@@ -1,0 +1,42 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+</head>
+
+<body class="mycoin">
+	<div class="mui-inner-wrap">
+    <!--头部导航-->
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-icon mui-icon-back mui-pull-left mui-action-back"></a>
+        <h1 class="mui-title">我的余额</h1>
+    </header>
+    <!--主体部分-->
+    <div class="mui-content" style="padding-bottom: 60px;">
+        <ul class="mui-table-view pad-t5 sub-table">
+			<li class="mui-table-view-cell">
+                <a class="mui-navigate-right" href="/wap/usercenter/buycoin">
+                    <i class="iconfont icon-xuebi mui-pull-left"></i>
+                    <span class="mui-badge mui-badge-danger mui-pull-right" id="private" style="display: none"></span>
+                    <span class="mui-block m-t-sm">余额充值</span>
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" href="/wap/usercenter/coinrecharged">
+                    <i class="iconfont icon-chongzhijilu mui-pull-left"></i>
+                    <span class="mui-badge mui-badge-danger mui-pull-right" id="private" style="display: none"></span>
+                    <span class="mui-block m-t-sm">充值记录</span>
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a class="mui-navigate-right" href="/wap/usercenter/spendcoin">
+                    <i class="iconfont icon-xiaofeijilu mui-pull-left"></i>
+                    <span class="mui-badge mui-badge-danger mui-pull-right" id="friend" style="display: none"></span>
+                    <span class="mui-block m-t-sm">消费记录</span>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!--end 主体部分-->
+</div>
+</body>
+{include file="public/footer" /}
+</html>

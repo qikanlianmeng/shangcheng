@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>神秘西域，掌中牧场</title>
+    <meta name="description" content="自由线上牧场，随心体验养殖乐趣，立即免费注册成为会员，与好友互动！">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/base.css" />
+    <script src="/static/wapapp/public/libs/mui.min.js" charset="utf-8"></script>
+    <link href="/static/wapapp/public/css/mui.min.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/game.css?v=2" />
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720 * 100 + 'px';
+        var UID = '{:get_uid()}';
+        var PATH_URL = '';
+        var SITE_URL = '/';
+        var IS_WEIXIN = '{:is_weixin() ? 1 : 0}';
+        if(UID < 1) {
+            window.location.href = '/wapapp/index/login.html'
+        }
+    </script>
+    <style>
+    [v-cloak] {
+        display: none;
+    }
+</style>
+</head>
+
+<body>
+    <div id="app" v-cloak>
+        <div class="game-bg"  v-cloak>
+            <div class="left">
+                <div class="avatar-bg">
+                    <div class="avatar">
+                        <img :src="userInfo.head_img" class="avatar-img" alt="">
+                    </div>
+
+                </div>
+                <div class="btns">
+                    <div class="btn help" @click="handleBangzhu"></div>
+                    <div class="btn notice" @click="handleGonggao"></div>
+                    <div class="btn task" v-if="false" @click="handleWenzhang"></div>
+                </div>
+            </div>
+            <div class="yangqun">
+                <img class="hidden" src="/static/wapapp/yang/imgs/game/yangqun.png" alt="">
+                <div v-for="(item, index) in yangLists" class="yang" :class="`yang${item.index}`" @click="yangInfo(item.id)">
+                    <div class="stateTip state3" v-if="item.yang_sick == 1"></div>
+                 
+                    <div class="stateTip state2" v-if="item.yang_hunger == 1"></div>
+                </div>
+            </div>
+            <div class="status">
+                <span v-cloak>{{yangLists.length}}/{{userInfo.max_num}}</span>
+            </div>
+
+            <!-- <div class="money"><span v-cloak>{{userInfo.integral}}</span></div> -->
+            <div class="yang_yao"><span v-cloak>{{userInfo.drug_count}}</span></div>
+
+            <div class="footer-bg">
+                <div class="shuicao" v-if="isShuicao"></div>
+                <div class="footer">
+                    <div class="navbar-item active" @click="handleShare" data-text="分享">
+                        <div class="text fenxiang">分享</div>
+                    </div>
+                    <div class="navbar-item" @click="handleRenyang" data-text="认养">
+                        <div class="text renyang">认养</div>
+                    </div>
+                    <div class="navbar-item" @click="handleYiliao" data-text="医疗">
+                        <div class="text yiliao">医疗</div>
+                    </div>
+                    <div class="navbar-item" @click="handleShangcheng" data-text="商城">
+                        <div class="text shangcheng">商城</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 公告弹窗 -->
+        <div class="g-dialog" v-cloak v-if="dialogName == 'Gonggao'">
+            <div class="g-dialog-title">
+                公告
+                <div class="close" @click="closeDialog"></div>
+            </div>
+            <div class="g-dialog-box">
+                <span class="title">{{notice.title}}</span>
+                <span class="time">{{new Date(notice.create_time*1000).Format("yyyy-MM-dd hh:mm")}}</span>
+                <div class="gonggao-box"  style="max-height: 400px;overflow: auto">{{notice.remark}}</div>
+                <p id="look_more"  @click="look_more"  style="text-align:center;padding:10px 0 0 0;color:#7ea935;"><b>查看更多>></b> </p>
+            </div>
+        </div>
+        <!-- 帮助弹窗 -->
+        <div class="g-dialog" v-cloak v-if="dialogName == 'Bangzhu'">
+            <div class="g-dialog-title">
+                帮助
+                <div class="close" @click="closeDialog"></div>
+            </div>
+            <div class="g-dialog-box">
+                <span class="title">{{help.title}}</span>
+                <span class="time">{{new Date(help.create_time*1000).Format("yyyy-MM-dd hh:mm")}}</span>
+                <div class="gonggao-box" style="max-height: 400px;overflow: auto">
+                    {{help.remark}}
+                   
+                </div>
+                <p id="look_more" @click="look_more" style="text-align:center;padding:10px 0 0 0;color:#7ea935;"><b>查看更多>></b> </p>
+            </div>
+        </div>
+        <!-- 文章弹窗 -->
+        <div class="g-dialog" v-cloak v-if="dialogName == 'Wenzhang'">
+            <div class="g-dialog-title">
+                文章
+                <div class="close" @click="closeDialog"></div>
+            </div>
+            <div class="g-dialog-box">
+                <span class="title">文章标题</span>
+                <span class="time">2018-05-30</span>
+                <div class="gonggao-box">内容巴啦啦啦啦啦啦啦啦啦啦啦阿拉蕾了内容巴啦啦啦啦啦啦啦啦啦啦啦阿拉蕾了</div>
+            </div>
+        </div>
+        <!-- 医疗弹窗 -->
+        <div class="yiliao-dialog" v-cloak v-if="dialogName == 'Yiliao'">
+            <div class="yiliao-dialog-title">
+                <div class="close" @click="closeDialog"></div>
+            </div>
+            <div class="yiliao-dialog-box">
+                <div class='price' onclick="buy(1)">CNY
+                    <span>{{price * 1}}</span>
+                </div>
+                <div class='price' onclick="buy(2)">CNY
+                    <span>{{price * 2}}</span>
+                </div>
+                <div class='price' onclick="buy(3)">CNY
+                    <span>{{price * 3}}</span>
+                </div>
+            </div>
+        </div>
+        <!-- 认养弹窗 -->
+        <div class="renyang-mask" v-cloak v-if="dialogName == 'Renyang'">
+            <div class="renyang-dialog">
+                <div class="renyang-dialog-title">
+                    <div class="close" @click="closeDialog"></div>
+                </div>
+                <div class="renyang-dialog-box">1</div>
+            </div>
+        </div>
+        <!-- 商城弹窗 -->
+        <div class="shangcheng-mask" v-cloak v-if="dialogName == 'Shangcheng'">
+            <div class="shangcheng-dialog">
+                <div class="shangcheng-dialog-title">
+                    <div class="close" @click="closeDialog"></div>
+                </div>
+                <div class="shangcheng-dialog-box">1</div>
+            </div>
+        </div>
+        <!-- 提示 -->
+        <div class="g-alert-mask" v-if="alert.show">
+            <div class="g-alert">
+                <div class="g-alert-text">{{alert.msg}}</div>
+                <div class="g-alert-btns">
+                    <div @click="btn1Callback" class="g-alert-btn btn1" v-if="alert.btns[0]" v-cloak>{{alert.btns[0]}}</div>
+                    <div @click="btn2Callback" class="g-alert-btn btn2" v-if="alert.btns[0]" v-cloak>{{alert.btns[1]}}</div>
+                </div>
+            </div>
+        </div>
+        <!-- 分享弹窗 非微信 -->
+        <div class="share-bg" v-cloak v-if="dialogName == 'Share'">
+            <div class="close" @click="closeDialog"></div>
+            <div class="share-box">
+                点击分享即可获得每日饲料，可分享至朋友圈或者分享给自己的好友哦！
+            </div>
+            <div class="footer-btn">
+                <div class="pengyouquan" onclick="to_share('timeline');"></div>
+                <div class="weixin" onclick="to_share('session');"></div>
+            </div>
+        </div>
+        <!-- 分享弹窗 是微信-->
+        <div class="share_weixin" style="z-index:999;" @click="closeDialog" v-cloak v-if="dialogName == 'Share_weixin'">
+           
+        </div>
+        <!-- 羊信息 -->
+        <div class="yang-info-mask" @click="closeDialog" v-cloak v-if="dialogName == 'yangInfo'">
+            <div class="yang-info">
+
+                <div class="info-title" v-cloak>
+                小羊{{yang.id}}
+                </div>
+
+                <div class="info-box">
+                    <div class="yang"></div>
+                    <div class="time" v-cloak style="width:auto">喂养：{{yang.share_num}}</div>
+                    <div class="state" v-if="yang.yang_hunger  == 0">饱</div>
+                    <div class="state" v-if="yang.yang_hunger  == 1">饿</div>
+                    <div class="list">
+                        <div class="time-item">生长状况：
+                            <span class="zise" v-if="yang.yang_sick == 0">健康</span>
+                            <span class="zise" v-if="yang.yang_sick == 1">生病</span>
+                            <div class="yao" @click="chiyao(yang.id, 1)" v-if="yang.yang_sick == 1"></div>
+                        </div>
+                        <div class="time-item">出栏时间：
+                            <span class="hongse" v-cloak>{{format(yang.end_date)}}</span>
+                        </div>
+                        <div class="time-item">认养时间：
+                            <span v-cloak>{{format(yang.start_date)}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="shareTip" v-if="!isShuicao">点击分享即可获得每日饲料~</div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+    <script src="/static/wapapp/yang/js/jquery.3.1.1.js"></script>
+    <script src="/static/wapapp/yang/js/common.js"></script>
+    <script src="/static/wapapp/yang/js/api.js"></script>
+    <script src="/static/wapapp/yang/js/pay.js"></script>
+    <!-- <script src="http://res.wx.qq.com/open/js/jweixin-1.4.0.js"></script> -->
+
+    <script>
+     
+    Date.prototype.Format = function (fmt) { //author: meizz 
+        var o = {
+            "M+": this.getMonth() + 1, //月份 
+            "d+": this.getDate(), //日 
+            "h+": this.getHours(), //小时 
+            "m+": this.getMinutes(), //分 
+            "s+": this.getSeconds(), //秒 
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度 
+            "S": this.getMilliseconds() //毫秒 
+        };
+        if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+        for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+        return fmt;
+    }
+  
+        var app = new Vue({
+            el: '#app',
+            data: {
+                isShuicao: true,
+                dialogName: '',
+                yangLists: [],
+                yang: {},
+                timer: null,
+                alert: {
+                    show: false,
+                    btns: ['', ],
+                    msg: ''
+                },
+                userInfo: {},
+                help:{1:"暂无内容"},
+                notice:{2:"暂无内容"},
+                price:''
+            },
+            created() {
+                axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+
+                this.getUserInfo();
+
+                this.getYanglist();
+
+                
+                this.gethelp();
+
+                
+                this.getnotice();
+
+
+                this.getprice();
+                // 用户信息
+                // var userInfo = window.localStorage.getItem('userData');
+                // if(!userInfo) {
+                //     this.alert = {
+                //         msg: '未登录，请先登录',
+                //         show: true,
+                //         btns: ['知道啦', '前往登录']
+                //     }
+                // } else {
+                //     this.userInfo = JSON.parse(userInfo);
+                // }
+                // 调用微信SDK
+                // wx.ready(this.wxConfig);
+            },
+            methods: {
+
+                getUserInfo() {
+                    var that = this
+                    this.http({
+                        url: '/api/user/getuserinfo',
+                        params: {
+                            uid: UID
+                        }
+                    }).then(function(res) {
+                        that.userInfo = {
+                            head_img: res.data.data.head_img,
+                            integral: res.data.data.integral,
+                            drug_count: res.data.data.drug_count,
+                            max_num: res.data.data.user_max_yang
+                        }
+                    }).catch(function(err) {
+
+                    })
+                },
+                getprice() {
+                    var that = this
+                    this.http({
+                        url: '/api/yangyang/drug_lists',
+                        params: {
+                           
+                        }
+                    }).then(function(res) {
+                        that.price = res.data.data.price
+                        
+                    }).catch(function(err) {
+
+                    })
+                },
+
+                format(time) {
+                    return new Date(time * 1000).Format("yyyy/MM/dd")
+                },
+                getYanglist() {
+                    var that = this
+                    this.http({
+                        method: 'get',
+                        url: '/api/yangyang/yang_lists'
+                    }).then(function(res) {
+                        if(res.data.status == 1) {
+                            var lists = res.data.data
+                            var randomIndex = that.getRandomIndex(lists.length)
+                            lists.forEach((item, index) => {
+                                if(item.yang_hunger == 1) {
+                                    that.isShuicao = false
+                                }
+                                item.index = randomIndex[index]
+                            })
+                            that.yangLists = lists
+                        }
+                    });
+                },
+                    // 帮助
+                    gethelp() {
+                    var that = this
+                    this.http({
+                        method: 'get',
+                        url: '/api/yangyang/zarticle_desc',
+                        params: {
+                            types: 2
+                        }
+                    }).then(function(res) {
+                        if(res.data.status == 1) {
+                            that.help = res.data.data
+                        }
+                    });
+                },
+                // 公告
+                getnotice() {
+                    var that = this
+                    this.http({
+                        method: 'get',
+                        url: '/api/yangyang/zarticle_desc',
+                        params: {
+                            types: 3
+                        }
+                    }).then(function(res) {
+                        if(res.data.status == 1) {
+                            that.notice = res.data.data;
+                        }
+                    });
+                },
+                // wxConfig() {
+                //     wx.config(wxConfig);
+                // },
+                getRandomIndex(num, length = 20) {
+                    return new Array(length)
+                        .fill(0)
+                        .map((v,i)=>i+1)
+                        .sort(()=>0.5 - Math.random())
+                        .filter((v,i) => i < num);
+                },
+                startTimer(timeCount) {
+                    var that = this
+                    if (!that.timer) {
+                        that.timer = setInterval(function() {
+                            if (that.yang.count > 0 && that.yang.count <= timeCount) {
+                                that.yang.count--;
+                            } else {
+                                that.endTimer()
+                            }
+                        }, 1000)
+                    }
+                },
+                endTimer() {
+                    clearInterval(this.timer);
+                    this.timer = null;
+                },
+                http(options) {
+                    var that = this
+                    return new Promise(function(resolve, reject) {
+                        axios(options).then(function(res) {
+                            if(res.data.msg == '未登录，请先登录') {
+                                that.alert = {
+                                    msg: res.data.msg,
+                                    show: true,
+                                    btns: ['知道啦', '前往登录']
+                                }
+                            } else if(res.data.msg == '药品数量不足') {
+                                that.alert = {
+                                    msg: res.data.msg,
+                                    show: true,
+                                    btns: ['知道啦', '前往购买']
+                                }
+                            } else if(res.data.msg) {
+                                // 弹出后端返回的msg提示语
+                                that.$toast({
+                                    message: res.data.msg
+                                });
+                            }
+                            resolve(res)
+                        }).catch(function(err) {
+                            reject(err)
+                        })
+                    })
+                },
+                btn1Callback() {
+                    this.alert.show = false
+                },
+                btn2Callback() {
+                    console.log(this.alert.btns[1])
+                    if(this.alert.btns[1] == '前往购买') {
+                        this.alert.show = false
+                        this.handleYiliao()
+                    }
+                    if(this.alert.btns[1] == '前往登录'){
+                        window.location.href = '/wapapp/index/login.html'
+                    }
+                },
+                closeDialog() {
+                    this.dialogName = ''
+                },
+                handleGonggao() {
+                    if(this.notice==''){
+                        this.dialogName = '';
+                        this.$toast({
+                            message: '暂无公告'
+                        });
+                    }else{
+                        this.dialogName = 'Gonggao'
+                    }
+                    
+                },
+                handleBangzhu() {
+                    if(this.help==''){
+                        this.dialogName = '';
+                        this.$toast({
+                            message: '暂无帮助 '
+                        });
+                    }else{
+                        this.dialogName = 'Bangzhu'
+                    }
+                   
+                },
+                handleWenzhang() {
+                    this.dialogName = 'Wenzhang'
+                },
+                // 分享
+                handleShare() {
+                    if(IS_WEIXIN==1){
+                        // 是微信
+                        this.dialogName = 'Share_weixin';
+                    }else{
+                        // 不是微信
+                        this.dialogName = 'Share';
+                    }
+                },
+                handleRenyang() {
+                    window.location.href = '/wapapp/yang/tender_list'
+                    // this.dialogName = 'Renyang'
+                },
+                handleYiliao() {
+                    this.dialogName = 'Yiliao'
+                },
+                handleShangcheng() {
+                    window.location.href = '/wapapp/index/index.html'
+                    // this.dialogName = 'Shangcheng'
+                },
+                look_more() {
+                    window.location.href = '/wapapp/usercenter/systemmessage.html'
+                    // this.dialogName = 'Shangcheng'
+                },
+                chiyao(yid, num) {
+                    var that = this
+                    this.http({
+                        url: '/api/yangyang/take_drug',
+                        params: {
+                            yid: yid,
+                            num: num
+                        }
+                    }).then(function(res) {
+                        if(res.data.status == 1) {
+                            that.getYanglist()
+                        }
+                        
+                    }).catch(function(err) {
+                        console.log(err)
+                    })
+                },
+           
+                yangInfo(id) {
+                    var that = this
+                    this.http({
+                        params: {
+                            id: id
+                        },
+                        url: '/api/yangyang/yang_info'
+                    }).then(function(res) {
+                        if(res.data.status == 1) {
+                            that.yang = res.data.data;
+                            that.dialogName = 'yangInfo'
+                        }
+                    }).catch(function(err) {
+                        console.log(err)
+                    });
+                }
+                
+            }
+
+        });
+        var urls=location.href;
+        console.log(urls);
+
+        var baseUrls="http://www.stdeye.com/";
+        
+        var track_id='';
+        $get('/api/user/getuserinfo',{},function(data){
+            track_id=data.data.mobile;
+            // alert(track_id);
+        });
+
+        // 微信分享 
+        function to_share(type){
+            var wx = api.require('wx');
+            wx.shareWebpage({
+                apiKey: 'wx105a07ac423c3e9d',
+                scene: type,
+                title: '神秘西域，掌中牧场',
+                description: '自由线上牧场，随心体验养殖乐趣，立即免费注册成为会员，与好友互动！',
+                thumb: 'widget://image/logo.jpg',
+                contentUrl: baseUrls+'/wap/index/register.html?track_id='+track_id
+            }, function(ret, err) {
+                if (ret.status) {
+                    // 用户点击了分享后执行的回调函数
+                    $get('/api/yangyang/share',{},function(ret){
+                        // alert(ret.msg);
+                        if(ret.code==1){
+                            location.href=urls;
+                        }
+                    });
+                } else {
+                    // alert(err.code);
+                    mui.toast("分享失败");
+                }
+            });
+        }
+
+        // 买药
+
+        function buy(num){
+            var wxPay = api.require('wxPay');
+            $post('/api/yangyang/buy_drug',{id: 1,num: num,pay_type:'wxpay'},function(data){
+                console.log(JSON.stringify(data));
+                wxPay.payOrder({
+                    apiKey: data.data.appid,
+                        orderId: data.data.prepayid,
+                        mchId: data.data.partnerid,
+                        nonceStr: data.data.noncestr,
+                        timeStamp: data.data.timestamp,
+                        package: data.data.package,
+                        sign: data.data.sign
+                }, function(ret, err) {
+                    if (ret.status) {
+                        //支付成功
+                        location.reload();
+                    } else {
+                        mui.toast("支付失败！");
+                    }
+                });
+            });
+        }
+
+
+
+    
+    </script>
+</body>
+
+</html>

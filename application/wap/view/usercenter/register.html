@@ -1,0 +1,51 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+<style>
+.mui-bar-nav{ background: #FF7415; box-shadow: none!important;}
+.mui-bar-nav .mui-title,.mui-bar-nav a{ color: #fff!important;}
+</style>
+</head>
+<body>
+	<div class="mui-inner-wrap">
+		<!--头部导航-->
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-icon mui-icon-back mui-pull-left" href="javascript:history.back();"></a>
+			<h1 class="mui-title">羊羊商城-注册</h1>
+		</header>
+		<!--主体部分-->
+		<div class="mui-content" >
+				<!-- s-->
+				<div class="mui-content">
+					<form class="ul-li-none" >
+						<div class="login-denglu">
+							<li><input name="mobile" type="text" class="inp-li-zhece mobile-num" placeholder="手机号"/></li>
+							<li><input name="code" type="text" class="inp-li-zhece" placeholder="动态码" style="width: 60%;"/><button type="button" s="0" id="sendbtn" class="mui-btn mar-lt5 border-0" style="background-color:#FF7415;color:#fff;">获取动态码 </button> </li>
+							<li><input name="password" type="password" class="inp-li-zhece" placeholder="密码：6-20位字母、数字或特殊字符"/></li>
+							<div >
+							<li class="fl">
+								<div class="mui-input-row mui-checkbox mui-left">
+									<input name="agree" type="checkbox" value="agree" checked style="left: 10px;top: 5px;"><label style="padding-right: 0;">同意</label>
+								</div>
+							</li>
+							<li class="fl"><a href="" style="line-height: 40px;color:#007aff">《用户协议》</a></li>
+						</div>
+							<li><button type="button" class="inp-but tosubmit" style="background-color:#FF7415;">确认</button></li>
+						</div>
+
+					</form>
+					<div class="clear"></div>
+				</div>
+				<!--end -->
+			</div>
+			<!--end mui-scroll-->
+		</div>
+		<!--end 主体部分-->
+		<!-- off-canvas backdrop -->
+		<div class="mui-off-canvas-backdrop"></div>
+	</div>
+</body>
+{include file="public/footer" /}
+<script>
+    seajs.use("__JS__/register")
+</script>
+</html>

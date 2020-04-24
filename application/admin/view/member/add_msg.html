@@ -1,0 +1,221 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/payment/css/config.css">
+<style>
+.file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
+.file-item .info{overflow: hidden;}
+.uploader-list{width: 100%; overflow: hidden;}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加推送</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" name="edit" id="edit" method="post" action="{:url('add_msg')}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">推送标题：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="title" type="text" class="form-control" name="title" value="">
+                            </div>
+                            
+                        </div>
+						<div class="form-group">
+                            <label class="col-sm-3 control-label">推送方式：</label>
+                            <div class="input-group col-sm-4">
+                                <select id="receive_type" name="receive_type" class="form-control m-b chosen-select">
+									<option value="1" selected="selected">个人</option>
+									<option value="2">群组</option>
+								</select>
+                            </div>
+                            
+                        </div>
+						<div class="form-group">
+                            <label class="col-sm-3 control-label">推送对象：</label>
+                            <div class="input-group col-sm-4" id="receive_div">
+								
+								<input type="text" class="form-control" name="receive" style="width:80%;" value="" >&nbsp;&nbsp;&nbsp;
+								<button class="btn btn-primary" type="button" onclick="open_div();">搜索</button>
+								
+								<!--
+								<select  name="receive" class="form-control m-b chosen-select">
+									<option value="1">分组1</option>
+									<option value="2">分组2</option>
+								</select>
+								-->
+                                
+                            </div>
+                            
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">推送内容：</label>
+                            <div class="input-group col-sm-4">
+                                <textarea type="text" rows="5" name="content" id="remark"  class="form-control"></textarea>
+                            </div>
+                            
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+								<input type="hidden" name="receive_id" value="0"/>
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+  {include file="public/footer" /}
+
+<script type="text/javascript">
+
+    $(function(){
+		$('#edit').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+        
+		
+        function checkForm(){
+            if( '' == $("input[name='title']").val()){
+                layer.msg('消息名称不能为空', {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+			if($("input[name='receive_id']").val() < 1){
+                layer.msg('未选择推送对象', {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+			if($("input[name='content']") == ''){
+				layer.msg('消息内容不能为空', {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+				return false;
+			}
+
+		}
+
+        function complete(data){
+            if(data.code == 1){
+                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+					layer.close(index);
+                    window.location.href="{:url('msg_list')}";
+                });
+            }else{
+                layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+		//改变推送方式
+		var user_group = $.parseJSON('{$user_group}');
+		$("#receive_type").change(function(){
+			if($(this).val() == 1){
+				$("#receive_div").html('<input type="text" class="form-control" name="receive" style="width:80%;" value="">&nbsp;&nbsp;&nbsp;\
+										<button class="btn btn-primary" type="button" onclick="open_div();">搜索</button>');
+			}else if($(this).val() == 2){
+				var option_str = '<option value="0">选择会员组</option>';
+				for(var i in user_group){
+					option_str += '<option value="'+user_group[i].id+'">'+user_group[i].group_name+'</option>';
+				}
+				$("#receive_div").html('<select id="group_select"  name="receive" class="form-control m-b chosen-select">'+option_str+'</select><input type="hidden" name="receive" value=""/>');
+			}
+		})
+		//设置接收群组的id
+		$(document).on('change','#group_select',function(){
+			$("input[name='receive']").val($(this).find("option:selected").text());
+			$("input[name='receive_id']").val($(this).val());
+		})
+    });
+
+
+    //IOS开关样式配置
+   var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem, {
+            color: '#1AB394'
+        });
+    var config = {
+        '.chosen-select': {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+	//弹出框
+	function open_div(){
+		var keywords = $("input[name='receive']").val();
+		if(keywords == ''){
+			layer.msg('请输入关键词', {icon: 5,time:1500,shade: 0.1}, function(index){
+				layer.close(index);
+			});
+			return false;
+		}
+		$.post("{:url('search_member')}",{'keywords':keywords},function(data){
+			var res = $.parseJSON(data);
+			var content_str = '';
+			//alert(typeof res);return false;
+			if(res){
+				for(var i in res){
+					content_str += '<label><input type="radio" name="member_name" data-name="'+res[i].nickname+'" value="'+res[i].id+'"/>'+res[i].nickname+'</label><br/>';
+				}
+			}else{
+				content_str = '暂无用户信息';
+			}
+			layer.open({
+				title:'选择接收人',
+				skin: 'layui-layer-rim', //加上边框
+				area: ['420px', '300px'], //宽高
+				content:content_str,
+				yes:function(index,layero){
+					$("input[name='receive_id']").val($("input[name='member_name']:checked").val());
+					$("input[name='receive']").val($("input[name='member_name']:checked").attr('data-name'));
+					layer.close(index);
+				}
+			});
+		})
+		
+		/*
+		layer.open({
+			title:'选择接收人',
+			skin: 'layui-layer-rim', //加上边框
+			area: ['420px', '300px'], //宽高
+			content: '<label><input type="radio" name="user"/>666</label><br/>\
+					  <input type="radio" name="user"/>'
+		});
+		*/
+		
+	}
+
+
+</script>
+</body>
+</html>

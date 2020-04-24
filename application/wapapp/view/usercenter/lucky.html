@@ -1,0 +1,251 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/index.css">
+<style>
+    .price {
+        font-size: 14px !important;
+    }
+</style>
+</head>
+
+<body>
+    <!--头部导航-->
+    <header class="mui-bar mui-bar-nav" style="background-color:transparent; ">
+        <a class="mui-icon mui-icon-back mui-pull-left mui-action-back" style="color: #fff;"></a>
+    </header>
+    <!-- 弹出层 -->
+    <div class="cover"></div>
+    <!-- <div class="covers1">
+        <div class="covers_quit">
+            <img src="__IMG__/lucky/pop_up_quit_icon.png" alt="pop_up_quit_icon" />
+        </div>
+        <div class="covers_icon">
+            <img src="__IMG__/lucky/task_draw_reward_free_img.png" alt="task_draw_reward_free_img" />
+        </div>
+        <div class="covers_font">恭喜您获得1次<span>免费</span>的机会</div>
+        <div class="covers_btn">立即前往抽奖</div>
+    </div> -->
+
+    <div class="covers2">
+        <div class="covers_quit">
+            <img src="__IMG__/lucky/pop_up_quit_icon.png" alt="pop_up_quit_icon" />
+        </div>
+        <div class="covers_icon">
+            <img src="__IMG__/lucky/task_draw_reward_gereward_img.png" alt="task_draw_reward_gereward_img" />
+        </div>
+        <div class="covers_font">恭喜您获得<span>10金币</span>奖励</div>
+        <div class="covers_btn covers_btn1">再抽一次</div>
+        <a href="/wapapp/usercenter/usercenter">
+            <div class="covers_btn2">返回个人中心</div>
+        </a>
+    </div>
+
+    <div class="covers3">
+        <div class="covers_quit">
+            <img src="__IMG__/lucky/pop_up_quit_icon.png" alt="pop_up_quit_icon" />
+        </div>
+        <div class="covers_icon">
+            <img src="__IMG__/lucky/task_draw_reward_tip_img.png" alt="task_draw_reward_tip_img" />
+        </div>
+        <div class="covers_font">您的免费机会已经用完</div>
+        <div class="covers_btn covers_btn1">再抽一次</div>
+        <a href="/wapapp/usercenter/usercenter">
+            <div class="covers_btn2">返回个人中心</div>
+        </a>
+    </div>
+    <!-- 收益 -->
+    <div>
+        <div class="float_btn">抽奖记录</div></a>
+        <!-- 抽奖转盘 -->
+        <div class="turntable">
+            <img class="turntablebg" src="__IMG__/lucky/task_draw_reward_default_bg.png" alt="turntableBg" />
+            <div class="rotate">
+                <img id="rotate" src="__IMG__/lucky/task_draw_reward_bg.png" />
+            </div>
+            <div class="pointer">
+                <img src="__IMG__/lucky/task_draw_reward_pointer.png" />
+            </div>
+            <div class="turntable_font">
+                <div class="turn_font_left">
+                    <img src="__IMG__/lucky/task_draw_reward_coin_icon.png" alt="task_draw_reward_coin_icon" />
+                    <span>余额:</span>
+                    <span id="money"></span>
+                </div>
+                <div class="turn_font_right">
+                    <img src="__IMG__/lucky/task_draw_reward_clock_icon.png" alt="task_draw_reward_clock_icon" />
+                    <span>免费次数:</span>
+                    <span class="free_num"></span>
+                    <span>次</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- task&rules -->
+        <div class="taskRules">
+            <div class="rules">
+                <div class="task_title">
+                    <img src="__IMG__/lucky/task_draw_reward_rule_title_img.png"
+                        alt="task_draw_reward_rule_title_img" />
+                </div>
+                <div class="rules_con">
+                    <ul>
+                        <!-- <span id="prize_data" class="color-red"></span>, -->
+                        <li>1、所有奖品库存发放完为止；</li>
+                        <li>2、抽奖一次花费<span class="price"></span>余额，抽奖次数无限制；</li>
+                        <li>3、抽奖<span class="buy_num"></span>次赠送<span class="sfree_num"></span>次额外抽奖机会；</li>
+                        <li>4、抽奖结果以当次抽奖结束后显示窗口的内容为准。</li><br />
+                        <li class="rules_li">温馨提醒：如果页面未及时显示您的免费机会，请尝试退出活动页面再重新进来哦。</li>
+                    </ul>
+                    <div id="rules_con_footer" class="rules_con_footer">本活动解释权归天佑众成商城所有</div>
+                </div>
+            </div>
+        </div>
+        {include file="public/footer" /}
+        <script src="__PUBLIC__/libs/jquery-3.2.1.min.js" charset="utf-8"></script>
+        <script src="__PUBLIC__/js/ajaxfileupload.js" charset="utf-8"></script>
+        <script src="__PUBLIC__/js/awardrotate.js" charset="utf-8"></script>
+        <script src="__PUBLIC__/libs/layer/layer.js" charset="utf-8"></script>
+        <script src="/static/wapapp/public/wallet/js/common.js"></script>
+        <script>
+            var id = "{:input('id')}";
+            $(function () {
+                getData();
+
+                function getData() {
+                    $get("/api2/prize/info", { id: id }, function (ret) {
+                        if (ret.status == 1) {
+                            $('.free_num').html(ret.data.free_num);
+                            $('.price').html(ret.data.info.price);
+                            $('.buy_num').html(ret.data.info.buy_num);
+                            $('.sfree_num').html(ret.data.info.free_num);
+                            var str='';
+                            ret.data.list.forEach( ( v, i ) => {
+                                if(i<ret.data.list.length-1){
+                                    str+=v.name+'、';
+                                }else{
+                                    str+=v.name;
+                                }
+                                
+                            } );
+                            $('#prize_data').html(str);
+                        }else if(ret.status==0||ret.status==3){
+                            setTimeout(() => {
+                                window.location.href = "/wapapp/index/login.html";
+                            }, 1000);
+                        }
+                    });
+                    //获取数据
+                    $get('/api2/user/getuserinfo', {}, function (data) {
+                        // console.log(JSON.stringify(data));
+                        if (data.status == 2) {
+                            window.location.href = "/wapapp/usercenter/binding_m.html";
+                        }
+                        if (data.code == 1) {
+                            var obj = data.data;
+                            $('#money').html(obj.money);
+                        } else if (data.status == 3 || data.status == 0) {
+                            common.toast(data.msg);
+                            setTimeout(() => {
+                                window.location.href = "/wapapp/index/login.html";
+                            }, 1000);
+                        }
+                    });
+                }
+                $('.float_btn').click(function () {
+                    window.location.href = "/wapapp/usercenter/lucky_log"
+                });
+                $('.pointer').click(function () {
+                    Rotate();
+                });
+                $(".covers_quit").click(function () {
+                    $(".cover").fadeOut(500);
+                    $(this).parent().fadeOut(500);
+                });
+
+                function Init() {
+                    var H = $(window).height(),
+                        W = $(window).width();
+                    $(".cover").css({ "width": W, "height": H });
+
+                    $(".covers_btn").click(function () {
+                        $(".cover").hide();
+                        $(this).parent().hide();
+                        Rotate();
+                    });
+
+                    $(".covers_btn2").click(function () {
+                        $(".cover").hide();
+                        $(this).parent().parent().hide();
+                        $(".rules_cover,.rules_footer").hide();
+                        $(".rules_con").css("height", "95vw");
+                    });
+                }
+                Init();
+                // 抽奖
+                var rotateTimeOut = function () {
+                    $('#rotate').rotate({
+                        angle: 0,
+                        animateTo: 2160,
+                        duration: 8000,
+                        callback: function () {
+                            alert('网络超时，请检查您的网络设置！');
+                        }
+                    });
+                };
+                var bRotate = false;
+
+                var rotateFn = function (awards, angles, txt) {
+                    bRotate = !bRotate;
+                    $('#rotate').stopRotate();
+                    $('#rotate').rotate({
+                        angle: 0,
+                        animateTo: angles + 2825,
+                        duration: 8000,
+                        callback: function () {
+                            $(".cover,.covers2").show();
+                            // $('.cover_fuck,.cover_quit').css({"display": "block","animation": "action_translateY 2s linear", "animation-fill-mode":"forwards"});
+                            // $(".cover_fuck").text("+"+parseInt(txt));
+                            $(".covers2 .covers_font span").text(txt);
+                            bRotate = !bRotate;
+                        }
+                    })
+                };
+
+                function Rotate() {
+
+                    var time = $('.free_num').html();
+                    // 防止多次点击
+                    if (bRotate) return;
+                    // var Url3 = testname+"/yfax-htt-api/api/htt/doHolidayActivityLuckyDraw";
+                    // $.post(Url3,{"phoneNum": uid1,"access_token": token1},function(res){
+                    // var times = res.data.remainlotteryTimes,
+                    // 	item = res.data.resultCode;
+                    // $(".cover_num span").text(times);
+                    // var item = 1;
+                    // console.log(res);
+                    // if(item == -1) {
+                    // alert("抽奖次数已用完");
+                    // }else {
+                    // $('.cover_fuck').hide();
+                    // if (time <= 0) {
+                    //     $(".cover,.covers3").show();
+                    // } else {
+                        $get("/api2/prize/draw", { id: id }, function (ret) {
+                            if (ret.status == 1) {
+                                var item = ret.msg;
+                                rotateFn(0, 360, item);
+                                getData();
+                            } else {
+                                mui.toast(ret.msg);
+                            }
+                        })
+                    // }
+
+                    // }  
+                    // });
+                }
+            })
+
+        </script>
+</body>
+
+</html>

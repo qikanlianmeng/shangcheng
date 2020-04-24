@@ -1,0 +1,196 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+</head>
+
+<body class="comment-list">
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">评论列表</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-content">
+        <ul class="mui-table-view commentList" id="comment">
+            <!-- <li>
+            <div class="mui-table-view-cell mui-media comment-user" uid="11129">
+                <img class="mui-media-object mui-pull-left" src="http://www.vxue360.com/Addons/Avatar/default_128_128.jpg">
+                <p class="mui-media-body color-333 text-15">
+                    学员11129
+                </p>
+                <p class="comment-stars">
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                </p>
+            </div>
+            <p class="commentTime text-mini">
+                2017-5-4 09:48 颜色：白色 尺码：S
+            </p>
+            <p class="content color-333">
+                最近刚看了这个电视剧，非常好，被达康书记圈粉
+            </p>
+            <div class="imgList clearfix">
+                <img src="http://resources-user-image.vxue360.com/87ad465fa1a025dc13edd5d2ab97da97.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/87ad465fa1a025dc13edd5d2ab97da97.jpg"
+                data-preview-group="12">
+                <img src="http://resources-user-image.vxue360.com/2c9dd1ab9dd49d980776ca5912865d53.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/2c9dd1ab9dd49d980776ca5912865d53.jpg"
+                data-preview-group="12">
+                <img src="http://resources-user-image.vxue360.com/ffa43e803c7cdd7fe7f8b3b4ced841d8.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/ffa43e803c7cdd7fe7f8b3b4ced841d8.jpg"
+                data-preview-group="12">
+                <img src="http://resources-user-image.vxue360.com/3c5fccdc06fab72e419f6734ba760a3d.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/3c5fccdc06fab72e419f6734ba760a3d.jpg"
+                data-preview-group="12">
+                <img src="http://resources-user-image.vxue360.com/617edd6aeffcdce8759f6d6363351a94.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/617edd6aeffcdce8759f6d6363351a94.jpg"
+                data-preview-group="12">
+            </div>
+            <p class="text-mini addComment">
+                商家回复于 2017-9-13 14:49
+            </p>
+            <p class="content color-333">
+                确实很好看，不过小说更精彩哦~
+            </p>
+            <div class="imgList clearfix">
+                <img src="http://resources-user-image.vxue360.com/f4ab4bc9cfb3f63cb4b3baeb88d60855.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/f4ab4bc9cfb3f63cb4b3baeb88d60855.jpg"
+                data-preview-group="12">
+                <img src="http://resources-user-image.vxue360.com/56ae13d50a45ec2d86427ae39807b41e.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/56ae13d50a45ec2d86427ae39807b41e.jpg"
+                data-preview-group="12">
+                <img src="http://resources-user-image.vxue360.com/911430ad31516c732b16ea0de4e8f49a.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/911430ad31516c732b16ea0de4e8f49a.jpg"
+                data-preview-group="12">
+            </div>
+            <p class="text-mini addComment color-orange top">用户追评于 2017-09-12 10:00:00</p>
+            <p class="content color-333">书已经买了，正在拜读</p>
+            <div class="imgList clearfix">
+                <img src="http://resources-user-image.vxue360.com/3c5fccdc06fab72e419f6734ba760a3d.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/3c5fccdc06fab72e419f6734ba760a3d.jpg"
+                data-preview-group="12">
+                <img src="http://resources-user-image.vxue360.com/617edd6aeffcdce8759f6d6363351a94.jpg"
+                data-preview-src="http://resources-user-image.vxue360.com/617edd6aeffcdce8759f6d6363351a94.jpg"
+                data-preview-group="12">
+            </div>
+        </li>
+        <li>
+            <a href="javascript:;" class="mui-table-view-cell mui-media mui-block" uid="11129">
+                <img class="mui-media-object mui-pull-left" src="http://www.vxue360.com/Addons/Avatar/default_128_128.jpg">
+                <p class="mui-media-body color-333 text-15">
+                    学员11129
+                </p>
+                <p class="comment-stars">
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                    <span class="iconfont icon-sc1 color-orange"></span>
+                </p>
+            </a>
+            <p class="commentTime text-mini">
+                2017-5-4 09:48 颜色：白色 尺码：S
+            </p>
+            <p class="content color-333">
+                最近刚看了这个电视剧，非常好，被达康书记圈粉
+            </p>
+        </li> -->
+        </ul>
+        <div class="dropDown">
+            <p style="display: none;text-align: center;line-height: 44px;">没有更多评价了</p>
+        </div>
+        <div class="noAttend" style="display: none;background-color:#f4f4f4">
+            <i class="iconfont icon-zanwu"></i>
+            <p>这件商品还没有评论~</p>
+        </div>
+    </div>
+    {include file="public/footer" /}
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.zoom.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.previewimage.js"></script>
+    <script type="text/javascript">
+        var id = "{:input('id')}";
+        mui.previewImage();
+        seajs.use("/static/wapapp/shop/js/comment_list");
+    </script>
+    <script type="text/html" id="commentList">
+        <li>
+            <div class="mui-table-view-cell mui-media comment-user" uid="[[uid]]">
+                [[if user_avatar]]
+                <img class="mui-media-object mui-pull-left" src="[[user_avatar]]"> [[else]]
+                <img class="mui-media-object mui-pull-left" src="__IMG__/defaultuser.jpg"> [[/if]]
+                <p class="mui-media-body color-333 text-15">
+                    [[user_nickname]]
+                </p>
+            </div>
+            [[each comment_content as value i]] [[if value.rank == 0 && i == 0]]
+            <p class="comment-stars">
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+            </p>
+            [[else if value.rank == 1 && i == 0]]
+            <p class="comment-stars">
+                <span class="iconfont icon-sc1 color-orange"></span>
+            </p>
+            [[else if value.rank == 2 && i == 0]]
+            <p class="comment-stars">
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+            </p>
+            [[else if value.rank == 3 && i == 0]]
+            <p class="comment-stars">
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+            </p>
+            [[else if value.rank == 4 && i == 0]]
+            <p class="comment-stars">
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+            </p>
+            [[else if value.rank == 5 && i == 0]]
+            <p class="comment-stars">
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+                <span class="iconfont icon-sc1 color-orange"></span>
+            </p>
+            [[/if]] [[if value.type == 0]]
+            <p class="commentTime text-mini">[[value.c_time]]</p>
+            <p class="content color-333">[[value.content]]</p>
+            <div class="imgList clearfix">
+                [[each value.pic_url as pic j]]
+                <img src="[[pic.url]]" data-preview-src='[[pic.url]]' data-preview-group='[[id]]'> [[/each]]
+                <div class="clear"></div>
+            </div>
+            [[else if value.type == 1]]
+            <p class="text-mini addComment color-orange top">用户追评于 [[value.c_time]]</p>
+            <p class="content color-black">[[value.content]]</p>
+            <div class="imgList clearfix">
+                [[each value.pic_url as pic j]]
+                <img src="[[pic.url]]" data-preview-src='[[pic.url]]' data-preview-group='[[id]]'> [[/each]]
+                <div class="clear"></div>
+            </div>
+            [[/if]] [[if value.reply_time]]
+            <p class="text-mini addComment">商家回复于 [[comment_content[0].reply_time]]</p>
+            <p class="content color-333">[[comment_content[0].reply_content]]</p>
+            <div class="imgList clearfix">
+                [[each comment_content[0].reply_pic as pic k]]
+                <img src="[[pic.url]]" data-preview-src='[[pic.url]]' data-preview-group='[[id]]'> [[/each]]
+                <div class="clear"></div>
+            </div>
+            [[/if]] [[/each]]
+        </li>
+    </script>
+</body>
+
+</html>

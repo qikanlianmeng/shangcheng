@@ -1,0 +1,97 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__CSS__/shopstyle.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.picker.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.poppicker.css">
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">申请退款</h1>
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+</header>
+<div class="mui-content">
+    <ul class="mui-table-view apply-refund" id="comment">
+        <li class="mui-table-view-cell">
+            <h4 class="text-15 color-333">
+                退款类型&nbsp;
+                <span class="color-main">
+                    *
+                </span>
+            </h4>
+            <div class="chooseType">
+                <p data-value="我要退款(无需退货)">
+                    <i class="iconfont icon-yuan">
+                    </i>
+                    我要退款(无需退货)
+                </p>
+                <p data-value="我要退货">
+                    <i class="iconfont icon-yuan">
+                    </i>
+                    我要退货
+                </p>
+            </div>
+        </li>
+        <li class="mui-table-view-cell">
+            <h4 class="text-15 color-333">
+                退款原因&nbsp;
+                <span class="color-main">
+                    *
+                </span>
+            </h4>
+            <div class="reason">
+                <input class="text-14" type="text" name="reason" disabled="false" placeholder="请先选择退款类型">
+                <i class="iconfont icon-you color-999">
+                </i>
+            </div>
+        </li>
+        <!-- <li class="mui-table-view-cell">
+            <h4 class="text-15 color-333">
+                退款金额&nbsp;
+                <span class="color-main">
+                    *
+                </span>
+                &nbsp;&nbsp;
+                <span class="color-999 text-14" id="maxPrize">
+                    最多20.5元
+                </span>
+            </h4>
+            <div class="refundPrize">
+                <p class="text-15">
+                    <label class="color-333">
+                        金额：
+                    </label>
+                    <input class="text-14" type="text" name="money" placeholder="请输入退款金额">
+                </p>
+            </div>
+        </li> -->
+        <li class="mui-table-view-cell">
+            <h4 class="text-15 color-333">
+                退款说明
+            </h4>
+            <textarea class="text-14" placeholder="请输入退款说明" value="" name="content" id="content">
+            </textarea>
+            <p style="text-align: right;">
+                请输入小于200字的文字说明
+            </p>
+        </li>
+        <li class="mui-table-view-cell">
+            <h4 class="text-15 color-333">上传照片</h4>
+            <input type="file" class="choose" accept="image/*" multiple="" style="display: none;">
+            <ul class="img-list clearfix m-t">
+                <li class="add"><i class="iconfont icon-pjia color-999"></i><p class="text-mini color-999">添加图片</p></li>
+            </ul>
+            <p>为了帮助我们更好的解决问题，请上传图片不超过6张</p>
+        </li>
+    </ul>
+    <button class="refundBtn text-16" type="button">
+        提交申请
+    </button>
+</div>
+{include file="public/footer" /}
+<script type="text/javascript" src="__PUBLIC__/libs/mui.picker.js"></script>
+<script type="text/javascript" src="__PUBLIC__/libs/mui.poppicker.js"></script>
+<script type="text/javascript">
+var order_id = "{:input('order_id')}";
+seajs.use(['shop/js/refund','public/js/imgUpload']);
+</script>
+</body>
+</html>

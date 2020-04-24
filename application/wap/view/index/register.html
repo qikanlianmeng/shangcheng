@@ -1,0 +1,52 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/shopstyle.css">
+</head>
+<style>
+    html {
+        background-color: #fff;
+    }
+</style>
+
+<body class="bg-white">
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <a class="mui-btn mui-btn-link mui-pull-right" href="login.html">登录</a>
+        <h1 class="mui-title">账号注册</h1>
+    </header>
+    <div class="mui-content login-content">
+        <div class="login-block">
+            <div class="inp-div"><span class=" iconfont icon-crmtubiao32"></span><input type="tel" name="mobile" class="input-login mobile-num" placeholder="请输入手机号码"></div>
+            <div class="inp-div inp-code"><span class=" iconfont icon-yanzhengma"></span><input type="number" name="code" placeholder="请输入验证码" class="input-login input-code"><span s="0" id="sendbtn" class="code-block get-code">获取验证码</span></div>
+            <div class="inp-div"><span class=" iconfont icon-mima"></span><input type="password" name="password" placeholder="请输入密码" class="input-login"></div>
+            <div class="inp-div"><span class=" iconfont icon-crmtubiao32"></span><input type="text" name="tmobile" value="" placeholder="推荐人手机号" class="input-login" id="tuijian"></div>
+            <!-- <div class="inp-div" style="margin-bottom: 5px;"><span class=" iconfont icon-mima"></span><input type="password" name="repassword" placeholder="请输入确认密码" class="input-login"></div> -->
+            <div class="protocol">
+                <div class="mui-input-row mui-checkbox mui-pull-left">
+                    <input name="agree" type="checkbox" value="agree" checked=""><label class="text-16">同意</label>
+                </div>
+                <a href="/wap/index/protocol" class="color-main text-16" title="">《用户协议》</a>
+            </div>
+            <button id="register" type="button" class="inp-btn m-t tosubmit">免费注册</button>
+        </div>
+    </div>
+</body>
+{include file="public/footer" /}
+
+<script src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+<script type="text/javascript">
+    seajs.use(['shop/js/register']);
+
+    function getParams(name) {
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i");
+        var r = window.location.search.substr(1).match(reg);
+        if (r != null) return unescape(r[2]);
+        return null;
+    }
+    var id = getParams('track_id');
+    if (id != '' && id != undefined) {
+        $('#tuijian').val(id);
+        $('#tuijian').attr('readonly', true);
+    }
+</script>
+
+</html>

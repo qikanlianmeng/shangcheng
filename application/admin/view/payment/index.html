@@ -1,0 +1,96 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>支付设置</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <!-- <div class="row">
+                <div class="col-sm-12">
+                <div  class="col-sm-2" style="width: 100px">
+                    <div class="input-group" >
+                        <a href="{:url('add_article')}"><button class="btn btn-outline btn-primary" type="button">添加文章</button></a>
+                    </div>
+                </div>
+                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" id="key" class="form-control" name="key" placeholder="输入需查询的文章名称" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div> -->
+            <!--搜索框结束-->
+            <!-- <div class="hr-line-dashed"></div> -->
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="20%">插件名称</th>
+                                <th width="20%">插件描述</th>
+                                <th width="20%">插件图片</th>
+                                <th width="20%">状态</th>
+                                <th width="20%">配置</th>
+
+                            </tr>
+                        </thead>
+
+                        <tbody id="list-content">
+                            {foreach  $lists as $v}
+                            <tr class="long-td">
+                                <td>{$v->id}</td>
+                                <td>{$v->name}</td>
+                                <td><img src="{$v->logo}" style="height: 30px" onerror="this.src='/static/admin/images/no_img.jpg'"/></td>
+                                <td>
+                                    {eq name="$v->status" value="1"}
+                                    <a id="zt{$v->id}" href="javascript:;" onclick="status({$v->id})"  >
+                                        <span class="label label-info">开启</span>
+                                    </a>
+                                    {else/}
+                                    <a  id="zt{$v->id}" href="javascript:;" onclick="status({$v->id});">
+                                        <span class="label label-danger">禁用</span>
+                                    </a>
+                                    {/eq}
+                                </td>
+                                <td>
+                                    {neq name="$v->id" value="1"}
+                                    <a href="{:URL('config',['id'=>$v['id']])}" class="btn btn-primary btn-xs btn-outline"> <i class="fa fa-paste"></i> 配置</a>
+                                    {/neq}
+                                </td>
+
+                            </tr>
+                        {/foreach}
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 加载动画 -->
+<!-- <div class="spiner-example">
+    <div class="sk-spinner sk-spinner-three-bounce">
+        <div class="sk-bounce1"></div>
+        <div class="sk-bounce2"></div>
+        <div class="sk-bounce3"></div>
+    </div>
+</div> -->
+{include file="public/footer" /}
+<script type="text/javascript">
+    //删除项目
+    function status(id){
+        lunhui.status(id,'{:url("status")}');
+    }
+</script>
+</body>
+</html>

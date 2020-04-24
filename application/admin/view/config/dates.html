@@ -1,0 +1,172 @@
+{include file="public/header" /}
+
+<style type="text/css">
+/* TAB */
+.nav-tabs.nav>li>a {
+    padding: 10px 25px;
+    margin-right: 0;
+}
+.nav-tabs.nav>li>a:hover,
+.nav-tabs.nav>li.active>a {
+    border-top: 3px solid #1ab394;
+    padding-top: 8px;
+}
+.nav-tabs>li>a {
+    color: #A7B1C2;
+    font-weight: 500;  
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 0;
+}
+</style>
+<link rel="stylesheet" href="/static/admin/remind/index.css">
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>网站配置</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">           
+                    <div class="panel-body">                      
+                        <div class="builder-tabs builder-form-tabs">
+                            <ul class="nav nav-tabs">
+                                {volist name="Think.config.config_group_list" id="group"}
+                                    <li {eq name="key" value="11"}class="active"{/eq}><a {eq name="group" value="11"}href="{:url('dates')}"{else/}href="{:url('group?id='.$key)}"{/eq}>{$group}配置</a></li>
+                                {/volist}           
+                            </ul>
+                        </div>
+                        <div class="form-group"></div>
+                    
+                    <div class="builder-container">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <form action="{:url('dates')}" method="post" class="form-horizontal">  
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <label class="col-sm-2 control-label">是否需要实名：</label>
+                                        <div class="input-group col-sm-4">
+                                            <label><input type="radio"  name="dy_real_info" {if $dy_real_info == 1}checked="checked"{/if} value="1">是</label>
+                                            <label><input type="radio"  name="dy_real_info" {if $dy_real_info == 0}checked="checked"{/if} value="0">否</label>
+                                            
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <label class="col-sm-2 control-label">是否开启：</label>
+                                        <div class="input-group col-sm-4">
+                                            <label><input type="radio"  name="dy_open" {if $dy_open == 1}checked="checked"{/if} value="1">开启</label>
+                                            <label><input type="radio"  name="dy_open" {if $dy_open == 0}checked="checked"{/if} value="0">关闭</label>
+                                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代售区是否开放。若不开放，则任何时间不能购买带营区商品</span>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <label class="col-sm-2 control-label">代售折扣：</label>
+                                        <div class="input-group col-sm-4">
+                                            <label><input type="radio"  name="dy_discount" {if $dy_discount == 1}checked="checked"{/if} value="1">开启</label>
+                                            <label><input type="radio"  name="dy_discount" {if $dy_discount == 0}checked="checked"{/if} value="0">关闭</label>
+                                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代售区订单折扣是否开放</span>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <label class="col-sm-2 control-label">每日订单上限：</label>
+                                        <div class="input-group col-sm-4">
+                                            <input type="text" class="form-control" name="dy_order_limit" value="{$dy_order_limit}">
+                                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代售区每日订单上限，每日订单达到该数量后，将无法购买带营区商品</span>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                        <label class="col-sm-2 control-label">用户每日代售商品数：</label>
+                                        <div class="input-group col-sm-4">
+                                            <input type="text" class="form-control" name="dy_goods_num" value="{$dy_goods_num}">
+                                            <span class="help-block m-b-none"><i class="fa fa-info-circle"></i> 代理用户每天可以购买代售商品的种类数量，超过此数量不能购买</span>
+                                        </div>
+                                        <div class="hr-line-dashed"></div>
+                                    </div>
+
+                                    <div class="example-wrap">
+                                    <div class="example">
+                                        <label class="col-sm-2 control-label">开放时间：</label>
+                                    <table class="table table-bordered table-hover">
+                                        <thead>
+                                            <tr class="long-tr">
+                                                <th width="10%">日期时间</th>
+                                                <th width="10%">周一</th>
+                                                <th width="10%">周二</th>
+                                                <th width="10%">周三</th>
+                                                <th width="10%">周四</th>
+                                                <th width="10%">周五</th>
+                                                <th width="10%">周六</th>
+                                                <th width="10%">周日</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="list-content">
+                                            {for start="0" end="24"}
+                                            <tr class="long-td">
+                                                <td>{$i}:00</td>
+                                                
+                                                {for start="0" end="7" name="ii"}
+                                                <td>
+                                                    {present name="time_arr[$ii]"}
+                                                        <input type="checkbox" name="date{$ii}[]" value="{$i}" {php} if(in_array($i,$time_arr[$ii])){echo "checked='checked'";}{/php} style="opacity: 0;" />
+                                                        <div class='iradio_square-green {php} if(in_array($i,$time_arr[$ii])){echo "checked";}{/php}'></div>
+                                                    {else /}
+                                                        <input type="checkbox" name="date{$ii}[]"  value="{$i}" style="opacity: 0;" />
+                                                        <div class="iradio_square-green "></div>
+                                                    {/present}
+                                                </td>
+                                                {/for}
+                                                
+                                            </tr>
+                                            {/for}
+                                            
+                                        </tbody>
+                                    </table>
+                                    </div>
+                                    </div>
+                                    <div class="hr-line-dashed"></div>
+                                    <div class="form-group">
+                                        <div class="col-sm-4 col-sm-offset-3">
+                                            <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存信息</button>&nbsp;&nbsp;&nbsp;
+                                            <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                                        </div>
+                                    </div>                               
+                                </form>
+                            </div>
+                        </div>
+                    </div>              
+                </div>
+				</div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+    var config = {
+        '.chosen-select': {},                    
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+    $(document).on("click",".iradio_square-green",function(){
+        $(this).hasClass("checked") ? $(this).removeClass("checked"):$(this).addClass("checked");
+        $(this).prev().prop("checked")?$(this).prev().prop("checked",false):$(this).prev().prop("checked",true);
+
+    })
+</script>
+</body>
+</html>
+

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>首页</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/base.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/public/font/iconfont.css" />
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/index.css" />
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+</head>
+<body>
+    
+<div id="app">
+    <div style="background: #fff; padding-top: 0.15rem">
+        <div class="banner">
+            <div class="banner-bar">
+                <div class="bar-item" :class="{'active': index == bannerIndex}" v-for="(bar, index) in banners" :key="index"></div>
+            </div>
+            <mt-swipe :auto="4000" @change="changeBanner" :show-indicators="false" class="banner-list">
+                <mt-swipe-item v-for="item in banners" >
+                    <a :href=" item.app_url ">
+                    <img class="banner-item" :src="item.images ? item.images : '/static/mob/yang/imgs/index/default-thumb.png'"  />
+                    </a>
+                </mt-swipe-item>
+            </mt-swipe>
+        </div>
+        <div class="navlist">
+            <div class="nav-item">
+                <a href="/wapapp/yang/camera_lists">
+                    <span><i class="iconfont icon-shexiangtou"></i></span>
+                    <!--<img src="/static/mob/yang/imgs/index/icon_shexiang.png" alt="">-->
+                    <p>牧场监控</p>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/wapapp/index/index.html">
+                    <span><i class="iconfont icon-shangcheng"></i></span>
+                    <p>商城</p>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/wapapp/usercenter/systemmessage.html">
+                    <span><i class="iconfont icon-svgwrite"></i></span>
+                    <p>新闻</p>
+                </a>
+            </div>
+            <div class="nav-item">
+                <a href="/wapapp/yang/game">
+                    <span><i class="iconfont icon-youxi"></i></span>
+                    <p>牧场</p>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="list" id="is_show" style="display:none;">
+        <div class='list-title'>
+            <img src="/static/mob/yang/imgs/index/yugao.png" />
+            <!-- <span class="more" id="that_time" style="color: #666; margin-top: 0.02rem">
+                <em>00</em>天<em>00</em>&nbsp;<em>00</em>:<em>00</em>
+            </span> -->
+        </div>
+        <div class="what-item" id="ry_show">
+            <!-- <div class="item-box"> -->
+                <!-- <div class="thumb">
+                    <img src="/static/mob/yang/imgs/login/bg_dengllu2.jpg" alt="">
+                </div>
+                <div class="item-title"></div>
+                <div class="item-y">
+                    <span class="num"><em>0</em>天</span>期限
+                </div>
+                <div class="item-y">
+                    <span class="num text-danger"><em>0.00</em>元</span>认养价格
+                </div>
+                <div class="item-btn hold">待认购</div>
+            </div> -->
+        <!-- </div> -->
+    </div>
+</div>
+    <div class="list" v-cloak>
+        <div class='list-title'>
+            <img src="/static/mob/yang/imgs/index/renyang.png" / style="height: 0.52rem;">
+            <a class="more" href="/wapapp/yang/tender_list">查看更多</a>
+        </div>
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+            <div class="what-list">
+                <div class="what-item"
+                 v-for="(item, index) in list"
+                 :key="item.photo">
+                    <div class="item-box clearfix" @click="rengou(item.id)">
+                        <div class="thumb">
+                            <span>第{{item.id}}期</span>
+                            <img :src="item.photo ? item.photo : '/static/mob/yang/imgs/index/default-thumb.png'" alt="">
+                        </div>
+                        <!--<div class="item-x">-->
+                            <!--<span class="num" v-cloak>{{item.returns}}<span class="unit">%</span></span>-->
+                            <!--<p>周期回报率</p>-->
+                        <!--</div>-->
+                        <div class="item-title" v-cloak>
+                            {{item.title}}
+                        </div>
+                        <div class="item-y">
+                            <span class="num" v-cloak><em>{{item.cycle}}</em>天</span>期限
+                        </div>
+                        <div class="item-y">
+                            <span class="num text-danger" v-cloak><em>{{item.price}}</em>元</span>认养价格
+                        </div>
+                        <div v-cloak style="font-size:12px;text-align:right;"><em style="font-style: normal; color: #999;font-size:12px;">库存</em> {{item.num - item.receive_num }}</div>
+                        <div class="item-btn receive"  v-if="item.status==1">认购</div>
+                        <div class="item-btn " style="background: linear-gradient(to right, #bbb, #999);box-shadow: none;" v-else>已结束</div>
+                    </div>
+                </div>
+            </div>
+        </mt-loadmore>
+    </div>
+    <!--<div class="footer-bar">-->
+        <!--<div class="tab-item active">-->
+            <!--<i class="iconfont icon-shouye1"></i>-->
+            <!--首页-->
+        <!--</div>-->
+        <!--<div class="tab-item">-->
+            <!--首页-->
+        <!--</div>-->
+        <!--<div class="logo" @click="gotoGame"></div>-->
+        <!--<div class="tab-item my" @click="my">-->
+            <!--我的-->
+        <!--</div>-->
+    <!--</div>-->
+
+    <nav class="footer-bar mui-bar-tab">
+        <a href="/wapapp/yang/index.html" class="mui-tab-item mui-active">
+            <span class="iconfont icon-shouye1"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a href="/wapapp/index/index.html" class="mui-tab-item">
+            <span class="iconfont icon-shangcheng"></span>
+            <span class="mui-tab-label">商城</span>
+        </a>
+        <a href="/wapapp/yang/game.html" class="mui-tab-item youxi">
+            <img src="/static/mob/yang/imgs/index/img_xiabaidi.png">
+        </a>
+        <a href="/wapapp/cart/shopcar.html" class="mui-tab-item" style="position:relative">
+            <span class="iconfont icon-gouwuche"></span>
+            <span class="mui-tab-label">购物车</span>
+        </a>
+        <a href="/wapapp/usercenter/usercenter.html" class="mui-tab-item">
+            <span class="iconfont icon-wode1"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+</div>    
+    <script src="/static/wapapp/yang/js/jquery.3.1.1.js"></script>
+    <script src="/static/wapapp/yang/js/template.js"></script>
+    <script src="/static/wapapp/yang/js/common.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script type="text/template" id="list">
+        <div class="item-box" onclick="to_rg({{id}});" style="border-bottom: 1px solid #f1f1f1;">
+                
+        <div class="thumb">
+                <img src="{{photo}}" alt="">
+            </div>
+            <div class="item-title">{{title}}</div>
+            <div class='list-title' style="margin:0;padding:0;">
+                <span class="more that_time" style="color: #666; margin-top: 0.02rem" title="{{start_time}}">
+                    <em>00</em>天<em>00</em>&nbsp;<em>00</em>:<em>00</em>
+                </span>
+            </div>
+            <div class="item-y">
+                <span class="num"><em>{{cycle}}</em>天</span>期限
+            </div>
+            <div class="item-y">
+                <span class="num text-danger"><em>{{price}}</em>元</span>认养价格
+            </div>
+            <div class="item-btn hold">待认购</div>
+        </div>
+        </div>
+    </script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                list: [],
+                page: 1,
+                limit: 8,
+                allLoaded: false,
+                bannerIndex: 1,
+                banners: [
+                    '/static/mob/yang/imgs/index/banner1.jpg',
+                    '/static/mob/yang/imgs/index/banner2.jpg',
+                    '/static/mob/yang/imgs/index/banner3.jpg'
+                ],
+                show:false
+            },
+            created() {
+                var that = this
+                this.getTender().then(function(res) {
+                    //小羊认养
+                    that.list = res.data.data
+                    console.log(JSON.stringify(res));
+                    
+                });
+                this.get_banner().then(function(res) {
+                    //小羊认养
+                    that.banners = res.data[1];
+                    // console.log(that.banners)
+                    console.log(JSON.stringify(that.banners));
+                    
+                    
+                });
+            },
+            methods: {
+                changeBanner(index) {
+                    this.bannerIndex = index
+                },
+                loadBottom() {
+                    var that = this
+                    that.page += 1
+                    that.getTender().then(function(res) {
+                        that.list.concat(res.data.data)
+                        
+                        if(res.data.data.length < that.limit) {
+                            that.allLoaded = true;// 若数据已全部获取完毕
+                        }
+
+                        that.$refs.loadmore.onBottomLoaded();
+                    })
+                },
+                getTender() {
+                    let that = this
+                    that.$indicator.open('加载中...');
+                    return new Promise(function(resolve, reject) {
+                        axios({
+                            url: '/api/yangyang/tender',
+                            params: {
+                                page: that.page,
+                                num: that.limit
+                            }
+                        }).then(function(res) {
+                            that.$indicator.close();
+                            resolve(res)
+                            
+                        }).catch(function(err) {
+                            that.$indicator.close();
+                            console.log(err)
+                            reject(err)
+                        })
+                    })
+                },
+                get_banner() {
+                    let that = this
+                    that.$indicator.open('加载中...');
+                    return new Promise(function(resolve, reject) {
+                        axios({
+                            url: '/api/ad/wap_index'
+                           
+                        }).then(function(res) {
+                            that.$indicator.close();
+                            resolve(res)
+                            
+                        }).catch(function(err) {
+                            that.$indicator.close();
+                            console.log(err)
+                            reject(err)
+                        })
+                    })
+                },
+                
+                rengou(id) {
+                    window.location.href = `/wapapp/yang/tender_desc?id=${id}`
+                },
+                gotoGame() {
+                    window.location.href = '/wapapp/yang/game'
+                },
+                my() {
+                    window.location.href = '/wapapp/usercenter/usercenter.html'
+                }
+            },
+        });
+
+        // 获取认养预告
+        get_data();
+        function get_data(){
+           $get('/api/yangyang/yg_tender',{},function(data){
+                console.log(JSON.stringify(data));
+                if(data.status==1){
+                    $('#is_show').show();
+                    
+                    var obj=data.data;
+                    var list='';
+                    for(var i in obj){
+                        if(obj[i].photo==''){
+                            var photo="/static/mob/shop/images/default/touxiang.jpg";
+                        }else{
+                            var photo=obj[i].photo;
+                        }
+                           
+                        list+=template('list',obj[i]);
+                    }
+                    $('#ry_show').html(list);
+                    // $('#ry_show').html(' <div class="item-box"   onclick="to_rg('+data.data.id+');"><div class="thumb"  onclick="to_rg('+data.data.id+');"><img src="'+photo+'" alt=""></div><div class="item-title"  onclick="to_rg('+data.data.id+');">'+data.data.title+'</div><div class="item-y" onclick="to_rg('+data.data.id+');"><span class="num"><em>'+data.data.cycle+'</em>天</span>期限</div><div class="item-y"><span class="num text-danger"><em>'+data.data.price+'</em>元</span>认养价格</div><div class="item-btn hold"  onclick="to_rg('+data.data.id+');">待认购</div></div>');
+                    setInterval(function(){
+                        $('.that_time').each(function(){
+                        var t=$(this).attr('title');
+                        
+                        
+                        // 倒计时
+                       
+                            //获取当前时间  
+                            var date = new Date();  
+                            var now = date.getTime();  
+                            //设置截止时间  
+                            var str="2017/5/17 00:00:00";
+                            var endDate = new Date(str); 
+                            var end = t*1000;  
+                            //  console.log(now+"***"+end)
+                            
+                            //时间差  
+                            var leftTime = end-now; 
+                            //定义变量 d,h,m,s保存倒计时的时间  
+                            var d,h,m,s;  
+                            if (leftTime>=0) {  
+                                d = Math.floor(leftTime/1000/60/60/24)<10?'0'+Math.floor(leftTime/1000/60/60/24):Math.floor(leftTime/1000/60/60/24);  
+                                h = Math.floor(leftTime/1000/60/60%24)<10?'0'+Math.floor(leftTime/1000/60/60%24):Math.floor(leftTime/1000/60/60%24);  
+                                m = Math.floor(leftTime/1000/60%60)<10? '0'+Math.floor(leftTime/1000/60%60): Math.floor(leftTime/1000/60%60);  
+                                s = Math.floor(leftTime/1000%60)<10?'0'+Math.floor(leftTime/1000%60):Math.floor(leftTime/1000%60);                     
+                            }  
+                            
+                            
+                            $(this).html('<em>'+d+'</em>天<em>'+h+'</em>:<em>'+m+'</em>:<em>'+s+'</em>');
+
+
+                            if($(this).html()=='<em>00</em>天<em>00</em>:<em>00</em>:<em>00</em>'){
+                            get_data();
+                            }
+                        
+                    });
+                    },1000);
+               
+                    
+                 
+
+
+
+                }else{
+                    $('#is_show').hide();
+                }
+            }); 
+        }
+            
+         function to_rg(id){
+            window.location.href = '/wapapp/yang/tender_desc?id='+id+"&nostart=11";
+         }
+    </script>
+</body>
+</html>

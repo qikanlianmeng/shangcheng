@@ -1,0 +1,163 @@
+{include file="public/header" /}
+    <link rel="stylesheet" type="text/css" href="/static/mob/public/wallet/css/api.css"/>
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/mui.min.css">
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/mui.picker.min.css">
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/mui.poppicker.css">
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/swiper.min.css">
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/style.css"/>
+    <script src="/static/mob/public/wallet/js/jquery.3.1.1.js"></script>
+    <script src="/static/mob/public/wallet/js/mui.min.js"></script>
+    <script src="/static/mob/public/wallet/js/mui.picker.min.js"></script>
+    <script src="/static/mob/public/wallet/js/mui.poppicker.js"></script>
+    <script src="/static/mob/public/wallet/js/swiper.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="/static/mob/public/wallet/css/animate.css"/>
+    <style>
+
+      @font-face {font-family: "iconfont";
+        src: url('iconfont.eot?t=1540547042726'); /* IE9*/
+        src: url('iconfont.eot?t=1540547042726#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAPcAAsAAAAABiQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADMAAABCsP6z7U9TLzIAAAE8AAAARAAAAFY8y0hHY21hcAAAAYAAAABLAAABcOd9tqlnbHlmAAABzAAAADAAAAAwq99ugGhlYWQAAAH8AAAALwAAADYTEUnLaGhlYQAAAiwAAAAcAAAAJAfeA4NobXR4AAACSAAAAAgAAAAICAAAAGxvY2EAAAJQAAAABgAAAAYAGAAAbWF4cAAAAlgAAAAeAAAAIAENABhuYW1lAAACeAAAAUUAAAJtPlT+fXBvc3QAAAPAAAAAHAAAAC1idWUFeJxjYGRgYOBikGPQYWB0cfMJYeBgYGGAAJAMY05meiJQDMoDyrGAaQ4gZoOIAgCKIwNPAHicY2BkYWCcwMDKwMHUyXSGgYGhH0IzvmYwYuRgYGBiYGVmwAoC0lxTGByehT4LZW7438AQw9zA0AAUZgTJAQDqbQyNeJxjYGBgZWBgYAZiHSBmYWBgDGFgZAABP6AoI1icmYELLM7CoARWwwISfxb6/z+MBPJZwCQDIxvDKOABkzJQHjisIJiBEQD4xAq9AAABAAD/oAP2A2oACwAABREhNSERMxEhFSERAb3+cQGPqgGP/nFgAZKoAY/+caj+bnicY2BkYGAA4ksWfanx/DZfGbhZGEDg+k+mRwj6/wIWBuYsIJeDgQkkCgBAOwswAHicY2BkYGBu+N/AEMPCAAJAkpEBFTABAEcIAmsEAAAABAAAAAAAAAAAGAAAeJxjYGRgYGBi4GEA0SAWAwMXEDIw/AfzGQAJwwEmAAB4nGWPTU7DMBCFX/oHpBKqqGCH5AViASj9EatuWFRq911036ZOmyqJI8et1ANwHo7ACTgC3IA78EgnmzaWx9+8eWNPANzgBx6O3y33kT1cMjtyDRe4F65TfxBukF+Em2jjVbhF/U3YxzOmwm10YXmD17hi9oR3YQ8dfAjXcI1P4Tr1L+EG+Vu4iTv8CrfQ8erCPuZeV7iNRy/2x1YvnF6p5UHFockikzm/gple75KFrdLqnGtbxCZTg6BfSVOdaVvdU+zXQ+ciFVmTqgmrOkmMyq3Z6tAFG+fyUa8XiR6EJuVYY/62xgKOcQWFJQ6MMUIYZIjK6Og7VWb0r7FDwl57Vj3N53RbFNT/c4UBAvTPXFO6stJ5Ok+BPV8bUnV0K27LnpQ0kV7NSRKyQl7WtlRC6gE2ZVeOEXpc0Yk/KGdI/wAJWm7IAAAAeJxjYGKAAC4G7ICJkYmRmYE5MSWFgQEABvgBQg==') format('woff'),
+        url('iconfont.ttf?t=1540547042726') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+        url('iconfont.svg?t=1540547042726#iconfont') format('svg'); /* iOS 4.1- */
+      }
+
+      .iconfont {
+        font-family:"iconfont" !important;
+        font-size:16px;
+        font-style:normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .icon-add:before { content: "\e655"; }
+
+
+    </style>
+</head>
+<body>
+
+
+    <header id="header" class="mui-bar"  style="margin-left:0px;">
+        <div class="mb15"></div>
+        <a class="mui-icon mui-icon-back mui-pull-left back" onclick="back();"></a>
+        <h1 class="mui-title">绑定银行卡</h1>
+        <script>
+            function back(){
+                mui.back();
+            }
+        </script>
+    </header>
+      <!-- main -->
+      <div class="content_box">
+        <div class="mb10"></div>
+        <p style="margin-left:3%;">请绑定持卡人本人的卡</p>
+        <div class="mb15"></div>
+        <div class="c_add_card">
+              <div class="mui-input-row msg_input">
+                <label style="width:30%;">持卡人</label>
+                <input type="text" placeholder="请输入持卡人姓名" id="huming">
+             </div>
+              <div class="mui-input-row msg_input">
+                <label style="width:30%;">开户行</label>
+                <input type="text" placeholder="请输入开户行" id="yinhang">
+             </div>
+             <div class="mui-input-row msg_input" style="border-bottom:none;">
+                  <label style="width:30%;">卡号</label>
+                  <input type="number" placeholder="请输入卡号" id="kahao">
+             </div>
+             <div class="mui-input-row msg_input" style="border-bottom:none;">
+                    <label style="width:30%;">验证码</label>
+                    <input type="number" placeholder="请输入验证码" id="verify" style="width:150px;float:left!important;">
+                    <a class="code fr" style="line-height:40px;">获取验证码</a>
+             </div>
+        </div>
+        <div class="mb20"></div>
+        <div class="midu_btn cont ">
+            <button class="btn">立即绑定</button>
+        </div>
+        <div class="mb20"></div>
+        <input type="hidden" id="mobile">
+      </div>
+      <script type="text/javascript" src="/static/mob/public/wallet/js/api.js"></script>
+      <script src="/static/mob/public/wallet/js/index.js"></script>
+      <script src="/static/mob/public/wallet/js/ajaxfileupload.js"></script>
+      <script src="/static/mob/public/wallet/js/common.js"></script>
+
+      <script type="text/javascript">
+
+          $post('/api/user/userinfo',{},function(data){
+                console.log(JSON.stringify(data))
+                var obj=data.data;
+                if(data.code==1){
+                    if(obj.huming!=''||obj.huming.length==0){
+                    $('#huming').val(obj.huming);
+                }
+                if(obj.kahao!=''||obj.kahao.length==0){
+                    $('#kahao').val(obj.kahao);
+                }
+                if(obj.yinhang!=''||obj.yinhang.length==0){
+                    $('#yinhang').val(obj.yinhang);
+                }
+                $('#mobile').val(obj.mobile);
+              }else{
+                mui.toast(data.msg);
+              }
+             
+          });
+        var timer = null;
+    		// 获取验证码
+            $('.code').on('tap',function(){
+    				var param=$('#mobile').val();
+    				var time = 60;
+    				var that = this;
+    				if(param==''){
+    					mui.toast('手机号不能为空！');
+    				}else{
+    					clearInterval(timer);
+    					timer = setInterval(function() {
+    						if(time <= 0) {
+    							that.innerText = "发送验证码";
+    							$("#mybtn").css('pointer-events', 'auto');
+    						} else {
+    							$("#mybtn").css('pointer-events', 'none');
+    							that.innerText = "剩余" + (time) + "秒";
+    							time--;
+    						}
+    					}, 1000);
+    					$post('/api/user/send_verify',{id:1,param:param,type:'sms'},function(data){
+    						mui.toast(data.msg);
+    					});
+    				}
+    			});
+
+        $('.btn').on('tap',function(){
+              var huming=$('#huming').val();
+              var kahao=$('#kahao').val();
+              var verify=$('#verify').val();
+              var yinhang=$('#yinhang').val();
+              if(huming==''){
+                mui.toast('持卡人不能为空');
+              }else if (yinhang=='') {
+                mui.toast('开户行不能为空');
+              }else if (kahao=='') {
+                mui.toast('卡号不能为空');
+              }else if(verify==''){
+                mui.toast('验证码不能为空');
+              }else{
+                $get('/api/user/yhk',{huming:huming,yinhang:yinhang,kahao:kahao,verify:verify},function(data){
+
+                  if(data.code==1){
+                  mui.alert('绑定成功','提示',function(){
+                      // api.closeWin();
+                  });
+
+                }else{
+                  mui.toast(data.msg);
+                }
+                });
+              }
+            });
+      </script>
+
+</body>
+</html>

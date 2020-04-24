@@ -1,0 +1,187 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/yang/css/index.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/style.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/mui.poppicker.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/mui.picker.min.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/api.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/icon.css">
+
+<script src="/static/wapapp/public/wallet/js/jquery.3.1.1.js"></script>
+<script src="/static/wapapp/public/wallet/js/mui.min.js"></script>
+<script src="/static/wapapp/public/wallet/js/mui.picker.min.js"></script>
+<script src="/static/wapapp/public/wallet/js/swiper.min.js"></script>
+<link rel="stylesheet" href="/static/wapapp/yang/mescroll/mescroll.min.css">
+<script src="/static/wapapp/yang/mescroll//mescroll.min.js" charset="utf-8"></script>
+<script src="/static/wapapp/public/wallet/js/mui.poppicker.js"></script>
+<style>
+    .c_wallet_detail a {
+        width: 33%!important;
+    }
+    
+    .c_withdraw_cash a {
+        margin: 0 10px;
+        border: 1px solid #fff;
+        border-radius: 20px;
+        padding: 3px 15px;
+        text-decoration: none;
+    }
+    
+    .text-16 {
+        font-weight: 600;
+    }
+    
+    .c_wallet_balance {
+        background-image: url('__IMG__/bg.jpg');
+    }
+    
+    .mescroll {
+        position: absolute;
+        top: 230px;
+        bottom: 0;
+        height: auto;
+    }
+</style>
+</head>
+
+<body style="background: #f4f4f4;">
+    <!--头部导航-->
+
+    <header class="mui-bar" style="left:0px;margin-left:0px;">
+        <a class="mui-icon mui-icon-back mui-pull-left" onclick="back();"></a>
+        <h1 class="mui-title">我的积分</h1>
+    </header>
+    <script>
+        function back() {
+            mui.back();
+        }
+    </script>
+    <!--主体部分-->
+    <div class="content_box mui-content">
+        <div class="c_wallet_balance" style="height: 145px;">
+            <p class="c_banlance_title">积分总计</p>
+            <p class="c_banlance money" id="money">0.00</p>
+            <!-- <p class="c_withdraw_cash"><a id="withdraw" href="{:url('usercenter/recharge')}">去提现</a></p> -->
+        </div>
+        <!-- <div class="mb15"></div> -->
+        <!-- <div class="c_wallet_detail">
+            <a class="" href="javascript:;">
+                <p class="text-14">累计积分</p>
+                <p class="text-16" id="moneyall">￥0.00</p>
+            </a>
+            <a href="javascript:;">
+                <p class="text-14">待审核金额</p>
+                <p class="text-16" id="moneying">￥0.00</p>
+            </a>
+            <a href="javascript:;">
+                <p class="text-14">已提现</p>
+                <p class="text-16" id="moneyed">￥0.00</p>
+            </a>
+        </div> -->
+        <!-- <div class="yuan_box">
+            <ul class="mui-table-view  text-16 color-333 unset_b radius_up">
+                <li class="mui-table-view-cell">
+                    <a class="islogin" need-login="1">
+
+                        <i class="uc_icon icon-tuiguang color-lv font-22" style="margin-right: 10px;"></i>
+                        <span style="font-weight: normal;">推广员</span>
+                    </a>
+                </li>
+            </ul>
+            <ul class="mui-table-view list-row text-15 color-666 clearfix unset_a radius_down">
+                <li class="" style="padding: 15px 20px;">
+                    <div class="mui-media-body">
+                        <a class="mui-navigate-right islogin" href="{:url('usercenter/commission_list')}" need-login="1" style="width: 96%;">
+                            <span> 分销积分</span>
+                            <p class="fr color-red">￥0.00</p>
+                        </a>
+                    </div>
+                </li>
+            </ul>
+        </div> -->
+        <div class="title_p">
+            <p class="">
+                <a href="{:url('usercenter/recharge_list')}" style="width: 100%;">
+                    <span>积分明细</span>
+                    <!-- <span class="fr mui-navigate-right">提现记录</span> -->
+                </a>
+            </p>
+        </div>
+        <div class="record_box mescroll" id="mescroll">
+            <ul id="dataList">
+            </ul>
+        </div>
+    </div>
+</body>
+{include file="public/footer" /}
+<script src="/static/wapapp/public/wallet/js/index.js"></script>
+<script src="/static/wapapp/public/wallet/js/common.js"></script>
+<script type="text/javascript">
+    //个人信息
+    $post('/api2/user/getuserinfo', {}, function(data) {
+        var obj = data.data;
+        if (data.code == 1) {
+            $('#money').html(obj.integral);
+        }
+    });
+    $(function() {
+
+        var mescroll = new MeScroll('mescroll', {
+            up: {
+                callback: upcallback,
+                isBounce: false,
+                noMoreSize: 5,
+                empty: {
+                    icon: "/static/wapapp/yang/imgs/index/web.png", //图标,默认null
+                    tip: "暂无相关数据~"
+                },
+                clearEmptyId: "dataList",
+                lazyload: {
+                    use: true
+                }
+            }
+        });
+
+        function upcallback(page) {
+            getListDataFromNet(page.num, function(cur) {
+
+                console.log(page.num + "~~~~~" + cur.length);
+                mescroll.endSuccess(cur.length);
+                if (cur.length < page.size) {
+                    $('.upwarp-nodata').html('全部加载完成');
+                }
+                setListData(cur);
+            }, function() {
+                //联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+                mescroll.endErr();
+            });
+        }
+
+
+        function getListDataFromNet(pageNum, successCallback) {
+            setTimeout(() => {
+                $post('/api2/user/integral', {
+                    page: pageNum
+                }, function(data) {
+                    var cur = data.list;
+                    successCallback(cur);
+
+                });
+            }, 500);
+
+        }
+
+
+        function setListData(obj) {
+            var integrallog = '';
+            for (var i in obj) {
+                obj[i].create_time = timetrans_4(obj[i].create_time);
+                obj[i].num = obj[i].num > 0 ? '+' + obj[i].num : obj[i].num;
+                integrallog += '<li><p><span>' + obj[i].remark + '</span><span class="fr price" style="font-weight:600;">' + obj[i].num + '</span></p><p><span>' + obj[i].create_time + '</span></p></li>';
+            }
+            $('.record_box ul').append(integrallog);
+        }
+
+    });
+</script>
+
+</html>

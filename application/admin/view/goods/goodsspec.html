@@ -1,0 +1,132 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>商品规格</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">   
+                <div  class="col-sm-2" style="width: 100px">
+                    <div class="input-group" >  
+                        <a href="{:url('addGoodsSpec', ['type_id' => $type_id])}"><button class="btn btn-outline btn-primary" type="button">添加规格</button></a>
+                    </div>
+                </div>
+                    <div class="col-sm-2" style="float:right">
+                        <select class="form-control" id="changeType">
+                            <option {if condition="$type_id == 0"}selected="selected"{/if}>全部类型</option>
+                            {volist name='typeList' id='v'}
+                            <option value="{$v.id}" {if condition="$type_id == $v->id"}selected="selected"{/if}>{$v.name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th>ID</th>
+                                <th>规格名称</th>
+                                <th>所属类型</th>
+                                <th>规格项</th>
+                                <th>排序</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        {if $list->isEmpty()}
+                        <tr class="long-td">
+                            <td colspan="7" style="text-align:center">该商品类型下暂无商品规格</td>
+                        </tr>
+                        {/if}
+                        {volist name='list' id='v'}
+                        <tr class="long-td">
+                            <td>{$v.id}</td>
+                            <td>{$v.name}</td>
+                            <td>{$v.goodsType.name}</td>
+                            <td>
+                                {php}
+                                    $item = '';
+                                    foreach ($v->goodsSpecItem()->order('id asc')->select() as $v1) {
+                                        $item .= "$v1->item|";
+                                    }
+                                    $item = rtrim($item, '|');
+                                {/php}
+                                {$item}
+                                </td>
+                            <td><input class="form-control sort" style="width:50px;margin:0 auto" value="{$v.order}" row_id="{$v.id}"/></td>
+                            <td>
+                                <a href="{:url('editGoodsSpec', ['type_id'=>$type_id, 'id' => $v['id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del({$v.id})" class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+//删除
+function del(id){
+    var url = '{:url("delGoodsSpec")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+
+$("#changeType").change(function(){
+    var id = $(this).val();
+    window.location.href = "{:url('goodsSpec')}?type_id="+id;
+})
+
+$(".sort").change(function(){
+    var id = $(this).attr('row_id');
+    var sort = $(this).val();
+    var model = 'goodsSpec';
+    var url = '{:url("changeSort")}';
+    if (sort > 255) {sort = 255};
+    if (sort < 0) {sort = 0};
+    $.getJSON(url, {'id' : id, 'sort' : sort, 'model' : model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+})
+</script>
+</body>
+</html>

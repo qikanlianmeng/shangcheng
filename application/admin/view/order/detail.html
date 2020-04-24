@@ -1,0 +1,332 @@
+{include file="public/header" /}
+<style>
+    .ncap-order-details{
+        overflow: hidden;
+    }
+    .ncap-order-details .tabs-panels dt {
+        color: #999;
+        width: 100px;
+        text-align: right;
+    }
+    .ncap-order-details .tabs-panels dd {
+        color: #333;
+        min-width: 150px;
+    }
+    .ncap-order-details .tabs-panels dt, .ncap-order-details .tabs-panels dd {
+        font-size: 12px;
+        line-height: 20px;
+        vertical-align: top;
+        display: inline-block;
+    }
+    .long-tr td{
+        text-align: center;
+    }
+    .input-group button{
+        margin-right: 20px;
+    }
+    .table>tbody>tr>td{
+        border-right: none;
+        border-left: none;
+    }
+    .table>thead:first-child>tr:first-child>th{
+        border-right: none;
+        border-left: none;
+    }
+    dl {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>订单详情</h5>
+        </div>
+        <div class="ibox-content">
+            <!-- 搜索框开始 -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div  class="col-sm-12">
+                        <div class="input-group" >
+                            <!--<a href=""><button class="btn btn-outline btn-primary" type="button">打印订单</button></a>-->
+                            <!--{if $orderInfo->order_status < 2}
+                            <a href="{:url('editOrder',['id' => $orderInfo->order_id])}"><button class="btn btn-outline btn-primary" type="button">修改订单</button></a>
+                            {/if}-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 搜索框结束 -->
+            <form class="form-horizontal" name="edit_cate" id="edit_cate" method="post" action="">
+            <input type="hidden" name="id" value="">
+                <div class="hr-line-dashed"></div>
+                <div class="ncap-order-details">
+                    <h4>基本信息</h4>
+                    <div class="tabs-panels">
+                        <dl>
+                            <dt>订单ID：</dt>
+                            <dd>{$orderInfo->order_id}</dd>
+                            <dt>订单号：</dt>
+                            <dd>{$orderInfo->order_sn}</dd>
+                            <dt>会员ID：</dt>
+                            <dd>{$orderInfo->user_id}</dd>
+                        </dl>
+                        <dl>
+                            <dt>E-mail：</dt>
+                            <dd>{$orderInfo->email|default='NaN'}</dd>
+                            <dt>电话：</dt>
+                            <dd>{$orderInfo->mobile|default='NaN'}</dd>
+                            <dt>应付金额：</dt>
+                            <dd>{$orderInfo->order_amount|default='NaN'}</dd>
+                        </dl>
+                        <dl>
+                            <dt>订单状态：</dt>
+                            <dd>{$ORDER_STATUS[$orderInfo->order_status]}/{$PAY_STATUS[$orderInfo->pay_status]}/{$SHIPPING_STATUS[$orderInfo->shipping_status]}</dd>
+                            <dt>下单时间：</dt>
+                            <dd>{:date('Y-m-d H:i:s', $orderInfo->add_time)}</dd>
+                            <dt>支付时间：</dt>
+                            <dd>{if $orderInfo->pay_time}{:date('Y-m-d H:i:s', $orderInfo->pay_time)}{else/}NaN{/if}</dd>
+                        </dl>
+                        <dl>
+                            <dt>支付方式：</dt>
+                            <dd>{$orderInfo->pay_name|default='NaN'}</dd>
+                            <dt>发票抬头：</dt>
+                            <dd>{$orderInfo->invoice_title|default='NaN'}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="ncap-order-details">
+                    <h4>收货信息</h4>
+                    <div class="tabs-panels">
+                        <dl>
+                            <dt>收货人：</dt>
+                            <dd>{$orderInfo->consignee|default='NaN'}</dd>
+                            <dt>联系方式：</dt>
+                            <dd>{$orderInfo->mobile|default='NaN'}</dd>
+                        </dl>
+                        <dl>
+                            <dt>收货地址：</dt>
+                            <dd>{$orderInfo->addr|default='NaN'}</dd>
+                        </dl>
+                        <dl>
+                            <dt>邮编：</dt>
+                            <dd>{$orderInfo->zipcode|default='NaN'}</dd>
+                        </dl>
+                        <dl>
+                            <dt>配送方式：</dt>
+                            <dd>{$orderInfo->shipping_name|default='NaN'}</dd>
+                        </dl>
+                        <dl>
+                            <dt>发货单号：</dt>
+                            <dd>{$orderInfo->invoice_no|default='NaN'}</dd>
+                        </dl>
+                        <dl>
+                            <dt>留言：</dt>
+                            <dd>{$orderInfo->user_note|default='NaN'}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="ncap-order-details">
+                    <h4>商品信息</h4>
+                    <div class="tabs-panels">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="long-tr">
+                                    <th>商品编号</th>
+                                    <th></th>
+                                    <th>商品</th>
+                                    <th>规格属性</th>
+                                    <th>数量</th>
+                                    <th>单品价格</th>
+                                    <th>会员折扣价</th>
+                                    <th>单品小计</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {foreach name="goodsList" item="vo"}
+                                <tr class="long-tr">
+                                    <td>{$vo.goods_sn}</td>
+                                    <td><img width="80px" height="80px;" src="{$vo.img}" alt="{$vo.goods_name}"></td>
+                                    <td>{$vo.goods_name}</td>
+                                    <td>{$vo.spec_key_name}</td>
+                                    <td>{$vo.goods_num}</td>
+                                    <td>{$vo.goods_price}</td>
+                                    <td>{$vo.member_goods_price}</td>
+                                    <td>{$vo.member_goods_price * $vo.goods_num}</td>
+                                </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="float:right;margin-bottom:0;">商品总额：￥{$orderInfo->goods_price}</p>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="ncap-order-details">
+                    <h4>费用信息 <!--<a href="{:url('editPrice',['id' => $orderInfo->order_id])}"><span style="color:green;font-size: small">修改费用</span></a>--></h4>
+                    <div class="tabs-panels">
+                        <dl>
+                            <dt>小计：</dt>
+                            <dd>{$orderInfo->goods_price}</dd>
+                            <dt>物流费用：</dt>
+                            <dd>+{$orderInfo->shipping_price}</dd>
+                            <!--<dt>羊币（-{$orderInfo->integral}）：</dt>
+                            <dd>-{$orderInfo->integral_money}</dd>-->
+                        </dl>
+                        <!--<dl>
+                            <dt>余额抵扣：</dt>
+                            <dd>-{$orderInfo->user_money}</dd>
+                            <dt>优惠卷抵扣：</dt>
+                            <dd>-{$orderInfo->coupon_price}</dd>
+                            <dt>价格调整：</dt>
+                            <dd>
+                                {if $orderInfo->discount > 0}
+                                加{$orderInfo->discount}
+                                {elseif $orderInfo->discount < 0/}
+                                减{:abs($orderInfo->discount)}
+                                {else/}
+                                无
+                                {/if}
+                            </dd>
+                        </dl>-->
+                        <dl>
+                            <dt>应付：</dt>
+                            <dd style="color:red">{$orderInfo->order_amount}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <h4>操作信息</h4>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">操作备注：</label>
+                    <div class="input-group col-sm-4">
+                        <textarea id="note" type="text" class="form-control" name="orderby" value="" placeholder="请输入操作备注"></textarea>
+                    </div>
+                    <label class="col-sm-3 control-label" style="margin-top:20px;">可执行操作：</label>
+                    <div class="input-group col-sm-4" style="margin-top:20px;">
+                        {foreach name="orderManagerBtn" item="vo"}
+                        {if $key == 'delivery'}
+                        <a href="{:url('delivery', ['id' => $orderInfo->order_id])}" btnKey = "{$key}"><button class="btn btn-outline btn-primary" type="button">{$vo}</button></a>
+                        {else/}
+                        <a href="javascript:;" btnKey = "{$key}" class="manage"><button class="btn btn-outline btn-primary" type="button">{$vo}</button></a>
+                        {/if}
+                        {/foreach}
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="ncap-order-details">
+                    <h4>操作记录</h4>
+                    <div class="tabs-panels">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="long-tr">
+                                    <!--<th>操作者</th>-->
+                                    <th>操作时间</th>
+                                    <th>订单状态</th>
+                                    <th>付款状态</th>
+                                    <th>发货状态</th>
+                                    <th>描述</th>
+                                    <th>备注</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {foreach name="orderAction" item="vo"}
+                                <tr class="long-tr">
+                                    <!--<td></td>-->
+                                    <td>{:date('Y-m-d H:i:s', $vo['log_time'])}</td>
+                                    <td>{$ORDER_STATUS[$vo.order_status]}</td>
+                                    <td>{$PAY_STATUS[$vo.pay_status]}</td>
+                                    <td>{$SHIPPING_STATUS[$vo.shipping_status]}</td>
+                                    <td>{$vo.status_desc}</td>
+                                    <td>{$vo.action_note}</td>
+                                </tr>
+                            {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+{include file="public/footer" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+
+//删除
+function del(id){
+    var url = '{:url("delOrder")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+function treeClicked(obj,cat_id,parent_id_path){
+
+    var src = $(obj).attr('src');
+    if(src == '/static/admin/images/tv-expandable.gif')
+    {
+        $(".parent_id_"+cat_id).show();
+        $(obj).attr('src','/static/admin/images/tv-collapsable-last.gif');
+    }else{
+        $("tr[parent_id_path^='"+parent_id_path+"_']").hide().find('img').attr('src','/static/admin/images/tv-expandable.gif');
+        $(obj).attr('src','/static/admin/images/tv-expandable.gif');
+
+    }
+}
+//管理员操作订单
+$('.manage').click(function(){
+    var id = "{$orderInfo->order_id}";
+    var btn_key = $(this).attr('btnKey');
+    var btn_value = $(this).find('button').html();
+    var url = "{:url('manageOrder')}";
+    var note = $("#note").val();
+    layer.confirm('确认对该订单进行【'+btn_value+'】操作吗?', {icon: 3, title:'提示'}, function(index){
+        $.post(url, {'id' : id, 'btn_key':btn_key, 'note':note}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        },'json');
+        layer.close(index);
+    })
+})
+
+//IOS开关样式配置
+var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+var config = {
+    '.chosen-select': {},
+}
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+$("#start").datetimepicker({onChangeDateTime:'logic',
+    onShow:'logic',lang:'ch'});
+$("#end").datetimepicker({onChangeDateTime:'logic',
+    onShow:'logic',lang:'ch'});
+
+</script>
+</body>
+</html>

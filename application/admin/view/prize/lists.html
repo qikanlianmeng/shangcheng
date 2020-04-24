@@ -1,0 +1,96 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>抽奖活动列表</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">   
+                <div  class="col-sm-2" style="width: 100px">
+                    <div class="input-group" >  
+                        <a href="{:url('add')}"><button class="btn btn-outline btn-primary" type="button">添加活动</button></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th>ID</th>
+                                <th>活动名称</th>
+                                <th>价格</th>
+                                <th>开始时间</th>
+                                <th>结束时间</th>
+                                <th>奖池金额</th>
+                                <th>已送奖品总额</th>
+                                <th>抽奖次数</th>
+                                <th width="20%">操作</th>
+                            </tr>
+                        </thead>
+                        {volist name='list' id='v'}
+                        <tr class="long-td">
+                            <td>{$v.id}</td>
+                            <td>{$v.title}</td>
+                            <td>{$v.price}</td>
+                            <td>{$v.start_time|date='Y-m-d',###}</td>
+                            <td>{$v.end_time|date='Y-m-d',###}</td>
+                            <td>{$v.jc_price}</td>
+                            <td>{$v.xf_price}</td>
+                            <td>{$v.total|default=0}</td>
+                            <td>
+                                <a href="{:url('goods', ['pid' => $v['id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i> 奖品列表</a>&nbsp;&nbsp;
+                                <a href="{:url('zj', ['pid' => $v['id']])}"  class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 中奖名单</a><br/>
+                                <a href="{:url('edit', ['id' => $v['id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del({$v.id})" class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+//删除
+function del(id){
+    var url = '{:url("del")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+</script>
+</body>
+</html>

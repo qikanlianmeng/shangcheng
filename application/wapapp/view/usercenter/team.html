@@ -1,0 +1,274 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/yang/css/style.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/yang/css/icon.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/yang/mescroll/mescroll.min.css">
+<!-- <script src="/static/wapapp/public/js/mui.min.js"></script> -->
+<script src="/static/wapapp/public/libs/mui.min.js" charset="utf-8"></script>
+<style>
+    .look_ranch {
+        height: auto;
+        margin: 0 auto;
+    }
+    
+    .mescroll {
+        position: fixed;
+        top: 132px;
+        left: 0;
+        bottom: 0;
+        width: 100%;
+        height: auto;
+        z-index: 55;
+    }
+    
+    #visit_d {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        color: cornflowerblue;
+        z-index: 9999;
+    }
+    
+    .c_tiyan {
+        background: #e7fee7;
+        padding: 2px 6px;
+        border-radius: 5px;
+        color: #0dc10b;
+    }
+    
+    .c_daili {
+        background: #fffae5;
+        padding: 2px 6px;
+        border-radius: 5px;
+        color: #e6b800;
+    }
+    
+    .c_putong {
+        background: #f0f0f5;
+        padding: 2px 6px;
+        border-radius: 5px;
+        color: #a3a3c2;
+    }
+    
+    #team_body {
+        background: url('__IMG__/team_2.png') no-repeat;
+        background-size: 100% auto;
+    }
+</style>
+</head>
+
+<body id="team_body">
+    <header id="header" class="mui-bar mui-bar-nav" style="border-bottom:none!important;margin: 0 auto;">
+        <h1 class="mui-title">我的团队</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="">
+        <div class="mb15"></div>
+        <div class="mb15"></div>
+        <div class="mb15"></div>
+        <div class="mb15"></div>
+        <!-- <div class="team_tab">
+            <div class="team_tab_cont">
+                <span class="active">一级好友</span><span>二级好友</span>
+            </div>
+        </div> -->
+        <div class="mb15"></div>
+        <div class="team_cont team_list">
+            <div id="mescroll" class="mescroll">
+                <ul id="dataList" class="data-list">
+
+                </ul>
+            </div>
+        </div>
+        <div id="team_two" style="display: none;">
+            <div>
+                <ul>
+
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <!-- <div class="team_box">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell to_team_list">
+                <a class="mui-navigate-right" href="javascript:;">
+                        一级好友（
+                        <span class="z1"></span>
+
+                        ）
+                    </a>
+            </li>
+            <li class="mui-table-view-cell to_team_list">
+                <a class="mui-navigate-right" href="javascript:;">
+                        二级好友（
+                        <span class="z2"></span>
+
+                        ）</a>
+            </li>
+        </ul>
+    </div> -->
+    </div>
+
+
+
+
+
+    <script src="/static/wapapp/yang/js/jquery.3.1.1.js"></script>
+    <script src="/static/wapapp/yang/js/template.js"></script>
+    <script src="/static/wapapp/yang/mescroll/mescroll.min.js"></script>
+    <script src="/static/wapapp/yang/js/common.js"></script>
+    <script type="text/template" id="list">
+        <li style="position:relative;height:100px;">
+            <div class="flex" style="width:100%;">
+                <span>
+            <img src="{{head_img}}" alt="">
+            </span>
+                <span class=" mui-ellipsis-2">
+            <p><b style="color:#333;"> {{name_show}}</b></p>
+            <p><span class="{{c_c}}">{{rank_name}}</span></p>
+
+                </span>
+                <span style="margin-top:18px;">
+            <p>{{create_time}}</p> 
+            </span>
+            </div>
+
+            <p class="dis_none" data-id='{{id}}' id="visit_d" onclick="window.location.href = '/wapapp/usercenter/team/i/{{id}}/a/{{account}}'">查看用户</p>
+        </li>
+    </script>
+
+    <script>
+        var re_uid = "{:input('i')}";
+        var acc = "{:input('a')}";
+        if (re_uid && acc) {
+            $('.mui-title').html(acc + '的团队');
+            $('.dis_none').each(function() {
+                console.log($(this));
+                $(this).hide();
+            });
+        }
+        $(function() {
+            //创建MeScroll对象,内部已默认开启下拉刷新,自动执行up.callback,刷新列表数据;
+            var mescroll = new MeScroll("mescroll", {
+
+                up: {
+                    callback: getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+                    isBounce: false,
+                    noMoreSize: 6,
+                    empty: {
+                        icon: "/static/wapapp/yang/imgs/index/web.png", //图标,默认null
+                        tip: "暂无相关数据~"
+                    },
+                    clearEmptyId: "dataList", //相当于同时设置了clearId和empty.warpId; 简化写法;默认null; 注意vue中不能配置此项
+
+                    lazyLoad: {
+                        use: true // 是否开启懒加载,默认false
+                    }
+                }
+
+            });
+            var pdType = '/api2/user/recommend_list';
+
+            // $('.team_tab_cont span').on('click',function(){
+            //     $(this).addClass('active').siblings().removeClass('active');
+            //     if($(this).index()==0){
+            //         pdType='/api/user/refer_user1';
+
+            //     }else{
+            //         pdType='/api/user/refer_user2';
+            //     }
+            //     //重置列表数据
+            //     mescroll.resetUpScroll();
+            // });
+
+
+
+            /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
+            function getListData(page) {
+                getListDataFromNet(pdType, page.num, function(curPageData) {
+
+                    mescroll.endSuccess(curPageData.length);
+
+                    //设置列表数据
+                    setListData(curPageData);
+                }, function() {
+                    //联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+                    mescroll.endErr();
+                });
+
+            }
+
+            function setListData(curPageData) {
+
+                var data_list = '';
+                for (var i in curPageData) {
+                    var n = curPageData[i].rank_name;
+                    var name = curPageData[i].nickname;
+                    var mobile = curPageData[i].mobile;
+                    curPageData[i].name_show = !name ? mobile : name;
+                    curPageData[i].c_c = n == "代理会员" ? 'c_daili' : n == "体验中心" ? 'c_tiyan' : 'c_putong';
+                    curPageData[i].create_time = timetrans_4(curPageData[i].create_time);
+                    if (curPageData[i].head_img == null || curPageData[i].head_img == '') {
+                        curPageData[i].head_img = '/static/wapapp/shop/images/default/touxiang.bk.jpg';
+                    } else {
+                        curPageData[i].head_img = curPageData[i].head_img;
+                    }
+                    data_list += template('list', curPageData[i]);
+                    // data_list += tcurPageData[i];
+                }
+
+                $('#dataList').append(data_list);
+                if (re_uid && acc) {
+                    $('.dis_none').each(function() {
+                        $(this).hide();
+                    });
+                }
+            }
+            //获取数据
+            function getListDataFromNet(pdType, pageNum, successCallback, errorCallback) {
+                setTimeout(function() {
+                    $get(pdType, {
+                        page: pageNum,
+                        re_uid: re_uid
+                    }, function(data) {
+
+
+                        var curPageData = data.list;
+                        var listData = [];
+
+                        if(data.status==1){
+                            //全部商品 (模拟分页数据)
+                        for (var i in curPageData) {
+                            if (i == curPageData.length) break;
+                            listData.push(curPageData[i]);
+                        }
+                        successCallback(listData);
+                        }else{
+                            errorCallback();
+                        }
+                       
+                    });
+                }, 500);
+
+            }
+
+            $('body').on('tap', '.visit', function(e) {
+                e.stopImmediatePropagation();
+                e.preventDefault();
+                var id = $(this).attr('data-id');
+                window.location.href = '/wapapp/usercenter/team/i/' + id;
+            });
+
+        });
+    </script>
+</body>
+
+</html>

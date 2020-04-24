@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>认养记录</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/mob/yang/css/base.css" />
+    <script src="/static/mob/public/libs/mui.min.js" charset="utf-8"></script>
+    <link href="/static/mob/public/css/mui.min.css" rel="stylesheet">
+
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="/static/mob/public/font/iconfont.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/mob/yang/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/static/mob/yang/mescroll/mescroll.min.css">
+<script src="/static/mob/public/libs/mui.min.js" charset="utf-8"></script>
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+    <style>
+    .num_con{
+        text-align:right;height: 30px;margin-right: 2%;font-size: 15px;
+    }
+    .mui-input-row{
+        margin-top: 1%;
+        padding: 0px 2px
+    }
+    .con_table{
+        width: 100%;
+        padding: 0 2.5%;
+        margin-top: 6%;
+    }
+    .con_table ul{
+        width: 100%;
+        padding: 0px;
+        margin: 0px;
+        display: inline-block;
+    }
+    .con_table ul>li{
+        padding: 0px;
+        margin: 0px;
+        width: 100%;
+        display: inline-block;
+        border: 1px solid #000000;
+        height: 40px;
+        float: left;
+    }
+    .con_table ul>li:nth-child(2){
+        border-top: none;
+    }
+    .con_table ul>li:nth-child(2)>span>input{
+        border: none;
+        height: 35px;
+
+    }
+    .con_table ul>li>span{
+        text-align: center;
+        float: left;
+        height: 100%;
+        font-size: 14px;
+        line-height: 35px;
+        overflow: hidden;
+    }
+    .con_table ul>li>span:nth-child(1){
+        width:30%;
+        border-right: 1px solid #000000;
+    }
+    .con_table ul>li>span:nth-child(2){
+        width:40%;
+        border-right: 1px solid #000000;
+    }
+    .con_table ul>li>span:nth-child(3){
+        width:30%;
+
+    }
+    .con_detial{
+        width: 100%;
+        padding: 0px 2.5%;
+    }
+    .con_detial span{
+        font-size: 20px;
+        width: 100%;
+        text-align: left;
+        color: #000000;
+        height: 40px;
+        line-height: 40px;
+    }
+    .con_detial p{
+        font-size: 20px;
+        width: 100%;
+        text-align: left;
+        padding: 0px;
+        color: #000000;
+        font-size: 16px;
+        line-height: 31px;
+        
+    }
+
+    .con_zhang{
+        position:absolute;top:0%;left:17%;width: 38%;
+    }
+    .con_header{
+        width: 100%;
+        padding: 0px 2.5%;
+    }
+    .con_header ul{
+        width: 100%;
+    }
+    .con_header ul>li{
+        width: 100%;
+        padding: 2% 2%;
+    }
+    #order{
+        border: none;
+        display: inline-block;
+        width: 20%;height: 100%;
+        background: transparent;
+        border-bottom: 1px solid #000000;
+        padding: 0px;
+        margin: 0px;
+        border-radius: 0px;
+        color:#000000;
+        text-align:center;
+    }
+    .con_table ul>li:nth-child(2)>span>p{
+        color: #000000;
+    }
+    </style>
+</head>
+<body style="max-width:640px;margin:0 auto;background: #ffffff;">
+<div>
+<header class="mui-bar mui-bar-nav" id="header">
+    <a class=" mui-icon mui-icon-left-nav " style="font-size: 18px;color:#666;" onclick="back();"></a>
+    <h1 class="mui-title">认养合同</h1>
+</header>
+    <script>
+        function back(){
+            mui.back();
+        }
+    </script>
+    <div class="mui-contents" style="margin-top:57px;background: #ffffff;position: relative;">
+       
+        <div class="num_con">
+            合同编号：<p  id="order">{$data.bianhao}</p>
+            <!-- <input type="text" style="border: none;width: 20%;height: 100%;background: transparent;border-bottom: 1px solid #000000;padding: 0px;margin: 0px;border-radius: 0px;" value="{$data.bianhao}"> -->
+        </div>
+        <div style="margin-top: 5%;">
+            <div class="con_header">
+                    <ul>
+                        <li>
+                            <span>甲方：</span>
+                            <span id="jiafang">新疆顺天德业农牧业科技有限公司</span>
+                        </li>
+                        <li>
+                            <span>乙方(奔跑吧小羊平台用户名):</span>
+                            <span id="yifang">{$data.username}</span>
+                        </li>
+                        <li>
+                                <span>注册手机号：</span>
+                                <span id="phone">{$data.phone}</span>
+                        </li>
+                    </ul>
+            </div>
+            <img src="/static/mob/shop/images/icon_01.png" alt="" srcset="" class="con_zhang">
+            <div class="con_table">
+                <ul>
+                    <li>
+                        <span>订单编号</span>
+                        <span>认购生态羊数量（只）</span>
+                        <span>投资本金金额（元）</span>
+                    </li>
+                    <li>
+                        <span>
+                            <p id="order_id">{$data.order_id}</p>
+                            <!-- <input type="text" value="{$data.order_id}"> -->
+                        </span>
+                        <span>
+                                <p>{$data.order_num}</p>
+                            <!-- <input type="text" value="{$data.order_num}"> -->
+                        </span>
+                        <span>
+                                <p>{$data.order_price}</p>
+                            <!-- <input type="text" value="{$data.order_price}"> -->
+                        </span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="con_detial">
+                <p>鉴于：</p>
+                <p>1、甲方是一家从事生态羊养殖，集饲料生产，销售及畜禽养殖、加工、销售为一体的现代高科技企业。即是互联网平台“奔跑吧小羊”（以下简称“平台”）的运营管理人，提供代养生态羊解决方案咨询及相关服务。</p>
+                <p>2、乙方作为甲方平台注册用户(具体信息详见本协议首部表格)，拟通过平台与甲方合作代养并销售生态羊，以获取生态羊及出售生态羊所得本金及收益。</p>
+                <p>3、甲方及乙方均同意遵守平台的各项行为准则，在充分阅读理解本文本情形下本着诚信、自愿、原则签订本协议。</p>
+                <p>现各方根据《中华人民共和国合同法》等相关法律、法规的规定，在平等、自愿、协商一致的基础上，就合作养殖并屠宰销售生态羊事宜，达成本协议如下：</p>
+
+                <span>一、合作方式</span>
+                <p>双方同意以“互联网共享牧场”的模式合作养殖并销售生态羊，即乙方作为投资人提供养殖资金，委托甲方养殖生态羊、屠宰、销售羊肉，最终按约定方式获取生态羊或收益；甲方负责运营“奔跑吧小羊”平台，为甲乙双方在“互联网共享牧场”模式下合作提供交易平台及信息数据的采集，披露等技术支持服务。</p>
+                <span>二、合作内容</span>
+                <p>1、乙方在平台发布的认购期内认购一定数量的生态羊，并将所认购生态羊数量对应的认购费用支付给甲方。</p>
+                <p>2、认购期届满（即甲方指定的认购期限届满之日或认购期内甲方发布的生羊数量被足额认购之日，以先到日期为准）后次日，乙方在成功认购所实际支付的认养本金总额一次性转付甲方。</p>
+                <p>3、甲方于收到认购资金后3个工作日内，接受用户委托以自己的名义为该期用户完成所认购数量生态羊的选购，并将所购买生态羊的耳标等信息告知乙方，由甲方将该等信息录入平台系统供乙方查询。</p>
+                <p>4、甲方确认并同意，其依据本协议所购买的生态羊（包括屠宰后的肉制产品）的所有权归属于乙方，即自甲方从其交易对手处受领生态羊之日起，乙方即享有生态羊的所有权。</p>
+                <p>5、乙方委托甲方对其所认购的生态羊按照《羊只收购标准》（附件一）进行认购。</p>
+                <p>6、甲方接受乙方委托，并按照约定标准对用户所认购的生态羊进行屠宰分割及销售。</p>
+                <p>7、养羊期间，甲方按照乙方的要求实时提供生态羊订购、屠宰及销售过程中的各项数据信息，完成系统的录入，从而乙方可通过平台实时查看过程。</p>
+                <p>8、除乙方按本协议约定承担的部分费用外，生态羊养殖过程中所产生的一切费用，包括但不限于羊舍及配套设备设施的建造、安装、饲料、疫苗、除虫、人工等均有甲方承担。</p>
+                <p>9、生态羊收购并屠宰销售的周期为180天，销售结束后，甲方将按照本协议约定形式向乙方配送生态羊，以自然月为基础。</p>
+                <span>三、投资本金及支付方式</span>
+                <p>1、本协议项下的“认购资金”是指，乙方为甲方受托履行本协议项下各委托事项所需一次性支付给甲方的费用。</p>
+                <p>2、每只生态羊的认购资金为<span style="border-bottom:1px solid #000000;width: 50px">1000</span>元。</p>
+                <p>3、各方确认，乙方通过平台成功认购的生态羊数量，即乙方委托甲方代养生态羊数量，以及本协议项下乙方应支付给甲方的认购资金金额详见本协议首部表格。</p>
+                <p>4、支付方式，本协议成立后，乙方应一次性将应付的认购资金通过在线支付或银行转账方式足额支付至甲方指定收款账户。</p>
+                <p>5、甲方指定收款账户信息如下：</p>
+                <p>户名：新疆顺天德业农牧业科技有限公司</p>
+                <p>账号：107645069200</p>
+                <p>开户行：中国银行股份有限公司乌鲁木齐市黄河路南支行</p>
+                <span>四、认购生态羊发货及代售</span>
+                <p>1、乙方确认并同意，生态羊代养销售结束后，甲方默认按以下第二种方式向乙方返还认购羊肉。</p>
+                <p>（1）认购资金及收益返还；即乙方委托甲方、甲方同意并接受乙方委托，以自己的名义代为出售乙方的生态羊屠宰后所生产的产品，并按约定返还乙方生态羊屠宰后销售生产产品的销售所得。</p>
+                <p>（2）实物返还；即乙方委托甲方、甲方同意并接受乙方委托，对乙方的生态羊进行屠宰后，按约定返还乙方一定标准数量的羊肉。</p>
+                <p>2、如采用现金返还形式的，则：</p>
+                <p>（1）无需征得乙方同意，甲方自己可以作为乙方生态羊及屠宰后肉制产品的买受人。</p>
+                <p>（2）甲方以自己名义代为出售生态羊屠宰后的肉制产品时，应按照乙方的指示以不低于  100  元/公斤（扣除应交税费后，以下简称“指导价”）的价格卖出，按照指导价出售所得价款全部归属于乙方。</p>
+                <p>（3）全部产品销售回款后3个工作日内，甲方应将乙方应得的认养资金及代售所得溢价，全部划入平台余额里面，由乙方自行提现。</p>
+                <span>五、甲方的权利和义务</span>
+                <p>1、甲方有权按照本协议约定向乙方先收取一定的认购资金。</p>
+                <p>2、甲方应在本协议约定的期限内，按照乙方成功认购的生态羊数量为乙方选购生态羊。</p>
+                <p>3、甲方应保证其为乙方选购的生态羊均符合《羊只收购标准》（附件一）中约定的选购标准。</p>
+                <p>4、甲方应负责提供/自建屠宰生态羊所需的羊舍和配套设备设施，并承担由此产生的一切费用。羊舍和配套设备设施建设、安装完毕后，需经丙方指定的技术监督单位进行验收，验收符合标准的方能投入使用。羊舍及屠宰设施建设如需要相关部门审批许可的，由甲方自行办理。</p>
+                <p>5、甲方应保证在对乙方生态羊进行屠宰销售期间，其提供/自建的羊舍和配套设备设施始终符合国家有关部门各项要求及指标。</p>
+                <p>6、甲方在受托收购生态羊过程中应严格按照《羊只收购标准》（附件一）操作，确保生态羊能达到屠宰及销售标准、按时间向乙方返还认购羊只和认购资金和代售的溢价。</p>
+                <p>7、甲方在符合国家肉制产品规定及标准的情况下，收购并屠宰销售符合国家规定的生态羊，并承担销售风险；甲方承担生态羊屠宰及销售期间所发生的一切风险和损失。</p>
+                <p>8、甲方须接受乙方的检查和监督，按乙方要求实时通过平台向乙方提交合作内容的相关数据，并保证其提供给乙方的各项数据及信息均真实、准确、完整及有效。</p>
+                <p>9、销售结束后，甲方按照本协议第四条的约定向乙方返还投资收益，甲方对本协议约定的投资收益承担保证担保责任，因市场萧条等外部因素导致销售收入不足以覆盖本协议约定的投资本金及收益时，由甲方负责不足差额。</p>
+                <p>10、如甲方因经营不善或财务严重恶化等因素而丧失还款或保证担保能力的，乙方有权要求甲方将生态羊屠宰后的加工产品返还乙方或者及时予以销售，甲方应无条件予以配合。</p>
+                <p>11、甲方须为其在本协议项下各项义务向乙方提供合理的履约担保。</p>
+
+                <span>六、乙方的权利和义务</span>
+                <p>1、乙方要求甲方按照履行标准代为选购生态羊，并按照约定享有本协议项下生态羊及屠宰后肉制产品的所有权。</p>
+                <p>2、乙方有权向甲方转付认购资金。</p>
+                <p>3、乙方有权要求甲方严格按照《羊只收购标准》（附件一）对生态羊进行收购，并承担收购风险。</p>
+                <p>4、乙方有权监督甲方在本协议项下对各委托事项的履行情况，包括但不限于生态羊的养殖、屠宰、出售等，并有权通过平台实时查询合作养羊过程中各项操作数据及信息。</p>
+                <p>5、销售结束后，乙方有权按照本协议第四条约定要求甲方返还认购资金和代售所得的溢价。</p>
+                <p>6、乙方有权对甲方不履行本协议项下义务的行为而给乙方造成的损失进行赔偿。</p>
+                <p>7、乙方应按本协议约定向甲方支付认购资金。</p>
+                <p>8、乙方应保证其认购资金来源合法、且是该资金的合法所有人。如果因其资金的归属及合法性问题与第三方发生争议，由乙方自行负责解决；如因此给甲方或造成任何直接或间接损失，乙方应予以赔偿。</p>
+                <p>9、非经甲方书面同意，乙方不得单方面提前解除或终止本协议。</p>
+                <p>10、本协议履行期间，如因发生不能预见、不能克服、不能避免等不可抗力因素（如：台风、地震、洪水、冰雹等自然灾害、战争、社会动乱、政府禁令等）而给乙方造成损失的，由乙方应承担相应的投资风险及损失。发生不可抗力情形时，甲方有义务及时通知乙方，并积极履行必要的配合义务。</p>
+                <p>11、由乙方因自身原因（密码丢失或被盗等）导致账号财产损失，由乙方自行承担。</p>
+                <span>七、违约责任</span>
+                <p>1、一方违反其在本协议中所作的声明和保证或未完全履行其在本协议项下的义务，即视为违约，因此给守约方造成损失的，违约方予以赔偿。</p>
+                <p>2、违约方因违约应赔偿给守约方的损失，包括但不限于因违约给守约方造成的直接损失，以及守约方在协议履行后可以获得的利益、守约方为防止或减少损失的扩大而支出的合理费用，守约方支付的诉讼费和律师费等间接损失。</p>
+                <p>3、各方均有过错的，应根据各方实际过错程度，分别承担各自的违约责任。</p>
+                <span>八、协议的签订及生效</span>
+                <p>1、本协议通过乙方以在线点击平台页面上相应按钮的方式签订并成立。本协议一经乙方签署，即视为各方接受本协议调款内容并受此内容之拘束。</p>
+                <p>2、本协议自甲方收到本协议项下乙方应支付的认购资金后立即生效。</p>
+                <span>九、协议的解除和终止</span>
+                <p>1、经双方一致协商，可以共同决定提前解除或终止本协议。</p>
+                <p>2、除本协议另有约定外，任何一方不得擅自单方面提前解除或终止本协议。</p>
+                <p>3、甲方违反其在本协议项下的义务致使乙方在本协议项下的目的不能实现的，乙方有权提前解除本协议，并要求甲方赔偿由此造成的一切损失。</p>
+                <span>十、争议解决条款</span>
+                <p>因解释和履行本协议而发生的任何争议，各方应首先通过友好协商的方式加以解决。如果在一方向其他方发出要求协商解决的书面通知书后30天之内争议任然得不到解决，则任何一方均有权将有关争议提交新疆仲裁委员会依据届时有效的仲裁规则进行裁决。</p>
+                <span>十一、其他条款</span>
+                <p>1、本协议受中华人民共和国法律管辖并依其解释和履行。对本协议的任何修改或补充应以丙方平台电子文本形式作出，作为本协议的组成部分，具有与本协议同等的法律效力。</p>
+                <p>2、任何一方未行使或延迟行使本协议及其修改或补充协议所约定的任何权利或救济的行为，都不应构成或被视为弃权行为；任何单一或部分行使上述权利和救济的行为也不应妨碍对该权利和救济的进一步行使。</p>
+                <p>3、本协议的任何条款或规定如在任何法律管辖的任何情况下无效或不能强制执行，不影响本协议的其他条款或规定的有效性或可强制执行性，也不影响该条款或规定在其他情况下或其他司法管辖区的效力或可强制执行性。</p>
+                <p>4、各方应采取和签署使本协议条款生效所需的所有其他行为、契约、活动和文件或使上述行动被采取或文件被签署。如果在交割后的任何时候，为实现本协议的目的必须或需要采取任何进一步的行动，协议任何一方都应在协议其他地方合理要求下采取这种行动（包括签署及交付文书或文件）。</p>
+            </div>
+        </div>
+    </div>
+   
+   
+</div>    
+
+
+    
+</body>
+</html>

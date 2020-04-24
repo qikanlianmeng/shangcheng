@@ -1,0 +1,216 @@
+{include file="public/header" /}
+<style type="text/css">
+    /* TAB */
+    .nav-tabs.nav>li>a {
+        padding: 10px 25px;
+        margin-right: 0;
+    }
+    .nav-tabs.nav>li>a:hover,
+    .nav-tabs.nav>li.active>a {
+        border-top: 3px solid #1ab394;
+        padding-top: 8px;
+    }
+    .nav-tabs>li>a {
+        color: #A7B1C2;
+        font-weight: 500;
+        margin-right: 2px;
+        line-height: 1.42857143;
+        border: 1px solid transparent;
+        border-radius: 0;
+    }
+</style>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>提现管理</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="panel-body">
+                        <div class="builder-tabs builder-form-tabs">
+                            <ul class="nav nav-tabs">
+                                <li {eq name="id" value="4"}class="active"{/eq}><a href="{:url('?id=4')}">全部</a></li>
+                                <li {eq name="id" value="0"}class="active"{/eq}><a href="{:url('?id=0')}">待处理</a></li>
+                                <li {eq name="id" value="1"}class="active"{/eq}><a href="{:url('?id=1')}">已处理</a></li>
+                                <li {eq name="id" value="2"}class="active"{/eq}><a href="{:url('?id=2')}">已拒绝</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="form-group"></div>
+
+                        <div class="builder-container">
+                            <div class="row">
+                                <div class="example-wrap">
+                                    <div class="example">
+                                        <table class="table table-bordered table-hover">
+                                            <thead>
+                                            <tr class="long-tr">
+                                                <th width="4%">ID</th>
+                                                <th width="5%">会员ID</th>
+                                                <th width="9%">账号</th>
+                                                <th width="9%">类型</th>
+                                                <th width="9%">开户行</th>
+                                                <th width="5%">姓名</th>
+                                                <th width="9%">账号</th>
+                                                <th width="5%">提现金额</th>
+                                                <th width="9%">费率</th>
+                                                <th width="9%">实际金额</th>
+                                                <th width="9%">状态</th>
+
+                                                <th width="10%">打款时间</th>
+                                                <th width="10%">申请时间</th>
+                                                <th width="10%">操作</th>
+                                            </tr>
+                                            </thead>
+                                            <script id="list-template" type="text/html">
+                                                {{# for(var i=0;i<d.length;i++){  }}
+                                                <tr class="long-td">
+                                                    <td>{{d[i].id}}</td>
+                                                    <td>{{d[i].uid}}</td>
+                                                    <td>{{d[i].username}}</td>
+                                                    {{# if(d[i].type==1){ }}
+                                                    <td>支付宝</td>
+                                                    {{# }else if(d[i].type==2){ }}
+                                                    <td>银行卡</td>
+                                                    {{# }else{ }}
+                                                    {{# } }}
+                                                    <td>{{d[i].kh_hang}}</td>
+                                                    <td>{{d[i].zfb_name}}</td>
+                                                    <td>{{d[i].zfb_hao}}</td>
+                                                    <td>{{d[i].money}}</td>
+                                                    <td>{{d[i].feilv}}%</td>
+                                                    <td>{{d[i].user_money}}</td>
+                                                    {{# if(d[i].status==1){ }}
+                                                    <td>已打款</td>
+                                                    {{# }else if(d[i].status==2){ }}
+                                                    <td>已拒绝</td>
+                                                    {{# }else{ }}
+                                                    <td>待打款</td>
+                                                    {{# } }}
+
+                                                    <td>{{# if(d[i].update_time != d[i].create_time){ }}{{d[i].update_time}}{{# }else{ }}———{{# } }}</td>
+                                                    <td>{{d[i].create_time}}</td>
+                                                    <td>
+                                                        {{# if(d[i].status==0){ }}
+                                                        <a href="javascript:;" onclick="edit_member({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
+                                                            <i class="fa fa-paste"></i> 打款</a>
+                                                        <a href="javascript:;" onclick="jujue({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
+                                                            <i class="fa fa-paste"></i> 拒绝</a>
+                                                        {{# } }}
+                                                    </td>
+                                                </tr>
+                                                {{# } }}
+                                            </script>
+                                            <tbody id="list-content"></tbody>
+                                        </table>
+                                        <div id="AjaxPage" style=" text-align: right;"></div>
+                                        <div id="allpage" style=" text-align: right;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- 加载动画 -->
+<div class="spiner-example">
+    <div class="sk-spinner sk-spinner-three-bounce">
+        <div class="sk-bounce1"></div>
+        <div class="sk-bounce2"></div>
+        <div class="sk-bounce3"></div>
+    </div>
+</div>
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+    //laypage分页
+    Ajaxpage();
+    function Ajaxpage(curr){
+        var key={$id};
+        $.getJSON('{:url("index")}', {page: curr || 1,id:key}, function(data){
+            $(".spiner-example").css('display','none'); //数据加载完关闭动画
+            if(data==''){
+                $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
+            }else{
+                var tpl = document.getElementById('list-template').innerHTML;
+                laytpl(tpl).render(data, function(html){
+                    document.getElementById('list-content').innerHTML = html;
+                });
+                laypage({
+                    cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
+                    pages:'{$allpage}',//总页数
+                    skip: true,//是否开启跳页
+                    skin: '#1AB5B7',//分页组件颜色
+                    curr: curr || 1,
+                    groups: 3,//连续显示分页数
+                    jump: function(obj, first){
+                        if(!first){
+                            Ajaxpage(obj.curr)
+                        }
+                        $('#allpage').html('第'+ obj.curr +'页，共'+ obj.pages +'页');
+                    }
+                });
+            }
+        });
+    }
+
+    //编辑会员
+    function edit_member(id){
+        layer.confirm('确认打款完成吗?', {icon: 3, title:'提示'}, function(index){
+
+            $.get('{:url("dakuan")}?id='+id,function (data) {
+                if(data.status){
+                    layer.msg(data.msg, {icon: 6,time:2000}, function(index){
+                        layer.close(index);
+                    });
+                    Ajaxpage();
+                }else{
+                    lunhui.error(data.msg);
+                }
+            });
+            layer.close(index);
+        });
+    }
+
+    //编辑会员
+    function jujue(id){
+        layer.confirm('确认拒绝提现吗?', {icon: 3, title:'提示'}, function(index){
+
+            $.get('{:url("jujue_dakuan")}?id='+id,function (data) {
+                if(data.status){
+                    layer.msg(data.msg, {icon: 6,time:2000}, function(index){
+                        layer.close(index);
+                    });
+                    Ajaxpage();
+                }else{
+                    lunhui.error(data.msg);
+                }
+            });
+            layer.close(index);
+        });
+
+    }
+
+</script>
+</body>
+</html>

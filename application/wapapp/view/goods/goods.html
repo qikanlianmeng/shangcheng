@@ -1,0 +1,532 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+<link rel="stylesheet" href="__CSS__/uc_icon.css">
+<script>
+    // var _hmt = _hmt || [];
+    // (function() {
+    //     var hm = document.createElement("script");
+    //     hm.src = "https://hm.baidu.com/hm.js?a154da86f31b94cc8ae4e17857ccd295";
+    //     var s = document.getElementsByTagName("script")[0];
+    //     s.parentNode.insertBefore(hm, s);
+    // })();
+</script>
+<script charset="utf-8" src="/static/wapapp/yang/js/jquery.3.1.1.js"></script>
+<style>
+    @font-face {
+        font-family: "iconfont";
+        src: url('iconfont.eot?t=1564738020322');
+        /* IE9 */
+        src: url('iconfont.eot?t=1564738020322#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAALYAAsAAAAABpQAAAKKAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCcAqBIIEkATYCJAMICwYABCAFhG0HMBvKBcgusG3YEyi7cQHFQwwx4cIJEA/Jfui7/68EIOtZIeqmqkYQDOMXv0z4ZUZPGDaiV3O5TySLagsKGBRC4JLPBy5zuSdXAg3kOr7jK3THE9nK6s8JnqEG6GXmZ4vD8yDwwDHjHyANn+dyehPoQO6q/7xy2pvGmjSpF2AcUIB7YRRYgAUSesP08gUN5H0CtQZVca2NTM1CUNLLAnGlqQIEc1EpWaFaqKzZmxCfwae6OHYH4FP4/fgPDREEhYoSdMvu5bAMfb/ClHi2cltWfQJiIKDDFSgxDyRxWJvd5hGM86iV9RoFUiZ+RXI57BF7dQr21+n6etAPVfekdppblS5AUs8csI7YfIeyLRpNy/PnJ1+vO+byzk67CtSL7W+v55hZ7px/QZeR5u0Fcg54bqmoODl57iktOrr9Mn5ZfFne1ZVr+el98iJ6n4wD0dOlLbG7h+/5CfVSBdRh3W5/Jji5U3sj+w9GvAA/E/UbLnjbSsprANVn8QV/S91zIIVWe4s8XmegMMdzF221avEGKNjqfayt49aKoVrHDfqrDKQoVRsnk51HhToLqFRtEbXmjB6u04bxiAwBs/YBQrN7FBr9QKnZI5nsGyp0+kOl5vCg1nE4s85kaOEZETiRUcyiJlFLsV4ejhqniZo0BJbVhvw8YY6WwPqaumJhlFiEzbHBSakNnCuoMGriCHiMGAZFm9EEkXhNnHO7o7ZWqXtRjURNCFvFEAKOkCFRFtJIKIvij+bCpc9PI1RJBgFr6cvl5xGMQ5sc1atR14McNVm9+u7lGUeKqgHHKZCCoUxoBMwiDAYK2fWzEggJVyM+Im3rUGuGKX1NNetbzK87BrW0vQgzzQOVF0ktLlAAAAA=') format('woff2'), url('iconfont.woff?t=1564738020322') format('woff'), url('iconfont.ttf?t=1564738020322') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+        url('iconfont.svg?t=1564738020322#iconfont') format('svg');
+        /* iOS 4.1- */
+    }
+    
+    .iconfont {
+        font-family: "iconfont" !important;
+        font-size: 16px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .icon-duihao:before {
+        content: "\e60b";
+        margin-right: 6px;
+    }
+    
+    p {
+        margin-bottom: 0 !important;
+    }
+    
+    #newBridge #nb_icon_wrap {
+        display: none;
+    }
+    
+    .small_btn {
+        background: red;
+        color: #fff;
+        border-radius: 5px;
+        padding: 2px 5px;
+        font-size: 12px;
+        margin-right: 10px;
+    }
+    
+    .mui-table-view-cell:last-child:after {
+        height: 0 !important;
+    }
+    
+    .security>span {
+        margin-right: 15px;
+    }
+    
+    .security_box {
+        padding: 20px 10px;
+    }
+    
+    .security_box>div {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+    
+    .security_box>div>div:first-child {
+        margin-right: 5px;
+    }
+    
+    .security_box>div>div:last-child p:first-child {
+        font-size: 14px;
+        color: #333;
+        font-weight: 600;
+    }
+    
+    .security_box>div p {
+        margin-bottom: 0;
+    }
+    
+    .tiaoma {
+        position: absolute;
+        right: 15px;
+        top: 10px;
+    }
+    
+    .tiaoma p {
+        text-align: center;
+    }
+    
+    @media (max-width:320px) {
+        .security>span {
+            margin-right: 5px;
+        }
+    }
+    
+    .share_pop {
+        width: 100%;
+        height: 100%;
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 9999999;
+        background: rgba(0, 0, 0, 0.5);
+        display: none;
+    }
+    
+    .share_pop_cont {
+        width: 100%;
+        height: 100%;
+        position: relative;
+    }
+    
+    .share_box {
+        width: 100%;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        background: #fff;
+        border-radius: 20px 20px 0px 0px;
+        padding: 20px 0 0 0;
+        display: table;
+        min-height: 100px;
+        -webkit-border-radius: 20px 20px 0px 0px;
+        -moz-border-radius: 20px 20px 0px 0px;
+        -ms-border-radius: 20px 20px 0px 0px;
+        -o-border-radius: 20px 20px 0px 0px;
+    }
+    
+    .share_box ul {
+        width: 100%;
+        min-height: 100px;
+        display: block;
+    }
+    
+    .share_box li {
+        display: block;
+        width: 50%;
+        text-align: center;
+        float: left;
+    }
+    
+    .share_box li img {
+        width: 40px;
+        height: 40px;
+    }
+    
+    .close_pop {
+        height: 50px;
+        border-top: 1px solid #f1f1f1;
+        line-height: 50px;
+        text-align: center;
+        font-size: 16px;
+    }
+    
+    .qr_img canvas {
+        width: 60%;
+        background: #fff;
+        padding: 6px;
+        border-radius: 5px;
+    }
+</style>
+
+</head>
+
+<body class="goods">
+    <header id="header" class="mui-bar" style="background-color: rgba(255, 255, 255, 0);">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <a class="iconfont icon-fenxiang mui-pull-right"></a>
+    </header>
+    <div class="goodsbar">
+        <!-- <a class="goodsbar-item" id="contact">
+            <span class="iconfont icon-kefu"></span>
+            <span class="goodsbar-label">客服</span>
+        </a> -->
+        <a class="goodsbar-item collect">
+            <span class="iconfont icon-shoucang"></span>
+            <span class="goodsbar-label">收藏</span>
+        </a>
+        <a href="{:url('cart/shopcar')}" class="goodsbar-item shopcart" style="position:relative">
+            <span class="iconfont icon-gouwucheshoppingcart"></span>
+            <span class="goodsbar-label">购物车</span>
+            <span class="mui-badge badge-num">1</span>
+        </a>
+        <div class="buyoption mui-row flex">
+            <a class="addtocart mui-col-xs-6 flex" href="#spec">
+                加入购物车
+            </a>
+            <a class="buynow mui-col-xs-6 flex" href="#spec">
+                立即购买
+            </a>
+        </div>
+    </div>
+    <div class="mui-content" style="padding-bottom: 50px;">
+        <div class="swiper-container goods-container">
+            <div class="swiper-wrapper">
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="goods-content">
+            <p style="width:90%;" class="goods_name mui-ellipsis">商品</p>
+            <p class="mui-ellipsis countdown" style="font-size:12px;color:#999;">
+                <i class="iconfont icon-xianshi"></i> 距离结束还剩:
+                <span class="hei">0</span>天<span class="hei">0</span>时<span class="hei">0</span>分<span class="hei">0</span>秒
+            </p>
+            <div class="return-info"><span class="price">￥
+                <e class="price-info goods-price-info"></e>
+                </span></div>
+            <!-- <div class="original-price">原价￥
+                <e>0.00</e>
+            </div> -->
+            <p class="mui-ellipsis commodity progressa" style="display:none">
+                <div id="bar" style="display:none">
+                    <div class="finish" style="width:50%;"></div>
+                    <span class="ing"></span>
+                </div>
+                <div class="goods-post mui-row"><span class="mui-col-xs-4 free_shipping">快递：<e>免运费</e></span><span class="mui-col-xs-4" style="text-align:center"><e class="comment_count"></e>人评价</span><span class="mui-pull-right mui-col-xs-4" style="text-align:right">销量<e class="sales_sum"></e></span></div>
+                <div class="tiaoma">
+                    <p class="uc_icon icon-tiaoxingma-xian color-lv font-20"></p>
+                    <p class="text-14 color-666">条码</p>
+                </div>
+        </div>
+        <ul class="mui-table-view goods-model unset_b unset_a">
+            <li class="mui-table-view-cell" id="specBtn">
+                <span class="small_btn">包邮</span><span>满<span id="baoyou_money">50.0</span>元包邮</span>
+            </li>
+            <!-- <li class="mui-table-view-cell" id="specBtn">
+                <a href="#spec">
+                    已选：<e class="open-option"></e>
+                    <i class="iconfont icon-you mui-pull-right" style="color:#666"></i>
+                </a>
+            </li> -->
+            <li class="mui-table-view-cell" id="specBtn">
+                <span>服务</span>&nbsp;&nbsp;<span>由天佑众成商城发货并提供售后服务</span>
+            </li>
+            <li class="mui-table-view-cell" id="specBtn">
+                <a class="security" href="#security">
+                    <span class="color-333"><span class="iconfont icon-duihao color-red"></span>假一赔十</span>
+                    <span class="color-333"><span class="iconfont icon-duihao color-red"></span>七天退换</span>
+                    <span class="color-333"><span class="iconfont icon-duihao color-red"></span>急速退款</span>
+                    <i class="iconfont icon-you mui-pull-right" style="color:#666"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="mui-card" style="background: #fff !important;">
+            <div class="mui-card-header">
+                <a class="gotocommentList" href="/wapapp/order/comment_list/id/{:input('id')}" style="width:100%;"><span style="font-size:14px">商品评价(<e class="comment_count"></e>)</span><span class="mui-pull-right" style="font-size:12px;color:#666"><i class="iconfont icon-you"></i></span></a>
+            </div>
+            <div class="mui-card-content">
+                <ul class="mui-table-view goods-model commentList" id="comment">
+                    <!-- <li class="mui-table-view-cell comment_list">
+                        <a>
+                            <div class="user-info"><img class="user-img" src="__IMG__/temp/user.jpg"><span class="user-name">人不犯二枉少年</span><span class="mui-pull-right evaluate-star"><i class="iconfont icon-sc1"></i><i class="iconfont icon-sc1"></i><i class="iconfont icon-sc1"></i><i class="iconfont icon-sc1"></i><i class="iconfont icon-sc1"></i></span></div>
+                            <div class="evaluate">收到了，里面文章写得非常好，试题都是以前没有做过的，最喜欢的就是试题调研系列，题材新颖，五分好评。</div>
+                            <div class="evaluate-goodsinfo"><span>2017-8-31</span><span>颜色：<e>黑色</e></span><span>尺码：<e>S</e></span></div>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="mui-card-footer seeAll">
+                <a href="/wapapp/order/comment_list/id/{:input('id')}" style="width:100%;">
+                    <div style="width:100%;text-align:center">
+                        查看更多评价
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div id="screenWrap" style="height:40px;">
+            <div class="mui-row screen">
+                <a class="mui-col-xs-6 scrolltoImgandText"><span class="active">图文详情</span></a>
+                <a class="mui-col-xs-6 scrolltoparameter"><span>产品参数</span></a>
+                <!-- <span class="mui-col-xs-4 scrolltoRecommend"><span>热门推荐</span></a> -->
+            </div>
+        </div>
+        <div id="ImgandText">
+
+        </div>
+        <div id="parameter">
+            <ul>
+
+            </ul>
+        </div>
+        <div id="Recommend">
+            <div class="mui-row RecommendList">
+
+            </div>
+            <div class="mui-row RecommendList_second">
+
+            </div>
+        </div>
+    </div>
+    <div id="spec" class="spec mui-popover mui-popover-action mui-popover-bottom">
+        <div style="padding: 10px;">
+            <div>
+                <img class="spec-img" src="__IMG__/temp/user.jpg" alt="">
+                <a href="#spec"><i class="iconfont icon-cuo mui-pull-right mui-backdrop-action" style="color:#999;"></i></a>
+                <div style="height:90px;padding-top:20px;">
+                    <span class="price">￥<e class="price-info specMoney">0.00</e></span><br>
+                    <span style="font-size:15px;">库存<e class="specCount">***</e>件</span><br>
+                    <!-- <span style="font-size:15px;">已选：<e class="open-option"></e></span> -->
+                </div>
+            </div>
+            <div>
+                <div class=" specWrap">
+
+                </div>
+                <!-- <div class="goods-attribute">
+                    <p>颜色</p>
+                    <p><span class="selected">卡其色</span><span>米白色</span><span>酒红色</span><span>深空灰</span><span>抹茶绿</span></p>
+                </div>
+                <div class="goods-attribute">
+                    <p>尺码</p>
+                    <p><span>M</span><span class="selected">L</span><span>XL</span></p>
+                </div> -->
+            </div>
+            <div class="goods-num mui-input-row">
+                <label class="buy-num">购买数量</label>
+                <div class="mui-numbox" data-numbox-min='1' data-numbox-max='999'>
+                    <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+                    <input class="mui-input-numbox" type="number" />
+                    <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+                </div>
+            </div>
+        </div>
+        <!-- <div class="mui-row goods-option">
+            <a class="add mui-col-xs-6"><span class="">加入购物车</span></a>
+            <a class="buy mui-col-xs-6"><span class="">立即购买</span></a>
+        </div> -->
+        <div id="buy_confirm" class="mui-row confirm">
+            <a class="mui-col-xs-12"><span>确定</span></a>
+        </div>
+    </div>
+    <div id="security" class="spec mui-popover mui-popover-action mui-popover-bottom">
+        <p class="text-16 color-333" style="padding: 10px;text-align:center;margin-bottom: 0;">商家服务</p>
+        <div style="padding: 10px;">
+            <div class="security_box">
+                <div class="">
+                    <div>
+                        <span class="iconfont icon-duihao color-red text-22"></span>
+                    </div>
+                    <div>
+                        <p>假一赔十</p>
+                        <p>正品保障，支持提供正规发票</p>
+                    </div>
+                </div>
+                <div class="">
+                    <div>
+                        <span class="iconfont icon-duihao color-red text-22"></span>
+                    </div>
+                    <div>
+                        <p>7天退换</p>
+                        <p>部分商品不支持七天无理由退换货</p>
+                    </div>
+                </div>
+                <div class="">
+                    <div>
+                        <span class="iconfont icon-duihao color-red text-22"></span>
+                    </div>
+                    <div>
+                        <p>极速退款</p>
+                        <p>提供极速退款退货流程</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="security_confirm" class="mui-row confirm">
+            <a class="mui-col-xs-12"><span>确定</span></a>
+        </div>
+    </div>
+    <div class="returnTop animated">
+        <i class="mui-icon mui-icon-arrowup"></i>
+    </div>
+    <div class="layer-mask" id="layer_mask"></div>
+    <!-- <div class="helper forward" id="forward"><img src="/static/wapapp/shop/images/share.png" alt="分享"></div> -->
+    <div class="share_pop" id="forward">
+        <div class="share_pop_cont">
+            <div class="share_box">
+                <ul>
+                    <li id="session" onclick="to_share('session');">
+                        <p><img src="/static/wapapp/yang/imgs/index/weixin.png" alt=""></p>
+                        <p>好友</p>
+                    </li>
+                    <li id="timeline" class="fr" onclick="to_share('timeline');">
+                        <p><img src="/static/wapapp/yang/imgs/index/pengyouquan.png" alt=""></p>
+                        <p>朋友圈</p>
+                    </li>
+                </ul>
+                <p class="close_pop">取消</p>
+            </div>
+        </div>
+    </div>
+    <div class="share_pop" id="tiaoma">
+        <div class="share_pop_cont flex">
+            <p class="qr_img" style="text-align: center;"></p>
+        </div>
+    </div>
+</body>
+<script type="text/html" id="recommend_goods">
+    <div class="goods-list" data-href="[[id]]">
+        <img src="[[original_img]]" alt="" style="height:100%;">
+        <p>[[goods_name]]</p>
+        <div><span class="price">￥<e class="price-info">[[price]]</e></span>[[if exchange_integral_money]]<span class="exchange">积分抵￥<e>[[exchange_integral_money]]</e></span>[[/if]]</div>
+    </div>
+</script>
+<script type="text/html" id="commentList">
+    <li>
+        <div class="mui-table-view-cell mui-media comment-user" uid="[[uid]]">
+            [[if user_avatar]]
+            <img class="mui-media-object mui-pull-left" src="[[user_avatar]]"> [[else]]
+            <img class="mui-media-object mui-pull-left" src="__IMG__/defaultuser.jpg"> [[/if]]
+            <p class="mui-media-body color-333 text-15">
+                [[user_nickname]]
+            </p>
+        </div>
+        [[each comment_content as value i]] [[if value.rank == 0 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 1 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 2 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 3 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 4 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 5 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[/if]] [[if value.type == 0]]
+        <p class="commentTime text-mini">[[value.c_time]]</p>
+        <p class="content color-333">[[value.content]]</p>
+        <div class="imgList clearfix">
+            [[each value.pic_url as pic j]]
+            <img src="[[pic.url]]" data-preview-src='[[pic.url]]' data-preview-group='[[id]]'> [[/each]]
+            <div class="clear"></div>
+        </div>
+        [[/if]] [[/each]]
+    </li>
+</script>
+{include file="public/footer" /}
+<script src="/static/wapapp/yang/js/api.js"></script>
+<script src="/static/wapapp/yang/js/jquery.3.1.1.js"></script>
+<script src="/static/wapapp/yang/js/jquery.qrcode.min.js"></script>
+<script src="/static/wapapp/yang/js/common.js"></script>
+
+<script>
+    var id = "{:input('id')}";
+    var group = "{:input('group')}";
+    var share = "{:input('share')}";
+    var baseUrls = "http://jc.jcnywzj.com";
+    // $('#session').on('tap', function () {
+    //     to_share('session');
+    // })
+    // $('#timeline').on('tap', function () {
+    //     to_share('timeline');
+    // })
+    var my_code = '';
+    $(document).ready(function() {
+        get_rcode();
+        jQuery('.qr_img').qrcode({
+            render: "canvas",
+            text: baseUrls + "/wap/index/s.html?g=" + group + "&i=" + id + "&r=" + my_code
+        });
+    });
+    // 微信分享 
+    function to_share(type) {
+        $('.share_pop').fadeOut(300);
+        var wx = api.require('wx');
+        var goods_name = $('.goods_name').text();
+        console.log(baseUrls + "/wap/index/s.html?g=" + group + "&i=" + id + "&r=" + my_code);
+        wx.shareWebpage({
+            apiKey: 'wx5cf90f1ce954e0b3',
+            scene: type,
+            title: goods_name,
+            description: goods_name,
+            contentUrl: baseUrls + "/wap/index/s.html?g=" + group + "&i=" + id + "&r=" + my_code
+        }, function(ret, err) {
+            if (ret.status) {
+                console.log('分享啊');
+                // 用户点击了分享后执行的回调函数
+                $get('/api2/user/share', {}, function(ret) {
+                    console.log(JSON.stringify(ret));
+                    mui.toast(ret.msg);
+                });
+            } else {
+                // alert(err.code);
+                mui.toast("分享失败");
+                console.log(JSON.stringify(err));
+            }
+        });
+    }
+
+    function get_rcode() {
+        $get('/api2/user/getuserinfo', {}, (ret) => {
+            my_code = ret.data.rcode;
+        });
+    }
+    seajs.use("/static/wapapp/shop/js/goods")
+</script>
+<script>
+</script>
+<!-- <script type="text/javascript" src="http://qiyu.im/onlinServer/chart/chat_fz.js"></script> -->
+
+</html>

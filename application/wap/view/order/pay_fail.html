@@ -1,0 +1,41 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__CSS__/shopstyle.css">
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">支付失败</h1>
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+</header>
+<div class="mui-content firm-order">
+    <div class="pay-result mui-text-center bg-whtie">
+        <p class="p-icon bg-main"><span class="iconfont icon-cuo"></span></p>
+        <p class="m-t color-main text-16">订单支付失败</p>
+    </div>
+    <div class="order-view bg-whtie m-t clearfix">
+    </div>
+    <ul class="mui-table-view m-t table-view-order color-333 text-15 pay-method">
+        <!-- <li class="mui-table-view-cell text-16">选择支付方式</li> -->
+        <li>
+            <div class="mui-input-row mui-radio mui-left pay-alipay"><label><span class="iconfont icon-zhifubao"></span>支付宝支付<input name="pay-method" value="alipay" type="radio"></label></div>
+            <div class="mui-input-row mui-radio mui-left pay-wxpay"><label><span class="iconfont icon-weixin"></span>微信支付<input name="pay-method" value="wxpay" type="radio"></label></div>
+        </li>
+    </ul>
+    <nav class="mui-bar mui-bar-tab bottom-bg order-bottom order-fail">
+        <span class="color-main mui-pull-left text-16 sum_money">总计：￥<span id="payFor">0.00</span></span>
+        <button type="button" id="checkOrder" class="text-15 nav-bottom-btn check-order">查看订单</button>
+        <button type="button" id="submitOrder" class="text-15 bg-main nav-bottom-btn">支付</button>
+    </nav>
+</div>
+{include file="public/footer" /}
+<script type="text/html" id="orderViewTem">
+    <p><label>订单金额</label><span>[[order_amount]]元</span></p>
+    <p><label>订单编号</label><span>[[order_sn]]</span></p>
+    <p><label>收货地址</label><span>[[address_detail]]</span></p>
+    [[if user_note]]<p><label>订单备注</label><span>[[user_note]]</span></p>[[/if]]
+</script>
+<script type="text/javascript">
+    var order_id = "{:input('order_id')}";
+    seajs.use(['shop/js/payOrder']);
+</script>
+</body>
+</html>

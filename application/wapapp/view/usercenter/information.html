@@ -1,0 +1,50 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/index.css">
+</head>
+<body class="information">
+    <header id="header" class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">消息中心</h1>
+    </header>
+    <div class="mui-content">
+        <ul class="mui-table-view">
+            <li class="mui-table-view-cell">
+                <a href="systemmessage.html">
+                    <div class="mui-media-object mui-pull-left">
+                        <div class="icon-wrap icon-wrap-lv"><span class="mui-badge badge-num message-num">1</span><i class="iconfont icon-shengyin"></i></div>
+                    </div>
+                    <div class="mui-media-body">
+                        <p class="information-title">系统消息<span class="information-time messageTime"></span></p>
+                        <div class="information-info message-info"></div>
+                    </div>
+                </a>
+            </li>
+          <!--  <li class="mui-table-view-cell" id="contact">
+                <a href="javascript:void(0);">
+                    <div class="mui-media-object mui-pull-left">
+                        <div class="icon-wrap icon-wrap-red"><span class="mui-badge badge-num badge-num-nonum"></span><i class="iconfont icon-kefu"></i></div>
+                    </div>
+                    <div class="mui-media-body">
+                        <p class="information-title">在线客服<span class="information-time"></span></p>
+                        <div class="information-info">羊羊商城官方客服</div>
+                    </div>
+                </a>
+            </li>-->
+        </ul>
+    </div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    seajs.use("/static/wapapp/shop/js/information");
+</script>
+<script type="text/javascript">
+    window.webImConfig = {
+        nickname   : '{$webImInfo.nickname|default=""}',//用户名称
+        headimgurl : '{$webImInfo.headimgurl|default=""}',//用户头像
+        mark_uid   : '{$webImInfo.mark_uid|default=""}',//用户平台uid
+        principal  : '0116fcaa30c3508b0626c9b96ffc85bc',//客服主体
+        button_id  : 'contact'//元素ID
+    }
+</script>
+<script type="text/javascript" src = "http://qiyu.im/onlinServer/chart/chat_fz.js"></script>
+</html>

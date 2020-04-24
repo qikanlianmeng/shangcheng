@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{$seo.title|default="商城"}</title>
+    <meta name="Keywords" content="{$seo.keywords|default='商城'}"/>
+    <meta name="description" content="{$seo.description|default='商城'}" />
+    <title>首页</title>
+    <script>
+        var UID = '{:get_uid()}';
+        var PATH_URL = '';
+        var SITE_URL = '/';
+        var IS_WEIXIN = '{:is_weixin() ? 1 : 0}';
+    </script>
+    <link rel="stylesheet" href="__PUBLIC__/css/mui.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/swiper.min.css">
+    <link rel="stylesheet" href="__PUBLIC__/fonts/iconfont.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/animate-3.5.css">
+    <link rel="stylesheet" href="__PUBLIC__/libs/layer/need/layer.css">
+    <link rel="stylesheet" href="__PUBLIC__/css/global.css">

@@ -1,0 +1,255 @@
+{include file="public/header" /}
+<style>
+.file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
+.file-item .info{overflow: hidden;}
+.uploader-list{width: 100%; overflow: hidden;}
+.input-group[class*=col-]{
+    float: left;
+}
+@media (max-width:768px) {
+    .input-group[class*=col-]{
+        float: none;
+    }
+}
+.detail{
+    line-height: 34px;
+    color: #999
+}
+
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>{$tpname_zh}消息提醒模板</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" name="edit" id="edit" method="post" action="{:url('edit_tp')}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{$tpname_zh}标识：</label>
+                            <div class="input-group col-sm-4" style="line-height: 34px;">
+                                <span>{$info.name}</span>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+						{if condition="$Request.param.tpname neq 'weichat'"}
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">{$tpname_zh}标题：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="text" class="form-control" name="title" value="{$tpinfo.title}"/>
+                            </div>
+                        </div>
+						{/if}
+                        
+						{in name="Request.param.tpname" value="sms,weichat"}
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">模板ID：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="text" class="form-control" name="tpid" value="{$tpinfo.tpid}"/>
+                            </div>
+                        </div>
+						{/in}
+						
+                        <div class="hr-line-dashed"></div>
+						
+						<!-- <div class="form-group">
+                            <label class="col-sm-2 control-label">邮件模板：(富文本)</label>
+                            <div class="input-group col-sm-9">
+                                <加载编辑器的容器 >
+                                <script id="container" name="content" type="text/plain">
+
+                                </script>
+                                <配置文件>
+                                <script type="text/javascript" src="__UE__/ueditor.config.js"></script>
+                                <编辑器源码文件>
+                                <script type="text/javascript" src="__UE__/ueditor.all.js"></script>
+                                <script type="text/javascript">
+                                    var ue = UE.getEditor('container');
+                                </script>
+                            </div>
+                            <br>
+                            <div class="col-sm-10 col-sm-offset-2 detail" style="color: #1ab394;padding-left: 0;margin-top: 5px;">请用#SITE_NAME#代替网站名称,#SITE_HOST#替代网站域名,"#user#"代替“用户名”;"#modelname#"代替“认证名称”;</div>
+                        </div> -->
+						
+                        
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">{$tpname_zh}模板：（纯文字）</label>
+                            <div class="input-group col-sm-4" style="width:70%;">
+								{if condition="$Request.param.tpname eq 'weichat'"}
+								<table class="table table-bordered">
+									<thead>
+										<tr>
+											<th style="width:20%;">参数名</th>
+											<th style="width:50%;">参数内容</th>
+											<th style="width:20%;">参数颜色</th>
+											<th style="width:10%;">操作</th>
+										</tr>
+									</thead>
+									<tbody id="tp_content">
+										{notempty name="tpinfo.param_data"}
+										{volist name="tpinfo.param_data" id="pd"}
+										<tr>
+											<td><input type="text" class="form-control" name="param_name" value="{$pd.param_name}"/></td>
+											<td><input type="text" class="form-control" name="param_val" value="{$pd.param_val}"/></td>
+											<td><input type="text" class="form-control" name="param_color" value="{$pd.param_color}"/></td>
+											<td><a class="btn btn-primary btn-outline btn-xs del_param"><i class="fa fa-paste"></i>删除</a></td>
+										</tr>
+										{/volist}
+										{/notempty}
+									</tbody>
+								</table>
+								<a id="add_content" class="btn btn-primary btn-outline btn-xs"><i class="fa fa-paste"></i>添加参数</a>
+								{else /}
+								 <textarea type="text" rows="10" name="content" id="content"  class="form-control" style="resize:none;width:100%;">{$tpinfo.content}</textarea>
+								{/if}
+                               
+                            </div>
+                            <br>
+                            <div class="col-sm-10 col-sm-offset-2 detail" style="color: #1ab394;padding-left: 0;margin-top: 5px;">请使用以下参数替换模板中对应的内容<br/>{$info.param}</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-2">
+								<!--
+								<button class="btn btn-success" type="submit"><i class="fa fa-file-text"></i> 测试</button>&nbsp;&nbsp;&nbsp;
+								--> 
+								<input type="hidden" name="id" value="{$Request.param.id}"/>
+								<input type="hidden" name="tpname" value="{$Request.param.tpname}"/>
+								{if condition="$Request.param.tpname eq 'weichat'"}
+									<button class="btn btn-primary" type="button" id="save_weixin"><i class="fa fa-save"></i> 保存</button>
+								{else/}
+									<button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>
+								{/if}
+                                &nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+  {include file="public/footer" /}
+<script type="text/javascript">
+	var tpname = "{$Request.param.tpname}";
+	var id = "{$Request.param.id}";
+    $(function(){
+        $('#edit').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+
+        function checkForm(){
+            if( '' == $.trim($("textarea[name='content']").val()) && tpname!='weichat' && tpname!='sms'){
+                layer.msg('消息模板不能为空', {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+			if( '' == $.trim($("input[name='title']").val()) ){
+                layer.msg('标题不能为空', {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+         }
+
+        function complete(data){
+            //window.location.href="{:url('ad/template')}";
+            if(data.code == 1){
+                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                     window.location.href="{:url('template')}";
+                 });
+            }else{
+                 layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1}, function(index){
+                     layer.close(index);
+                 });
+                 return false;
+            }
+        }
+		//添加微信运费模板参数
+		$("#add_content").click(function(){
+			var param_num = $("#tp_content tr").length+1;
+			var str='<tr>\
+						<td><input type="text" class="form-control" name="param_name" value=""/></td>\
+						<td><input type="text" class="form-control" name="param_val" value=""/></td>\
+						<td><input type="text" class="form-control" name="param_color" value=""/></td>\
+						<td><a class="btn btn-primary btn-outline btn-xs del_param"><i class="fa fa-paste"></i>删除</a></td>\
+					</tr>';
+			$("#tp_content").append(str);
+		})
+		//删除添加微信运费模板参数
+		$(document).on('click','.del_param',function(){
+			$(this).parent().parent().css('display','none');
+		})
+		//提交微信模板数据
+		$("#save_weixin").click(function(){
+			var tpid = $("input[name='tpid']").val();
+			if(!tpid){
+				layer.msg('模板id不能为空', {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+				return false;
+			}
+			var param_name_empty = 0;
+			var param_value_empty = 0;
+			$("input[name='param_name']").each(function(){
+				if($(this).val() == '' || $(this).val == null){
+					param_name_empty = 1;
+				}
+			})
+			$("input[name='param_val']").each(function(){
+				if($(this).val() == '' || $(this).val == null){
+					param_value_empty = 1;
+				}
+			})
+			if(param_name_empty >0 || param_value_empty>0){
+				layer.msg('模板参数和内容不能为空', {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+				return false;
+			}
+			//构造模板参数的数组
+			var param_data = {};
+			$("#tp_content tr").each(function(index){
+				param_data[index] = {'param_name':'','param_val':'','param_color':''};
+				param_data[index].param_name = $(this).find("input[name='param_name']").val();
+				param_data[index].param_val = $(this).find("input[name='param_val']").val();
+				param_data[index].param_color = $(this).find("input[name='param_color']").val();
+			})
+			$.post("{:url('edit_tp')}",{'id':id,'tpname':tpname,'tpid':tpid,'param_data':param_data},function(data){
+				if(data.code == 1){
+					layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+						layer.close(index);
+						 window.location.href="{:url('template')}";
+					 });
+				}else{
+					 layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1}, function(index){
+						 layer.close(index);
+					 });
+					 return false;
+				}
+			},'json')
+		})
+    });
+</script>
+</body>
+</html>

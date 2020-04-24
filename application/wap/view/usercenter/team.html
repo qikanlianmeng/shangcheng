@@ -1,0 +1,212 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__CSS__/shopstyle.css">
+<link rel="stylesheet" type="text/css" href="/static/mob/yang/css/style.css">
+<link rel="stylesheet" type="text/css" href="/static/mob/yang/css/icon.css">
+<link rel="stylesheet" type="text/css" href="/static/mob/yang/mescroll/mescroll.min.css">
+<!-- <script src="/static/mob/public/js/mui.min.js"></script> -->
+<script src="/static/mob/public/libs/mui.min.js" charset="utf-8"></script>
+<style>
+    .look_ranch{
+        height:auto;
+        margin:0 auto;
+    }
+    .mescroll{
+        position:fixed;
+        top:100px;
+        left:0;
+        bottom:0;
+        width:100%;
+        height:auto;
+        z-index: 55;
+    }
+</style>
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav" style="border-bottom:none!important;margin: 0 auto;">
+    <h1 class="mui-title">我的团队</h1>
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+</header>
+<div class="">
+        <div class="mb15"></div>
+        <div class="mb15"></div>
+        <div class="mb15"></div>
+        <div class="mb15"></div>
+         <div class="team_tab">
+            <div class="team_tab_cont">
+                <span class="active">一级好友</span><span>二级好友</span>
+            </div>
+        </div> 
+        <div class="mb15"></div>
+        <div class="team_cont team_list">
+            <div id="mescroll" class="mescroll">
+                <ul id="dataList" class="data-list">
+
+                </ul>
+            </div>
+        </div>
+            <!-- <div id="team_two" style="display: none;">
+                <div>
+                    <ul>
+
+                    </ul>
+                </div>
+            </div> -->
+           
+        </div> 
+      <!-- <div class="team_box">
+            <ul class="mui-table-view">
+                <li class="mui-table-view-cell to_team_list">
+                    <a class="mui-navigate-right" href="javascript:;">
+                        一级好友（
+                        <span class="z1"></span>
+
+                        ）
+                    </a>
+                </li>
+                <li class="mui-table-view-cell to_team_list">
+                    <a class="mui-navigate-right" href="javascript:;">
+                        二级好友（
+                        <span class="z2"></span>
+
+                        ）</a>
+                </li>
+            </ul>
+      </div>  -->
+  </div>
+
+
+  
+
+
+  <script src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+  <script src="/static/mob/yang/js/template.js"></script>
+  <script src="/static/mob/yang/mescroll/mescroll.min.js"></script>
+  <script src="/static/mob/yang/js/common.js"></script>
+  <script type="text/template" id="list">
+    <li>
+        <span class="fl">
+            <img src="{{head_img}}" alt="">
+        </span>
+        <span class="fl mui-ellipsis-2">
+            <p><b style="color:#333;"> {{account}}</b></p>
+            <p>认养中：{{yang_ing}}</p>
+           
+        </span>
+        <span class="fr">
+            <p>{{create_time}}</p> 
+            <p><button class="btn look_ranch" onclick="to_ranch({{id}});">查看农场</button></p>
+        </span>
+    </li> 
+  </script>
+
+<script>
+    
+
+     		$(function(){
+			//创建MeScroll对象,内部已默认开启下拉刷新,自动执行up.callback,刷新列表数据;
+			var mescroll = new MeScroll("mescroll", {
+               
+				up: {
+					callback: getListData , //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+                    isBounce: false,
+                    noMoreSize:1,
+					empty: {
+						icon: "/static/mob/yang/imgs/index/web.png", //图标,默认null
+						tip: "暂无相关数据~"
+					},
+					clearEmptyId: "dataList", //相当于同时设置了clearId和empty.warpId; 简化写法;默认null; 注意vue中不能配置此项
+					
+					lazyLoad: {
+			        	use: true // 是否开启懒加载,默认false
+			        }
+                }
+                
+            });
+            var pdType='/api/user/refer_user1';
+		
+            $('.team_tab_cont span').on('click',function(){
+                $(this).addClass('active').siblings().removeClass('active');
+                if($(this).index()==0){
+                    pdType='/api/user/refer_user1';
+                    
+                }else{
+                    pdType='/api/user/refer_user2';
+                }
+                //重置列表数据
+                mescroll.resetUpScroll();
+            });
+            
+            
+
+			/*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
+			function getListData(page){
+                getListDataFromNet(pdType, page.num, function(curPageData){
+					
+                    mescroll.endSuccess(curPageData.length);
+                    
+					//设置列表数据
+					setListData(curPageData);
+				}, function(){
+					//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+	                mescroll.endErr();
+				});
+                
+			}
+			
+			function setListData(curPageData){  
+               
+                    var data_list='';
+                    for(var i in curPageData){
+                        curPageData[i].create_time=new Date((curPageData[i].create_time)*1000).Format("yyyy-MM-dd hh:mm");
+                        if(curPageData[i].head_img==null||curPageData[i].head_img==''){
+                            curPageData[i].head_img='/static/mob/shop/images/default/touxiang.jpg';
+                        }else{
+                            curPageData[i].head_img=curPageData[i].head_img;
+                        }
+
+                        data_list+=template('list',curPageData[i]);
+                    }
+                    
+                    $('#dataList').append(data_list);
+			}
+            //获取数据
+			function getListDataFromNet(pdType,pageNum,successCallback,errorCallback) {
+                setTimeout(function(){
+                    $get(pdType,{page:pageNum},function(data){
+                   
+                    
+                    var curPageData=data.data;
+                    var listData=[];
+                    
+                   
+                        //全部商品 (模拟分页数据)
+                        for (var i in curPageData) {
+                            if(i==curPageData.length) break;
+                            listData.push(curPageData[i]);
+                        }
+                        successCallback(listData);
+                        // }else{
+                        // errorCallback();
+                    // }
+                });
+            },1000);
+               
+        }
+        
+
+    });
+
+
+    function to_ranch(id){
+            $get('/api/user/refer_yang',{yuid:id},function(data){
+                
+                if(data.code==1){
+                    window.location.href="/wap/yang/ranch.html?id="+id;
+                }else{
+                    mui.toast(data.msg);
+                }
+            });
+    }
+</script>
+</body>
+</html>

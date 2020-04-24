@@ -1,0 +1,139 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/weixin/css/index.css">
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>微信菜单设置</h5>
+        </div>
+        <div class="ibox-content">
+            <!-- 搜索框开始 -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('menu\_add')}"><button class="btn btn-outline btn-primary" type="button">添加菜单</button></a>
+                        </div>
+                    </div>
+                    <div  class="col-sm-2" style="width: 100px">
+                         <button class="btn btn-outline btn-primary"  onclick="weixin_menu()" type="button">生成微信菜单</button>
+                    </div>
+                </div>
+            </div>
+            <!-- 搜索框结束 -->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="20%">菜单名称</th>
+                                <th width="10%">菜单类型</th>
+                                <th width="40%">菜单值</th>
+                                <th width="10%">排序</th>
+                                <th width="20%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list-content">
+	                        {empty name="list"}
+								<tr>
+								  <td colspan="5" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>
+								</tr>
+							{/empty}
+                            {volist name="list" id="vo"}
+							    <tr class="long-td">
+	                                <td>{$vo.name}</td>
+	                                <td>
+		                                {switch name="vo.type" }
+		                                    {case value="0"}一级菜单{/case}
+	   										{case value="1"}命令{/case}
+						   					{case value="2"}链接{/case}
+						   					{case value="3"}自定义图文{/case}
+										{/switch}
+									</td>
+	                                <td>{$vo.key_value}</td>
+	                                <td>{$vo.sort}</td>
+	                                <td>
+	                                    <a href="{:url('menu_edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs btn-outline">
+	                                        <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+	                                    <a  href="javascript:;" onclick="del_index({$vo.id})" class="btn btn-danger btn-xs btn-outline">
+	                                        <i class="fa fa-trash-o"></i> 删除
+	                                    </a>&nbsp;&nbsp;
+	                                    {switch name="vo.type"}
+										    {case value="1"}
+										    <a href="{:url('msg_add',array('id'=>$vo['id']))}"  class="btn  btn-primary btn-xs btn-outline">
+                                            <i class="fa fa-paste"></i>设置</a>&nbsp;&nbsp;
+										    {/case}
+										    {default /}
+										    <a href="javascript:;" disabled='true' class="btn btn-default btn-xs btn-outline">
+                                        <i class="fa fa-paste"></i>  设置</a>&nbsp;&nbsp;
+										{/switch}
+	                                </td>
+	                            </tr>
+		                         {notempty name="vo.child"}
+									{volist name="vo.child" id="vv"}
+									 <tr class="long-td secondfloor">
+		                                <td>{$vv.name}</td>
+		                                <td>
+		                                {switch name="vv.type" }
+		                                    {case value="0"}一级菜单{/case}
+	   										{case value="1"}命令{/case}
+						   					{case value="2"}链接{/case}
+						   					{case value="3"}自定义图文{/case}
+										{/switch}
+		                                </td>
+		                                <td>{$vv.key_value}</td>
+		                                <td>{$vv.sort}</td>
+		                                <td>
+		                                    <a href="{:url('menu_edit',array('id'=>$vv['id']))}" class="btn btn-primary btn-xs btn-outline">
+		                                        <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+		                                    <a href="javascript:;" onclick="del_index({$vv.id})" class="btn btn-danger btn-xs btn-outline">
+		                                        <i class="fa fa-trash-o"></i> 删除</a>&nbsp;&nbsp;
+		                                        {switch name="vv.type"}
+												    {case value="1"}
+												    <a href="{:url('msg_add',array('id'=>$vv['id']))}"  class="btn  btn-primary btn-xs btn-outline">
+		                                            <i class="fa fa-paste"></i>  设置</a>&nbsp;&nbsp;
+												    {/case}
+												    {default /}
+												    <a href="javascript:;" disabled='true' class="btn btn-default btn-xs btn-outline">
+		                                        <i class="fa fa-paste"></i>  设置</a>&nbsp;&nbsp;
+												{/switch}
+		                                        
+		                                </td>
+		                            </tr>
+									{/volist}
+								{/notempty}
+							{/volist}
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+</body>
+<script>
+function del_index(id){
+	layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+		var url="{:url('menu_del','','')}";
+		window.location.href=url+'/id/'+id;
+	    layer.close(index);
+	})
+}
+function weixin_menu(){
+	layer.confirm('确认吗?', {icon: 3, title:'提示'}, function(index){
+		layer.close(index);
+	    $.get("{:url('wxin_menu','','')}", function(res){
+            if(res.status == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            }else{
+                layer.msg(res.msg);
+            }
+        }, 'json')
+	})
+}
+</script>
+</html>

@@ -1,0 +1,138 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/index.css">
+<style>
+    .mui-popup-inner {
+        padding: 0;
+    }
+    
+    .mui-popup-title {
+        /* background: #e30000; */
+        color: #000;
+        height: 45px;
+        line-height: 45px;
+        font-size: 14px;
+    }
+    
+    .mui-popup-text {
+        padding: 5px 0;
+    }
+    
+    .alert_text input {
+        padding: 0 !important;
+        margin: 0;
+        padding-left: 10px !important;
+        background: #f1f1f1;
+        color: #333;
+        border: none;
+        font-size: 14px;
+    }
+    
+    .alert_text {
+        padding: 0 12px;
+    }
+    
+    .mui-popup-button:first-child,
+    .text_hong {
+        color: #e30000;
+    }
+    
+    .mui-popup-button:last-child {
+        border-radius: 0 0 13px;
+        /* background: #e30000; */
+        color: #44cf43;
+        font-weight: 400 !important;
+    }
+    
+    .mui-navigate-right:after,
+    .mui-push-right:after {
+        right: -2px !important;
+    }
+    
+    .img_v {
+        width: 44%;
+        position: absolute;
+        top: 20%;
+        right: 0;
+    }
+    
+    #password input::placeholder,
+    #phone input::placeholder {
+        color: #44cf43;
+    }
+    
+    .mui-table-view-cell:last-child:after {
+        content: unset;
+    }
+    
+    .mui-input-group:after {
+        content: unset;
+    }
+    
+    .line_span {
+        font-size: 16px !important;
+        border-bottom: 1px solid #999;
+        padding-right: 0;
+        position: absolute;
+        right: 6%;
+        top: 20%;
+    }
+    
+    .line_img {
+        position: absolute;
+        right: 2%;
+        top: 10%;
+    }
+</style>
+</head>
+
+<body class="editinfo">
+    <div class="mui-inner-wrap">
+        <!--头部导航-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left mui-action-back"></a>
+            <h1 class="mui-title">设置</h1>
+        </header>
+
+        <!--主体部分-->
+        <div class="mui-content">
+            <form method="post" id="form1" name="form1" action="" enctype="multipart/form-data" class="mui-input-group">
+                <ul class="mui-table-view edit-table" style="margin-top: 0">
+                    <li class="mui-table-view-cell">
+                        <a href="{:url('usercenter/editinfo')}">
+                            <span style="line-height:30px;font-size:16px;float:left">个人资料</span>
+                            <div class="mui-pull-right  mui-navigate-right color-hui right5" style="position:absolute;width:100%;">
+                               <input id="password" name="password" value="" type="text" class="text-14 mui-text-right text_hong" readonly onfocus="this.blur()">
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <a href="{:url('collection')}">
+                            <span style="line-height:30px;font-size:16px;float:left">我的收藏</span>
+                            <div class="mui-pull-right  mui-navigate-right color-hui right5" style="position:absolute;width:100%;">
+                               <input id="password" name="password" value="" type="text" class="text-14 mui-text-right text_hong" readonly onfocus="this.blur()">
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <a href="{:url('goods/footprint')}">
+                            <span style="line-height:30px;font-size:16px;float:left">我的足迹</span>
+                            <div class="mui-pull-right  mui-navigate-right color-hui right5" style="position:absolute;width:100%;">
+                               <input id="password" name="password" value="" type="text" class="text-14 mui-text-right text_hong" readonly onfocus="this.blur()">
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <!--end 主体部分-->
+    </div>
+    {include file="public/footer" /}
+    <script src="__PUBLIC__/libs/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/ajaxfileupload.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/libs/layer/layer.js" charset="utf-8"></script>
+    <script>
+      
+    </script>
+</body>
+
+</html>

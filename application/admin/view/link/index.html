@@ -1,0 +1,128 @@
+{include file="public/header" /}
+<!-- <link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet"> -->
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>友情链接管理</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="col-sm-3" style="width: 120px">
+                            <div class="input-group" >
+                                <a href="{:url('index_add')}"><button class="btn btn-outline btn-primary" type="button">添加友情链接</button></a>
+                            </div>
+                        </div>
+                        <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="kw" value="{$kw}" placeholder="输入需查询名称" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th width="34"><input class="i-checks checkbox check-all" type="checkbox"></th>
+                                <th>链接名称</th>
+                                <th>链接地址</th>
+                                <th style="text-align: center;">新窗口打开</th>
+                                <th style="text-align: center;">是否显示</th>
+                                <th>排序</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           {empty name="list"}
+								<tr>
+								  <td colspan="7" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>
+								</tr>
+							 {/empty}
+                              {volist name="list" id="vo"}
+	                            <tr>
+	                                <td><input class="ids i-checks" type="checkbox" name="ids[]" value=""></td>
+	                                <td>{$vo.title}</td>
+	                                <td><a href="{$vo.link}" title="">{$vo.link}</a></td>
+	                                <td align="center">
+	                                    <div style="text-align: center; width: 80px; color: #1BBC9D;">
+	                                    {eq name="vo.istarget" value="1"}
+	                                        <a href="{:url('update_fields',array('id'=>$vo['id'],'istarget'=>'0'))}"  class="yes" style="color: #1BBC9D;"><i class="fa fa-check-circle"></i> 是</a>
+	                                    {else/}
+	                                      <a href="{:url('update_fields',array('id'=>$vo['id'],'istarget'=>'1'))}"  class="no" style="color:#9ea3a7;"><i class="fa fa-ban"></i> 否</a>
+	                                    {/eq}
+	                                    </div>
+	                                </td>
+	                                <td align="center">
+	                                    <div style="text-align: center; width: 80px; color: #1BBC9D;">
+	                                    {eq name="vo.isshow" value="1"}
+	                                        <a href="{:url('update_fields',array('id'=>$vo['id'],'isshow'=>'0'))}"  class="yes" style="color: #1BBC9D;"><i class="fa fa-check-circle"></i> 是</a>
+	                                    {else/}
+	                                      <a href="{:url('update_fields',array('id'=>$vo['id'],'isshow'=>'1'))}"  class="no" style="color:#9ea3a7;"><i class="fa fa-ban"></i> 否</a>
+	                                    {/eq}
+	                                    </div>
+	                                </td>
+	                                <td><input name="sort" data-id="{$vo.id}" width="50%" style="text-align:center;" class="form-control sort" type="text" size="3" value="{$vo.sort}" aria-invalid="false"></td>
+	                                <td>
+	                                    <a href="{:url('index_edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs btn-outline">
+	                                        <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+	                                    <a href="javascript:;" onclick="del_index({$vo.id})" class="btn btn-danger btn-xs btn-outline">
+	                                        <i class="fa fa-trash-o"></i> 删除</a>
+	                                </td>
+	                            </tr>
+                              {/volist}
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;">{$page}</div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+
+<script type="text/javascript">
+    //全选的实现
+    $('.check-all').on('ifChecked', function (event) {
+        $('input[name="ids[]"]').iCheck('check');
+    });
+    $('.check-all').on('ifUnchecked', function (event) {
+        $('input[name="ids[]"]').iCheck('uncheck');
+    });
+    $(".sort").change(function(){
+        var id = $(this).data('id');
+        var sort = $(this).val();
+        var url = '{:url("ajax_update")}';
+        $.getJSON('{:url("ajax_update")}',{'id':id,'sort':sort},function(res){
+            if(res.status=='1'){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+    })
+    function del_index(id){
+    	layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+    		var url="{:url('index_del','','')}";
+    		window.location.href=url+'/id/'+id;
+    	    layer.close(index);
+    	})
+    }
+</script>
+</body>
+</html>

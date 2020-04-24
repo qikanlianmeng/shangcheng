@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>提现记录</title>
+
+    <!-- <link rel="stylesheet" type="text/css" href="/static/mob/public/wallet/css/api.css"/> -->
+    <script>
+        var UID = '{:get_uid()}';
+        var PATH_URL = '';
+        var SITE_URL = '/';
+        var IS_WEIXIN = '{:is_weixin() ? 1 : 0}';
+    </script>
+    <link rel="stylesheet" href="/static/wapapp/public/wallet/css/mui.min.css">
+    <link rel="stylesheet" href="/static/wapapp/public/wallet/css/mui.picker.min.css">
+    <link rel="stylesheet" href="/static/wapapp/public/wallet/css/mui.poppicker.css">
+    <link rel="stylesheet" href="/static/wapapp/public/wallet/css/swiper.min.css">
+    <script src="/static/wapapp/public/wallet/js/jquery.3.1.1.js"></script>
+    <script src="/static/wapapp/public/wallet/js/mui.min.js"></script>
+    <script src="/static/wapapp/public/wallet/js/mui.picker.min.js"></script>
+    <script src="/static/wapapp/public/wallet/js/mui.poppicker.js"></script>
+    <link rel="stylesheet" href="/static/wapapp/public/wallet/css/style.css" />
+    <script src="/static/wapapp/public/wallet/js/swiper.min.js"></script>
+    <script src="/static/wapapp/public/wallet/js/common.js"></script>
+    <link rel="stylesheet" href="/static/wapapp/yang/mescroll/mescroll.min.css">
+    <script src="/static/wapapp/yang/mescroll//mescroll.min.js" charset="utf-8"></script>
+
+
+    charset="utf-8"></script>
+    <style>
+        @font-face {
+            font-family: "iconfont";
+            src: url('iconfont.eot?t=1545382396459');
+            /* IE9*/
+            src: url('iconfont.eot?t=1545382396459#iefix') format('embedded-opentype'), /* IE6-IE8 */
+            url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'), url('iconfont.ttf?t=1545382396459') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+            url('iconfont.svg?t=1545382396459#iconfont') format('svg');
+            /* iOS 4.1- */
+        }
+        
+        .iconfont {
+            font-family: "iconfont" !important;
+            font-size: 16px;
+            font-style: normal;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .icon-zanwushuju:before {
+            content: "\e603";
+        }
+        
+        .cancel_btn {
+            border: 1px solid orangered;
+            border-radius: 10px;
+            padding: 3px 12px;
+            color: orangered;
+        }
+        
+        .exta_p span {
+            width: 33%;
+            display: inline-block;
+            color: #333;
+        }
+        
+        .exta_p span:last-child {
+            text-align: right;
+        }
+        
+        .exta_p span:nth-child(2) {
+            text-align: center;
+        }
+        
+        .symbol {
+            font-size: 14px;
+            border-top: 1px dashed #999;
+            margin: 0 20px;
+            padding: 0 !important;
+            padding-top: 6px !important;
+        }
+        
+        .record_box ul li {
+            border-bottom: 0;
+        }
+    </style>
+</head>
+
+<body style="background:#efeff4;max-width:640px;">
+
+    <!-- 顶部 -->
+    <header id="header" class="mui-bar" style="max-width:640px;">
+        <a class="mui-icon mui-icon-back mui-pull-left" onclick="back()"></a>
+        <h1 class="mui-title">提现记录 </h1>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+
+    <script>
+        function back() {
+            mui.back();
+        }
+    </script>
+    <!-- main -->
+    <div class="content_box mui-content" style="padding-top:24px;">
+        <div class="record_box mescroll" id="mescroll" style="position: absolute;background:#efeff4;">
+            <ul id="dataList">
+                <!-- <li data-id="' + value.id + '">
+                    <p><span class="price">' + value.money + '<span style="color:#666;">(实到账:' + value.get_money + ')</span></span><span></span></p>
+                    <p class="flex exta_p"><span>手续费:' + value.shouxu_cost + '</span><span>服务费:' + value.fuwu_cost + '</span><span>余额:' + value.balance + '</span></span>
+                    </p>
+                    <p><span>' + value.create_time + '</span>' + status + '</p>
+                    <p style="font-size:14px;">备注：<span style="color:red;">' + m + '</span>
+                        <p>
+                </li> -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+                var mescroll = new MeScroll('mescroll', {
+                    up: {
+                        callback: upcallback,
+                        isBounce: false,
+                        noMoreSize: 8,
+                        empty: {
+                            icon: '/static/mob/yang/imgs/index/web.png',
+                            tips: '暂无数据'
+                        },
+                        clearEmptyId: 'dataList',
+                        lazyload: {
+                            use: true
+                        }
+                    }
+                });
+
+
+                function upcallback(page) {
+                    getListDataFromNet(page.num, function(data) {
+                        mescroll.endSuccess(data.length);
+                        if (data.length < page.size) {
+                            $('.upwarp-nodata').html('全部加载完成');
+                        }
+                        setListdata(data);
+
+                    }, function() {
+                        mescroll.endErr();
+                    });
+                }
+
+                function getListDataFromNet(pageNum, successCallback, errorCallback) {
+                    setTimeout(() => {
+                        $post('/api2/user/cash_log', {
+                            page: pageNum
+                        }, function(data) {
+                            var cur = data.list;
+                            var listData = [];
+
+
+                            //全部商品 (模拟分页数据)
+                            for (var i in cur) {
+                                if (i == cur.length) break;
+                                listData.push(cur[i]);
+                            }
+                            successCallback(listData);
+                        });
+                    }, 500);
+                }
+
+                function setListdata(data) {
+
+                    var recharge_list = '';
+                    $.each(data, function(key, value) {
+                        var s = value.status,
+                            t = value.account_type,
+                            m = value.msg,
+                            status = '',
+                            msg = '';
+                        // value.shouxu_cost = accMul(value.shouxu_cost / 100.0, value.money);
+                        value.shouxu_cost = parseFloat(value.shouxu_cost).toFixed(2);
+                        status = s == 0 ? '<span class="">审核中</span>' : s == 1 ? '<span style="color:#e6b800;">打款中</span>' : s == 2 ? '<span style="color:green !important;">已打款</span>' : s == 3 ? '<span style="color:red;">已拒绝</span>' : s == 4 ? '已取消' : '';
+                        status = '<span class="fr" style="color:#333;font-weight:600">' + status + '</span>';
+                        m = !m ? '已拒绝' : m;
+                        msg = (s == 3) ? '<p class="symbol">备注：<span style="color:red;">' + m + '</span><p>' : '';
+                        value.create_time = timetrans_4(value.create_time);
+                        recharge_list += '<li data-id="' + value.id + '"><p><span class="price"><span style="font-weight:600;">' + value.money + '</span><span style="color:#666;">(实到账:' + value.get_money + ')</span></span>' + status + '</p><p class="flex exta_p"><span>手续费:' + value.shouxu_cost + '</span><span>服务费:' + value.fuwu_cost + '</span><span>余额:' + value.balance + '</span></span></p><p style="color:#333;">提现银行卡号：' + value.account + '</p><p style="color:#333;">银行联行号：' + value.bank_number + '</p><p style="text-align:right;font-size:14px;"><span>' + value.create_time + '</span></p>' + msg + '</li>'
+                    });
+
+                    $('#dataList').append(recharge_list);
+                }
+                $('body').on('tap', '.cancel_btn', function() {
+                    var id = $(this).parents('li').attr('data-id');
+                    console.log(id);
+                    setTimeout(() => {
+                        $get("/api2/user/cancel_cash", {
+                            id: id
+                        }, (data) => {
+                            if (data.status) {
+                                mui.toast('取消提现成功');
+                                window.location.reload();
+                            } else {
+                                mui.toast(data.msg);
+                            }
+                        })
+                    }, 500);
+
+
+                });
+            })
+            //导航
+        $('#nav_more>.mui-icon').on('tap', function(e) {
+            $(this).parent().find('.small_box').toggle();
+        });
+        //精确乘法函数
+        function accMul(arg1, arg2) {
+            var m = 0,
+                s1 = arg1.toString(),
+                s2 = arg2.toString();
+            try {
+                m += s1.split(".")[1].length
+            } catch (e) {}
+            try {
+                m += s2.split(".")[1].length
+            } catch (e) {}
+            return (Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)).toFixed(2);
+        }
+    </script>
+
+    <script type="text/javascript" src="/static/mob/public/wallet/js/api.js"></script>
+    <script src="/static/wapapp/public/wallet/js/index.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,279 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?a154da86f31b94cc8ae4e17857ccd295";
+        var s = document.getElementsByTagName("script")[0];
+        var s = document.getElementsByTagName("script")[0];
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+<script charset="utf-8" src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+
+
+<style>
+    @font-face {
+        font-family: "iconfont";
+        src: url('iconfont.eot?t=1546848291218');
+        /* IE9 */
+        src: url('iconfont.eot?t=1546848291218#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAM0AAsAAAAABxQAAALoAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCcAqCIIISATYCJAMICwYABCAFhG0HLhs2BhHVmwnIfibE27uMLWJyci4mmmgfjTVBPG9X1ev/Z7YxCyLaMxDNHJUJiIiFw4MyuHNg+n1xzukaFaFG8hY9+kFS4DSnAPifY6bL5wPLDzSX7MABjlsHGlEXBXpAdyAH4DeMXeASTkMAmxSKkPYdu/fHRGNNEkCmT5k0BjPnQKNZ2ETw1qzUIbIFD6ax1ngKbA5/Xz5RLCYYeBRWVu+JHcbT+q22o5Tf9TPcR8CcTwewdaCAIkCD9K819ETFgSIUthbQZMC+0gXeatf1Vche/3mIFyvVB0ASZNwT02XdaqoBgIb9o4Glo74baF9zn28Yu2+vvysSuLPu1owTF0QOlncqKxtYUtL/Xmk6+0ra3y/LkEB5s/LyQaWlA66XJrPr3NOSnFslnXe9rG9feR2okXP4enz5HLhU2fN+452jJwMnbHvdMf/xhgNnqS+dvmTNyvza6euv78d+ybOsHj22Bm8ve7SLTfVvCNm+v3uP+FkJPXrs39qzhz2roKhtb/vKj6+CVPgJ1pXRhW2tWVK1qI3524xq3jd2/Ox+/gn9Jvr7bTlaMiilR/TU+Fo1y6h7QfdL/cImZk6K6Be+KHMhrQFwN+ok5f/tf0PptuqPCm3+zXQ0ABVD8jNDVj8TmDdnFPjJFToRXFcncbblNzTQwkBOg9FM6jcAWzfjYlkiqBsriX6jiGAS/V6mIJJTUJhkITW2CDw41AcvJq3AppBO6x0imYtCtAUUsBKAEMZZMAjhLijCeIbU2FrwEMMX8BImCmwGSuSODjkCWXVkXAR3WP9gt5zIUYuK0m+o32HhLDvEv5CbdcPUj8XwFRPyHHPaR88iBMQ5wgWchyFkKJwdbtIbkXIYBqr7on7LsVO0Y1wEd1j/YLecyG8uqvTzN9TvsHBLXY3yhdzs4DD1Yw/kVZB61d3LS9pHzyIExDnCBegw2IEMpX6Yw016M8JXDgNqRH0F/fqi+HVbABtLaoidr9DTkN5dBw==') format('woff2'), url('iconfont.woff?t=1546848291218') format('woff'), url('iconfont.ttf?t=1546848291218') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+        url('iconfont.svg?t=1546848291218#iconfont') format('svg');
+        /* iOS 4.1- */
+    }
+    
+    .iconfont {
+        font-family: "iconfont" !important;
+        font-size: 16px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    
+    .icon-kefu:before {
+        content: "\e604";
+    }
+</style>
+<style>
+    #newBridge #nb_icon_wrap {
+        display: none;
+    }
+</style>
+</head>
+
+<body class="goods">
+    <header id="header" class="mui-bar" style="background-color: rgba(255, 255, 255, 0);">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <a class="iconfont icon-fenxiang mui-pull-right"></a>
+    </header>
+    <div class="goodsbar">
+        <a class="goodsbar-item" id="contact">
+            <span class="iconfont icon-kefu"></span>
+            <span class="goodsbar-label">客服</span>
+        </a>
+        <a class="goodsbar-item collect">
+            <span class="iconfont icon-shoucang"></span>
+            <span class="goodsbar-label">收藏</span>
+        </a>
+
+        <a href="{:url('cart/shopcar')}" class="goodsbar-item shopcart" style="position:relative">
+            <span class="iconfont icon-gouwucheshoppingcart"></span>
+            <span class="goodsbar-label">购物车</span>
+            <span class="mui-badge badge-num">1</span>
+        </a>
+        <div class="buyoption mui-row">
+            <a class="addtocart mui-col-xs-6" href="#spec">
+                加入购物车
+            </a>
+            <a class="buynow mui-col-xs-6" href="#spec">
+                立即购买
+            </a>
+        </div>
+    </div>
+    <div class="mui-content" style="padding-bottom: 50px;">
+        <div class="swiper-container goods-container">
+            <div class="swiper-wrapper">
+
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="goods-content">
+            <p class="goods_name mui-ellipsis">商品</p>
+            <p class="mui-ellipsis countdown" style="font-size:12px;color:#999;">
+                <i class="iconfont icon-xianshi"></i> 距离结束还剩:
+                <span class="hei">0</span>天<span class="hei">0</span>时<span class="hei">0</span>分<span class="hei">0</span>秒
+            </p>
+            <div class="return-info"><span class="price"><span class="seckill" style="display:none;">抢购价</span>￥
+                <e class="price-info goods-price-info">00</e>
+                </span><span class="exchange">羊币抵￥<e>0.00</e></span><span class="return-integral">购物返<e>00</e>羊币</span><span class="xiangou" style="float:right;font-size:12px;color:#999;display:none"></span></div>
+            <div class="original-price">原价￥
+                <e>0.00</e>
+            </div>
+            <p class="mui-ellipsis commodity progressa" style="display:none">
+                <div id="bar" style="display:none">
+                    <div class="finish" style="width:50%;"></div>
+                    <span class="ing"></span>
+                </div>
+                <div class="goods-post mui-row"><span class="mui-col-xs-4 free_shipping">快递：<e>免运费</e></span><span class="mui-col-xs-4" style="text-align:center"><e class="comment_count">000</e>人评价</span><span class="mui-pull-right mui-col-xs-4" style="text-align:right">销量<e class="sales_sum">00</e></span></div>
+        </div>
+        <ul class="mui-table-view goods-model">
+            <li class="mui-table-view-cell" id="specBtn">
+                <a href="#spec">
+                    已选：<e class="open-option"></e>
+                    <i class="iconfont icon-you mui-pull-right" style="color:#666"></i>
+                </a>
+            </li>
+        </ul>
+        <div class="mui-card">
+            <div class="mui-card-header">
+                <a class="gotocommentList" href="/wap/order/comment_list/id/{:input('id')}" style="width:100%;"><span style="font-size:14px">商品评价(<e class="comment_count">99+</e>)</span><span class="mui-pull-right" style="font-size:12px;color:#666"><i class="iconfont icon-you"></i></span></a>
+            </div>
+            <div class="mui-card-content">
+                <ul class="mui-table-view goods-model commentList" id="comment">
+                    <!-- <li class="mui-table-view-cell comment_list">
+                        <a>
+                            <div class="user-info"><img class="user-img" src="__IMG__/temp/user.jpg"><span class="user-name">人不犯二枉少年</span><span class="mui-pull-right evaluate-star"><i class="iconfont icon-sc1"></i><i class="iconfont icon-sc1"></i><i class="iconfont icon-sc1"></i><i class="iconfont icon-sc1"></i><i class="iconfont icon-sc1"></i></span></div>
+                            <div class="evaluate">收到了，里面文章写得非常好，试题都是以前没有做过的，最喜欢的就是试题调研系列，题材新颖，五分好评。</div>
+                            <div class="evaluate-goodsinfo"><span>2017-8-31</span><span>颜色：<e>黑色</e></span><span>尺码：<e>S</e></span></div>
+                        </a>
+                    </li> -->
+                </ul>
+            </div>
+            <div class="mui-card-footer seeAll">
+                <a href="/wap/order/comment_list/id/{:input('id')}" style="width:100%;">
+                    <div style="width:100%;text-align:center">
+                        查看更多评价
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div id="screenWrap" style="height:40px;">
+            <div class="mui-row screen">
+                <a class="mui-col-xs-4 scrolltoImgandText"><span class="active">图文详情</span></a>
+                <a class="mui-col-xs-4 scrolltoparameter"><span>产品参数</span></a>
+                <a class="mui-col-xs-4 scrolltoRecommend"><span>热门推荐</span></a>
+            </div>
+        </div>
+        <div id="ImgandText">
+
+        </div>
+        <div id="parameter">
+            <ul>
+
+            </ul>
+        </div>
+        <div id="Recommend">
+            <div class="mui-row RecommendList">
+
+            </div>
+            <div class="mui-row RecommendList_second">
+
+            </div>
+        </div>
+    </div>
+    <div id="spec" class="spec mui-popover mui-popover-action mui-popover-bottom">
+        <div style="padding: 10px;">
+            <div>
+                <img class="spec-img" src="__IMG__/temp/user.jpg" alt="">
+                <a href="#spec"><i class="iconfont icon-cuo mui-pull-right mui-backdrop-action" style="color:#999;"></i></a>
+                <div style="height:90px;padding-top:20px;">
+                    <span class="price">￥<e class="price-info specMoney">0.00</e></span><br>
+                    <span style="font-size:15px;">库存<e class="specCount">***</e>件</span><br>
+                    <span style="font-size:15px;">已选：<e class="open-option"></e></span>
+                </div>
+            </div>
+            <div>
+                <div class=" specWrap">
+
+                </div>
+                <!-- <div class="goods-attribute">
+                    <p>颜色</p>
+                    <p><span class="selected">卡其色</span><span>米白色</span><span>酒红色</span><span>深空灰</span><span>抹茶绿</span></p>
+                </div>
+                <div class="goods-attribute">
+                    <p>尺码</p>
+                    <p><span>M</span><span class="selected">L</span><span>XL</span></p>
+                </div> -->
+            </div>
+            <div class="goods-num mui-input-row">
+                <label class="buy-num">购买数量</label>
+                <div class="mui-numbox" data-numbox-min='1' data-numbox-max='999'>
+                    <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+                    <input class="mui-input-numbox" type="number" />
+                    <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="mui-row goods-option">
+            <a class="add mui-col-xs-6"><span class="">加入购物车</span></a>
+            <a class="buy mui-col-xs-6"><span class="">立即购买</span></a>
+        </div>
+        <div class="mui-row confirm">
+            <a class="mui-col-xs-12"><span>确定</span></a>
+        </div>
+    </div>
+    <div class="returnTop animated">
+        <i class="mui-icon mui-icon-arrowup"></i>
+    </div>
+    <div class="layer-mask" id="layer_mask"></div>
+    <div class="helper forward" id="forward"><img src="__IMG__/share.png" alt="分享"></div>
+
+</body>
+{include file="public/footer" /}
+<script type="text/html" id="recommend_goods">
+    <div class="goods-list" data-href="[[id]]">
+        <img src="[[original_img]]" alt="" style="height:100%;">
+        <p>[[goods_name]]</p>
+        <div><span class="price">￥<e class="price-info">[[shop_price]]</e></span>[[if exchange_integral_money]]<span class="exchange">羊币抵￥<e>[[exchange_integral_money]]</e></span>[[/if]]</div>
+    </div>
+</script>
+<script type="text/html" id="commentList">
+    <li>
+        <div class="mui-table-view-cell mui-media comment-user" uid="[[uid]]">
+            [[if user_avatar]]
+            <img class="mui-media-object mui-pull-left" src="[[user_avatar]]"> [[else]]
+            <img class="mui-media-object mui-pull-left" src="__IMG__/defaultuser.jpg"> [[/if]]
+            <p class="mui-media-body color-333 text-15">
+                [[user_nickname]]
+            </p>
+        </div>
+        [[each comment_content as value i]] [[if value.rank == 0 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 1 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 2 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 3 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 4 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[else if value.rank == 5 && i == 0]]
+        <p class="comment-stars">
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+            <span class="iconfont icon-sc1 color-orange"></span>
+        </p>
+        [[/if]] [[if value.type == 0]]
+        <p class="commentTime text-mini">[[value.c_time]]</p>
+        <p class="content color-333">[[value.content]]</p>
+        <div class="imgList clearfix">
+            [[each value.pic_url as pic j]]
+            <img src="[[pic.url]]" data-preview-src='[[pic.url]]' data-preview-group='[[id]]'> [[/each]]
+            <div class="clear"></div>
+        </div>
+        [[/if]] [[/each]]
+    </li>
+</script>
+
+<script type="text/javascript">
+    var id = "{:input('id')}";
+    seajs.use("__JS__/goods")
+    $('#contact').on('click', function() {
+        $('#newBridge #nb_icon_wrap').click();
+    });
+</script>
+<!-- <script type="text/javascript" src = "http://qiyu.im/onlinServer/chart/chat_fz.js"></script> -->
+
+</html>

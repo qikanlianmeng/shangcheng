@@ -1,0 +1,50 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+</head>
+<body class="coinrecharged">
+   <div class="mui-inner-wrap">
+    <!--头部导航-->
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-icon mui-icon-back mui-pull-left mui-action-back"></a>
+        <h1 class="mui-title">充值记录</h1>
+    </header>
+
+    <!--主体部分-->
+    <div class="mui-content bg-whtie integral-list">
+        <ul id="list">
+            <!-- <li class="clearfix">
+                <div class="clearfix">
+                    <p class="mui-text-left color-333 text-16 mui-pull-left">微信支付10元</p><p class="mui-text-right text-orange mui-pull-right text-16">+10学币</p>
+                </div>
+                <div class="clearfix">
+                    <p class="mui-text-left mui-pull-left text-mini color-hui">2017-08-02 12:00:00</p><p class="mui-text-right mui-pull-right text-mini color-hui">交易成功</p>
+                </div>
+            </li> -->
+        </ul>
+
+        <div class="noAttend" style="display: none;background-color:#f4f4f4;">
+            <i class="iconfont icon-zanwu"></i>
+            <p>暂无更多记录~</p>
+        </div>
+        <div class="dropDown">
+            <p>暂无更多记录了~</p>
+        </div>
+    </div>
+    <!--end 主体部分-->
+  </div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    seajs.use("__JS__/coinrecharged")
+</script>
+<script type="text/html" id="listTem">
+    <li class="clearfix">
+        <div class="clearfix">
+            <p class="mui-text-left color-333 text-16 mui-pull-left"> [[if act=='1']]用户[[else]]管理员[[/if]]充值[[money]]元</p><p class="mui-text-right text-orange mui-pull-right text-16">+[[money]]余额</p>
+        </div>
+        <div class="clearfix">
+            <p class="mui-text-left mui-pull-left text-mini color-hui">[[update_time]]</p><p class="mui-text-right mui-pull-right text-mini color-hui">交易成功</p>
+        </div>
+    </li>
+</script>
+</html>

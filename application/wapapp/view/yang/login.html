@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>登录/注册</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/base.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/login.css" />
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+</head>
+<body>
+    <div id="app" class="container login-bg"  v-cloak>
+        <template v-if="!isRegister">
+        <div class="logo"></div>
+        <div class="login-box">
+            <div class="from-item">
+                <div class="label account-label"></div>
+                <div class="input-bg account-input">
+                    <input type="text" v-model="account" placeholder="请输入账号">
+                </div>
+            </div>
+            <div class="from-item">
+                <div class="label password-label"></div>
+                <div class="input-bg password-input">
+                    <input type="password" v-model="password" placeholder="请输入数字密码">
+                </div>
+                <a href="/wapapp/usercenter/find_password.html" class="forget-pwd">忘记密码</a>
+            </div>
+        </div>
+        <div class="login-btns">
+            <div class="login-btn" @click="login">登陆</div>
+            <div class="register-btn" @click="gotoRegister">注册</div>
+        </div>
+        </template>
+        <!--注册-->
+        <div class="zhuce" v-if="isRegister">
+            <div class="zhuce-title">
+                <div class="close" @click="closeRegister"></div>
+            </div>
+            <div class="zhuce-box">
+                <div class="zhuce-from-item">
+                    <div class="stroke" data-text="账号">账号</div>
+                    <div class="input-bg2 input-1">
+                        <input type="text" v-model="zhuce.account" placeholder="请输入账号">
+                    </div>
+                </div>
+                <div class="zhuce-from-item">
+                    <div class="stroke" data-text="密码">密码</div>
+                    <div class="input-bg2 input-1">
+                        <input type="password" v-model="zhuce.password" placeholder="请输入数字密码">
+                    </div>
+                </div>
+                <div class="zhuce-from-item">
+                    <div class="stroke phone-label" data-text="推荐人手机号">推荐人手机号</div>
+                    <div class="input-bg2 input-1">
+                        <input type="text" v-model="zhuce.tusername">
+                    </div>
+                </div>
+                <div class="zhuce-from-item">
+                    <div class="stroke" data-text="验证码">验证码</div>
+                    <div class="input-bg2 input-2">
+                        <input type="text" v-model="zhuce.verify"  placeholder="">
+                    </div>
+                    <div class="send-msg-btn sended" v-if="sended">
+                        <span>{{count}}</span> s
+                    </div>
+                    
+                    <div class="send-msg-btn" @click="getCode" v-if="!sended">
+                        发送
+                    </div>
+                </div>
+                <div class="login-btns">
+                    <div class="register-btn2" @click="register">注册</div>
+                </div>
+            </div>
+            <div class="zhuce-bottom"></div>
+            
+        </div>
+        <!--loading-->
+        <div class="loading hidden">
+            <p class="num">52<span>%</span></p>
+            <p class="text">loading...</p>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script>
+    function getParams(name) { 
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+        var r = window.location.search.substr(1).match(reg); 
+        if (r != null) return unescape(r[2]); return null; 
+        }
+        var app = new Vue({
+            el: '#app',
+            data: {
+                sended: false,
+                count: '',
+                timer: null,
+                zhuce: {
+                    account: '',
+                    password: '',
+                    tusername: '',
+                    verify: ''
+                },
+                account: '',
+                password: '',
+                isRegister: false
+            },
+            created() {
+                axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+            },
+            methods: {
+                getCode() {
+                    var that = this;
+                    if(!that.zhuce.account) {
+                        that.$toast({
+                            message: '请输入手机号'
+                        });
+                        return;
+                    }
+                    axios({
+                        url: '/api/user/send_verify',
+                        params: {
+                            id: 1,
+                            param: that.zhuce.account,
+                            type: 'sms'
+                        }
+                    }).then(function(res) {
+                        if(res.data.msg) {
+                            // 弹出后端返回的msg提示语
+                            that.$toast({
+                                message: res.data.msg
+                            });
+                        }
+                        if(res.data.code == 1) {
+                            that.startTimer()
+                        }
+                    }).catch(function(err) {
+                        console.log(err)
+                    })
+                },
+                startTimer() {
+                    var TIME_COUNT = 10;
+                    var that = this
+                    if (!that.timer) {
+                        that.count = TIME_COUNT;
+                        that.sended = true;
+                        that.timer = setInterval(function() {
+                            if (that.count > 0 && that.count <= TIME_COUNT) {
+                                that.count--;
+                            } else {
+                                clearInterval(that.timer);
+                                that.timer = null;
+                                that.sended = false;
+                            }
+                        }, 1000)
+                    }
+                },
+                login() {
+                    var that = this
+                    var account = this.account;
+                    var password = this.password;
+                    if(!account) {
+                        this.$toast({
+                            message: '请输入账号'
+                        });
+                        return
+                    }
+                    if(!password) {
+                        this.$toast({
+                            message: '请输入数字密码'
+                        });
+                        return   
+                    }
+                    this.$indicator.open('登录中...');
+                    axios({
+                        method: 'post',
+                        url: '/api/User/login',
+                        data: {
+                            account: account,
+                            password: password
+                        }
+                    }).then(function(res) {
+                        that.$indicator.close();
+                        // 弹出后端返回的msg提示语
+                        if(res.data.msg) {
+                            that.$toast({
+                                message: res.data.msg
+                            });
+                        }
+                        if(res.data.code == 1) {
+                            // 登录成功，记录用户信息
+                            localStorage.setItem('userData', JSON.stringify(res.data.data));
+                            // var url = getParams('url') || '/wap/yang/game';
+                            window.location.href = '/wapapp/yang/game';
+                        }
+                    }).catch(function(err) {
+                        console.log(err);
+                        that.$indicator.close();
+                    })
+                },
+                closeRegister() {
+                    this.isRegister = false
+                },
+                register() {
+                    var that = this
+                    var account = this.zhuce.account;
+                    var password = this.zhuce.password;
+                    var verify = this.zhuce.verify
+                    var tusername = this.zhuce.tusername;
+                    if(!account) {
+                        this.$toast({
+                            message: '请输入账号'
+                        });
+                        return
+                    }
+                    if(!password) {
+                        this.$toast({
+                            message: '请输入数字密码'
+                        });
+                        return   
+                    }
+                    if(!verify) {
+                        this.$toast({
+                            message: '请输入验证码'
+                        });
+                        return 
+                    }
+                    this.$indicator.open('注册中...');
+                    axios({
+                        method: 'post',
+                        url: '/api/User/register',
+                        data: {
+                            account: account,
+                            password: password,
+                            verify: verify,
+                            tusername: tusername
+                        }
+                    }).then(function(res) {
+                        that.$indicator.close();
+                        // 弹出后端返回的msg提示语
+                        that.$toast({
+                            message: res.data.msg
+                        });
+                        if(res.data.code == 1) {
+                            // 登录成功，记录用户信息
+                            localStorage.setItem('userData', JSON.stringify(res.data.data));
+                            // var url = getParams('url') || '/wap/yang/game';
+                            window.location.href = '/wapapp/yang/game';
+                        }
+                    }).catch(function(err) {
+                        console.log(err);
+                        that.$indicator.close();
+                    })
+                },
+                gotoRegister() {
+                    this.isRegister = true
+                }
+            }
+
+        })
+    </script>
+</body>
+</html>

@@ -1,0 +1,128 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/index.css">
+<style>
+    .screen span {
+        /* width: 33.3%; */
+    }
+    
+    .screen span.active e {
+        color: #333;
+        font-weight: 600;
+    }
+    
+    .s_box {
+        display: none;
+        position: absolute;
+        width: 100%;
+        border-radius: 0 0 10px 10px;
+        top: 34px;
+        z-index: 10;
+        background: #fff;
+        box-shadow: 0 2px 10px #999;
+    }
+    
+    .s_box p {
+        margin-bottom: 0;
+        width: 100%;
+        text-align: center;
+        font-size: 12px;
+    }
+    
+    .s_box p.on {
+        background: rgba(0, 0, 0, 0.1);
+        color: #333;
+    }
+    
+    .mui-bar .mui-input-row .mui-input-clear~.mui-icon-clear {
+        right: 35px !important;
+    }
+    .screen img{
+        margin-top: 0;
+    }
+    .mui-bar input[type=search]{
+        margin: 0 0 !important;
+    }
+</style>
+</head>
+
+<body class="searchlist">
+    <header id="header" class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div class="mui-title mui-input-row mui-search">
+            <input id="searchInput" type="search" name="searchgoods" class="mui-input-clear" placeholder="搜索全部商品" value="" style="text-align: left">
+        </div>
+        <a class="mui-pull-right cancel search" style="position: absolute;right: 64px;">搜索</a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-row screen" style="z-index: 1;">
+        <span class="mui-col-xs-3 col_span active" data-orderby="order"><e>综合</e></span>
+        <span class="mui-col-xs-3 sales_span" data-orderby="sales_num"><e>销量</e></span>
+        <span class="mui-col-xs-3 price-span" data-orderby="shop_price"><e>价格<img class="shengjiangxu" src="__IMG__/shengjiangxu.png" alt=""><img class="shengxu" src="__IMG__/shengxu.png" alt=""><img class="jiangxu" src="__IMG__/jiangxu.png" alt=""></e></span>
+        <span class="mui-col-xs-3 g_span" data-orderby="">
+            <e class="goods_group"><span class="g_group">样品区</span><span class="mui-icon mui-icon-arrowdown"></span></e>
+        <div class="s_box">
+            <p class="on">样品区</p>
+            <p>代售区</p>
+            <p>订货区</p>
+        </div>
+        </span>
+        <!-- <a href="#searchSpec" class="mui-col-xs-3" style="text-align:center"><e>筛选</e></a> -->
+    </div>
+    <div class="mui-content">
+        <ul class="mui-table-view" id="goodsWrap">
+
+        </ul>
+        <div class="dropDown">
+            <p>暂无更多商品了，到别处看看</p>
+        </div>
+        <div class="noAttend" style="display: none;background-color:#f4f4f4">
+            <i class="iconfont icon-zanwu"></i>
+            <p>没有搜索结果，试试搜索别的吧~</p>
+        </div>
+        <div id="searchSpec" class="spec mui-popover mui-popover-action mui-popover-bottom">
+            <div style="padding: 10px;">
+                <div class="specWrap">
+                    <!-- <div class="goods-attribute">
+                        <p>颜色</p>
+                        <p><span class="selected">卡其色</span><span>米白色</span><span>酒红色</span><span>深空灰</span><span>抹茶绿</span></p>
+                    </div>
+                    <div class="goods-attribute">
+                        <p>尺码</p>
+                        <p><span>M</span><span class="selected">L</span><span>XL</span></p>
+                    </div> -->
+                </div>
+            </div>
+            <div class="mui-row search-option">
+                <a class="add reset mui-col-xs-6"><span class="">重置</span></a>
+                <a class="buy mui-col-xs-6" href="#searchSpec"><span class="">完成</span></a>
+            </div>
+        </div>
+    </div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    var group = "{:input('group')}";
+    var keywords = "{:input('keywords')}";
+    var cid = "{:input('cid')}";
+    seajs.use("/static/wapapp/shop/js/searchlist")
+</script>
+<script type="text/html" id="goodslist">
+    <li class="mui-table-view-cell mui-media">
+        <a class="to_goods" href="javascript:;" data-id="[[id]]">
+            <img class="mui-media-object mui-pull-left" src="[[original_img]]" alt="">
+            <div class="mui-media-body" style="position: relative;height: 88px;">
+                <p>[[goods_name]]</p>
+                <div style="position: absolute;bottom: 0;width:100%;"><span class="price">￥<e class="price-info">[[price]]</e></span></div>
+                <!-- <div class="return-info">[[if exchange_integral_money]]<span class="exchange">羊币抵￥<e>[[exchange_integral_money]]</e></span>[[/if]][[if give_integral]]<span class="return-integral">购物返<e>[[give_integral]]</e>羊币</span>[[/if]]</div> -->
+            </div>
+        </a>
+    </li>
+</script>
+
+</html>

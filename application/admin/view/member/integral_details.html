@@ -1,0 +1,132 @@
+{include file="public/header" /}
+<style type="text/css">
+.chosen-search{
+    display: none;
+}
+.clearfix{overflow:hidden;_zoom:1;}
+.con-form{padding: 0 15px;}
+.con-form input,.con-form select{width: 160px;display: inline-block;}
+.con-form .form-group{float: left;margin-bottom: 0;}
+.m-r{margin-right: 15px;}
+.clear{clear: both;}
+.table th, .table td{text-align: center;padding: 12px 8px!important;}
+.color-red{color: #ec4758;}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            {if $uid > 0}
+            <h5>用户：{$user_account}积分明细</h5>
+        {else/}
+            <h5>积分明细</h5>
+        {/if}
+        </div>
+        <div class="ibox-content">
+            <div class="row con-form clearfix">
+                <form action="#" method="get" accept-charset="utf-8">
+                    <div class="form-group m-r">
+                        <label class="control-label">开始时间</label>
+                        <input type="input" name="start_time" id="start_time" class="form-control" value="{$start_time}">
+                    </div>
+                    <div class="form-group m-r">
+                        <label class="control-label">结束时间</label>
+                        <input type="input" name="end_time" id="end_time" class="form-control" value="{$end_time}">
+                    </div>
+                    <div class="form-group m-r">
+                        <label class="control-label">明细类型</label>
+                        <select class="form-control chosen-select" name="act">
+                            <option value="0" {eq name="act" value="0"}selected{/eq} >全部明细</option>
+                            <!-- <option value="1" {eq name="act" value="1"}selected{/eq} >充值</option>
+                            <option value="2" {eq name="act" value="2"}selected{/eq} >管理员操作</option>
+                            <option value="3" {eq name="act" value="3"}selected{/eq} >付款</option>
+                            <option value="4" {eq name="act" value="4"}selected{/eq} >退款</option>
+                            <option value="21" {eq name="act" value="21"}selected{/eq} >直推</option>
+                            <option value="22" {eq name="act" value="22"}selected{/eq} >间推</option>
+                            <option value="25" {eq name="act" value="25"}selected{/eq} >提现</option>
+                            <option value="26" {eq name="act" value="26"}selected{/eq} >提现退回</option>
+                            <option value="31" {eq name="act" value="31"}selected{/eq} >羊到期兑换</option> -->
+                            <option value="41" {eq name="act" value="41"}selected{/eq} >签到</option>
+                            <option value="42" {eq name="act" value="42"}selected{/eq} >分享</option>
+                        </select>
+                    </div>
+                    <div class="form-group m-r">
+                        <label class="control-label">关键字</label>
+                        <input type="input" name="key" id="key" placeholder="用户编号/账号/手机" class="form-control" value="{$key}">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit"><i class="fa fa-search"></i> 搜索</button>&nbsp;&nbsp;&nbsp;
+
+                    </div>
+                </form>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>用户编号</th>
+                                <th>用户账号</th>
+                                <th>积分</th>
+                                <th>发生时间</th>
+                                <th>备注</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         {foreach $list as $v}
+                            <tr>
+                                <td>{$v.id}</td>
+                             <!--  /*<td>
+                                {if condition="$v.act eq 1"}
+                                充值
+                                {elseif  condition="$v.act eq 2" /}
+                               管理员操作
+                                {elseif  condition="$v.act eq 3" /}
+                                付款
+                                {elseif  condition="$v.act eq 4" /}
+                                退款
+                                    {elseif  condition="$v.act eq 21" /}
+                                    直推
+                                    {elseif  condition="$v.act eq 22" /}
+                                    间推
+                                    {elseif  condition="$v.act eq 25" /}
+                                    提现
+                                    {elseif  condition="$v.act eq 26" /}
+                                    提现退回
+                                    {elseif  condition="$v.act eq 31" /}
+                                    羊到期兑换
+                                {/if}
+                                </td>*/-->
+                                <td>{$v.uid}</td>
+                                <td>{$v.account}</td>
+                                <td class="color-red">{$v.num}</td>
+                                <td>{$v.create_time|date="Y-m-d H:i:s",###}</td>
+                                <td >{$v.remark}</td>
+                            </tr>
+                         {/foreach}
+                        </tbody>
+                        
+                    </table>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+
+{include file="public/footer" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+$("#start_time").datetimepicker({lang:'ch'});
+$("#end_time").datetimepicker({lang:'ch'});
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">支付订单</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-content firm-order">
+        <div class="pay-result mui-text-center bg-whtie">
+            <p class="p-suc p-icon"><span class="iconfont icon-dui"></span></p>
+            <p class="m-t p-suc-text text-16">订单提交成功</p>
+        </div>
+        <div class="order-view bg-whtie m-t clearfix">
+            <!-- <p><label>订单金额</label><span>5000.11元</span></p>
+        <p><label>订单编号</label><span>1235974569745</span></p>
+        <p><label>收货地址</label><span>河南省手机铃声看到羊币拉时代峰峻阿斯蒂芬索拉卡多放假哎说多了</span></p>
+        <p><label>订单备注</label><span>快点发货哦</span></p> -->
+        </div>
+        <ul class="mui-table-view m-t table-view-order color-333 text-15 pay-method">
+            <!-- <li class="mui-table-view-cell text-16">选择支付方式</li> -->
+            <li>
+                <div class="mui-input-row mui-radio mui-left pay-alipay"><label><span class="iconfont icon-zhifubao"></span>支付宝支付<input name="pay-method" value="alipay" type="radio"></label></div>
+                <div class="mui-input-row mui-radio mui-left pay-wxpay"><label><span class="iconfont icon-weixin"></span>微信支付<input name="pay-method" value="wxpay" type="radio"></label></div>
+            </li>
+        </ul>
+        <nav class="mui-bar mui-bar-tab bottom-bg order-bottom">
+            <span class="color-main mui-pull-left text-16 sum_money">总计：￥<span id="payFor">0.00</span></span>
+            <button type="button" id="submitOrder" class="text-15 bg-main nav-bottom-btn" style="border-radius: 25px;
+        top: 1.5px;
+        height: 45px;">支付</button>
+        </nav>
+    </div>
+    {include file="public/footer" /}
+    <script src="/static/wapapp/yang/js/api.js"></script>
+    <script type="text/html" id="orderViewTem">
+        <p><label>订单金额</label><span>[[order_amount]]元</span></p>
+        <p><label>订单编号</label><span>[[order_sn]]</span></p>
+        <p><label>收货地址</label><span>[[address_detail]]</span></p>
+        [[if user_note]]
+        <p><label>订单备注</label><span>[[user_note]]</span></p>[[/if]]
+    </script>
+    <script type="text/javascript">
+        var order_id = "{:input('order_id')}";
+        seajs.use(['/static/wapapp/shop/js/payOrder']);
+    </script>
+</body>
+
+</html>

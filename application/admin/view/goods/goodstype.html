@@ -1,0 +1,87 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>商品类型</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">   
+                <div  class="col-sm-2" style="width: 100px">
+                    <div class="input-group" >  
+                        <a href="{:url('addGoodsType')}"><button class="btn btn-outline btn-primary" type="button">添加类型</button></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th>ID</th>
+                                <th>类型名称</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        {volist name='list' id='v'}
+                        <tr class="long-td">
+                            <td>{$v.id}</td>
+                            <td>{$v.name}</td>
+                            <td>
+                                <a href="{:url('GoodsAttribute', ['type_id' => $v['id']])}" class="btn btn-default btn-outline btn-xs">
+                                    <i class="glyphicon glyphicon-search"></i> 属性列表</a>&nbsp;&nbsp;
+                                <a href="{:url('GoodsSpec', ['type_id' => $v['id']])}" class="btn btn-default btn-outline btn-xs">
+                                    <i class="glyphicon glyphicon-search"></i> 规格列表</a>&nbsp;&nbsp;
+                                <a href="{:url('editGoodsType', ['id' => $v['id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del({$v.id})" class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+//删除
+function del(id){
+    var url = '{:url("delGoodsType")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+
+
+
+</script>
+</body>
+</html>

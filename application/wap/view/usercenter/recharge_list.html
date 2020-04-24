@@ -1,0 +1,142 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="maximum-scale=1.0,minimum-scale=1.0,user-scalable=0,width=device-width,initial-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no,email=no,date=no,address=no">
+    <title>提现记录</title>
+    
+    <!-- <link rel="stylesheet" type="text/css" href="/static/mob/public/wallet/css/api.css"/> -->
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/mui.min.css">
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/mui.picker.min.css">
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/mui.poppicker.css">
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/swiper.min.css">
+    <script src="/static/mob/public/wallet/js/jquery.3.1.1.js"></script>
+    <script src="/static/mob/public/wallet/js/mui.min.js"></script>
+    <script src="/static/mob/public/wallet/js/mui.picker.min.js"></script>
+    <script src="/static/mob/public/wallet/js/mui.poppicker.js"></script>
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/style.css"/>
+    <script src="/static/mob/public/wallet/js/swiper.min.js"></script>
+    <script src="/static/mob/public/wallet/js/common.js"></script>
+    <link rel="stylesheet" href="/static/mob/yang/mescroll/mescroll.min.css">
+    <script src="/static/mob/yang/mescroll//mescroll.min.js" charset="utf-8"></script>
+  
+   
+   charset="utf-8"></script>
+    <style>
+    
+@font-face {font-family: "iconfont";
+  src: url('iconfont.eot?t=1545382396459'); /* IE9*/
+  src: url('iconfont.eot?t=1545382396459#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+  url('iconfont.ttf?t=1545382396459') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+  url('iconfont.svg?t=1545382396459#iconfont') format('svg'); /* iOS 4.1- */
+}
+
+.iconfont {
+  font-family:"iconfont" !important;
+  font-size:16px;
+  font-style:normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-zanwushuju:before { content: "\e603"; }
+    </style>
+</head>
+<body style="background:#fff;max-width:640px;">
+        
+    <!-- 顶部 -->
+    <header id="header" class="mui-bar" style="max-width:640px;">
+        <div class="mb15"></div>
+        <a  class="mui-icon mui-icon-back mui-pull-left back" onclick="back()"></a>
+        <h1 class="mui-title">提现记录 </h1>
+    </header>
+
+    <script>
+        function back(){
+            mui.back();
+        }
+    </script>
+    <!-- main -->
+    <div class="content_box mui-content" style="background:#fff;">
+        <div class="record_box mescroll" id="mescroll">
+            <ul id="dataList">
+                
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        $(function(){
+            var mescroll=new MeScroll('mescroll',{
+                up:{
+                    callback:upcallback,
+                    isBounce:false,
+                    noMoreSize:1,
+                    empty:{
+                        icon:'/static/mob/yang/imgs/index/web.png',
+                        tips:'暂无数据'
+                    },
+                    clearEmptyId:'dataList',
+                    lazyload:{
+                        use:true
+                    }
+                }
+            });
+
+
+            function upcallback(page){
+                getListDataFromNet(page.num,function(data){
+                    mescroll.endSuccess(data.length);
+                    // if(data.length<page.size){
+                    //     $('.upwarp-nodata').html('全部加载完成');
+                    // }
+                    setListdata(data);
+
+                },function(){
+                    mescroll.endErr();
+                });
+            }
+               function getListDataFromNet(pageNum,successCallback,errorCallback){
+                
+                    $post('/api/user/withdraw',{page:pageNum},function(data){
+                        console.log((JSON.stringify(data)));
+                        var cur=data.data;
+                        var listData=[];
+                    
+                   
+                        //全部商品 (模拟分页数据)
+                        for (var i in cur) {
+                            if(i==cur.length) break;
+                            listData.push(cur[i]);
+                        }
+                        successCallback(listData);
+                    });
+                }
+
+                function setListdata(data){
+                    
+                    var recharge_list='';
+                    $.each(data,function(key,value){
+                            if(value.status==0){
+                            status='<span class="fr" style="color:red;">待打款</span>';
+                            }else if (value.status==1) {
+                            status='<span class="fr" style="color:green;">已打款</span>';
+                            }else{
+                            status='<span class="fr" style="color:red;">拒绝</span>';
+                            }
+                            recharge_list+='<li><p><span>'+value.zfb_name+'('+value.zfb_hao+')</span><span class="fr price">'+value.money+'</span></p><p><span>'+value.create_time+'</span>'+status+'</p></li>'
+                        });
+
+                        $('#dataList').append(recharge_list);
+                }
+            
+        })
+    </script>
+    
+    <!-- <script type="text/javascript" src="/static/mob/public/wallet/js/api.js"></script> -->
+    <script src="/static/mob/public/wallet/js/index.js"></script>
+    
+</body>
+</html>

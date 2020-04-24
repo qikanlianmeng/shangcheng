@@ -1,0 +1,323 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<style>
+.file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
+.file-item .info{overflow: hidden;}
+.uploader-list{width: 100%; overflow: hidden;}
+.input-group[class*=col-]{
+    float: left;
+}
+@media (max-width:768px) {
+    .input-group[class*=col-]{
+        float: none;
+    }
+}
+.detail{
+    line-height: 34px;
+    color: #999
+}
+
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑分类</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal" name="userAdd" id="userAdd" method="post" action="{:url('editGoodsCategory')}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">分类名称：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="name" type="text" class="form-control" name="name" value="{$info.name}">
+                                <input type="hidden" name="id" value="{$info.id}" />
+                            </div>
+                            <div class="col-sm-4 detail">*</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">wap分类名称：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="mobile_name" type="text" class="form-control" name="mobile_name" value="{$info.mobile_name}">
+                            </div>
+                            <div class="col-sm-4 detail">*</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">顶级分类：</label>
+                            <div class="input-group col-sm-4">
+                                <select class="form-control m-b chosen-select" name="parent_id_1" id="parent_id_1">
+                                    <option value="">请选择顶级分类，如果添加的分类为顶级分类，不选即可</option>
+                                    {foreach name="categoryList" item="vo"}
+                                    <option value="{$vo.id}" {if condition="$info->topParentId == $vo->id"}selected="selected"{/if}>{$vo.name}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">二级分类：</label>
+                            <div class="input-group col-sm-4">
+                                <select class="form-control m-b " name="parent_id_2" id="parent_id_2">
+                                    <option value="">请选择二级分类，如果添加的分类为二级分类，不选即可</option>
+
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">展示图片：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="hidden" id="data_photo" name="image" value="{$info->image}">
+                                <div id="fileList" class="uploader-list" style="float:right"></div>
+                                <div id="imgPicker" style="float:left">选择图片</div>
+                                <img id="img_data"  height="98px" width="152px" style="float:left;margin-left: 50px;margin-top: -10px;" src="{if condition='!$info->image'}/static/admin/images/no_img.jpg{else/}{$info->image}{/if}"/>
+
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">是否推荐：</label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <input type="radio" name='is_hot' value="0" {if $info->is_hot == 0}checked="checked"{/if}/>否&nbsp;&nbsp;
+                                    <input type="radio" name='is_hot' value="1" {if $info->is_hot == 1}checked="checked"{/if}/>是
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">是否显示：</label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <input type="radio" name='is_show' value="0" {if $info->is_show == 0}checked="checked"{/if}/>否&nbsp;&nbsp;
+                                    <input type="radio" name='is_show' value="1" {if $info->is_show == 1}checked="checked"{/if}/>是
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">筛选规格：</label>
+
+                            <div class="col-sm-6" style="padding:0" id="spec">
+                                {if !$info->spec_list}
+                                <div style="display:inline-flex;width:500px;">
+                                    <span style="line-height: 31px; padding-right:5px;margin-bottom:10px" class="add">[+]</span>
+                                    <select class="form-control col-md-3 typeList" style="width: 200px; margin-right: 10px;">
+                                        <option value="">请选择商品类型</option>
+                                        {foreach name="typeList" item="vo"}
+                                        <option value="{$vo.id}">{$vo.name}</option>
+                                        {/foreach}
+                                    </select>
+                                    <select class="form-control col-md-3" style="width: 200px;" name="spec_id[]">
+                                        <option value="">请选择筛选规格</option>
+                                    </select>
+                                </div>
+                                {else /}
+                                    {foreach name="$info.spec_list" item="v"}
+                                        <div style="display:inline-flex;width:500px;">
+
+                                            <span style="line-height: 31px; padding-right:5px;margin-bottom:10px" class="add">{if $key == 0}[+]{else /}[-]{/if}</span>
+                                            <select class="form-control col-md-3 typeList" style="width: 200px; margin-right: 10px;" spec_id="{$v.id}">
+                                                <option value="">请选择商品类型</option>
+                                                {foreach name="typeList" item="vo"}
+                                                <option value="{$vo.id}" {if condition="$v.type_id == $vo->id"}selected="selected"{/if}>{$vo.name}</option>
+                                                {/foreach}
+                                            </select>
+                                            <select class="form-control col-md-3" style="width: 200px;" name="spec_id[]">
+                                                <option value="">请选择筛选规格</option>
+                                            </select>
+                                        </div>
+                                    {/foreach}
+                                {/if}
+                            </div>
+
+                        </div>
+
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+<script type="text/javascript" src="/static/admin/webupload/webuploader.min.js"></script>
+
+<script type="text/javascript">
+    var $list = $('#fileList');
+    //上传图片,初始化WebUploader
+    var uploader = WebUploader.create({
+
+        auto: true,// 选完文件后，是否自动上传。
+        swf: '/static/admin/webupload/Uploader.swf',// swf文件路径
+        server: "{:url('Upload/upload2qiniu')}",// 文件接收服务端。
+        duplicate :true,// 重复上传图片，true为可重复false为不可重复
+        pick: '#imgPicker',// 选择文件的按钮。可选。
+
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/jpg,image/jpeg,image/png'
+        },
+
+        'onUploadSuccess': function(file, data, response) {
+            if (data.code == 0) {
+                layer.msg(data.data, {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+            $("#data_photo").val(data.data);
+            $("#img_data").attr('src', data.data).show();
+        }
+    });
+
+    uploader.on( 'fileQueued', function( file ) {
+        $list.html( '<div id="' + file.id + '" class="item">' +
+                '<h4 class="info">' + file.name + '</h4>' +
+                '<p class="state">正在上传...</p>' +
+                '</div>' );
+    });
+
+    // 文件上传成功
+    uploader.on( 'uploadSuccess', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传成功！');
+    });
+
+    // 文件上传失败，显示上传出错。
+    uploader.on( 'uploadError', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传出错!');
+    });
+    //提交
+    $(function(){
+        $('#userAdd').ajaxForm({
+            beforeSubmit: checkForm,
+            success: complete,
+            dataType: 'json'
+        });
+
+        function checkForm(){
+            if( !$.trim($('#name').val())){
+                layer.msg('分类名称必须填写',{icon:2,time:1500,shade: 0.1}, function(index){
+                layer.close(index);
+                });
+                return false;
+            }
+        }
+
+
+        function complete(data){
+             //window.location.href="{:url('goodsType')}";
+             if(data.code==1){
+                 layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+                     window.location.href = "{$backUrl}";
+                 });
+             }else{
+                 layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1});
+                 return false;
+             }
+        }
+
+    });
+
+
+
+    //IOS开关样式配置
+   var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem, {
+            color: '#1AB394'
+        });
+    var config = {
+        '.chosen-select': {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+    //ajax获取二级分类
+    $("#parent_id_1").change(function(){
+        var url = "{:url('ajaxGetCategory')}";
+        var pid = $(this).val();
+        if(!pid){
+            return false;
+        }
+        var secParentId = "{$info->secParentId}";
+        $.getJSON(url, {pid : pid}, function(data){
+            var option = '<option value="">请选择二级分类，如果添加的分类为二级分类，不选即可</option>';
+            if (data.code == 1) {
+                $(data.msg).each(function(k, v){
+                    var selected = '';
+                    if(secParentId == v.id){
+                        selected = "selected = 'selected'";
+                    }
+                    option += '<option value="'+ v.id +'" '+selected+'>'+ v.name +'</option>';
+                })
+            }
+            $("#parent_id_2").html(option);
+        })
+    })
+    $("#parent_id_1").trigger('change');
+    $("#spec").on('click', '.add', function(){
+        var tag = $(this).html();
+        if (tag == '[+]') {
+            var dom = $(this).parent().clone();
+            dom.find('.add').html('[-]');
+            $("#spec").append(dom);
+        } else {
+            $(this).parent().remove();
+        }
+    })
+    $("#spec").on('change','.typeList',function(){
+        var _this = $(this);
+        var id = _this.val();
+        if (!id) {
+            return false;
+        }
+        var url = "{:url('ajaxGetGoodsSpec')}";
+        var spec_id = _this.attr('spec_id');
+        $.getJSON(url, {id : id}, function(data){
+            var option = '<option value="">请选择筛选规格</option>';
+            if (data.code == 1) {
+                $(data.msg).each(function(k, v){
+                    var selected = '';
+                    if(spec_id == v.id){
+                        selected = "selected = 'selected'";
+                    }
+                    option += '<option value="'+ v.id +'" '+selected+'>'+ v.name +'</option>';
+                })
+
+            }
+            _this.siblings('select').html(option);
+        })
+    })
+    $('.typeList').trigger('change');
+</script>
+</body>
+</html>

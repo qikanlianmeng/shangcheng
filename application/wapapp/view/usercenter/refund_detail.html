@@ -1,0 +1,182 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">退款详情</h1>
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+</header>
+<div class="mui-content refunddetail">
+    <!-- <ul class="mui-table-view">
+        <li class="mui-table-view-cell title">
+            <i class="iconfont icon-shibai color-main mui-pull-left">
+            </i>
+            <span class="mui-pull-left color-333">
+                提交退款
+            </span>
+        </li>
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                商品名称：
+            </span>
+            宝贝名称
+        </li>
+    </ul>
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款类型：
+            </span>
+            退货退款
+        </li>
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款金额：
+            </span>
+            23.80元
+        </li>
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款原因：
+            </span>
+            质量问题
+        </li>
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款说明：
+            </span>
+        </li>
+        <li class="mui-table-view-cell text-15 color-333 imgs">
+            <span class="color-999">
+                上传图片：
+            </span>
+            <div class="imgBox">
+                <img src="http://img4.imgtn.bdimg.com/it/u=3432487329,2901563519&fm=27&gp=0.jpg" data-preview-src='http://img4.imgtn.bdimg.com/it/u=3432487329,2901563519&fm=27&gp=0.jpg' data-preview-group='1'>
+                <img src="http://img2.imgtn.bdimg.com/it/u=3965705221,2010595691&fm=27&gp=0.jpg" data-preview-src='http://img2.imgtn.bdimg.com/it/u=3965705221,2010595691&fm=27&gp=0.jpg' data-preview-group='1'>
+                <img src="http://img4.imgtn.bdimg.com/it/u=3432487329,2901563519&fm=27&gp=0.jpg" data-preview-src='http://img4.imgtn.bdimg.com/it/u=3432487329,2901563519&fm=27&gp=0.jpg' data-preview-group='1'>
+            </div>
+        </li>
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                申请时间：
+            </span>
+            2017-5-16 11:35
+        </li>
+    </ul> -->
+    <a href="/wapapp/usercenter/refund_list">
+        <button class="text-15" type="button">
+            查看退款记录
+        </button>
+    </a>
+</div>
+{include file="public/footer" /}
+<script type="text/javascript" src="__PUBLIC__/libs/mui.zoom.js"></script>
+<script type="text/javascript" src="__PUBLIC__/libs/mui.previewimage.js"></script>
+<script type="text/html" id="refundTem">
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell title">
+            <i class="iconfont [[if status == 1]]icon-chenggong color-green[[else]]icon-shibai color-main[[/if]] mui-pull-left">
+            </i>
+            <span class="mui-pull-left color-333">
+                [[if status == -1]]
+                审核未通过，拒绝退款
+                [[else if status == -2]]
+                用户取消退款
+                [[else if status == 0]]
+                待审核
+                [[else if status == 1]]
+                退款成功
+                [[/if]]
+            </span>
+        </li>
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                订单编号：
+            </span>
+            [[order_sn]]
+        </li>
+    </ul>
+    <ul class="mui-table-view">
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款类型：
+            </span>
+            [[if refund_type]]
+            退货退款
+            [[else]]
+            仅退款
+            [[/if]]
+        </li>
+        [[if refund_money]]
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款金额：
+            </span>
+            [[refund_money]]元
+        </li>
+        [[/if]]
+        [[if refund_deposit]]
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款余额：
+            </span>
+            [[refund_deposit]]金币
+        </li>
+        [[/if]]
+        [[if refund_integral]]
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款羊币：
+            </span>
+            [[refund_integral]]羊币
+        </li>
+        [[/if]]
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款原因：
+            </span>
+            [[reason]]
+        </li>
+        [[if describe]]
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                退款说明：
+            </span>
+            [[describe]]
+        </li>
+        [[/if]]
+        [[if imgs]]
+        <li class="mui-table-view-cell text-15 color-333 imgs">
+            <span class="color-999">
+                上传图片：
+            </span>
+            <div class="imgBox">
+                [[each imgs as value i]]
+                <img src="[[imgs[i].url]]" data-preview-src='[[imgs[i].url]]' data-preview-group='[[id]]'>
+                [[/each]]
+            </div>
+        </li>
+        [[/if]]
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                申请时间：
+            </span>
+            [[addtime]]
+        </li>
+        [[if status==1 || status==-1]]
+        <li class="mui-table-view-cell text-15 color-333">
+            <span class="color-999">
+                处理时间：
+            </span>
+            [[refund_time]]
+        </li>
+        [[/if]]
+    </ul>
+</script>
+<script type="text/javascript">
+var id = "{:input('return_id')}";
+mui.previewImage();
+seajs.use(['/static/wapapp/shop/js/refundDetail'])
+</script>
+</body>
+</html>

@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{$seo.title|default="商城"}</title>
+    <meta name="Keywords" content="{$seo.keywords|default='商城'}" />
+    <meta name="description" content="{$seo.description|default='商城'}" />
+    <title>首页</title>
+    <script>
+        var UID = '{:get_uid()}';
+        var PATH_URL = '';
+        var SITE_URL = '/';
+        var IS_WEIXIN = '{:is_weixin() ? 1 : 0}';
+    </script>
+    <link rel="stylesheet" href="/static/wapapp/public/css/mui.min.css">
+    <link rel="stylesheet" href="/static/wapapp/public/css/swiper.min.css">
+    <link rel="stylesheet" href="/static/wapapp/public/fonts/iconfont.css">
+    <link rel="stylesheet" href="/static/wapapp/public/css/animate-3.5.css">
+    <link rel="stylesheet" href="/static/wapapp/public/css/global.css">
+
+    <script src="/static/wapapp/public/wallet/js/mui.min.js"></script>
+    <script src="/static/wapapp/public/wallet/js/jquery.3.1.1.js"></script>
+    <link rel="stylesheet" href="/static/wapapp/public/wallet/css/style.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.picker.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.poppicker.css">
+    <link rel="stylesheet" href="/static/wapapp/public/libs/layer/need/layer.css">
+
+    <link rel="stylesheet" href="/static/wapapp/shop/css/shopstyle.css">
+    <title>绑定银行卡</title>
+    <style>
+        .line_span {
+            font-size: 16px !important;
+            border-bottom: 1px solid #999;
+            padding-right: 0;
+            position: absolute;
+            right: 6%;
+            top: 20%;
+            color: rgb(255, 80, 76);
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header" class=" mui-bar" style="margin-left:0px;">
+        <div class="mb15"></div>
+        <a class="back mui-icon mui-icon-left-nav mui-pull-left" onclick="back();"></a>
+        <script>
+            function back() {
+                mui.back();
+            }
+        </script>
+        <h1 class="mui-title">绑定银行卡</h1>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="content_box">
+        <div class="binding_info">
+            <ul>
+                <li>
+                    <span>持卡人姓名</span>
+                    <span>
+            <i class="mui-icon mui-icon-arrowright"></i>
+            <input type="text" class="zfb_name" id="name" value="" placeholder="绑定后不可修改">
+  
+          </span>
+                </li>
+                <li>
+                    <span>预留电话</span>
+                    <span>
+            <i class="mui-icon mui-icon-arrowright"></i>
+            <input class="zfb_hao" id="mobile" type="tel" value="" placeholder="请输入手机号码">
+          </span>
+                </li>
+                <li>
+                    <span>银行卡号</span>
+                    <span>
+          <i class="mui-icon mui-icon-arrowright"></i>
+          <input type="text" class="zfb_name" id="card_number" value="" placeholder="请输入银行卡号">
+
+        </span>
+                </li>
+                <li>
+                    <span>银行归属地</span>
+                    <span>
+          <i class="mui-icon mui-icon-arrowright"></i>
+          <input type="text" class="zfb_name bank_local" id="showCityPicker" value="" placeholder="请选择银行归属地" readonly onfocus="this.blur()">
+          <div id="cityResult3" class="ui-alert"></div>
+
+        </span>
+                </li>
+                <li>
+                    <span>开户银行</span>
+                    <span>
+          <i class="mui-icon mui-icon-arrowright"></i>
+          <input type="text" class="zfb_name" id="bank" value="" placeholder="请输入开户银行名称">
+
+        </span>
+                </li>
+                <li>
+                    <span>银行联行号</span>
+                    <span>
+          <i class="mui-icon mui-icon-arrowright"></i>
+          <input type="text" class="zfb_name" id="bank_number" value="" placeholder="请输入银行联行号">
+
+        </span>
+                </li>
+                </li>
+                <li>
+                    <span>开户支行</span>
+                    <span>
+          <i class="mui-icon mui-icon-arrowright"></i>
+          <input type="text" class="zfb_name" id="bank_son" value="" placeholder="请输入开户支行">
+
+        </span>
+                </li>
+                <li>
+                    <p style="position:relative;width: 100%;"><input type="number" id="verify" placeholder="请输入验证码" style="padding: 10px 0;margin-bottom: 0;font-size: 14px;"><span id="sendbtn" class="line_span">获取验证码</span></p>
+
+                </li>
+
+            </ul>
+
+
+        </div>
+        <div class="mb20"></div>
+        <button type="button" name="button" class="btn bingding_btn">确定绑定</button>
+    </div>
+
+
+
+
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.picker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.poppicker.js"></script>
+    <script src="/static/wapapp/public/wallet/js/api.js"></script>
+    <!-- <script src="/static/wapapp/public/wallet/js/index.js"></script> -->
+    <script src="/static/wapapp/public/wallet/js/common.js"></script>
+    <script src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+    <script src="/static/wapapp/public/libs/layer/layer.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        mui.init();
+    </script>
+    <script type="text/javascript">
+        //定义省市区邮政编码
+        var province, city, district = 0;
+
+        sessionStorage.setItem("need-refresh", true);
+        //省市区三级联动
+        mui.init();
+        mui.ready(function() {
+            //三级联
+            var cityPicker = new mui.PopPicker({
+                layer: 3
+            });
+            $get('/api2/address/get_region_tree', {}, function(data) {
+                if (data.status) {
+                    for (var i of data.data) {
+                        if (i.value == '410000') {
+                            for (var j of i.children) {
+                                if (j.value == '410100') {
+                                    for (var k in j.children) {
+                                        /*if (j.children[k].value == '410106' || j.children[k].value == '410182') {
+                                            j.children.splice(k, 1);
+                                        }*/
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    cityPicker.setData(data.data);
+                } else {
+                    common.toast(data.msg);
+                }
+            });
+            var showCityPicker = document.getElementById('showCityPicker');
+            showCityPicker.addEventListener('click', function(event) {
+                cityPicker.show(function(items) {
+                    console.log(items);
+                    var provinceText, cityText, districtText;
+                    province = items[0].value;
+                    provinceText = items[0].text;
+                    city = items[1].value;
+                    cityText = items[1].text;
+                    if (typeof(items[2].value) == 'undefined') {
+                        district = 0;
+                        districtText = '';
+                    } else {
+                        district = items[2].value;
+                        districtText = items[2].text;
+                    }
+                    showCityPicker.value = provinceText + " " + cityText + " " + districtText;
+                    // 返回 false 可以阻止选择框的关闭
+                    // return false;
+                });
+            }, false);
+        });
+        $("body").on("tap", '#sendbtn', function() {
+            var s = $("#sendbtn").attr('s');
+            if (s > 0) {
+                mui.toast("请稍后再试")
+                return false;
+            } else {
+                confirm(mobile);
+            }
+        })
+
+        function confirm(mobile) {
+            layer.confirm('<div class="inp-div inp-code" style="padding:9px 5px;margin-bottom:0;"><span class=" iconfont icon-yanzhengma"></span><input id="img_code" type="text" name="code" placeholder="图形验证码" class="input-login input-code" style="width:80%;background:unset;font-size:14px;"><img class="code-block" src="/api2/user/img_verify" onclick="javascript:this.src=\'/api2/user/img_verify\'" style="right:0;height: 43px;width: 48%;top:0;"></div>', {
+                    btn: ['确定', '取消'],
+                    title: "验证"
+                },
+                function(e) {
+                    var code = $('#img_code').val();
+                    if (!code) {
+                        mui.toast('请输入图形验证码');
+                        return false;
+                    } else {
+                        $get("/api2/user/send_verify_bank", {
+                            img_code: code
+                        }, function(ret) {
+                            if (ret.code) {
+                                mui.toast('发送成功');
+                                setTime();
+                                layer.close(layer.index);
+                            } else {
+                                mui.toast(ret.msg);
+                                if (ret.msg == '图片验证码错误') {
+                                    confirm(mobile);
+                                }
+                            }
+                        });
+                    }
+                });
+        }
+
+        function setTime() {
+            console.log("Aa")
+            $("#sendbtn").attr('s', 60);
+            $("#sendbtn").html("60秒后再发");
+            window.set_time = setInterval(function() {
+                var s = $("#sendbtn").attr('s');
+                if (s > 0) {
+                    s--;
+                    $("#sendbtn").attr('s', s);
+                    $("#sendbtn").html(s + "秒后再发");
+                } else {
+                    clearInterval(window.set_time);
+                    $("#sendbtn").html("获取验证码");
+                }
+            }, 1000);
+        }
+        $('#name').on('tap', () => {
+            if ($('#name').attr('readonly')) {
+                mui.toast('请联系管理员修改');
+            }
+        });
+
+        function get_info() {
+            $post('/api2/user/getuserinfo', {}, function(data) {
+                if (data.code == 1) {
+                    var obj = data.data.cash_account;
+                    if (data.data.cash_account_ok == 1) {
+                        $('#mobile').val(obj.mobile);
+                        $('#bank').val(obj.bank);
+                        $('#name').val(obj.name);
+                        $('#card_number').val(obj.card_number);
+                        $('#bank_number').val(obj.bank_number);
+                        $('#bank_son').val(obj.bank_son);
+                        $('.bank_local').val(obj.bank_local);
+                        $('#name').attr('readonly', true);
+                        $('#name').attr('onfocus', "this.blur()");
+                    }
+                }
+            });
+        };
+        //获取会员基本信息
+        get_info();
+
+        // 提交
+        $('.bingding_btn').on('tap', function() {
+            var name = $('#name').val();
+            var mobile = $('#mobile').val();
+            var card_number = $('#card_number').val();
+            var bank_local = $('.bank_local').val();
+            var bank = $('#bank').val();
+            var bank_number = $('#bank_number').val();
+            var bank_son = $('#bank_son').val();
+            var verify = $('#verify').val();
+            if (name == '') {
+                mui.toast('持卡人姓名不能为空');
+            } else if (mobile == '') {
+                mui.toast('预留手机号码不能为空');
+            } else if (mobile.search(/^\d{11}$/) == -1) {
+                mui.toast('手机号码格式不正确');
+            } else if (card_number == '') {
+                mui.toast('银行卡号不能为空！');
+            } else if (bank_local == '') {
+                mui.toast('银行归属地不能为空！');
+            } else if (bank == '') {
+                mui.toast('开户银行不能为空！');
+            } else if (bank_number == '') {
+                mui.toast('银行联行号不能为空！');
+            } else if (bank_son == '') {
+                mui.toast('开户支行不能为空！');
+            } else if (verify == '') {
+                mui.toast('验证码不能为空！');
+            } else {
+                $post('/api2/user/update_cash_account', {
+                    name: name,
+                    mobile: mobile,
+                    card_number: card_number,
+                    bank_local: bank_local,
+                    bank: bank,
+                    bank_number: bank_number,
+                    bank_son: bank_son,
+                    verify: verify
+                }, function(data) {
+                    if (data.status == 1) {
+                        mui.alert(data.msg, '提示', function() {
+                            mui.back();
+                        });
+                    } else {
+                        mui.toast(data.msg);
+                    }
+                });
+            };
+
+        });
+    </script>
+
+</body>
+
+</html>

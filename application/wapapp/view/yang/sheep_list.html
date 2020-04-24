@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>认养列表</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/base.css" />
+    <script src="/static/wapapp/public/libs/mui.min.js" charset="utf-8"></script>
+    <link href="/static/wapapp/public/css/mui.min.css" rel="stylesheet">
+
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="/static/wapapp/public/font/iconfont.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/static/wapapp/yang/mescroll/mescroll.min.css">
+<script src="/static/wapapp/public/libs/mui.min.js" charset="utf-8"></script>
+    <style>
+    .item-box {
+        display: flex;
+        /* flex-direction: row; */
+        padding: 0.25rem;
+        overflow: hidden;
+        /* height: 1.1rem; */
+        /* height: 0.56rem; */
+        justify-content: space-around;
+        /* text-decoration: none; */
+        align-items: center;
+        border-bottom:1px solid #f1f1f1;
+    }
+    .item_box_left{
+        width:25%;
+        position: relative;
+    }
+    .item_box_left span{
+        position: absolute;
+        left: 0px;
+        top: 10px;
+        color:#fff;
+        background:#FF5B5B;
+        padding:0 5px;
+        font-size:14px;
+    }
+    .item_box_left img{
+        width:80px;
+        height:80px;
+    }
+    .item_box_center{
+        width:45%;
+    }
+    .item_box_right{
+        width:30%;
+    }
+    .mescroll{
+        position: fixed;
+        top:50px;
+        bottom: 0;
+        height: auto;
+    }
+    .item_box_center p{
+        color: #666;
+        font-size:13px;
+        padding:3px 0;
+        margin: 0;
+    }
+    p{
+     margin: 0;
+    }
+</style>
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+</head>
+<body>
+<div>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-icon iconfont icon-back11 mui-pull-left" onclick="back();" style="font-size: 18px;color:#666;"></a>
+        <h1 class="mui-title">认养列表</h1>
+    </header>
+    <script>
+        function back(){
+            mui.back();
+        }
+    </script>
+    <div class="mui-contents">
+        <div class="status_tab">
+            <ul>
+                <li class="active">生长中</li>
+                <li>待收益</li>
+                <li>已完成</li>
+            </ul>
+        </div>
+        <div class="tender-list mescroll"  id="mescroll">
+            <div class="what-list data-list"  id="dataList" style="padding-bottom:0;">
+                
+            </div>
+           
+        </div>
+    </div>
+   
+   
+</div>    
+<script src="/static/wapapp/yang/js/jquery.3.1.1.js"></script>
+<script src="/static/wapapp/yang/js/template.js"></script>
+<script src="/static/wapapp/yang/mescroll/mescroll.min.js"></script>
+<script src="/static/wapapp/yang/js/common.js"></script>
+<script type="text/template" id="list">
+    <div class="what-item">
+        <div class="item-box clearfix">
+            <div class="item_box_left">
+                <span>{{id}}</span>
+                <img src="/static/mob/shop/images/default/touxiang.jpg" alt="">
+            </div>
+            {{if status==1 || status== 3}}
+            <div class="item_box_center">
+                <p>开始时间：{{start_date}}</p>
+                <p>结束时间：{{end_date}}</p>
+                <!-- <p>{{start_date}}到{{end_date}}</p> -->
+            </div>
+            {{/if end}}
+            
+            {{if status==2}}
+            <div class="item_box_center">
+                <p>饥饿次数：{{share_num}}</p>
+                <p>生病天数：{{drug_num}}</p>
+                <p>{{start_date}}到{{end_date}}</p>
+            </div>
+            <div class=" item_box_right">
+                {{if is_submit==0}}
+                <div class="item-btn over" onclick="to_receive({{id}});">兑换</div>
+                {{/if end}}
+                {{if is_submit==1}}
+                <div class="item-btn hold">已提交</div>
+                {{/if end}}
+            </div>
+            {{/if end}}
+            
+        </div>
+</script>
+<script>
+  
+    $(function(){
+			//创建MeScroll对象,内部已默认开启下拉刷新,自动执行up.callback,刷新列表数据;
+			var mescroll = new MeScroll("mescroll", {
+				//上拉加载的配置项
+                up: {
+					callback: getListData, //上拉回调,此处可简写; 相当于 callback: function (page) { getListData(page); }
+					isBounce: false, //此处禁止ios回弹,解析(务必认真阅读,特别是最后一点): http://www.mescroll.com/qa.html#q10
+                    clearEmptyId: "dataList", //1.下拉刷新时会自动先清空此列表,再加入数据; 2.无任何数据时会在此列表自动提示空
+                    noMoreSize:1,
+                    empty: {
+						icon: "/static/mob/yang/imgs/index/web.png", //图标,默认null
+						tip: "暂无相关数据~"
+					},
+					
+					lazyLoad: {
+			        	use: true // 是否开启懒加载,默认false
+			        }
+				}
+			});
+			/*初始化菜单*/
+            var type=1;
+            $('.status_tab ul li').on('click',function(){
+                $(this).addClass('active').siblings().removeClass('active');
+                var i=$(this).index();
+                type=i+1;
+                mescroll.resetUpScroll();  //初始化插件
+            });
+			
+			/*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
+			function getListData(page){
+				//联网加载数据
+				getListDataFromNet(page.num, function(curPageData){
+					//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+					//mescroll会根据传的参数,自动判断列表如果无任何数据,则提示空;列表无下一页数据,则提示无更多数据;
+                    console.log("page.num="+page.num+", curPageData.length="+curPageData.length);
+                    
+					mescroll.endSuccess(curPageData.length);
+                    if(curPageData.length<page.size){
+                        $('.upwarp-nodata').html('全部加载完成');
+                    }
+					// console.log(curPageData.length)
+					setListData(curPageData);
+				}, function(){
+					//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+	                mescroll.endErr();
+				});
+			}
+			
+			/*设置列表数据*/
+			function setListData(curPageData){
+                
+                var pd=curPageData;
+                // console.log(pd)
+                // console.log(pd[1]);
+                 
+				for (var i in pd) {
+                    var list='';
+                    pd[i].start_date=timetrans_1(pd[i].start_date);
+                    pd[i].end_date=timetrans_1(pd[i].end_date);
+                    list+=template('list',pd[i]);
+                    $('#dataList').append(list);
+				}
+                 
+			}
+			
+			/*联网加载列表数据
+			 在您的实际项目中,请参考官方写法: http://www.mescroll.com/api.html#tagUpCallback
+			 请忽略getListDataFromNet的逻辑,这里仅仅是在本地模拟分页数据,本地演示用
+			 实际项目以您服务器接口返回的数据为准,无需本地处理分页.
+			 * */
+			function getListDataFromNet(pageNum,successCallback) {
+				//延时一秒,模拟联网
+                setTimeout(function () {
+                
+                    $get('/api/yangyang/yang_userlists',{status:type,page:pageNum},function(data){
+                        var listData=[];
+                        // console.log(JSON.stringify(data));
+                        curPageData=data.data;
+                        // listData.push(data.data);
+                        for (var i in curPageData) {
+			            		if(i==data.data.length) break;
+			            		listData.push(data.data[i]);
+			            	}
+                        // console.log(curPageData);
+                        //回调
+                        successCallback(listData);
+                    });
+
+                    
+                },1000);
+            }
+            
+			
+        });
+        
+        function to_receive(id){
+            location.href="/wapapp/yang/receive_detial.html?id="+id;
+        }
+</script>
+    
+</body>
+</html>

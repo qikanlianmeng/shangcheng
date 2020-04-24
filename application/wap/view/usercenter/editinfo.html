@@ -1,0 +1,261 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+</head>
+
+<body class="editinfo">
+    <div class="mui-inner-wrap">
+        <!--头部导航-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left mui-action-back"></a>
+            <h1 class="mui-title">编辑资料</h1>
+            <a class="mui-btn mui-btn-link mui-btn-nav mui-pull-right" onclick="toSubmit();" id="submit">
+                保存  <!-- 权限不同，自己显示，别人不显 -->
+            </a>
+        </header>
+
+        <!--主体部分-->
+        <div class="mui-content">
+            <form method="post" id="form1" name="form1" action="" enctype="multipart/form-data" class="mui-input-group">
+                <ul class="mui-table-view edit-table" style="margin-top: 0">
+                    <li class="mui-table-view-cell">
+                        <a href="javascript:fn_browse();" id="imgtag">
+                            <span style="line-height:64px;">头像</span>
+                            <div class="mui-pull-right right5" id="imgdiv">
+                                <img width="64" height="64" class=" img-circle" src="__IMG__/default/touxiang.jpg" id="imgShow">
+                            </div>
+                            <input type="hidden" value="" name="avatar">
+                            <input type="file" id="up_img" name="file" onchange="uploadImg(this, 'imgdiv', 'imgshow', 'picDiv1')" style="display: none;" value="">
+                        </a>
+                        <div id="picDiv1" style="width: 1px; height: 1px;"></div>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <a href="javascript:void(0);">
+                            <span style="line-height:40px;float:left">昵称</span>
+                            <div class="mui-pull-right color-hui right5" style="position:absolute;width:100%;">
+                                <input id="nickname" name="nickname" value="" type="text" class="text-16 mui-text-right" placeholder="输入昵称">
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <a class="choose-sex">
+                            <span style="line-height:40px;">性别</span>
+                            <div class="mui-pull-right color-hui right5" style="padding-right:15px;">
+                                <span id="sex" class="text-16 mui-text-right" style="line-height:40px;"></span>
+                                <input name="sex" value="" type="hidden">
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <a href="javascript:void(0);">
+                            <span style="line-height:40px;float: left;">年龄</span>
+                            <div class="mui-pull-right color-hui right5" style="position:absolute;width:100%;">
+                                <input name="age" onkeyup="value=value.replace(/[^\d]/g,'')" value="" type="tel" class="text-16 mui-text-right" placeholder="输入年龄">
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <!--end 主体部分-->
+    </div>
+{include file="public/footer" /}
+<script src="__PUBLIC__/libs/jquery-3.2.1.min.js" charset="utf-8"></script>
+<script src="__PUBLIC__/js/ajaxfileupload.js" charset="utf-8"></script>
+<script src="__PUBLIC__/libs/layer/layer.js" charset="utf-8"></script>
+<script>
+function fn_browse(){
+    document.form1.file.click();
+}
+//图片上传预览    IE是用了滤镜。
+function uploadImg(file, pre, imag, imgDiv){
+    $.ajaxFileUpload({
+        url: '/api/user/upload', //用于文件上传的服务器端请求地址
+        secureuri: false, //一般设置为false
+        fileElementId: 'up_img', //文件上传空间的id属性  <input type="file" id="file" name="file" />
+        dataType: 'json', //返回值类型 一般设置为json
+        success: function (data, status)  //服务器成功响应处理函数
+        {
+            if(data.code != 1){
+                layer.open({
+                    content: data.info,
+                    time: 1
+                });
+                return false;
+            }else{
+                previewImage(file, pre, imag, imgDiv)
+                $("input[name='avatar']").val(data.info);
+                layer.open({
+                    content: "上传成功，保存后查看头像",
+                    time: 2
+                });
+            }
+        },
+        error: function (data, status, e)//服务器响应失败处理函数
+        {
+            alert("上传失败，请稍后再试。");
+        }
+    })
+}
+function previewImage(file, pre, imag, imgDiv){
+    var MAXWIDTH = 200;
+    var MAXHEIGHT = 200;
+    var div = document.getElementById(pre);
+    if (!file.value.match(/.jpg|.gif|.png|.bmp/i)) {
+        $('#' + pre).next('span').css({"color": "red", "font-weight": "bold"}).text('图片类型无效！');
+        return false;
+    } else {
+        $('#' + pre).next('span').css({"color": "green", "font-weight": "bold"}).text('图片类型符合！');
+    }
+    if (file.files && file.files[0]){
+        div.innerHTML = '<img id=' + imag + '>';
+        var img = document.getElementById(imag);
+
+        var reader = new FileReader();
+        reader.onload = function (evt) {
+            img.src = evt.target.result;
+            // console.log(evt.target.result)
+            img.style.width = '64px';
+            img.style.height = '64px';
+            img.style.borderRadius = '30px';
+            img.style.MozBorderRadius = '100%'
+        }
+        reader.readAsDataURL(file.files[0]);
+    } else //兼容IE
+    {
+        var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+        file.select();
+        $("#" + imgDiv).focus();
+        //file.focus();
+        var src = document.selection.createRange().text;
+
+        div.innerHTML = '<img style=" filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);width:32px;height:32px;border-radius:30px;-moz-border-radius:100%;-webkit-border-radius:100%;"  id=' + imag + '>';
+        var img = document.getElementById(imag);
+        img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+        var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+        status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
+
+    }
+}
+function clacImgZoomParam(maxWidth, maxHeight, width, height) {
+    var param = {top: 0, left: 0, width: width, height: height};
+    if (width > maxWidth || height > maxHeight)
+    {
+        rateWidth = width / maxWidth;
+        rateHeight = height / maxHeight;
+
+        if (rateWidth > rateHeight)
+        {
+            param.width = maxWidth;
+            param.height = Math.round(height / rateWidth);
+        } else
+        {
+            param.width = Math.round(width / rateHeight);
+            param.height = maxHeight;
+        }
+    }
+
+    param.left = Math.round((maxWidth - param.width) / 2);
+    param.top = Math.round((maxHeight - param.height) / 2);
+    return param;
+}
+
+function toSubmit() {
+    var avatar = $("input[name='avatar']").val();
+    var image = $("input[name='file']").val();
+    var nickname = $("input[name='nickname']").val();
+    var sex = $("input[name='sex']").val();
+    var age = $("input[name='age']").val();
+    if(sex == "男"){
+        var choosedsex = 1;
+    }else if(sex == "女"){
+        var choosedsex = 2;
+    }
+    if (!image && !avatar) {
+        layer.open({
+            content: '头像不能为空',
+            time: 1
+        });
+    } else if (!nickname || nickname.length < 1 || nickname.length > 16) {
+        layer.open({
+            content: '昵称长度必须为1-16字符',
+            time: 1
+        });
+    }  else {
+        $post("/api/user/update_info",{nickname:nickname,head_img:avatar,sex:choosedsex,age:age},function(ret){
+            console.log(ret);
+            if(ret.code == 1){
+                layer.open({
+                    content: ret.msg,
+                    time: 1,
+                    end:function(){
+                        window.history.back();
+                    }
+                });
+            }
+        })
+    }
+}
+</script>
+<script type="text/javascript">
+    seajs.use(['common','layer',"jquery","ajaxupload"],function(common,layer){
+        getData();
+        function getData(){
+            $get("api/user/getuserinfo",function(ret){
+                if(ret.code){
+                    // console.log(ret.data.head_img)
+                    $("#nickname").val(ret.data.nickname);
+                    if(ret.data.head_img == null || ret.data.head_img == ""){
+                    }else{
+                        $("#imgShow").attr("src",ret.data.head_img);
+                        $("input[name='avatar']").val(ret.data.head_img);
+                    }
+                    if(ret.data.age != null){
+                        $("input[name='age']").val(ret.data.age);
+                    }
+                    if(ret.data.sex == 0){
+                        $("input[name=sex]").val("");
+                        $("#sex").text("未知").css("color","#666")
+                    }else{
+                        if(ret.data.sex == 1){
+                            $("#sex").text("男")
+                        }else if(ret.data.sex == 2){
+                            $("#sex").text("女")
+                        }
+                        $("input[name=sex]").val(ret.data.sex);
+                    }
+                }
+            })
+        }
+        //选择性别
+        $(".choose-sex").on("click",function(){
+            chooseSex();
+        })
+        function chooseSex(){
+            layer.open({
+                title:"选择性别",
+                btn: ['确定', '取消'],
+                content:'<div class="blockWrap" id="chooseSex">\
+                    <div class="mui-input-row mui-radio mui-left">\
+                        <label>男</label>\
+                        <input name="sexchoose" type="radio" value="男">\
+                    </div>\
+                    <div class="mui-input-row mui-radio mui-left">\
+                        <label>女</label>\
+                        <input name="sexchoose" type="radio" value="女">\
+                    </div>\
+                </div>',
+                yes: function(index, layero){
+                    console.log($("input[name=sexchoose]:checked").val())
+                    var choosesex = $("input[name=sexchoose]:checked").val();
+                    if(choosesex != undefined){
+                        $("input[name=sex]").val(choosesex);
+                        $("#sex").text(choosesex).css("color","#000")
+                    }
+                    layer.close(index); //如果设定了yes回调，需进行手工关闭
+                 }
+            })
+        }
+    })
+</script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>商品品牌</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">   
+                <div  class="col-sm-2" style="width: 100px">
+                    <div class="input-group" >  
+                        <a href="{:url('addGoodsBrand')}"><button class="btn btn-outline btn-primary" type="button">添加品牌</button></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th>ID</th>
+                                <th>品牌名称</th>
+                                <th>Logo</th>
+                                <!--<th>品牌分类</th>-->
+                                <th>是否推荐</th>
+                                <th>排序</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        {volist name='list' id='v'}
+                        <tr class="long-td">
+                            <td>{$v.id}</td>
+                            <td>{$v.name}</td>
+                            <td><img src="{$v.logo}" width="50px" height="50px"></td>
+                            <!--<td>{$v.cat_name}</td>-->
+                            <td>{if condition='$v.is_recom eq 1'}
+                                <span class="yes" onClick="changeTableVal('GoodsBrand','{$v.id}','is_recom',0)" style="color:#1ab394;"><i class="fa fa-check-circle"></i> 是</span>
+                                {else /}
+                                <span class="no" onClick="changeTableVal('GoodsBrand','{$v.id}','is_recom',1)" style="color:#9ea3a7;"><i class="fa fa-ban"></i> 否</span>
+                                {/if}</td>
+                            <td><input class="form-control sort" style="width:50px;margin:0 auto" value="{$v.order}" row_id = "{$v.id}"/></td>
+                            <td>
+                                <a href="{:url('editGoodsBrand', ['id' => $v['id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del({$v.id})" class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+//删除
+function del(id){
+    var url = '{:url("delGoodsBrand")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+
+$(".sort").change(function(){
+    var id = $(this).attr('row_id');
+    var sort = $(this).val();
+    var model = 'goodsBrand';
+    var url = '{:url("changeSort")}';
+    if (sort > 255) {sort = 255};
+    if (sort < 0) {sort = 0};
+    $.getJSON(url, {'id' : id, 'sort' : sort, 'model' : model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+})
+function changeTableVal(model, id, attr, val){
+    var url = '{:url("changeInfo")}';
+    $.getJSON(url, {'id' : id, 'val' : val, 'attr' : attr,'model':model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+}
+</script>
+</body>
+</html>

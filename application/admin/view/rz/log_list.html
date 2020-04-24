@@ -1,0 +1,307 @@
+{include file="public/header" /}
+<style type="text/css">
+.chosen-container{
+    width: 100px !important;
+}
+
+.chosen-search{
+    display: none;
+}
+.select-wrap{
+    border: 1px solid #1ab394;
+    margin: 0 15px;
+    padding:0;
+    width: auto;
+    float: right;
+}
+.chosen-container-single .chosen-single{
+    border: none;
+}
+.search:focus{
+    border: none;
+}
+.table>thead>.long-tr>th{
+    position: relative;
+}
+.long-tr th:hover::after{
+    content: "";
+    display: inline-block;
+    background-color: #1ab394;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+}
+.chosen-container-single .chosen-single span{
+    margin-right: 0;
+}
+</style>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>认购申请列表</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">
+					<!--
+					<div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('addOrder')}"><button class="btn btn-outline btn-primary" type="button">添加订单</button></a>
+                        </div>
+                    </div>
+					-->
+                    
+                    <form method="get" action="{:url('log_list')}" id="search">
+                    <!--<div class="col-sm-12 select-wrap">-->
+					<div class="col-sm-12 select-wrap" style="float: left;">
+                        <span class="btn btn-outline" onclick="" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" >申请时间</span>
+                        <input placeholder="开始时间" type="text" class="form-control" name="start_time" style="width:100px;vertical-align: middle;display: inline-block;border:none;" id="start" value="{$data['start_time']}"/>
+                        <input placeholder="结束时间" type="text" class="form-control" name="end_time" style="width:100px;vertical-align: middle;display: inline-block;border:none;" id="end" value="{$data['end_time']}"/>
+                        
+                        <select class="form-control m-b chosen-select" name="status">
+                            <option value="all">审核状态</option>
+                            <option value="all">全部</option>
+                            <option value="0" {if condition="isset($data['status']) && $data['status'] == '0'"}selected{/if}>待审核</option>
+                            <option value="1" {if condition="isset($data['status']) && $data['status'] == '1'"}selected{/if}>已审核</option>
+                            <option value="2" {if condition="isset($data['status']) && $data['status'] == '2'"}selected{/if}>已拒绝</option>
+                            
+                        </select>
+                        <select class="form-control m-b chosen-select" name="rid">
+                            <option value="0">认购项目</option>
+                            <option value="0">全部</option>
+                            {volist name="rz" id="val"}
+                            <option value="{$val.id}" {if condition="isset($data['rid']) && $data['rid'] == $val.id"}selected{/if}>{$val.title}</option>
+                            {/volist}
+                        </select>
+                        
+                        <input placeholder="用户账号/手机号/昵称" type="text" class="form-control search" name="keywords" style="width:200px;vertical-align: middle;display: inline-block;border:none;" value="{if isset($data['keywords'])}{$data['keywords']}{/if}">
+                        
+                        <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" id="submit">搜索</button>
+                        <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" id="export">导出</button>
+                    </div>
+                    <div class="row">
+                 
+                <div  class="col-sm-3" style="width: 100px;margin-right:20px;">
+                    <div class="input-group" >  
+                        <a href="javascript:;" onclick="show_div();"><button class="btn btn-outline btn-primary" style="height:37px;" type="button">审核</button></a>
+                    </div>
+                </div>   
+                </div>
+            
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            
+            <div class="example-wrap">
+                <div class="example">
+                    <form class="form-search" method="post" action="{:url('delete_log')}">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr><th colspan="11">
+                                <button class="btn btn-danger" type="submit" id="delete"><i class="fa fa-trash-o"></i> 删除</button>
+                            </th></tr>
+                        </thead>
+                        <thead>
+                            <tr class="long-tr">
+                                <th><label>审核全选<input type="checkbox" name="all" id="all_checkbox"/></label></th>
+                                <th><label>删除全选<input type="checkbox" id="del_all_checkbox"/></label></th>
+                                <th>ID</th>
+                                <th>会员信息</th>
+                                <th>认购项目</th>
+                                <th>认购信息</th>
+                                <th>申请时间</th>
+                                <th>审核状态</th>
+                                <th>审核说明</th>
+                            </tr>
+                            </thead>
+                        {if $list->isEmpty()}
+                        <tr class="long-td">
+                            <td colspan="12" style="text-align:center">暂无信息</td>
+                        </tr>
+                        {/if}
+                        
+                        {volist name='list' id='v'}
+                        <tr class="long-td ">
+                            <td>{if $v.status == 0}<input type="checkbox" value="{$v.id}" name="id[]"/>{else/}*{/if}</td>
+                            <td><input type="checkbox" value="{$v.id}" name="del_id[]"/></td>
+                            <td>{$v.id}</td>
+                            <td>会员编号：{$v.uid}<br/>会员账号：{$v.user_account}<br/>会员昵称：{$v.nickname}</td>
+                            <td>{$v.title}</td>
+                            <td>
+                                认购单价：{$v.price}<br/>
+                                认购数量{$v.num}<br/>
+                                认购总额：{$v.total_price}
+                            </td>
+                            <td>
+                                {:date('Y-m-d H:i:s',$v.create_time)}
+                            </td>
+                            <td>
+                            {switch name="$v.status"}
+                                {case value="0"}未审核{/case}
+                                {case value="1"}审核通过{/case}
+                                {case value="2"}已拒绝{/case}
+                            {/switch}
+                            </td>
+                            <td>{$v.msg}</td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    </form>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                        <span style="display:inline-block;padding:22px 5px;vertical-align: top;">到<input style="width:50px;" type="text" id="go_page" />页</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#export').click(function () {
+            $('#search').attr('action',"{:url('log_export')}");
+        });
+        $('#submit').click(function () {
+            $('#search').attr('action',"{:url('log_list')}");
+        });
+
+
+
+    });
+
+//删除
+function del(id){
+    var url = '{:url("manageOrder")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id, 'btn_key':'remove'}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+function treeClicked(obj,cat_id,parent_id_path){
+
+    var src = $(obj).attr('src');
+    if(src == '/static/admin/images/tv-expandable.gif')
+    {
+        $(".parent_id_"+cat_id).show();
+        $(obj).attr('src','/static/admin/images/tv-collapsable-last.gif');
+    }else{
+        $("tr[parent_id_path^='"+parent_id_path+"_']").hide().find('img').attr('src','/static/admin/images/tv-expandable.gif');
+        $(obj).attr('src','/static/admin/images/tv-expandable.gif');
+
+    }
+}
+
+
+//IOS开关样式配置
+var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+var config = {
+    '.chosen-select': {},
+}
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+$("#start").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#end").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+
+
+$('#all_checkbox').change(function(){
+    $(':checkbox[name="id[]"]').prop('checked',$(this).prop('checked'));
+})
+$('#del_all_checkbox').change(function(){
+    $(':checkbox[name="del_id[]"]').prop('checked',$(this).prop('checked'));
+})
+    function show_div(){
+        var selected_box = $(':checkbox[name="id[]"]:checked');
+        //alert(selected_box.length);
+        //return false;
+        if(selected_box.length < 1){
+            layer.msg('未选择任何记录',{icon:0,time:1500,shade: 0.1});
+            return false
+        }
+        var id_arr = {};
+        selected_box.each(function(index){
+            id_arr[index] = $(this).val();
+        })
+        //console.log(id_arr);
+        //return false;
+        layer.open({
+            title : '审核信息',
+            content: '<textarea style="width:210px;height:60px;" id="admin_msg" placeholder="请输入审核建议"></textarea>'
+            ,btn: ['同意申请', '拒绝申请']
+            ,yes: function(index, layero){
+                //按钮【按钮一】的回调
+                //console.log(id_arr);
+                var admin_msg = $('#admin_msg').val();
+                $.post('{:url("log_act")}',{type:1,id_arr:id_arr,admin_msg:admin_msg},function(data){
+                    if(data.status == 1){
+                        layer.msg('操作成功',{icon:1,time:1500,shade: 0.1});
+                        setTimeout(location.reload(),3000)
+                    }else{
+                        layer.msg('操作失败',{icon:0,time:1500,shade: 0.1});
+                       /* var err_html = '';
+                        for(var i in data.data){
+                            err_html += '<p>'+data.data[i].account+'****************'+data.data[i].msg+'</p>';
+                        }
+                        layer.open({
+                            title : '错误信息',
+                            content: err_html
+                        })*/
+                    }
+                },'json')
+
+            }
+            ,btn2: function(index, layero){
+                //按钮【按钮二】的回调
+                //console.log($('#admin_msg'));
+                var admin_msg = $('#admin_msg').val();
+                $.post('{:url("log_act")}',{type:2,id_arr:id_arr,admin_msg:admin_msg},function(data){
+                    if(data.status == 1){
+                        layer.msg('操作成功',{icon:1,time:1500,shade: 0.1});
+                        setTimeout(location.reload(),3000)
+                    }else{
+                        layer.msg(data.msg,{icon:0,time:1500,shade: 0.1});
+                    }
+                },'json')
+                return false;// 开启该代码可禁止点击该按钮关闭
+            }
+            ,cancel: function(){
+                //右上角关闭回调
+
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+        });
+    }
+    $("#go_page").blur(function(){
+        var page = $(this).val();
+        var url = '{$go_url}'+'&page='+page;
+        window.location.href = url;
+    })
+
+</script>
+</body>
+</html>

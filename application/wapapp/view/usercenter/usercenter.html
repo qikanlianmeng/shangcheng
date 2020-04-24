@@ -1,0 +1,373 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__CSS__/shopstyle.css">
+<!-- <link rel="stylesheet" type="text/css" href="/static/wapapp/public/font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/public/fonts/iconfont.css"> -->
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/uc_icon.css">
+<style>
+    .unset_b.mui-table-view:before,
+    .unset_a.mui-table-view:after {
+        content: unset !important;
+    }
+
+    .mui-table-view-cell:after {
+        width: 95%;
+        left: 0;
+        margin: 0 auto;
+    }
+
+    .mui-grid-view.mui-grid-9 .mui-table-view-cell {
+        border-right: unset;
+        border-bottom: unset;
+    }
+
+    .sp_box ul li .uc_icon {
+        font-size: 18px !important;
+        margin-right: 5px;
+    }
+
+    .group_t {
+        margin-left: -8px;
+        background: rgba(0, 0, 0, 0.2);
+        border-radius: 10px;
+        padding: 2px 10px;
+        color: #fff;
+    }
+</style>
+</head>
+
+<body>
+    <footer class="mui-bar mui-bar-tab">
+        <a href="{:url('wapapp/index/index')}" class="mui-tab-item">
+            <span class="uc_icon icon-yemian font-22"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a href="{:url('wapapp/goods/classification')}" class="mui-tab-item" id="integralshopbtn">
+            <span class="uc_icon icon-icon_type font-22"></span>
+            <span class="mui-tab-label">分类</span>
+        </a>
+        <a href="{:url('cart/shopcar')}" class="mui-tab-item" id="shopcarbtn" style="position:relative">
+            <span class="uc_icon icon-gouwuche font-22"></span>
+            <span class="mui-tab-label">购物车</span>
+            <span class="mui-badge shopcart-num">1</span>
+        </a>
+        <a href="{:url('usercenter/usercenter')}" class="mui-tab-item mui-active">
+            <span class="uc_icon icon-wode- font-22"></span>
+            <span class="mui-tab-label">会员中心</span>
+        </a>
+    </footer>
+    <div class="mui-content ucenter">
+        <div class="user-top">
+            <a href="javascript:;" need-login="1" class="user-info islogin">
+                <img class="mui-pull-left img-circle m-r" src="__IMG__/default/touxiang.bk.jpg" />
+                <p class="notlogin color-white">未登录</p>
+                <!-- <p class="text-16 m-t needhide"></p>
+                <p class="level needhide"><img src="" alt="lev"></p> -->
+            </a>
+        </div>
+        <ul class="user-link text-16 flex">
+            <li id="go_spendintegral" need-login="1">
+                <p id="money" class="color-white text-18">0.00</p>
+                <p class="color-white">余额</p>
+            </li>
+            <li id="go_jifen" need-login="1">
+                <p id="jifen" class="color-white text-18">0.00</p>
+                <p class="color-white">积分</p>
+            </li>
+            <!-- <li class="mui-col-xs-4" style="width:50%;">
+                <a href="{:url('collection')}" need-login="1" class="txt islogin">
+                    <span class="iconfont icon-shoucang"></span> 收藏
+                </a>
+            </li>
+            <li class="mui-col-xs-4" style="width:50%;">
+                <a href="{:url('goods/footprint')}" need-login="1" class="txt islogin">
+                    <span class="iconfont icon-zuji"></span> 足迹
+                </a>
+            </li> -->
+            <!-- <li class="mui-col-xs-4">
+                <a href="{:url('information')}" need-login="1" class="txt islogin">
+                    <span class="iconfont icon-xiaoxi1"></span> 消息
+                </a>
+            </li> -->
+        </ul>
+        <div class="m-b"></div>
+        <div class="yuan_box">
+            <ul class="mui-table-view  text-16 color-333 unset_b radius_up">
+                <li class="mui-table-view-cell">
+                    <a class="mui-navigate-right islogin" need-login="1" href="{:url('usercenter/promote')}">
+                        推广中心
+                    </a>
+                </li>
+            </ul>
+            <!-- <ul class="mui-table-view list-row text-15 color-666 clearfix unset_a radius_down" style="padding: 10px 0;"> -->
+
+            <li class="mui-table-view-cell bg-whtie radius_down">
+                <a class="mui-navigate-right islogin" href="{:url('usercenter/team')}" need-login="1">
+                    <span class="uc_icon icon-crmtubiao28 color-lv font-22"></span> 我的团队
+                </a>
+            </li>
+            <!-- </ul> -->
+        </div>
+        <div class="m-b"></div>
+        <div class="yuan_box">
+            <ul class="mui-table-view  text-16 color-333 unset_b radius_up">
+                <li class="mui-table-view-cell">
+                    <a class="mui-navigate-right islogin" need-login="1" href="{:url('usercenter/lucky_list')}">
+                        抽奖中心
+                    </a>
+                </li>
+            </ul>
+            <li class="mui-table-view-cell bg-whtie radius_down">
+                <a class="mui-navigate-right islogin" href="{:url('usercenter/lucky_log')}" need-login="1">
+                    <span class="uc_icon icon-tuiguang color-lv font-22"></span> 抽奖记录
+                </a>
+            </li>
+            <!-- </ul> -->
+        </div>
+        <div class="yuan_box">
+            <ul class="mui-table-view m-t text-16 color-333 unset_b radius_up">
+                <li class="mui-table-view-cell">
+                    <a class="mui-navigate-right islogin" need-login="1" href="/wapapp/order/order_list/tab_num/0">
+                        我的订单
+                    </a>
+                </li>
+            </ul>
+            <ul class="mui-table-view list-row text-15 color-666 clearfix unset_a radius_down">
+                <li class="mui-col-xs-3">
+                    <a href="/wapapp/order/order_list/tab_num/1" need-login="1" class="islogin">
+                        <p><i class="uc_icon icon-daifukuan font-26"><span
+                                    class="mui-daifukuan mui-badge-red mui-badge"></span></i></p>
+                        <div class="mui-media-body">待付款</div>
+                    </a>
+                </li>
+                <li class="mui-col-xs-3">
+                    <a href="/wapapp/order/order_list/tab_num/2" id="signbtn" need-login="1" class="islogin">
+                        <p><i class="uc_icon icon-daishouhuo font-26"><span
+                                    class="mui-daifahuo mui-badge-red mui-badge"></span></i></p>
+                        <div class="mui-media-body">待发货</div>
+                    </a>
+                </li>
+                <li class="mui-col-xs-3">
+                    <a href="/wapapp/order/order_list/tab_num/3" id="signbtn" need-login="1" class="islogin">
+                        <p><i class="uc_icon  icon-daifahuo font-26"><span
+                                    class="mui-daishouhuo mui-badge-red mui-badge"></span></i></p>
+                        <div class="mui-media-body">待收货</div>
+                    </a>
+                </li>
+                <li class="mui-col-xs-3">
+                    <a href="/wapapp/order/order_list/tab_num/4" need-login="1" class="islogin">
+                        <p><i class="uc_icon icon-yifahuo font-26"><span
+                                    class="mui-daipingjia mui-badge-red mui-badge"></span></i></p>
+                        <div class="mui-media-body">待评价</div>
+                    </a>
+                    <!-- </li>
+            <li class="mui-col-xs-3">
+                <a href="{:url('refund_list')}" need-login="1" class="islogin">
+                    <p><i class="iconfont icon-tuikuan1"></i></p>
+                    <div class="mui-media-body">我的售后</div>
+                </a>
+            </li> -->
+            </ul>
+        </div>
+
+        <!-- <ul class="mui-table-view m-t icon-list text-16">
+            <li class="mui-table-view-cell">
+                <a href="/wapapp/usercenter/mycoin" class="mui-navigate-right islogin" need-login="1">
+                    <span class="mui-badge-nobg text-14 color-red needhide mui-xuebi">0余额</span>
+                    <span class="iconfont icon-qianbao12 color-orange"></span> 我的余额
+                </a>
+            </li>
+            <li class="mui-table-view-cell">
+                <a href="/wapapp/usercenter/spendintegral" class="mui-navigate-right islogin" need-login="1">
+                    <span class="mui-badge-nobg text-14 color-red needhide mui-score">0羊币</span>
+                    <span class="iconfont icon-jifen color-pink" style="font-size: 18px;"></span> 我的羊币
+                </a>
+            </li>
+        </ul> -->
+        <div class="yuan_box sp_box">
+            <ul class="mui-table-view m-t icon-list text-16 unset_b unset_a radius_all">
+                <li class="mui-table-view-cell">
+                    <a class="mui-navigate-right islogin" href="{:url('order/order_list?type=1')}" need-login="1">
+                        <span class="uc_icon icon-daili color-lv font-22"></span> 样品订单
+                    </a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a href="{:url('order/order_list?type=2')}" class="mui-navigate-right islogin" need-login="1">
+                        <span class="uc_icon icon-ziying color-lv font-22"></span> 代售订单
+                    </a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a href="{:url('order/order_list?type=3')}" class="mui-navigate-right islogin" need-login="1">
+                        <span class="uc_icon icon-i color-lv font-22"></span> 订货订单
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="m-b"></div>
+        <div class="yuan_box sp_box">
+            <ul class="mui-table-view m-t icon-list text-16 unset_b unset_a radius_all">
+                <li class="mui-table-view-cell">
+                    <a class="mui-navigate-right islogin" href="{:url('usercenter/auth')}" need-login="1">
+                        <span class="uc_icon icon-gerenziliao color-lv font-22"></span> 实名认证
+                    </a>
+                </li>
+                <li class="mui-table-view-cell">
+                    <a href="{:url('address_list')}" class="mui-navigate-right islogin" need-login="1">
+                        <span class="uc_icon icon-dizhi color-lv font-22"></span> 收货地址
+                    </a>
+                </li>
+                <if condition="$weixin eq 1">
+                    <li class="mui-table-view-cell" id="msg">
+
+                            <span class="uc_icon icon-tuiguang color-lv font-22"></span> 扫一扫
+
+                    </li>
+                </if>
+
+
+
+                <li class="mui-table-view-cell">
+                    <a href="{:url('usercenter/share')}" class="mui-navigate-right islogin" need-login="1">
+                        <span class="uc_icon icon-tuiguang color-lv font-22"></span> 推广二维码
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="m-b"></div>
+        <div class="yuan_box">
+            <ul class="mui-table-view mui-grid-view mui-grid-9 bg-whtie radius_all unset_b unset_a button-area">
+                <!-- <li class="mui-table-view-cell mui-media mui-col-xs-4 ">
+                    <a class="islogin" href="{:url('usercenter/editinfo')}" need-login="1">
+                        <span class="uc_icon icon-gerenziliao color-lv font-22"></span>
+                        <div class="mui-media-body">个人资料</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 ">
+                    <a class="islogin" href="{:url('address_list')}" need-login="1">
+                        <span class="uc_icon icon-dizhi color-lv font-22"></span>
+                        <div class="mui-media-body">收货地址</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 ">
+                    <a class="islogin" href="{:url('usercenter/share')}" need-login="1">
+                        <span class="uc_icon icon-tuiguang color-lv font-22"></span>
+                        <div class="mui-media-body">推广二维码</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 ">
+                    <a class="islogin" href="{:url('collection')}" need-login="1">
+                        <span class="uc_icon icon-shoucang color-lv font-22"></span>
+                        <div class="mui-media-body">我的收藏</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4 ">
+                    <a class="islogin" href="{:url('goods/footprint')}" need-login="1">
+                        <span class="uc_icon icon-zuji color-lv font-22"></span>
+                        <div class="mui-media-body">我的足迹</div>
+                    </a>
+                </li> -->
+            </ul>
+        </div>
+
+        <div class="long_btn needhide">
+            <button id="login" type="button" class="inp-btn">退出登录</button>
+        </div>
+    </div>
+    <if condition="$weixin eq 1">
+        <input type="hidden" value="{$jssdk.appId}" id="appId"/>
+        <input type="hidden" value="{$jssdk.timestamp}" id="timestamp"/>
+        <input type="hidden" value="{$jssdk.nonceStr}" id="nonceStr"/>
+        <input type="hidden" value="{$jssdk.signature}" id="signature"/>
+    </if>
+
+</body>
+{include file="public/footer" /}
+<script type="text/html" id="userInfoTem">
+    [[if head_img==''||head_img==null]]
+    <img class="mui-pull-left img-circle m-r" src="__IMG__/default/touxiang.bk.jpg" /> [[else]]
+    <img class="mui-pull-left img-circle m-r" src="[[head_img]]" /> [[/if]]
+    <p class="text-16 m-t account_text">[[account]]</p>
+    <p class="level color-333">
+        <img src="__IMG__/hy.png" alt=""><span class=" group_t" style="margin-left:-8px;">[[rank_name]]</span>
+    </p>
+    <span class="user_sign"></span>
+    <span id="go_setting" class="mui-icon mui-icon-gear" style="position: absolute;right: 15px;top: 10px;color: #fff;font-size: 26px;"></span>
+</script>
+<script type="text/template" id="ad_btn">
+    <li class="mui-table-view-cell mui-media mui-col-xs-4>
+        <a class="mui-table-view-cell mui-media mui-col-xs-4 ">
+            <a class="islogin" href="[[link_url]]" need-login="1">
+                <span style="width: 100%;text-align: center;">
+                    <img src="[[images]]" alt="" style="width:30%;border-radius:50%;">
+                </span>
+                <div class="mui-media-body">[[title]]</div>
+            </a>
+        </a>
+    </li>
+    
+</script>
+<script src="/static/wapapp/public/libs/jquery-3.2.1.min.js"></script>
+<script type="text/javascript">
+    seajs.use(['__JS__/usercenter']);
+    $('.to_app').on('click', function () {
+        location.href = $(this).attr('href');
+    });
+</script>
+
+<!--<script type="text/javascript">
+  define = null;
+  require = null;
+</script>-->
+
+
+
+
+<!-- <script type="text/javascript" src="__TMPL__/public/muser/wei/js/swipe.js"></script> -->
+<script>
+  var appId = document.getElementById("appId").value;
+  var timestamp = document.getElementById("timestamp").value;
+  var nonceStr = document.getElementById("nonceStr").value;
+  var signature = document.getElementById("signature").value;
+
+  // var div=document.getElementById('sao');
+  function openSao() {
+    wx.config({
+      debug: false,
+      appId: appId,
+      timestamp: timestamp,
+      nonceStr: nonceStr,
+      signature: signature,
+      jsApiList: [
+        // 所有要调用的 API 都要加到这个列表中
+        'checkJsApi',
+        'openLocation',
+        'getLocation',
+        'onMenuShareTimeline',
+        'onMenuShareAppMessage',
+        'scanQRCode'
+      ]
+    });
+    wx.ready(function () {
+      wx.scanQRCode({
+        desc: 'scanQRCode desc',
+        needResult: 0, // 默认为0，扫描结果由微信处理，1则直接返回扫描结果，
+        scanType: ["qrCode", "barCode"], // 可以指定扫二维码还是一维码，默认二者都有
+        success: function (res) {
+          // 回调
+        },
+        error: function (res) {
+          if (res.errMsg.indexOf('function_not_exist') > 0) {
+            alert('版本过低请升级')
+          }
+        }
+      });
+    });
+  }
+
+  $("#msg").click(function () {
+    openSao();
+  })
+</script>
+
+</html>

@@ -1,0 +1,59 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>第三方登录</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="example-wrap">
+                <div class="example">
+                    <div class="example-wrap">
+                        <div class="example">
+                            <table class="table table-bordered table-hover">
+                                <thead>
+                                    <tr class="long-tr">
+                                        <th width="25%">插件名称</th>
+                                        <th width="25%">插件描述</th>
+                                        <th width="25%">插件图片</th>
+                                        <th width="25%">操作</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="list-content">
+                                    {volist name="list" id="vo"}
+										<tr class="long-td">
+	                                        <td>{$vo.name}</td>
+	                                        <td>{$vo.config_desc}</td>
+	                                        <td><img src="{$vo.logo}" style="height: 30px" onerror="this.src='/static/admin/images/no_img.jpg'"/></td>
+	                                        <td>
+	                                            <a href="{:url('config',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs btn-outline">
+	                                                <i class="fa fa-paste"></i> 配置
+	                                            </a>&nbsp;&nbsp;
+                                                {eq name="vo.status" value="1"}
+	                                                <a href="{:url('del_config',array('id'=>$vo['id'],'status'=>$vo['status']))}" class="btn btn-primary btn-xs btn-outline">
+	                                                                                                                                                       启用    
+	                                                </a>
+                                                {else/}
+	                                                 <a href="{:url('del_config',array('id'=>$vo['id'],'status'=>$vo['status']))}" class="btn btn-danger btn-xs btn-outline">
+	                                                   		禁用 	                                                                                              
+	                                                 </a>
+                                                {/eq}
+	                                        </td>
+	                                    </tr>
+									{/volist}
+                                </tbody>
+                            </table>
+                            <div id="AjaxPage" style="text-align:right;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Example Pagination -->
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+{include file="public/footer" /}
+</body>
+</html>

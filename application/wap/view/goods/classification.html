@@ -1,0 +1,125 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+<link rel="stylesheet" type="text/css" href="/static/mob/public/font/iconfont.css">
+</head>
+
+<body class="classification">
+    <header id="header" class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div class="mui-title mui-input-row mui-search">
+            <input type="search" class="mui-input-clear" name="searchgoods" placeholder="搜索全部商品">
+        </div>
+        <a class="mui-pull-right cancel search">搜索</a>
+    </header>
+    <div class="mui-content mui-row mui-fullscreen">
+
+    </div>
+    <footer class="mui-bar mui-bar-tab">
+        <a href="{:url('wap/index/index')}" class="mui-tab-item">
+            <span class="iconfont icon-shouye1"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a href="{:url('wap/goods/classification')}" class="mui-tab-item mui-active" id="integralshopbtn">
+            <span class="iconfont icon-shangcheng"></span>
+            <span class="mui-tab-label">分类</span>
+        </a>
+        <a href="{:url('cart/shopcar')}" class="mui-tab-item" id="shopcarbtn" style="position:relative">
+            <span class="iconfont icon-gouwuche"></span>
+            <span class="mui-tab-label">购物车</span>
+            <span class="mui-badge shopcart-num">1</span>
+        </a>
+        <a href="{:url('usercenter/usercenter')}" class="mui-tab-item">
+            <span class="iconfont icon-wode1"></span>
+            <span class="mui-tab-label">会员中心</span>
+        </a>
+    </footer>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    seajs.use("__JS__/classification")
+</script>
+<!-- <script type="text/html" id="deduction">
+    <div class="mui-col-xs-3 classify" style="overflow-y:scroll">
+        <div class="mui-segmented-control mui-segmented-control-inverted mui-segmented-control-vertical" id="role_content">
+            {{each data as value i}}
+            <p>value</p>
+                <a class="mui-control-item">{{value.mobile_name}}</a>
+            {{/each}}
+        </div>
+    </div>
+    <div class="mui-col-xs-9 classify-info" style="overflow-y:scroll">
+        <div class="mui-control-content mui-active">
+            {{each data as value i}}
+                <p>{{value.mobile_name}}</p>
+                {{each value.child as item j}}
+                    <b>{{value.mobile_name}}</b>
+                    {{each item as tag}}
+                        <em>{{tag.mobile_name}}</em>
+                    {{/each}}
+                {{/each}}
+            {{/each}}
+            <ul class="mui-table-view mui-grid-view" style="padding-top:20px;padding-right:0;">
+                <li class="mui-table-view-cell mui-media mui-col-xs-4">
+                    <a href="">
+                        <img class="mui-media-object classify-img" src="__IMG__/book.jpg" alt="">
+                        <div class="mui-media-body">毛呢外套</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4">
+                    <a href="">
+                        <img class="mui-media-object classify-img" src="__IMG__/book.jpg" alt="">
+                        <div class="mui-media-body">毛呢外套</div>
+                    </a>
+                </li>
+            </ul>
+
+            <p style="text-align:center;margin-bottom:0;padding-top:20px;">———— <e>图书</e> ————</p>
+            <ul class="mui-table-view mui-grid-view" style="padding-top:20px;padding-right:0;">
+                <li class="mui-table-view-cell mui-media mui-col-xs-4">
+                    <a href="{:url('goods/hotgoods')}">
+                        <img class="mui-media-object classify-img" src="__IMG__/book.jpg" alt="">
+                        <div class="mui-media-body">图书</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4">
+                    <a href="{:url('goods/hotgoods')}">
+                        <img class="mui-media-object classify-img" src="__IMG__/book.jpg" alt="">
+                        <div class="mui-media-body">手机</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4">
+                    <a href="">
+                        <img class="mui-media-object classify-img" src="__IMG__/book.jpg" alt="">
+                        <div class="mui-media-body">毛呢外套</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4">
+                    <a href="">
+                        <img class="mui-media-object classify-img" src="__IMG__/book.jpg" alt="">
+                        <div class="mui-media-body">毛呢外套</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4">
+                    <a href="">
+                        <img class="mui-media-object classify-img" src="__IMG__/book.jpg" alt="">
+                        <div class="mui-media-body">毛呢外套</div>
+                    </a>
+                </li>
+                <li class="mui-table-view-cell mui-media mui-col-xs-4">
+                    <a href="">
+                        <img class="mui-media-object classify-img" src="__IMG__/book.jpg" alt="">
+                        <div class="mui-media-body">毛呢外套</div>
+                    </a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="mui-control-content">
+            <ul class="mui-table-view people-cell hot-cell cardBag">
+
+            </ul>
+        </div>
+    </div>
+</script> -->
+
+</html>

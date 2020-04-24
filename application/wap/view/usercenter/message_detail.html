@@ -1,0 +1,21 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+</head>
+<body class="information">
+    <header id="header" class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">消息详情</h1>
+    </header>
+    <div class="mui-content">
+        <div style="padding:20px 15px 0 15px;background-color:#fff;">
+            <p class="message-title" style="margin-bottom:20px;font-size:16px;color:#333;"></p>
+            <p class="message-content" style="text-indent:2em;"></p>
+        </div>
+    </div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    var id = "{:input('id')}";
+    seajs.use("__JS__/messageDetail");
+</script>
+</html>

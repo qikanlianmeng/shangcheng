@@ -1,0 +1,10 @@
+<script>window.jQuery || document.write('<script src="/static/index/js/jquery-slim.min.js"><\/script>')</script>
+<script src="/static/index/js/popper.min.js"></script>
+<script src="/static/index/js/bootstrap.min.js"></script>
+<script src="/static/index/js/holder.min.js"></script>
+<script type="text/javascript">
+    $("footer .contact li").mouseenter(function(){
+        $(this).addClass("active").siblings().removeClass("active");
+        $(".focus"+$(this).val()).attr('style','display:block').siblings(".word").attr("style","display:none");
+    });
+</script>

@@ -1,0 +1,110 @@
+{include file="public/header" /}
+<!-- <link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet"> -->
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>通知模板</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+				<!--
+				<div class="row">
+                    <div class="col-sm-12">
+                        <form name="admin_list_sea" class="form-search" method="post" action="{:url('template')}">
+                            <div class="col-sm-3">
+                                <div class="input-group">
+                                    <input type="text" id="key" class="form-control" name="key" value="" placeholder="输入需查询内容" />
+                                    <span class="input-group-btn">
+                                        <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                                    </span>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+				-->
+                
+                <div class="hr-line-dashed"></div>
+                <form id="export-form" method="post" action="">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>标识</th>
+                                <th>短信</th>
+                                <!--<th>电子邮件</th>
+                                <th>站内信</th>
+                                <th>微信</th>
+                                <th>推送</th>-->
+                            </tr>
+                        </thead>
+                        <tbody>
+							{volist name="list" id="l"}
+                            <tr>
+                                <td>{$l.id}</td>
+                                <td>{$l.name}</td>
+                                <td><a href="{:url('templateinfo',['id'=>$l.id,'tpname'=>'sms'])}" class="btn btn-primary btn-xs btn-outline"><i class="fa fa-paste"></i> 编辑模板</a></td>
+                          <!--      <td><a href="{:url('templateinfo',['id'=>$l.id,'tpname'=>'email'])}" class="btn btn-primary btn-xs btn-outline"><i class="fa fa-paste"></i> 编辑模板</a></td>
+                                <td><a href="{:url('templateinfo',['id'=>$l.id,'tpname'=>'mail'])}" class="btn btn-primary btn-xs btn-outline"><i class="fa fa-paste"></i> 编辑模板</a></td>
+                                <td><a href="{:url('templateinfo',['id'=>$l.id,'tpname'=>'weichat'])}" class="btn btn-primary btn-xs btn-outline"><i class="fa fa-paste"></i> 编辑模板</a></td>
+                                <td><a href="{:url('templateinfo',['id'=>$l.id,'tpname'=>'push'])}" class="btn btn-primary btn-xs btn-outline"><i class="fa fa-paste"></i> 编辑模板</a></td>-->
+                            </tr>
+                            {/volist}
+                            <!-- {notempty name="data"}
+                                {volist name="data" id="vo"}
+                                <tr>
+                                    <td><input class="ids i-checks" checked="chedked" type="checkbox" name="ids[]" value="{$vo.name}"></td>
+                                    <td>{$vo.name}</td>
+                                    <td>【{$vo.rows}】 条记录</td>
+                                    <td>{$vo.data_length|format_bytes}</td>
+                                    <td>{$vo.create_time}</td>
+                                    <td id="info">等待备份...</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-xs btn-outline" href="{:url('optimize',['ids'=>$vo['name']])}">优化表</a>
+                                        <a class="btn btn-danger btn-xs btn-outline" href="{:url('repair',['ids'=>$vo['name']])}">修复表</a>
+                                    </td>
+                                </tr>
+                                {/volist}
+                            {else /}
+                                <td colspan="7" class="text-center"> 暂未发现数据库表! </td>
+                            {/notempty} -->
+                        </tbody>
+                    </table>
+                </form>
+				{$page}
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+    function edit_ad(id){
+        location.href = './slide_edit/id/'+id+'.html';
+        // location.href = './slidecat_edit/id/'+id+'.html';
+    }
+    function del_ad(id){
+        layer.confirm('确认删除此幻灯片?', {icon: 3, title:'提示'}, function(index){
+
+            layer.close(index);
+        })
+    }
+
+</script>
+</body>
+</html>

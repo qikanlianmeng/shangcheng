@@ -1,0 +1,190 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+<link rel="stylesheet" href="/static/mob/public/wallet/css/style.css">
+<link rel="stylesheet" href="/static/mob/public/wallet/css/mui.poppicker.css">
+<link rel="stylesheet" href="/static/mob/public/wallet/css/mui.picker.min.css">
+<link rel="stylesheet" href="/static/mob/public/wallet/css/api.css">
+<link rel="stylesheet" href="/static/mob/public/wallet/css/icon.css">
+
+<script src="/static/mob/public/wallet/js/jquery.3.1.1.js"></script>
+<script src="/static/mob/public/wallet/js/mui.min.js"></script>
+<script src="/static/mob/public/wallet/js/mui.picker.min.js"></script>
+<script src="/static/mob/public/wallet/js/swiper.min.js"></script>
+<link rel="stylesheet" href="/static/mob/yang/mescroll/mescroll.min.css">
+<script src="/static/mob/yang/mescroll//mescroll.min.js" charset="utf-8"></script>
+<script src="/static/mob/public/wallet/js/mui.poppicker.js"></script>
+<style>
+        @font-face {font-family: "iconfont";
+        src: url('iconfont.eot?t=1540605506821'); /* IE9*/
+        src: url('iconfont.eot?t=1540605506821#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('data:application/x-font-woff;charset=utf-8;base64,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') format('woff'),
+        url('iconfont.ttf?t=1540605506821') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+        url('iconfont.svg?t=1540605506821#iconfont') format('svg'); /* iOS 4.1- */
+        }
+        .iconfont {
+        font-family:"iconfont" !important;
+        font-size:16px;
+        font-style:normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        }
+        .icon-bangding:before { content: "\e63a"; }
+        .icon-weixinzhanghuzhuye226:before { content: "\e60f"; }
+        .icon-tixian:before { content: "\e505"; }
+        .c_wallet_detail a{
+          width:50%!important;
+        }
+
+
+        .mescroll{
+        top:5px;
+        bottom: 0;
+        height: auto;
+    }
+</style>
+</head>
+<body style="background: #f4f4f4;">
+    <!--头部导航-->
+  
+    <header class="mui-bar" style="left:0px;margin-left:0px;">
+        <a class="mui-icon mui-icon-back mui-pull-left"  onclick="back();"></a>
+        <h1 class="mui-title">我的羊币</h1>
+    </header>
+    <script>
+        function back(){
+            mui.back();
+        }
+    </script>
+    <!--主体部分-->
+    <div class="content_box">
+        <div class="c_wallet_balance">
+            <p class="c_banlance_title">羊币余额(元)</p>
+            <p class="c_banlance money" id="money">0.00</p>
+            <p class="c_withdraw_cash"><a id="withdraw" href="recharge">提现</a></p>
+        </div>
+        <!-- <div class="mb15"></div> -->
+        <div class="c_wallet_detail">
+              <a class="to_recharge_list" href="recharge_list">
+                  <p class="iconfont icon-tixian"></p>
+                  <p>提现记录</p>
+              </a>
+              <a id="bangding">
+                  <p class="iconfont icon-bangding"></p>
+            
+                  <p>绑定</p>
+              </a>
+        </div>
+
+
+        <div class="record_box mescroll" id="mescroll">
+            <ul id="dataList">
+            </ul>
+        </div>
+    </div>
+    <div class="c_pop">
+		<div class="c_pop_content">
+			<div class="c_content">
+				<ul>
+					<li id="zhifubao">支付宝</li>
+					<li id="yinhangka">银行卡</li>
+				</ul>
+				<button class="c_content_cancel mui-btn">取消</button>
+			</div>
+		</div>
+	</div>
+</body>
+{include file="public/footer" /}
+<script src="/static/mob/public/wallet/js/api.js"></script>
+<script src="/static/mob/public/wallet/js/index.js"></script>
+<script src="/static/mob/public/wallet/js/common.js"></script>
+<script type="text/javascript">
+    $('.c_pop').hide();
+    $('#bangding').on('tap',function(){
+      $('.c_pop').show();
+      $('.c_content').addClass('animated bounceInUp');
+    });
+    $('.c_content_cancel').on('tap',function(){
+      $('.c_pop').hide();
+    })
+    $('.c_content>ul>li').on('tap',function(){
+      var sex=$(this).text();
+      mui.toast(sex);
+      $('.c_pop').hide();
+    });
+
+
+    //个人信息
+    $post('/api/user/userinfo',{},function(data){
+      console.log("会员基本信息");
+      var obj=data.data;
+        if(data.code==1){
+           $('#money').html(obj.integral);
+        }
+    });
+
+    $(function(){
+
+        var mescroll=new MeScroll('mescroll',{
+            up:{
+                callback:upcallback,
+                isBounce:false,
+                noMoreSize:1,
+                empty: {
+						icon: "/static/mob/yang/imgs/index/web.png", //图标,默认null
+						tip: "暂无相关数据~"
+                    },
+                clearEmptyId:"dataList",
+                lazyload:{
+                    use:true
+                }
+            }
+        });
+
+        function upcallback(page){
+            getListDataFromNet(page.num,function(cur){
+
+                console.log(page.num+"~~~~~"+cur.length);
+                mescroll.endSuccess(cur.length);
+                if(cur.length<page.size){
+                        $('.upwarp-nodata').html('全部加载完成');
+                }
+                setListData(cur);
+            },function(){
+					//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+	                mescroll.endErr();
+				});
+        }
+
+
+        function getListDataFromNet(pageNum,successCallback){
+            $post('/api/user/integrallog',{page:pageNum},function(data){
+                var cur=data.data;
+                successCallback(cur);
+                
+            });
+        }
+
+
+        function setListData(obj){
+            var integrallog='';
+            for(var i in obj){
+                integrallog+='<li><p><span>'+obj[i].remark+'</span><span class="fr price">'+obj[i].num+'</span></p><p><span>'+obj[i].update_time+'</span></p></li>';
+            }
+            $('.record_box ul').append(integrallog);
+    }
+
+    });
+   
+   
+    $("#yinhangka").on('tap', function() {
+        //绑定银行卡
+        location.href='addcard';
+    });
+    
+    $("#zhifubao").on('tap', function() {
+       //绑定支付宝
+       location.href='binding';
+    });
+
+</script>
+</html>

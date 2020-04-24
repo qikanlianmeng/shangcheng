@@ -1,0 +1,55 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<div class='loginPanel normalPanel'>
+   <div class='title'>二微码登录</div>
+    <div class='waiting panelContent'>
+      <div class='wrp_code'><img id='code' src='' height='300px'></div>
+      <div class='info'>
+        <div class='status status_browser js_status' id='wx_default_tip'>
+          <p>请使用微信扫描二维码即可注册或登录。</p>
+          <!-- <p><a href='../user.php'>如没跳转请点击此处</a></p> -->
+        </div>
+       </div>
+    </div>
+  </div>
+</body>
+<script src="/static/admin/js/jquery.min.js?v=2.1.4"></script>
+<script type="text/javascript">
+var code='';
+ $.ajax({
+		url:"{:url('api/Weixin/spreadCodePro')}",
+		type: "GET",
+		dataType:"json",
+		success: function (data) {
+			if(data.status=='1'){
+			    var src='https://mp.weixin.qq.com/cgi-bin/showqrcode?ticket='+data.token;
+				$('#code').attr({ src:src});
+				code=data.code;
+			}
+		},
+		error: function () {
+		}
+ });
+ setInterval("ajaxstatus()", 1000);
+ function ajaxstatus(){
+	 if(code!=''){
+		 $.ajax({
+				url:"{:url('api/Oalogin/valiInfo')}",
+				type: "POST",
+				data:{'code':code},
+				dataType:"json",
+				success: function (data) {
+					if(data.status=='1'){
+						window.location.href = "/api/Oalogin/spreadCodeLogin/code/"+code; 
+					}
+				}
+		 });
+	 }
+ }
+</script>
+</html>

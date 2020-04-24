@@ -1,0 +1,132 @@
+{include file="public/header"/}
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <div>尊敬的会员<span id="weather"></span></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12" style="margin: 10px 0 20px 20px;">
+
+            <form name="admin_list_sea" class="form-inline" method="post" action="{:url('indexPage')}">
+
+                <div class="form-group" style="float:left;">
+                    <input placeholder="开始时间" type="text" class="form-control" name="start"  id="start" value=""/>
+                </div>
+                <div class="form-group" style="float:left;">
+                    <input placeholder="结束时间" type="text" class="form-control" name="end"  id="end" value=""/>
+                </div>
+                <div class="col-sm-4">
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                                </span>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <!-- 中间折线 -->
+    <div class="row">
+        <div class="col-sm-12">
+
+            <div class="col-sm-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart"></i>会员统计（{$date_limit}会员数量统计）
+                    </div>
+                    <div class="panel-body">
+                        <p><i class="fa fa-users"></i> 会员总数量：{$total_member}
+                        </p>
+                        <p><i class="fa fa-users"></i> 新增代理数量：{$total_dl}
+                        </p>
+                        <p><i class="fa fa-users"></i> 用户中心数量：{$total_center}
+                        </p>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart"></i>收支统计（{$date_limit}产生的收支统计）
+                    </div>
+                    <div class="panel-body">
+                        <p><i class="fa fa-shopping-cart"></i>余额充值收入：{$chongzhi}元</p>
+                        <p><i class="fa fa-shopping-cart"></i>订单支付收入（非余额）：{$order_cash}元</p>
+                        <p><i class="fa fa-shopping-cart"></i>提现支出：{$total_cash}元</p>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6" >
+                <div class="panel panel-info" style="height:295px;">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart"></i>收益统计（{$date_limit}产生收益统计）
+                    </div>
+                    <div class="panel-body">
+                        <p><i class="fa fa-sitemap"></i> 产生总收益：{$total_income}元
+                        </p>
+                        {foreach $income_type as $val }
+                        <p style="width:45%;float:left;"><i class="fa fa-sitemap"></i> {$val.name}：{$val.money}元
+                        </p>
+                        {/foreach}
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6" >
+                <div class="panel panel-info" style="height:295px;">
+                    <div class="panel-heading">
+                        <i class="fa fa-bar-chart"></i>订单统计（{$date_limit}订单数量统计）
+                    </div>
+                    <div class="panel-body">
+                        <p><i class="fa fa-file-text"></i> 订单总数量：{$total_order}
+                        </p>
+                        <p><i class="fa fa-file-text"></i> 已支付订单数量：{$total_pay}
+                        </p>
+                        <p><i class="fa fa-file-text"></i> 已支付总额：{$total_amount}元</p>
+                        <p><i class="fa fa-file-text"></i> 支付宝支付总额：{$ali_amount}元</p>
+                        <p><i class="fa fa-file-text"></i> 微信支付总额：{$wx_amount}元</p>
+                        <p><i class="fa fa-file-text"></i> 余额支付总额：{$yue_amount}元</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <i class="fa fa-cogs"></i> 系统信息
+                    </div>
+                    <div class="panel-body">
+                        <p><i class="fa fa-sitemap"></i> 框架版本：ThinkPHP{$think_v}
+                        </p>
+                        <p><i class="fa fa-windows"></i> 服务环境：{$web_server}
+                        </p>
+                        <p><i class="fa fa-warning"></i> 上传附件限制：{$onload}
+                        </p>
+                        <p><i class="fa fa-credit-card"></i> PHP 版本：{$phpversion}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{include file="public/footer" /}
+<script src="/static/admin/js/jquery.leoweather.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    $("#start").datetimepicker({lang:'ch'});
+    $("#end").datetimepicker({lang:'ch'});
+    $('#weather').leoweather({format:'，{时段}好！<span id="colock">现在时间是：<strong>{年}年{月}月{日}日 星期{周} {时}:{分}:{秒}</strong></span>'});
+</script>
+
+</body>
+</html>

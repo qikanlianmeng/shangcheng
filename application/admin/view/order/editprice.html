@@ -1,0 +1,135 @@
+{include file="public/header" /}
+<style>
+.goodsselect {
+    width: 150px !important;
+    margin-right: 20px;
+    margin-bottom: 5px !important;
+}
+.chosen-container {
+    width: 120px !important;
+}
+.chosen-search{
+    display:none;
+}
+#role .allgoods-wrap{
+    padding:0 20px;
+}
+#role{
+    display: none;
+}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>修改费用</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal" name="edit_cate" id="edit_cate" method="post" action="{:url('editPrice')}">
+                    <input type="hidden" name="id" value="{$orderInfo->order_id}">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">订单总额：</label>
+                            <div class="input-group col-sm-4" style="padding-top: 7px;">
+                                <p><b>{$orderInfo->total_amount}</b>（商品总价：{$orderInfo->goods_price} 运费：{$orderInfo->shipping_price}）</p>
+                                <p>订单总额 = 商品总价 + 运费</p>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">物流费用：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="text" class="form-control" name = "shipping_price" value="{$orderInfo->shipping_price}">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">订单价格调整：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="text" class="form-control" name = "discount" value="{$orderInfo->discount}" placeholder="正数为价格上调，负数为价格下调">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">使用余额：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="text" class="form-control" value="{$orderInfo->user_money}" disabled>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">使用羊币：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="text" class="form-control" value="{$orderInfo->integral}" disabled>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">应付金额：</label>
+                            <div class="input-group col-sm-4">
+                                <input type="text" class="form-control" value="{$orderInfo->order_amount}" disabled>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+<script type="text/javascript">
+
+
+    $(function(){
+        $('#edit_cate').ajaxForm({
+            success: complete,
+            dataType: 'json'
+        });
+        function complete(data){
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+                    window.location.href="{$backUrl}";
+                });
+            }else{
+                layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1});
+                return false;
+            }
+        }
+
+    });
+
+    //IOS开关样式配置
+   var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem, {
+            color: '#1AB394'
+        });
+    var config = {
+        '.chosen-select': {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+</script>
+</body>
+</html>

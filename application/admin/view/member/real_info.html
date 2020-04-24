@@ -1,0 +1,227 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>实名信息待审核列表</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <form name="admin_list_sea" id="admin_list_sea" class="form-search" method="post" action="{:url('real_info')}">
+
+                        <div class="col-sm-5">
+
+                            <div class="input-group" style="display:block;float:left;">
+                                <input type="text" id="keywords" class="form-control" name="keywords" value="{$keywords}" placeholder="会员账号/手机号查询" />
+
+                            </div>
+                            <div class="input-group" style="display:block;float:left;">
+                                <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div  class="col-sm-3" style="width: 100px;margin-right:20px;">
+                        <div class="input-group" >
+                            <a href="javascript:;" onclick="show_div();"><button class="btn btn-outline btn-primary" style="height:37px;" type="button">审核</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            
+            <div class="example-wrap">
+                <div class="example">
+                
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="4%"><label>全选<input type="checkbox" name="all" id="all_checkbox"/></label></th>
+                                <th width="4%">会员编号</th>
+                                <th width="10%">会员账号</th>
+                                <th width="10%">姓名</th>
+                                <th width="15%">身份证号</th>
+                                <th width="20%">身份证正面</th>
+                                <th width="20%">身份证背面</th>
+                                <th width="5%">审核状态</th>
+                                <th width="10%">操作备注</th>
+                                <th width="8%">操作</th>
+                            </tr>
+                        </thead>
+                        <script id="list-template" type="text/html">
+                            {{# for(var i=0;i<d.length;i++){  }}
+                            <tr class="long-td">
+                                <td>{{# if(d[i].status==0){ }} <input type="checkbox" value="{{d[i].uid}}" name="id[]"/> {{# }else{ }} * {{#} }}</td>
+                                <td>{{d[i].uid}}</td>
+                                <td>{{d[i].user_account}}</td>
+                                <td>{{d[i].name}}</td>
+                                <td>{{d[i].id}}</td>
+                                <td><a href="{{d[i].front_img}}" target="_blank"><img src="{{d[i].front_img}}" height="150" width="100%"/></a></td>
+                                <td><a href="{{d[i].back_img}}" target="_blank"><img src="{{d[i].back_img}}" height="150" width="100%"/></a></td>
+                                <td>{{# if(d[i].status==0){ }} 待审核 {{# }else if(d[i].status==1){ }} 审核通过{{# }else{ }} 审核不通过 {{#} }}</td>
+                                <td>{{d[i].msg}}</td>
+                                <td><a href="javascript:;" onclick="del({{d[i].uid}})" class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 删除</a></td>
+                            </tr>
+                            {{# } }}
+                        </script>
+                        <tbody id="list-content"></tbody>
+                    </table>
+                    <div id="AjaxPage" style=" text-align: right;"></div>
+                    <div id="allpage" style=" text-align: right;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+//删除
+function del(id){
+    var url = '{:url("del_real_act")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+function treeClicked(obj,cat_id,parent_id_path){
+
+    var src = $(obj).attr('src');
+    if(src == '/static/admin/images/tv-expandable.gif')
+    {
+        $(".parent_id_"+cat_id).show();
+        $(obj).attr('src','/static/admin/images/tv-collapsable-last.gif');
+    }else{
+        $("tr[parent_id_path^='"+parent_id_path+"_']").hide().find('img').attr('src','/static/admin/images/tv-expandable.gif');
+        $(obj).attr('src','/static/admin/images/tv-expandable.gif');
+
+    }
+}
+
+
+//IOS开关样式配置
+var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+var config = {
+    '.chosen-select': {},
+}
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+
+
+$('#all_checkbox').change(function(){
+    $(':checkbox[name="id[]"]').prop('checked',$(this).prop('checked'));
+})
+    function show_div(){
+        var selected_box = $(':checkbox[name="id[]"]:checked');
+        //alert(selected_box.length);
+        //return false;
+        if(selected_box.length < 1){
+            layer.msg('未选择任何记录',{icon:0,time:1500,shade: 0.1});
+            return false
+        }
+        var id_arr = {};
+        selected_box.each(function(index){
+            id_arr[index] = $(this).val();
+        })
+        //console.log(id_arr);
+        //return false;
+        layer.open({
+            title : '审核信息',
+            content: '<textarea style="width:210px;height:60px;" id="admin_msg" placeholder="请输入审核建议"></textarea>'
+            ,btn: ['同意申请', '拒绝申请']
+            ,yes: function(index, layero){
+                //按钮【按钮一】的回调
+                //console.log(id_arr);
+                var admin_msg = $('#admin_msg').val();
+                $.post('{:url("real_act")}',{status:1,id_arr:id_arr,admin_msg:admin_msg},function(data){
+                    if(data.status == 1){
+                        layer.msg('操作成功',{icon:1,time:1500,shade: 0.1});
+                        setTimeout(location.reload(),3000)
+                    }else{
+                        layer.msg('操作失败',{icon:0,time:1500,shade: 0.1});
+                       /* var err_html = '';
+                        for(var i in data.data){
+                            err_html += '<p>'+data.data[i].account+'****************'+data.data[i].msg+'</p>';
+                        }
+                        layer.open({
+                            title : '错误信息',
+                            content: err_html
+                        })*/
+                    }
+                },'json')
+
+            }
+            ,btn2: function(index, layero){
+                //按钮【按钮二】的回调
+                //console.log($('#admin_msg'));
+                var admin_msg = $('#admin_msg').val();
+                $.post('{:url("real_act")}',{status:2,id_arr:id_arr,admin_msg:admin_msg},function(data){
+                    if(data.status == 1){
+                        layer.msg('操作成功',{icon:1,time:1500,shade: 0.1});
+                        setTimeout(location.reload(),3000)
+                    }else{
+                        layer.msg(data.msg,{icon:0,time:1500,shade: 0.1});
+                    }
+                },'json')
+                return false;// 开启该代码可禁止点击该按钮关闭
+            }
+            ,cancel: function(){
+                //右上角关闭回调
+
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+        });
+    }
+//laypage分页
+Ajaxpage();
+function Ajaxpage(curr){
+    var keywords = $('#keywords').val();
+    $.getJSON('{:url("Member/real_info")}', {page: curr || 1,keywords:keywords}, function(data){
+        $(".spiner-example").css('display','none'); //数据加载完关闭动画
+        if(data==''){
+            $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
+        }else{
+            var tpl = document.getElementById('list-template').innerHTML;
+            laytpl(tpl).render(data, function(html){
+                document.getElementById('list-content').innerHTML = html;
+            });
+            laypage({
+                cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
+                pages:'{$allpage}',//总页数
+                skip: true,//是否开启跳页
+                skin: '#1AB5B7',//分页组件颜色
+                curr: curr || 1,
+                groups: 3,//连续显示分页数
+                jump: function(obj, first){
+                    if(!first){
+                        Ajaxpage(obj.curr)
+                    }
+                    $('#allpage').html('第'+ obj.curr +'页，共'+ obj.pages +'页');
+                }
+            });
+        }
+    });
+}
+</script>
+</body>
+</html>

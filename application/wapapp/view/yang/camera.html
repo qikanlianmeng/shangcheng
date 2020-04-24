@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>摄像头详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/base.css" />
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/dplayer@1.17.2/dist//DPlayer.min.css">
+    <link rel="stylesheet" href="/static/wapapp/public/css/mui.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/index.css" />
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav"  v-cloak>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left" @click="back" style="color: #333!important;"></a>
+        <h1 class="mui-title" v-cloak>{{camera.title}}</h1>
+    </header>
+    <div class="camera">
+        <div class="video" id="videoModal"></div>
+        <div class="title" v-cloak>{{camera.title}}</div>
+        <div class="introduce" v-cloak>{{camera.introduce}}</div>
+    </div>
+    <!--<div class="footer-bar">-->
+        <!--<div class="tab-item home active" @click="home">-->
+            <!--首页-->
+        <!--</div>-->
+        <!--<div class="logo" @click="gotoGame"></div>-->
+        <!--<div class="tab-item my" @click="my">-->
+            <!--我的-->
+        <!--</div>-->
+    <!--</div>-->
+</div>    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/dplayer@1.17.2/dist/DPlayer.min.js"></script>
+    <script>
+    function getParams(name) { 
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+        var r = window.location.search.substr(1).match(reg); 
+        if (r != null) return unescape(r[2]); return null; 
+        }
+        var player = null
+        var app = new Vue({
+            el: '#app',
+            data: {
+                camera: {
+                    id: getParams('id'),
+                }
+            },
+            created() {
+                axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                var that = this
+                this.getCamera().then(function(res) {
+                    that.camera = res.data.data
+                    that.initPlayer()
+                });
+            },
+            methods: {
+                back() {
+                    window.history.back()
+                },
+                initPlayer() {
+                    if (!player) {
+                        console.log(this.camera.m3u8)
+                      player = new DPlayer({
+                        container: document.getElementById('videoModal'),
+                        screenshot: true,
+                        video: {
+                          type: 'hls',
+                          url: this.camera.m3u8,
+                          pic: this.camera.photo,
+                          thumbnails: this.camera.photo
+                        }
+                      })
+                    }
+                },
+                getCamera() {
+                    let that = this
+                    that.$indicator.open('加载中...');
+                    return new Promise(function(resolve, reject) {
+
+                        axios({
+                            url: '/api/yangyang/camera',
+                            params: {
+                                id: that.camera.id
+                            }
+                        }).then(function(res) {
+                            that.$indicator.close();
+                            resolve(res)
+                            
+                        }).catch(function(err) {
+                            that.$indicator.close();
+                            console.log(err)
+                            reject(err)
+                        })
+                    })
+                },
+                home() {
+                    window.location.href = '/wapapp/yang'
+                },
+                gotoGame() {
+                    window.location.href = '/wapapp/yang/game'
+                },
+                my() {
+                    window.location.href = '/wapapp/usercenter/usercenter.html'
+                }
+            },
+        })
+    </script>
+</body>
+</html>

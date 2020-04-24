@@ -1,0 +1,383 @@
+{include file="public/header" /}
+<style type="text/css">
+.chosen-container{
+    width: 100px !important;
+}
+
+.chosen-search{
+    display: none;
+}
+.select-wrap{
+    border: 1px solid #1ab394;
+    margin: 0 15px;
+    padding:0;
+    width: auto;
+    float: right;
+}
+.chosen-container-single .chosen-single{
+    border: none;
+}
+.search:focus{
+    border: none;
+}
+.table>thead>.long-tr>th{
+    position: relative;
+}
+.long-tr th:hover::after{
+    content: "";
+    display: inline-block;
+    background-color: #1ab394;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+}
+.chosen-container-single .chosen-single span{
+    margin-right: 0;
+}
+</style>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+        {if $ruid > 0}
+            <h5>会员{$user.account}下级列表</h5>
+        {else/}
+            <h5>会员列表</h5>
+        {/if}
+            
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->           
+            <div class="row">
+                <div class="col-sm-12">   
+                    <div  class="col-sm-2" style="width: 100px;margin-right:20px;">
+                        <div class="input-group" >  
+                            <a href="{:url('add_member')}"><button class="btn btn-outline btn-primary" type="button">添加会员</button></a> 
+                        </div>
+                    </div>   
+                    <div  class="col-sm-2" style="width: 200px">
+                        <div class="input-group" >
+                            <div  class="btn btn-outline btn-primary" id="clear_money">普通会员余额清零</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12">  
+                    <form name="admin_list_sea" class="form-inline" method="post" action="{:url('index','uid='.$uid.'&ruid='.$ruid)}" id="search">
+                       <div class="col-sm-12 select-wrap" style="float: left;">
+                        <span class="btn btn-outline" onclick="" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" >注册时间</span>
+                        <input placeholder="开始时间" type="text" class="form-control" name="start" style="width:100px;vertical-align: middle;display: inline-block;border:none;" id="start" value="{$start}"/>
+                        <input placeholder="结束时间" type="text" class="form-control" name="end" style="width:100px;vertical-align: middle;display: inline-block;border:none;" id="end" value="{$end}"/>
+                        <span class="btn btn-outline" onclick="" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" >代理时间</span>
+                        <input placeholder="开始时间" type="text" class="form-control" name="start2" style="width:100px;vertical-align: middle;display: inline-block;border:none;" id="start2" value="{$start2}"/>
+                        <input placeholder="结束时间" type="text" class="form-control" name="end2" style="width:100px;vertical-align: middle;display: inline-block;border:none;" id="end2" value="{$end2}"/>
+                        <span class="btn btn-outline" onclick="" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" >余额</span>
+                        <input placeholder="例:1-100" type="text" class="form-control" name="money" style="width:140px;vertical-align: middle;display: inline-block;border:none;" id="money" value="{$money}"/>
+                        <span class="btn btn-outline" onclick="" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" >产生代理</span>
+                        <input placeholder="例:1-100" type="text" class="form-control" name="dl_money" style="width:140px;vertical-align: middle;display: inline-block;border:none;" id="dl_money" value="{$dl_money}"/>
+                        <span class="btn btn-outline" onclick="" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" >产生代售</span>
+                        <input placeholder="例:1-100" type="text" class="form-control" name="dy_money" style="width:140px;vertical-align: middle;display: inline-block;border:none;" id="dy_money" value="{$dy_money}"/>
+                       <select class="form-control m-b chosen-select" name="group" id="group">
+                            <option value="0">会员等级</option>
+                            <option value="1" {if $group==1}selected="selected"{/if}>普通会员</option>
+                            <option value="2" {if $group==2}selected="selected"{/if}>代理会员</option>
+                            <option value="3" {if $group==3}selected="selected"{/if}>体验中心</option>
+                       </select>
+                          
+                        <input placeholder="会员账号/手机号/昵称" type="text" class="form-control search" id="key" name="key" style="width:200px;vertical-align: middle;display: inline-block;border:none;" value="{$val}">
+                        <input placeholder="会员编号" type="text" class="form-control search" id="id" name="id" style="width:100px;vertical-align: middle;display: inline-block;border:none;" value="{if $id>0}{$id}{/if}">
+                        <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" id="submit">搜索</button>
+                        <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" id="export">导出</button>
+                        
+                        
+                    </div>    
+                    </form>                         
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <div>
+                        {if $group > 0}
+                        <span>{$group_name}总人数：{$total_people_num}</span>&nbsp;&nbsp;
+                        {else/}
+                        <span>注册人数：{$total_people_num}</span>&nbsp;&nbsp;&nbsp;
+                        <span>代理人数：{$dl_people_num}</span>&nbsp;&nbsp;&nbsp;
+                        <span>体验中心数量：{$center_num}</span>&nbsp;
+                        {/if}
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <tr class="long-tr">
+                                <th width="4%">会员编号</th>
+                                <th width="10%">会员信息</th>
+                                <th width="10%">实名信息</th>
+                                <th width="6%">会员等级</th>
+                                <th width="6%">积分</th>
+                                <th width="6%">账户余额</th>
+                                <th width="5%">产生的代理收益</th>
+                                <th width="5%">产生的代售收益</th>
+                                
+                                <th width="5%">状态</th>
+                                <th width="10%">时间</th>
+                                <th width="20%">操作</th>
+                            </tr>
+                            </tr>
+                        </thead>
+                        <script id="list-template" type="text/html">
+                            {{# for(var i=0;i<d.length;i++){  }}
+                            <tr class="long-td">
+                                <td>{{d[i].id}}</td>
+                                <td>账号：{{d[i].account}}<br/>手机号：{{d[i].mobile}}<br/>昵称：{{d[i].nickname}}</td>
+                                <td>
+                                {{# if(d[i].real_info_ok == 1){ }}
+                                姓名：{{d[i].real_name}}<br/>年龄：{{d[i].real_age}}
+                                {{# }else{ }}
+                                未认证
+                                {{# } }}  
+                                </td>
+                                <td>
+                                <!-- {{# if(d[i].dl_time > 0){ }}{{d[i].r_account}}{{# }else{ }}无推荐人{{# } }} -->
+                                {{# if(d[i].is_center == 1){ }}
+                                    体验中心
+                                {{# }else{ }}
+                                    {{# if(d[i].dl_time > 1){ }} 代理会员{{# }else{ }}普通会员{{# } }}   
+                                {{# } }}  
+                                </td>
+                                <td> {{d[i].integral}}</td>
+                                <td> {{d[i].money}}</td>
+                                
+                                <td>{{d[i].income|0}}</td>
+                                <td>{{d[i].income_dy|0}}</td>
+                                
+                                <td>
+                                    {{# if(d[i].status==1){ }}
+                                        <a class="red" href="javascript:;" onclick="member_status({{d[i].id}});">
+                                            <div id="zt{{d[i].id}}"><span class="label label-info">开启</span></div>
+                                        </a>
+                                    {{# }else{ }}
+                                        <a class="red" href="javascript:;" onclick="member_status({{d[i].id}});">
+                                            <div id="zt{{d[i].id}}"><span class="label label-danger">禁用</span></div>
+                                        </a>
+                                    {{# } }}                               
+                                </td>
+                                <td>注册时间：{{d[i].create_time}}</br>代理时间：{{d[i].dl_date}}<br/>体验中心时间：{{d[i].center_date}}</br></td>
+                                <td> 
+                                    <a href="javascript:;" onclick="money({{d[i].id}})" class="btn btn-primary btn-outline btn-xs"><i class="fa fa-paste"></i>账户明细</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="integral({{d[i].id}})" class="btn btn-primary btn-outline btn-xs"><i class="fa fa-paste"></i>积分明细</a>&nbsp;&nbsp;<br/>
+                                    <a href="javascript:;" onclick="edit_amount({{d[i].id}},'money')" class="btn btn-primary btn-outline btn-xs"><i class="fa fa-paste"></i>调整余额</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="edit_amount({{d[i].id}},'integral')" class="btn btn-primary btn-outline btn-xs"><i class="fa fa-paste"></i>调整积分</a>&nbsp;&nbsp;<br/>
+                                    <a href="javascript:;" onclick="parent_index({{d[i].ruid}})" class="btn btn-primary btn-outline btn-xs"><i class="fa fa-paste"></i>查看上级</a>&nbsp;&nbsp;                                
+                                    <a href="javascript:;" onclick="son_index({{d[i].id}})" class="btn btn-primary btn-outline btn-xs"><i class="fa fa-paste"></i>查看下级</a>&nbsp;&nbsp;<br/>
+                                    <a href="javascript:;" onclick="edit_bank({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
+                                        <i class="fa fa-paste"></i> 银行卡</a>&nbsp;&nbsp;
+                                        <a href="javascript:;" onclick="edit_address({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
+                                        <i class="fa fa-paste"></i> 收货地址</a><br/>
+                                    <a href="javascript:;" onclick="edit_member({{d[i].id}})" class="btn btn-primary btn-outline btn-xs">
+                                        <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="del_member({{d[i].id}})" class="btn btn-danger btn-outline btn-xs">
+                                        <i class="fa fa-trash-o"></i> 删除</a>                                       
+                                </td>
+                            </tr>
+                            {{# } }}
+                        </script>
+                        <tbody id="list-content"></tbody>
+                    </table>
+                    <div id="AjaxPage" style=" text-align: right;"></div>
+                    <div id="allpage" style=" text-align: right;"></div>
+                </div>
+            </div>
+            <!-- End Example Pagination -->
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+<!-- 加载动画 -->
+<div class="spiner-example">
+    <div class="sk-spinner sk-spinner-three-bounce">
+        <div class="sk-bounce1"></div>
+        <div class="sk-bounce2"></div>
+        <div class="sk-bounce3"></div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    $(function(){
+        var uid = "{$uid}";
+        var ruid = "{$ruid}";
+        $('#export').click(function () {
+            $('#search').attr('action',"{:url('member_export','','')}"+'/uid/'+uid+'/ruid/'+ruid);
+        });
+        $('#submit').click(function () {
+            $('#search').attr('action',"{:url('index','','')}"+'/uid/'+uid+'/ruid/'+ruid);
+        });
+    });
+    $("#start").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#end").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#start2").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#end2").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+    //laypage分页
+    Ajaxpage();
+    function Ajaxpage(curr){
+        var key=$('#key').val();
+        var start = $('#start').val();
+        var end = $('#end').val();
+        var start2 = $('#start2').val();
+        var end2 = $('#end2').val();
+        var money = $('#money').val();
+        var dl_money = $('#dl_money').val();
+        var dy_money = $('#dy_money').val();
+        var group = $('#group').val();
+        //alert(key);return false;
+        var uid = "{$uid}";
+        var ruid = "{$ruid}";
+        var id = "{$id}";
+        console.log(start);
+        $.getJSON('{:url("Member/index")}', {page: curr || 1,key:key,start:start,end:end,start2:start2,end2:end2,money:money,dl_money:dl_money,dy_money:dy_money,group:group,uid:uid,ruid:ruid,id:id}, function(data){
+            $(".spiner-example").css('display','none'); //数据加载完关闭动画 
+            if(data==''){
+                $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
+            }else{
+                var tpl = document.getElementById('list-template').innerHTML;
+                laytpl(tpl).render(data, function(html){
+                    document.getElementById('list-content').innerHTML = html;
+                });
+                laypage({
+                    cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
+                    pages:'{$allpage}',//总页数
+                    skip: true,//是否开启跳页
+                    skin: '#1AB5B7',//分页组件颜色
+                    curr: curr || 1,
+                    groups: 3,//连续显示分页数
+                    jump: function(obj, first){
+                        if(!first){
+                            Ajaxpage(obj.curr)
+                        }
+                        $('#allpage').html('第'+ obj.curr +'页，共'+ obj.pages +'页');
+                    }
+                });
+            }
+        });
+    }
+
+//编辑会员
+function edit_member(id){
+    location.href = '/admin/member/edit_member/id/'+id+'.html';
+}
+function edit_bank(id){
+    location.href = '/admin/member/edit_bank/id/'+id+'.html';
+}
+function edit_address(id){
+    location.href = '/admin/member/edit_address/id/'+id+'.html';
+}
+function son_index(id){
+    location.href = '/admin/member/index/ruid/'+id+'.html';
+}
+function parent_index(id){
+    location.href = '/admin/member/index/uid/'+id+'.html';
+}
+    function integral(id){
+        location.href = '/admin/member/integral_details/uid/'+id+'.html';
+    }
+    function money(id){
+        location.href = '/admin/member/money_details/uid/'+id+'.html';
+    }
+    //清空余额
+$('#clear_money').click(function(){
+    layer.confirm('确定清空普通会员余额吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON('{:url("clear_money")}', {}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+})
+//删除会员
+function del_member(id){
+    lunhui.confirm(id,'{:url("del_member")}');
+}
+
+//用户会员
+function member_status(id){
+    lunhui.status(id,'{:url("member_status")}');
+}
+//调整余额和积分
+    function edit_amount(uid,mod){
+        if(mod == 'money'){
+            var url = "{:url('update_money')}";
+            var title = '调整余额';
+        }else if(mod == 'integral'){
+            var url = "{:url('update_integral')}";
+            var title = '调整积分';
+        }
+        layer.open({
+            title : title,
+            content: '<input name="num_val" id="num_val" value="" style="width:210px;margin-bottom: 10px;" placeholder="正数为增加，负数为扣除"/><textarea style="width:210px;height:60px;" id="admin_msg" placeholder="请输入操作说明"></textarea>'
+            ,btn: ['确认修改']
+            ,yes: function(index, layero){
+                //按钮【按钮一】的回调
+                //console.log(id_arr);
+                var admin_msg = $('#admin_msg').val();
+                var num = $('#num_val').val();
+                $.post(url,{uid:uid,mod:mod,num:num,msg:admin_msg},function(data){
+                    if(data.code == 1){
+                        layer.msg(data.msg,{icon:1,time:1500,shade: 0.1});
+                        setTimeout(location.reload(),3000)
+                    }else{
+                        layer.msg(data.msg,{icon:0,time:1500,shade: 0.1});
+                        /* var err_html = '';
+                         for(var i in data.data){
+                             err_html += '<p>'+data.data[i].account+'****************'+data.data[i].msg+'</p>';
+                         }
+                         layer.open({
+                             title : '错误信息',
+                             content: err_html
+                         })*/
+                    }
+                },'json')
+
+            }
+            ,cancel: function(){
+                //右上角关闭回调
+
+                //return false 开启该代码可禁止点击该按钮关闭
+            }
+        });
+    }
+
+
+$('#export').click(function () {
+    var key = $('#key').val();
+   window.location.href="{:url('admin/member/export')}?key="+key;
+});
+
+//IOS开关样式配置
+var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+var config = {
+    '.chosen-select': {},
+}
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+</script>
+</body>
+</html>

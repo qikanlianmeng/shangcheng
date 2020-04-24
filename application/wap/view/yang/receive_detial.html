@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>认养详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/mob/yang/css/base.css" />
+    <script src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+    <script src="/static/mob/public/libs/mui.min.js" charset="utf-8"></script>
+    <link href="/static/mob/public/css/mui.min.css" rel="stylesheet">
+
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="/static/mob/public/font/iconfont.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/mob/yang/css/index.css" />
+    <link rel="stylesheet" type="text/css" href="/static/mob/yang/mescroll/mescroll.min.css">
+
+    <style>
+        .mui-checkbox input[type=checkbox]:checked:before, .mui-radio input[type=radio]:checked:before{
+            color:#FF5B5B;
+        }
+    </style>
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+</head>
+<body>
+<div>
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon iconfont icon-back11 mui-pull-left back" style="font-size: 18px; color:#333"></a>
+        <h1 class="mui-title">认养详情</h1>
+    </header>
+    <div style="padding-top:45px;padding-bottom:45px;">
+        
+         <div class="mb10"></div>
+       <!-- <div class="mb10"></div> -->
+        <div class="sheet_info">
+            <ul>
+                <li><span>编号：</span><span id="sheet_id">0</span></li>
+                <li><span>开始时间：</span><span id="sheet_st">0</span></li>
+                <li><span>结束时间：</span><span id="sheet_et">0</span></li>
+                <li><span>饥饿次数：</span><span id="sheet_jie">0</span></li>
+                <li><span>生病天数：</span><span id="sheet_sheng">0</span></li>
+            </ul>
+            
+        </div>
+        <div class="mb10"></div>
+        
+        <div class="choose_box">
+            <div class="mui-input-row mui-radio mui-right">
+                <label>换钱 <span id="sheet_price" class="fr"></span></label>
+                <input name="types" type="radio" value="1" checked>
+            </div> 
+            <div class="mui-input-row mui-radio mui-right">
+                <label>换肉 <span id="sheet_zhong" class="fr"></span></label>
+                <input name="types" type="radio" value="2">
+            </div>
+        </div>
+        <div class="mb10"></div>
+        <div class="my_address">
+            <ul>
+                <!-- <li><span>似曾相识</span><span class="fr">15638187275</span></li>
+                <li class="mui-ellipsis-2">河南省郑州市二七区大学路汝河路康桥金域上郡5号院3号楼711室</li> -->
+            </ul>
+            
+        <div class="no_address">
+            <button class="active">修改收货地址</button>
+        </div>
+            
+        </div>
+         
+    </div>
+    <div class="bottom_submit">
+        确定
+    </div>    
+<input type="hidden" value='' class="choose_types">
+<input type="hidden" value='' id="add_id">
+<script src="/static/mob/yang/js/template.js"></script>
+<script src="/static/mob/yang/mescroll/mescroll.min.js"></script>
+<script src="/static/mob/yang/js/common.js"></script>
+
+<script>
+   function getParams(name) { 
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+        var r = window.location.search.substr(1).match(reg); 
+        if (r != null) return unescape(r[2]); return null; 
+    }
+    var id=getParams('id');
+    // mui.toast('当前的id是'+id);
+    $get('/api/yangyang/yang_desc',{yang_id:id},function(data){
+        console.log(JSON.stringify(data));
+        if(data.code==1){
+            $('#sheet_id').html(data.data.id);
+            $('#sheet_st').html(timetrans_1(data.data.start_date));
+            $('#sheet_et').html(timetrans_1(data.data.end_date));
+            $('#sheet_jie').html(data.data.ji_e);
+            $('#sheet_zhong').html(data.data.zhong_liang+'<em>KG</em>');
+            $('#sheet_price').html(data.data.jia_ge+'<em>元</em>');
+            $('#sheet_sheng').html(data.data.drug_num);
+
+        }
+    });
+    // 获取默认收货地址
+    function get_add(){
+        $get('/api/address/get_normal_address',{},function(data){
+            console.log(JSON.stringify(data));
+            if(data.data==''){
+                $('.no_address').show();
+                $('.no_address button').removeClass('active');
+                $('.no_address button').html('添加收货地址');
+                $('.no_address button').on('click',function(){
+                    location.href='/wap/usercenter/add_address.html'
+                });
+            }else{
+                $('.my_address ul').html('<li><span>'+data.data.consignee+'</span><span class="fr">'+data.data.mobile+'</span></li><li class="mui-ellipsis-2">'+data.data.address_detail+'</li>');
+                $('#add_id').val(data.data.address_id);
+                $('.no_address').show();
+                $('.no_address button').addClass('active');
+                $('.no_address button').html('修改收货地址');
+                $('.no_address button').on('click',function(){
+                    location.href='/wap/usercenter/address_list.html'
+                });
+            }
+        
+        });
+        if($('.choose_types').val()==2){
+            $('.my_address').show();
+        }else{
+            $('.my_address').hide();
+        }
+    }
+    
+    get_add();
+  
+  
+      // 初始化支付方式选择
+      $('.choose_types').val($('input[name="types"]:checked').val());
+      
+      // 改变支付方式选择
+      $('input[name="types"]').on('change',function(){
+        if($(this).is(':checked')){
+          $('.choose_types').val($(this).val());
+        }
+        if($('.choose_types').val()==2){
+            $('.my_address').show();
+        }else{
+            $('.my_address').hide();
+        }
+        get_add();
+      });
+      
+    //  提交
+
+    $('.bottom_submit').on('click',function(){
+        var type=$('.choose_types').val();
+        var add_id=$('#add_id').val();
+        // alert(id+'****'+type+'*****'+add_id);
+         $get('/api/yangyang/yang_submit',{yang_id:id,type:type,add_id:add_id},function(data){
+            mui.toast(data.msg);
+            if(data.code==1){
+                setTimeout(function(){
+                    mui.back();
+                },1000);
+               
+            }
+        }); 
+    });
+
+</script>
+    
+</body>
+</html>

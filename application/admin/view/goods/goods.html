@@ -1,0 +1,287 @@
+{include file="public/header" /}
+<style type="text/css">
+.chosen-container{
+    width: 200px !important;
+}
+.chosen-search{
+    display: none;
+}
+.select-wrap{
+    border: 1px solid #1ab394;
+    margin: 0 15px;
+    padding:0;
+    width: auto;
+    float: left;
+}
+.select-wrap .chosen-container:nth-child(6),.select-wrap .chosen-container:nth-child(8){
+    width: 150px !important;
+}
+.chosen-container-single .chosen-single{
+    border: none;
+}
+.search:focus{
+    border: none;
+}
+.table>thead>.long-tr>th{
+    position: relative;
+}
+.long-tr th:hover::after{
+    content: "";
+    display: inline-block;
+    background-color: #1ab394;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+
+}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>商品列表</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">
+                    <!-- <div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('addGoods')}"><button class="btn btn-outline btn-primary" type="button">添加商品</button></a>
+                        </div>
+                    </div> -->
+                    <form method="get" action="{:url('Goods')}" id="search">
+                    <div class="col-sm-10 select-wrap">
+                        
+                        <select class="form-control m-b chosen-select" name="is_on_sale">
+                            <option value="">上下架</option>
+                            <option value="0" {if condition="isset($data['is_on_sale']) && $data['is_on_sale'] == '0'"}selected{/if}>下架</option>
+                            <option value="1" {if condition="isset($data['is_on_sale']) && $data['is_on_sale'] == '1'"}selected{/if}>上架</option>
+                        </select>
+                        <select class="form-control m-b chosen-select" name="status">
+                            <option value="">状态</option>
+                            <option value="is_hot" {if condition="isset($data['status']) && $data['status'] == 'is_hot'"}selected{/if}>热销</option>
+                            <option value="is_new" {if condition="isset($data['status']) && $data['status'] == 'is_new'"}selected{/if}>新品</option>
+                            <option value="is_recommend" {if condition="isset($data['status']) && $data['status'] == 'is_recommend'"}selected{/if}>推荐</option>
+                        </select>
+                        <select class="form-control m-b chosen-select" name="sales_num" >
+                            <option value="">销量排序</option>
+                            <option value="asc" {if condition="isset($data['sales_num']) && $data['sales_num'] == 'asc'"}selected{/if}>销量升序</option>
+                            <option value="desc" {if condition="isset($data['sales_num']) && $data['sales_num'] == 'desc'"}selected{/if}>销量倒序</option>
+                        </select>
+                        <select class="form-control m-b chosen-select" name="click_count">
+                            <option value="">浏览量排序</option>
+                            <option value="asc" {if condition="isset($data['click_count']) && $data['click_count'] == 'asc'"}selected{/if}>浏览量升序</option>
+                            <option value="desc" {if condition="isset($data['click_count']) && $data['click_count'] == 'desc'"}selected{/if}>浏览量倒序</option>
+                        </select>
+                        <input placeholder="商品关键词" type="text" class="form-control search" name="keywords" style="width:200px;vertical-align: middle;display: inline-block;border:none;" value="{if isset($data['keywords'])}{$data['keywords']}{/if}">
+                        <input type="hidden" id="order"/>
+                        <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;">搜索</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th>ID</th>
+                                <th>商品名称</th>
+                                <th>销量</th>
+                                <th>点击数</th>
+                                <th>热销</th>
+                                <th>新品</th>
+                                <th>推荐</th>
+                                <th>上架</th>
+                                <th>库存</th>
+                                <th>排序</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <style>
+                            .lev2,.lev3{
+                                background-color:#F5F5F6;
+                            }
+                        </style>
+                        {if $list->isEmpty()}
+                        <tr class="long-td">
+                            <td colspan="12" style="text-align:center">暂无商品信息</td>
+                        </tr>
+                        {/if}
+                        {volist name='list' id='v'}
+                        <tr class="long-td ">
+                            <td>{$v.id}</td>
+                            <td>{$v.goods_name}</td>
+                            <td>{$v.sales_num}</td>
+                            <td>{$v.click_count}</td>
+                            <td>
+                                {if condition='$v.is_hot eq 1'}
+                                <span class="yes" onClick="changeTableVal('Goods','{$v.id}','is_hot',0)" style="color:#1ab394;"><i class="fa fa-check-circle"></i> 是</span>
+                                {else /}
+                                <span class="no" onClick="changeTableVal('Goods','{$v.id}','is_hot',1)" style="color:#9ea3a7;"><i class="fa fa-ban"></i> 否</span>
+                                {/if}
+                            </td>
+                            <td>
+                                {if condition='$v.is_new eq 1'}
+                                <span class="yes" onClick="changeTableVal('Goods','{$v.id}','is_new',0)" style="color:#1ab394;"><i class="fa fa-check-circle"></i> 是</span>
+                                {else /}
+                                <span class="no" onClick="changeTableVal('Goods','{$v.id}','is_new',1)" style="color:#9ea3a7;"><i class="fa fa-ban"></i> 否</span>
+                                {/if}
+                            </td>
+                            <td>
+                                {if condition='$v.is_recommend eq 1'}
+                                <span class="yes" onClick="changeTableVal('Goods','{$v.id}','is_recommend',0)" style="color:#1ab394;"><i class="fa fa-check-circle"></i> 是</span>
+                                {else /}
+                                <span class="no" onClick="changeTableVal('Goods','{$v.id}','is_recommend',1)" style="color:#9ea3a7;"><i class="fa fa-ban"></i> 否</span>
+                                {/if}
+                            </td>
+                            <td>
+                                {if condition='$v.is_on_sale eq 1'}
+                                <span class="yes" onClick="changeTableVal('Goods','{$v.id}','is_on_sale',0)" style="color:#1ab394;"><i class="fa fa-check-circle"></i> 是</span>
+                                {else /}
+                                <span class="no" onClick="changeTableVal('Goods','{$v.id}','is_on_sale',1)" style="color:#9ea3a7;"><i class="fa fa-ban"></i> 否</span>
+                                {/if}
+                            </td>
+                            <td>{$v.store_count}</td>
+                            <td><input class="form-control sort" style="width:50px;margin:0 auto" value="{$v.order}" row_id = "{$v.id}"/></td>
+                            <td>
+                                
+                                <a href="{:url('editGoods', ['id' => $v['id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del({$v.id})" class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+//删除
+function del(id){
+    var url = '{:url("delGoods")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+function treeClicked(obj,cat_id,parent_id_path){
+
+    var src = $(obj).attr('src');
+    if(src == '/static/admin/images/tv-expandable.gif')
+    {
+        $(".parent_id_"+cat_id).show();
+        $(obj).attr('src','/static/admin/images/tv-collapsable-last.gif');
+    }else{
+        $("tr[parent_id_path^='"+parent_id_path+"_']").hide().find('img').attr('src','/static/admin/images/tv-expandable.gif');
+        $(obj).attr('src','/static/admin/images/tv-expandable.gif');
+
+    }
+}
+$(".sort").change(function(){
+    var id = $(this).attr('row_id');
+    var sort = $(this).val();
+    var model = 'goods';
+    var url = '{:url("changeSort")}';
+    if (sort > 255) {sort = 255};
+    if (sort < 0) {sort = 0};
+    $.getJSON(url, {'id' : id, 'sort' : sort, 'model' : model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+})
+$(".name").change(function(){
+    var id = $(this).attr('row_id');
+    var val = $(this).val();
+    var attr = $(this).attr('attr');
+    var model = "GoodsCategory";
+    var url = '{:url("changeInfo")}';
+    if(!val){
+        layer.msg("分类名称不允许为空",{icon:0,time:1500,shade: 0.1});
+        return false;
+    }
+    $.getJSON(url, {'id' : id, 'val' : val, 'attr' : attr,'model':model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+})
+function changeTableVal(model, id, attr, val){
+    var url = '{:url("changeInfo")}';
+    $.getJSON(url, {'id' : id, 'val' : val, 'attr' : attr,'model':model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+}
+
+//IOS开关样式配置
+var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+var config = {
+    '.chosen-select': {},
+}
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+var order = [
+    {name : 'id', order : 0},
+    {name : 'goods_name', order : 0},
+    {name : 'goods_sn', order : 0},
+    {name : 'cat_id', order : 0},
+    {name : 'shop_price', order : 0},
+    {name : 'is_recommend', order : 0},
+    {name : 'is_new', order : 0},
+    {name : 'is_hot', order : 0},
+    {name : 'is_on_sale', order : 0},
+    {name : 'store_count', order : 0},
+    {name : 'order', order : 0}
+]
+
+</script>
+</body>
+</html>

@@ -1,0 +1,64 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__CSS__/shopstyle.css">
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">物流详情</h1>
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+</header>
+<div class="mui-content">
+    <div class="mui-loading m-t"><div class="mui-spinner"></div></div>
+    <div class="wuliuTitle bg-whtie">
+        <!-- <p class="mui-pull-left color-333 text-15">物流公司：<span></span></p> -->
+        <p class="color-333 text-15">
+            快递单号：
+            <span>
+                3337548463515
+            </span>
+        </p>
+    </div>
+    <div class="wuliuNews bg-whtie">
+        <h2 class=" color-333 text-16 clearfix">
+            <i class="iconfont icon-daishouhuo color-main mui-pull-left">
+            </i>
+            <span class="mui-pull-left">
+                物流信息：
+            </span>
+        </h2>
+        <ul>
+            <!-- <li>
+                <p class="color-999">
+                    已签收-已签收 已收件
+                </p>
+                <p class="color-999 border">
+                    2017-09-06 11:58:24
+                </p>
+                <span>
+                    <i>
+                    </i>
+                </span>
+            </li> -->
+        </ul>
+    </div>
+    <div class="noAttend" style="display: none;">
+        <i class="iconfont icon-zanwu">
+        </i>
+        <p>
+            暂无物流信息
+        </p>
+    </div>
+</div>
+{include file="public/footer" /}
+<script type="text/html" id="wuliuTem">
+    <li>
+        <p class="color-999">[[status]]</p>
+        <p class="color-999 border">[[time]]</p>
+        <span><i></i></span>
+    </li>
+</script>
+<script type="text/javascript">
+    var order_id = "{:input('order_id')}";
+    seajs.use(['shop/js/wuliu']);
+</script>
+</body>
+</html>

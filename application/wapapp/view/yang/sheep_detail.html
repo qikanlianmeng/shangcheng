@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>羊状态</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/base.css" />
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="/static/wapapp/public/font/iconfont.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/index.css" />
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon iconfont icon-back11 mui-pull-left" @click="back" style="font-size: 18px; line-height: 44px;"></a>
+        <h1 class="mui-title">羊状态</h1>
+    </header>
+    <div class="tender-list">
+       
+    </div>
+   
+</div>    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script>
+        function getParams(name) { 
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+            var r = window.location.search.substr(1).match(reg); 
+            if (r != null) return unescape(r[2]); return null; 
+        }
+        var id=getParams('id');
+        var app = new Vue({
+            el: '#app',
+            data: {
+               id:id,
+               desc:{}
+            },
+            created() {
+                axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                var that = this
+                this.getTenderDesc().then(function(res) {
+                    if(res.data.msg == '未登录，请先登录') {
+                        that.$messagebox.confirm('未登录，请先登录').then(action => {
+                            window.location.href = `/wapapp/index/login.html?url=${window.location.href}`
+                        }).catch(err => console.log);
+                    } else if(res.data.status == 1) {
+                        that.desc = res.data.data
+                    } else {
+                        that.$toast({
+                            message: res.data.msg
+                        });
+                    }
+                });
+            },
+            methods: {
+                back() {
+                    window.history.back();
+                },
+                getTenderDesc(id) {
+                    let that = this
+                    that.$indicator.open('加载中...');
+                    return new Promise(function(resolve, reject) {
+
+                        axios({
+                            url: '/api/yangyang/yang_info',
+                            params: {
+                                id: that.id
+                            }
+                        }).then(function(res) {
+                            that.$indicator.close();
+                            resolve(res)
+                            
+                        }).catch(function(err) {
+                            that.$indicator.close();
+                            console.log(err)
+                            reject(err)
+                        })
+                    })
+                },
+            }
+
+        });
+        
+
+    </script>
+</body>
+</html>

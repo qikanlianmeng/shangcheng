@@ -1,0 +1,135 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>退货管理</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">   
+                <div  class="col-sm-2" style="width: 100px">
+                    <div class="input-group" >
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th>ID</th>
+                                <th>订单编号</th>
+                               <!-- <th>商品名称</th>-->
+                                <th>类型</th>
+                                <th>申请日期</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        {volist name='list' id='v'}
+                        <tr class="long-td">
+                            <td>{$v.id}</td>
+                            <td>{$v.order_sn}</td>
+
+                            <td>
+                                {if $v.refund_type == 0}
+                                仅退款
+                                {else /}
+                                退货退款
+                                {/if}
+                            </td>
+                            <td>{:date('Y-m-d H:i:s', $v.addtime)}</td>
+                            <td>{if $v.status == 0}
+                                待审核
+                                {elseif  $v.status == -2/}
+                                用户取消
+                                {elseif  $v.status == -1/}
+                                审核拒绝
+                                {elseif  $v.status == 1/}
+                                审核通过
+                                {/if}</td>
+                            <td>
+
+                                <a href="{:url('shenhe', ['id' => $v['id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i>审核</a>&nbsp;&nbsp;
+                                <a href="{:url('detail', ['id' => $v['order_id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    查看订单</a>
+
+                            </td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+//删除
+function del(id){
+    var url = '{:url("delGoodsBrand")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+
+$(".sort").change(function(){
+    var id = $(this).attr('row_id');
+    var sort = $(this).val();
+    var model = 'goodsBrand';
+    var url = '{:url("changeSort")}';
+    if (sort > 255) {sort = 255};
+    if (sort < 0) {sort = 0};
+    $.getJSON(url, {'id' : id, 'sort' : sort, 'model' : model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+})
+function changeTableVal(model, id, attr, val){
+    var url = '{:url("changeInfo")}';
+    $.getJSON(url, {'id' : id, 'val' : val, 'attr' : attr,'model':model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+}
+</script>
+</body>
+</html>

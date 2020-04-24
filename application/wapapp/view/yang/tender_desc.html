@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>认养详情</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/base.css" />
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="/static/wapapp/public/font/iconfont.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/index.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/api.css" />
+ 
+    <script>
+        var UID = '{:get_uid()}';
+        var PATH_URL = '';
+        var SITE_URL = '/';
+        var IS_WEIXIN = '{:is_weixin() ? 1 : 0}';
+    </script>
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon iconfont icon-back11 mui-pull-left" @click="back" style="font-size: 18px; line-height: 44px;"></a>
+
+        <h1 class="mui-title">认养详情</h1>
+
+    </header>
+    <div class="tender-detail">
+        <div class="cover">
+            <img :src="desc.img" alt="">
+        </div>
+        <div class="info"  v-cloak>
+            <div class="title" v-cloak>{{desc.title}}</div>
+            <div style="overflow: hidden; background: #fff; margin-top: 0.2rem">
+                <div class="num-price">
+                    <p><em style="font-style: normal; color: #999; margin-right: 5px;">单价</em><span class="red" v-cloak>{{desc.price}}</span></p>
+                    <span v-cloak><em style="font-style: normal; color: #999">剩余数量</em> {{desc.num - desc.receive_num }}</span>
+                </div>
+                <div class="buy-num">
+                    <div class="num-revise">
+                        <div class="btn" :class="{'can': num != 0}" @click="delNum">-</div>
+                        <div class="num" v-cloak>{{num}}</div>
+                        <div class="btn can" @click="addNum">+</div>
+                    </div>
+                    <div class="buy-btn" :class="{'canBuy': num > 0}" v-if="desc.status==1"  onclick="buyYang();">立即购买</div>
+                    <!-- <div class="buy-btn" :class="{'canBuy': num > 0}" v-if="desc.status==1" @click="buyYang">立即购买</div> -->
+                    <div class="buy-btn" v-if="desc.status>1" @click="buyYang">已结束</div>
+                </div>
+            </div>
+
+        </div>
+        <div class="tender-desc" v-html="desc.detail"></div>
+    </div>
+    <nav class="footer-bar mui-bar-tab">
+        <a href="/wapapp/yang/index.html" class="mui-tab-item mui-active">
+            <span class="iconfont icon-shouye1" style="color:rgb(79,109,59);"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a href="/wapapp/index/index.html" class="mui-tab-item">
+            <span class="iconfont icon-shangcheng"></span>
+            <span class="mui-tab-label">商城</span>
+        </a>
+        <a href="/wapapp/yang/game.html" class="mui-tab-item youxi">
+            <img src="/static/mob/yang/imgs/index/img_xiabaidi.png">
+        </a>
+        <a href="/wapapp/cart/shopcar.html" class="mui-tab-item" style="position:relative">
+            <span class="iconfont icon-gouwuche"></span>
+            <span class="mui-tab-label">购物车</span>
+        </a>
+        <a href="/wapapp/usercenter/usercenter.html" class="mui-tab-item">
+            <span class="iconfont icon-wode1"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+</div>    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script src="/static/wapapp/yang/js/jquery.3.1.1.js"></script>
+    <script src="/static/wapapp/yang/js/common.js"></script>
+    <script src="/static/wapapp/yang/js/api.js"></script>
+    <script>
+        function getParams(name) { 
+        var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+        var r = window.location.search.substr(1).match(reg); 
+        if (r != null) return unescape(r[2]); return null; 
+        }
+        var id=getParams('id');
+        var nostart=getParams('nostart');
+        if(nostart==11){
+            $('.buy-num').hide();
+        }
+        var app = new Vue({
+            el: '#app',
+            data: {
+                id: getParams('id'),
+                num: 0,
+                desc: {}
+            },
+            created() {
+                axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                var that = this
+                this.getTenderDesc().then(function(res) {
+                    if(res.data.msg == '未登录，请先登录') {
+                        that.$messagebox.confirm('未登录，请先登录').then(action => {
+                            window.location.href = `/wapapp/index/login.html?url=${window.location.href}`
+                        }).catch(err => console.log);
+                    } else if(res.data.status == 1) {
+                        that.desc = res.data.data;
+                        console.log(JSON.stringify(res.data.data));
+                    } else {
+                        that.$toast({
+                            message: res.data.msg
+                        });
+                    }
+                })
+            },
+            methods: {
+                back() {
+                    window.history.back();
+                },
+                addNum() {
+                    this.num += 1
+                },
+                delNum() {
+                    if(this.num != 0) {
+                        this.num -= 1
+                    }
+                },
+                getTenderDesc(id) {
+                    let that = this
+                    that.$indicator.open('加载中...');
+                    return new Promise(function(resolve, reject) {
+
+                        axios({
+                            url: '/api/yangyang/tender_des',
+                            params: {
+                                id: that.id
+                            }
+                        }).then(function(res) {
+                            that.$indicator.close();
+                            resolve(res);
+                            
+                        }).catch(function(err) {
+                            that.$indicator.close();
+                            console.log(err);
+                            reject(err);
+                        });
+                    });
+                },
+                // buyYang() {
+                //     if(this.num <= 0) return;
+                //     let that = this;
+                //     that.$indicator.open('请求中...');
+                //     axios({
+                //         url: '/api/yangyang/receive',
+                //         params: {
+                //             id: this.id,
+                //             num: this.num
+                //         }
+                //     }).then(function(res) {
+                //         that.$indicator.close();
+                //       /*  if(res.data.msg == '未登录，请先登录') {
+                //             that.$messagebox.confirm('未登录，请先登录').then(action => {
+                //                 window.location.href = `/wap/index/login.html?url=${window.location.href}`
+                //             }).catch(err => console.log);
+                //         }*/
+                //         if(res.data.code == 1) {
+                //             let ret = res.data.data;
+                //             if(IS_WEIXIN){
+                //                 WeixinJSBridge.invoke(
+                //                     'getBrandWCPayRequest', {
+                //                         "appId":ret.appId,     //公众号名称，由商户传入
+                //                         "timeStamp":ret.timeStamp, //时间戳，自1970年以来的秒数
+                //                         "nonceStr":ret.nonceStr, //随机串
+                //                         "package":ret.package,
+                //                         "signType":ret.signType,         //微信签名方式：
+                //                         "paySign":ret.paySign //微信签名
+                //                     },
+                //                     function(res){
+                //                         if(res.err_msg == "get_brand_wcpay_request:ok" ){
+                //                             // 用以上方式判断前端返回,微信团队郑重提示：res.err_msg将在用户支付成功后返回    ok，但并不保证它绝对可靠。
+                //                             window.location.href = '/wapapp/yang/game';
+                //                         } else if(res.err_msg == "get_brand_wcpay_request:fail" ){
+                //                             // alert(JSON.stringify(res))
+                //                             common.open("支付失败请稍后再试",2);
+                //                         }else if(res.err_msg == "get_brand_wcpay_request:cancel" ){
+                //                             common.open("取消支付",2);
+                //                             // window.location.href = '/wap/order/pay_fail/order_id/' + order_id;
+                //                         }
+                //                     }
+                //                 );
+                //             }
+                //         } else {
+                //             that.$toast({
+                //                 message: res.data.msg
+                //             });
+                //         }
+                //     }).catch(function(err) {
+                //         that.$indicator.close();
+                //         console.log(err)
+                //     })
+                // },
+                home() {
+                    window.location.href = '/wapapp/yang'
+                },
+                gotoGame() {
+                    window.location.href = '/wapapp/yang/game'
+                },
+                my() {
+                    window.location.href = '/wapapp/usercenter/usercenter.html'
+                }
+            },
+        });
+
+        // 买羊
+       function buyYang(){
+           
+           var num=$('.num').text();
+        //    alert(id+'*****'+num);
+           $get('/api/yangyang/receive',{id:id,num:num,pay_type:'wxpay'},function(data){
+                console.log(JSON.stringify(data));
+                var wxPay = api.require('wxPay');
+                if(data.code==1){
+                    wxPay.payOrder({
+                        apiKey: data.data.appid,
+                        orderId: data.data.prepayid,
+                        mchId: data.data.partnerid,
+                        nonceStr: data.data.noncestr,
+                        timeStamp: data.data.timestamp,
+                        package: data.data.package,
+                        sign: data.data.sign
+                    }, function(ret, err) {
+                        if (ret.status) {
+                            //支付成功
+                            window.location.href = '/wapapp/yang/game';
+                        } else {
+                            api.toast("支付失败！");
+                        }
+                        console.log(JSON.stringify(err));
+                    });
+                }else{
+                    // api.toast(data.msg);
+                    alert(data.msg);
+                }
+               
+           });
+       }
+
+  
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>配置列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">
+                <div  class="col-sm-2" style="width: 100px">
+                    <div class="input-group" >
+                        <a href="{:url('add_config')}"><button class="btn btn-outline btn-primary" type="button">添加配置</button></a>
+                    </div>
+                </div>
+                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('index')}">
+                        <div class="col-sm-3">
+                            <div class="input-group">
+                                <input type="text" id="key" class="form-control" name="key" value="{$val}" placeholder="输入需查询的标题" />
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i> 搜索</button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th>ID</th>
+                                <th>名称</th>
+                                <th>标题</th>
+                                <th>类型</th>
+                                <th>分组</th>
+                                <th>创建时间</th>
+                                <th>更新时间</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {foreach name="list" item="vo"}
+                                <tr class="long-td">
+                                    <td>{$vo.id}</td>
+                                    <td>{$vo.name}</td>
+                                    <td>{$vo.title}</td>
+                                    <td>{$vo.type|get_config_type}</td>
+                                    <td>{$vo.group|get_config_group}</td>
+                                    <td>{$vo.create_time}</td>
+                                    <td>{$vo.update_time}</td>
+                                    <td>
+                                        {if condition="$vo['status'] == 1"}
+                                            <a class="red" href="javascript:;" onclick="status_config({$vo.id});">
+                                                <div id="zt{$vo.id}"><span class="label label-info">开启</span></div>
+                                            </a>
+                                        {else/}
+                                            <a class="red" href="javascript:;" onclick="status_config({$vo.id});">
+                                                <div id="zt{$vo.id}"><span class="label label-danger">禁用</span></div>
+                                            </a>
+                                        {/if}
+                                    </td>
+                                    <td>
+                                        <a href="{:url('Config/edit_config',['id'=>$vo.id])}" class="btn btn-primary btn-xs">
+                                            <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                        <a href="javascript:;" onclick="del_config({$vo.id})" class="btn btn-danger btn-xs">
+                                            <i class="fa fa-trash-o"></i> 删除</a>
+                                    </td>
+                                </tr>
+                            {/foreach}
+                        </tbody>
+                    </table>
+                    <div id="Pages" style="text-align:right;"></div><div id="allpage" style=" text-align: right;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+//分页
+laypage({
+    cont: $('#Pages'),  // 分页容器
+    pages: "{$allpage}",// 总页数
+    skip: false, //是否开启跳页
+    skin: '#1AB5B7',//分页组件颜色
+    groups: 3,//连续显示分页数
+    curr: function(){
+        var page = "{$nowpage}"; // 当前页(后台获取到的)
+        return page ? page : 1; // 返回当前页码值
+    }(),
+    jump: function(e, first){ //触发分页后的回调(单击页码后)
+        if(!first){ //一定要加此判断，否则初始时会无限刷新
+            location.href = '?page='+e.curr;
+        }
+    }
+});
+
+
+/**
+ * [del_config 删除配置]
+ * @Author[田建龙 864491238@qq.com]
+ * @param   {[type]}    id [配置id]
+ */
+function del_config(id){
+    layer.confirm('确认删除此配置?', {icon: 3, title:'提示'}, function(index){
+        //do something
+        $.getJSON('./del_config', {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500});
+                Ajaxpage(1,5)
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500});
+            }
+        });
+
+        layer.close(index);
+    })
+
+}
+
+/**
+ * [status_config 配置状态]
+ * @param  {[type]} val [description]
+ * @Author[田建龙 864491238@qq.com]
+ */
+function status_config(val){
+    $.post('{:url("status_config")}',
+    {id:val},
+    function(data){
+
+        if(data.code==1){
+            var a='<span class="label label-danger">禁用</span>'
+            $('#zt'+val).html(a);
+            layer.msg(data.msg,{icon:2,time:1500,shade: 0.1,});
+            return false;
+        }else{
+            var b='<span class="label label-info">开启</span>'
+            $('#zt'+val).html(b);
+            layer.msg(data.msg,{icon:1,time:1500,shade: 0.1,});
+            return false;
+        }
+
+    });
+    return false;
+}
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,79 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/admin/remind/index.css">
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>运费模板</h5>
+        </div>
+        <div class="ibox-content">
+            <!-- 搜索框开始 -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('editor')}"><button class="btn btn-outline btn-primary" type="button">新增运费模板</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 搜索框结束 -->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="33%">模板名称</th>
+                                <th width="33%">计费方式</th>
+								<th width="33%">操作</th>
+                            </tr>
+                        </thead>
+                        
+                        <tbody id="list-content">
+							{volist name="list" id="l"}
+                            <tr class="long-td" id="tr_{$l.id}">
+                                <td>{$l.name}</td>
+                                <td>{$l.type_name}</td>
+								
+                                <td>                                   
+									<a href="{:url('editor',['id'=>$l.id])}" class="btn btn-primary btn-outline btn-xs"><i class="fa fa-paste"></i> 编辑</a>
+									<a href="javascript:;" onclick="del_msg({$l.id})" class="btn btn-danger btn-outline btn-xs"><i class="fa fa-trash-o"></i> 删除</a>
+								</td>
+                            </tr>
+                            {/volist}
+                            
+                        </tbody>
+                    </table>
+					
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 加载动画 -->
+{include file="public/footer" /}
+<script>
+function del_msg(id){
+	layer.confirm('确认删除此运费模板?', {icon: 3, title:'提示'}, function(index){
+		$.post("{:url('del')}",{'id':id},function(data){
+			if(data.status == 1){
+				$("#tr_"+id).css('display','none');
+				layer.msg(data.msg, {icon: 6,time:1000,shade: 0.1}, function(index){
+					layer.close(index);
+				});
+			}else{
+				layer.msg(data.msg, {icon: 5,time:1000,shade: 0.1}, function(index){
+					layer.close(index);
+				});
+			}
+		},'json')
+		layer.close(index);
+	})
+		
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,445 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/index.css">
+<style>
+    .mui-popup-inner {
+        padding: 0;
+    }
+    
+    .mui-popup-title {
+        /* background: #e30000; */
+        color: #000;
+        height: 45px;
+        line-height: 45px;
+        font-size: 16px;
+    }
+    
+    .mui-popup-text {
+        padding: 5px 0;
+    }
+    
+    .alert_text input {
+        padding: 0 !important;
+        margin: 0;
+        padding-left: 10px !important;
+        background: #f1f1f1;
+        color: #333;
+        border: none;
+        font-size: 16px;
+    }
+    
+    .alert_text {
+        padding: 0 12px;
+    }
+    .alert_text>p{
+        margin-bottom: 10px;
+    }
+    
+    .mui-popup-button:first-child,
+    .text_hong {
+        color: #e30000;
+    }
+    
+    .mui-popup-button:last-child {
+        border-radius: 0 0 13px;
+        /* background: #e30000; */
+        color: #44cf43;
+        font-weight: 400 !important;
+    }
+    
+    .mui-navigate-right:after,
+    .mui-push-right:after {
+        right: -2px !important;
+    }
+    
+    .img_v {
+        width: 44%;
+        position: absolute;
+        top: 20%;
+        right: 0;
+    }
+    
+    #password input::placeholder,
+    #phone input::placeholder {
+        color: #44cf43;
+    }
+    
+    .mui-table-view-cell:last-child:after {
+        content: unset;
+    }
+    
+    .mui-input-group:after {
+        content: unset;
+    }
+    
+    .line_span {
+        font-size: 16px !important;
+        border-bottom: 1px solid #999;
+        padding-right: 0;
+        position: absolute;
+        right: 6%;
+        top: 20%;
+    }
+    
+    .line_img {
+        position: absolute;
+        right: 2%;
+        top: 10%;
+    }
+    .mui-table-view-cell>a>span:first-child{
+        font-size: 16px;
+    }
+</style>
+</head>
+
+<body class="editinfo">
+    <div class="mui-inner-wrap">
+        <!--头部导航-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left mui-action-back"></a>
+            <h1 class="mui-title">编辑资料</h1>
+        </header>
+
+        <!--主体部分-->
+        <div class="mui-content">
+            <form method="post" id="form1" name="form1" action="" enctype="multipart/form-data" class="mui-input-group">
+                <ul class="mui-table-view edit-table" style="margin-top: 0">
+                    <li class="mui-table-view-cell">
+                        <a href="javascript:fn_browse();" id="imgtag">
+                            <span style="line-height:64px;">头像</span>
+                            <div class="mui-pull-right right5" id="imgdiv">
+                                <img width="64" height="64" class=" img-circle" src="__IMG__/default/touxiang.bk.jpg" id="imgShow">
+                            </div>
+                            <input type="hidden" value="" name="avatar">
+                            <input type="file" id="up_img" name="file" onchange="uploadImg(this, 'imgdiv', 'imgshow', 'picDiv1')" style="display: none;" value="">
+                        </a>
+                        <div id="picDiv1" style="width: 1px; height: 1px;"></div>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <a href="javascript:void(0);">
+                            <span style="line-height:40px;float:left">账号</span>
+                            <div class="mui-pull-right color-hui right5" style="position:absolute;width:100%;">
+                                <input id="account" name="account" value="" type="text" class="text-16 mui-text-right" readonly onfocus="this.blur()">
+                            </div>
+                        </a>
+                    </li>
+                    <li id="name_li" class="mui-table-view-cell" style="display: none;">
+                        <a href="javascript:void(0);">
+                            <span style="line-height:40px;float:left">真实姓名</span>
+                            <div class="mui-pull-right mui-navigate-right color-hui right5" style="position:absolute;width:100%;">
+                                <input id="nickname" name="nickname" value="" type="text" class="text-16 mui-text-right" placeholder="" readonly onfocus="this.blur()">
+                            </div>
+                        </a>
+                    </li>
+                    <!-- <li class="mui-table-view-cell">
+                        <a class="choose-sex">
+                            <span style="line-height:40px;">性别</span>
+                            <div class="mui-pull-right color-hui right5" style="padding-right:15px;">
+                                <span id="sex" class="text-16 mui-text-right" style="line-height:40px;"></span>
+                                <input name="sex" value="" type="hidden">
+                            </div>
+                        </a>
+                    </li> -->
+                    <li class="mui-table-view-cell">
+                        <a href="javascript:void(0);">
+                            <span style="line-height:40px;float: left;">密码</span>
+                            <div class="mui-pull-right mui-navigate-right color-hui right5" style="position:absolute;width:100%;">
+                                <input id="password" name="password" value="修改" type="text" class="text-14 mui-text-right text_hong" readonly onfocus="this.blur()">
+                            </div>
+                        </a>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <a href="javascript:void(0);">
+                            <span style="line-height:40px;float: left;">手机号码</span>
+                            <div class="mui-pull-right mui-navigate-right color-hui right5" style="position:absolute;width:100%;">
+                                <input id="phone" name="phone" value="" type="tel" class="text-14 mui-text-right" placeholder="绑定手机号码" readonly onfocus="this.blur()">
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <!--end 主体部分-->
+    </div>
+    {include file="public/footer" /}
+    <script src="__PUBLIC__/libs/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/ajaxfileupload.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/libs/layer/layer.js" charset="utf-8"></script>
+    <script>
+        function fn_browse() {
+            document.form1.file.click();
+        }
+        //图片上传预览    IE是用了滤镜。
+        function uploadImg(file, pre, imag, imgDiv) {
+            $.ajaxFileUpload({
+                url: '/api2/user/upload', //用于文件上传的服务器端请求地址
+                secureuri: false, //一般设置为false
+                fileElementId: 'up_img', //文件上传空间的id属性  <input type="file" id="file" name="file" />
+                dataType: 'json', //返回值类型 一般设置为json
+                success: function(data, status) //服务器成功响应处理函数
+                    {
+                        if (data.code != 1) {
+                            layer.open({
+                                content: data.info,
+                                time: 1
+                            });
+                            return false;
+                        } else {
+                            previewImage(file, pre, imag, imgDiv)
+                            $("input[name='avatar']").val(data.info);
+                            $post('/api2/user/update_info', {
+                                head_img: data.info
+                            }, function(data) {
+                                // console.log(data);
+                                mui.toast(data.msg);
+                            });
+                        }
+                    },
+                error: function(data, status, e) //服务器响应失败处理函数
+                    {
+                        alert("上传失败，请稍后再试。");
+                    }
+            })
+        }
+
+        function previewImage(file, pre, imag, imgDiv) {
+            var MAXWIDTH = 200;
+            var MAXHEIGHT = 200;
+            var div = document.getElementById(pre);
+            if (!file.value.match(/.jpg|.gif|.png|.bmp/i)) {
+                $('#' + pre).next('span').css({
+                    "color": "red",
+                    "font-weight": "bold"
+                }).text('图片类型无效！');
+                return false;
+            } else {
+                $('#' + pre).next('span').css({
+                    "color": "green",
+                    "font-weight": "bold"
+                }).text('图片类型符合！');
+            }
+            if (file.files && file.files[0]) {
+                div.innerHTML = '<img id=' + imag + '>';
+                var img = document.getElementById(imag);
+
+                var reader = new FileReader();
+                reader.onload = function(evt) {
+                    img.src = evt.target.result;
+                    // console.log(evt.target.result)
+                    img.style.width = '64px';
+                    img.style.height = '64px';
+                    img.style.borderRadius = '30px';
+                    img.style.MozBorderRadius = '100%'
+                }
+                reader.readAsDataURL(file.files[0]);
+            } else //兼容IE
+            {
+                var sFilter = 'filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale,src="';
+                file.select();
+                $("#" + imgDiv).focus();
+                //file.focus();
+                var src = document.selection.createRange().text;
+
+                div.innerHTML = '<img style=" filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale);width:32px;height:32px;border-radius:30px;-moz-border-radius:100%;-webkit-border-radius:100%;"  id=' + imag + '>';
+                var img = document.getElementById(imag);
+                img.filters.item('DXImageTransform.Microsoft.AlphaImageLoader').src = src;
+                var rect = clacImgZoomParam(MAXWIDTH, MAXHEIGHT, img.offsetWidth, img.offsetHeight);
+                status = ('rect:' + rect.top + ',' + rect.left + ',' + rect.width + ',' + rect.height);
+
+            }
+        }
+
+        function clacImgZoomParam(maxWidth, maxHeight, width, height) {
+            var param = {
+                top: 0,
+                left: 0,
+                width: width,
+                height: height
+            };
+            if (width > maxWidth || height > maxHeight) {
+                rateWidth = width / maxWidth;
+                rateHeight = height / maxHeight;
+
+                if (rateWidth > rateHeight) {
+                    param.width = maxWidth;
+                    param.height = Math.round(height / rateWidth);
+                } else {
+                    param.width = Math.round(width / rateHeight);
+                    param.height = maxHeight;
+                }
+            }
+
+            param.left = Math.round((maxWidth - param.width) / 2);
+            param.top = Math.round((maxHeight - param.height) / 2);
+            return param;
+        }
+    </script>
+    <script type="text/javascript">
+        seajs.use(['common', 'layer', "jquery", "ajaxupload"], function(common, layer) {
+            var old_mobile = '';
+            getData();
+
+            function getData() {
+                $get("/api2/user/getuserinfo", function(ret) {
+                    if (ret.code) {
+                        // console.log(ret.data.head_img)
+                        $("#account").val(ret.data.account);
+                        $("#phone").val(ret.data.mobile);
+                        if (ret.data.head_img == null || ret.data.head_img == "") {} else {
+                            $("#imgShow").attr("src", ret.data.head_img);
+                            $("input[name='avatar']").val(ret.data.head_img);
+                        }
+                        if (ret.data.cash_account_ok == 1) {
+                            $("#nickname").val(ret.data.cash_account.name);
+                            $('#name_li').show();
+                        }
+                        if (ret.data.mobile != null) {
+                            // $("#phone").val(ret.data.mobile);
+                            old_mobile = ret.data.mobile;
+                        }
+                    }
+                })
+            }
+            $('#nickname').on('tap', function() {
+                    mui.toast('请联系管理员修改');
+                })
+                // 修改用户名
+                // $('#nickname').on('tap', function() {
+                //     mui.confirm('<div class="alert_text nikename-pop"><p><input type="text" id="new_name" placeholder="请输入您的真实姓名" style="line-height:normal;font-size:16px!important;" value="' + $('#nickname').val() + '"></p><p class="color-hui" style="text-align:left;font-size:12px;">*默认与持卡人姓名保持一致，绑定银行卡后仅可修改一次。</p></div>', '真实姓名', ['取消', '确定'], function(e) {
+                //         if (e.index == 1) {
+                //             var new_name = $('#new_name').val();
+                //             if (new_name == "") {
+                //                 mui.toast('姓名不能为空!');
+                //                 return false;
+                //             } else {
+                //                 $post('/api2/user/update_info', {
+                //                     nickname: new_name
+                //                 }, function(data) {
+                //                     // console.log(data);
+                //                     mui.toast(data.msg);
+                //                     if (data.status == 1) {
+                //                         $('#nickname').val(new_name);
+                //                     }
+                //                 });
+                //             }
+                //         } else {
+                //             $('#new_name').val('');
+                //         }
+                //     }, 'div');
+                // });
+                // 手机号
+            $('#phone').on('tap', function() {
+                mui.confirm('<div class="alert_text phone-pop"><p><input type="tel" id="new_mobile" placeholder="请输入手机号" style="line-height:normal;"></p><p style="position:relative;"><input type="number" id="code"  placeholder="请输入验证码"><span id="sendbtn" class="line_span">获取验证码</span></p></div>', '修改手机号', ['取消', '确定'], function(e) {
+
+                    // 修改手机号
+                    if (e.index == 1) {
+                        var new_mobile = $('#new_mobile').val();
+                        var code = $('#code').val();
+                        if (new_mobile == "") {
+                            mui.toast('手机号不能为空!');
+                            return false;
+                        } else if (new_mobile.search(/^\d{11}$/) == -1) {
+                            mui.toast('手机号码格式不正确');
+                        } else if (code == '') {
+                            mui.toast('验证码不能为空!');
+                            return false;
+                            s
+                        } else {
+                            $get('/api2/user/update_mobile', {
+                                mobile: new_mobile,
+                                verify: code
+                            }, function(data) {
+                                mui.toast(data.msg);
+                                if (data.status == 1) {
+                                    $('#phone').html(new_mobile);
+                                }
+                            });
+                        }
+
+                    } else {
+                        $('#input_val').val('');
+                        $('#code').val('');
+                    }
+
+                });
+            });
+
+            //发送验证码
+            $("body").on("tap", '#sendbtn', function() {
+                    var s = $("#sendbtn").attr('s');
+                    var mobile = $("#new_mobile").val();
+                    if (s > 0) {
+                        return false;
+                        mui.toast("请稍后再试")
+                    } else if (!mobile) {
+                        mui.toast('请输入手机号');
+                    } else {
+                        $get("/api2/user/send_verify2", {
+                            mobile: old_mobile,
+                            img_verify: 0
+                        }, function(ret) {
+                            if (ret.code == 1) {
+                                mui.toast('发送成功');
+                                setTime();
+                            } else {
+                                mui.toast(ret.msg);
+                            }
+                        });
+                    }
+                })
+                //倒计时
+            function setTime() {
+                console.log("Aa")
+                $("#sendbtn").attr('s', 60);
+                $("#sendbtn").html("60秒后再发");
+                window.set_time = setInterval(function() {
+                    var s = $("#sendbtn").attr('s');
+                    if (s > 0) {
+                        s--;
+                        $("#sendbtn").attr('s', s);
+                        $("#sendbtn").html(s + "秒后再发");
+                    } else {
+                        clearInterval(window.set_time);
+                        $("#sendbtn").html("获取验证码");
+                    }
+                }, 1000);
+            }
+            // 密码
+            $('#password').on('tap', function() {
+                mui.confirm('<div class="alert_text phone-pop"><p><input type="password" id="old_pwd" placeholder="请输入当前密码" style="line-height:normal;"></p><p><input type="password" id="new_pwd" placeholder="请输入新密码" style="line-height:normal;"></p><p><input type="password" id="confirm_pwd" placeholder="请确认新密码" style="line-height:normal;"></p></div>', '修改密码', ['取消', '确定'], function(e) {
+                    if (e.index == 1) {
+                        var old_pwd = $('#old_pwd').val();
+                        var new_pwd = $('#new_pwd').val();
+                        var confirm_pwd = $('#confirm_pwd').val();
+                        if (!old_pwd) {
+                            mui.toast('请输入当前密码');
+                            return false;
+                        } else if (!new_pwd) {
+                            mui.toast('请输入新密码');
+                            return false;
+                        } else if (!confirm_pwd) {
+                            mui.toast('请确认新密码');
+                            return false;
+                        } else if (confirm_pwd != new_pwd) {
+                            mui.toast('两次密码不一致');
+                            return false;
+                        } else {
+                            $get('/api2/user/update_password', {
+                                old_pwd: old_pwd,
+                                new_pwd: new_pwd
+                            }, (ret) => {
+                                mui.toast(ret.msg);
+                                if (ret.status == 1) {
+                                    $get('/api2/user/logout', {}, function(data) {
+                                        setTimeout('window.location.href="/wapapp/index/login.html";', 1000);
+                                    });
+                                }
+                            })
+                        }
+                    } else {}
+                }, 'div');
+            });
+        })
+    </script>
+</body>
+
+</html>

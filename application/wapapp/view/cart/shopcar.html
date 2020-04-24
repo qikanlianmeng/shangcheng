@@ -1,0 +1,173 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/uc_icon.css">
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">购物车(<span>0</span>)</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <!-- <a class="mui-btn mui-btn-link mui-pull-right" id="contact"><span class="iconfont icon-kefu"></span></a>-->
+        <a class="mui-btn mui-btn-link mui-pull-right oprBtn">编辑</a>
+    </header>
+    <footer class="mui-bar mui-bar-tab">
+        <a href="{:url('wapapp/index/index')}" class="mui-tab-item">
+            <span class="uc_icon icon-yemian font-22"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a href="{:url('wapapp/goods/classification')}" class="mui-tab-item" id="integralshopbtn">
+            <span class="uc_icon icon-icon_type font-22"></span>
+            <span class="mui-tab-label">分类</span>
+        </a>
+        <a href="{:url('cart/shopcar')}" class="mui-tab-item mui-active" id="shopcarbtn" style="position:relative">
+            <span class="uc_icon icon-gouwuche font-22"></span>
+            <span class="mui-tab-label">购物车</span>
+            <span class="mui-badge shopcart-num">1</span>
+        </a>
+        <a href="{:url('usercenter/usercenter')}" class="mui-tab-item">
+            <span class="uc_icon icon-wode- font-22"></span>
+            <span class="mui-tab-label">会员中心</span>
+        </a>
+    </footer>
+    <div class="mui-content" style="padding-bottom: 100px;">
+        <div class="shopcarKong" style="display: none;">
+            <div class="icon"><i class="iconfont icon-gouwucheshoppingcart"></i></div>
+            <p>购物车空空如也，赶紧挑选心仪的商品吧！</p>
+            <a href="/wapapp/goods/searchlist/group/1" class="text-16 goshopping">去挑选</a>
+        </div>
+        <ul class="mui-table-view shopcarList" id="shopcarList">
+            <!-- <li class="mui-table-view-cell mui-media" goodsid="19">
+            <a href="{:url('goods/goods')}" class="mui-media-object mui-pull-left">
+                <i class="iconfont mui-pull-left color-999 icon-yuan"></i>
+                <img src="http://resources-user-image.vxue360.com/7645e8f5832d5a2332b73afe0e0c6b93.png">
+            </a>
+            <div class="mui-media-body">
+                <a href="{:url('goods/goods')}" title=""><p class="mui-ellipsis-2 color-333 text-14 b-name">物理考试试卷（名师预测名师解析高分秘籍）</p></a>
+                <a class="color-666 b-spec mui-block text-14">套装：6册</a>
+                <div class="priceNum">
+                    <p class="color-333 text-15 mui-ellipsis">
+                        ￥<span class="yuan">20.00</span>
+                        <del class="color-999 text-mini"> ￥28.00</del>
+                    </p>
+                    <ul class="color-333 oprnum">
+                        <li class="subNum">-</li>
+                        <li class="num">1</li>
+                        <li class="addNum">+</li>
+                    </ul>
+                </div>
+                <p class="list-opr color-999 text-14"><span class="atten">收藏</span><span class="del">删除</span></p>
+            </div>
+        </li> -->
+        </ul>
+        <!-- <p class="baoyou">你已享受满100元包邮，<a class="color-main" href="{:url('goods/searchlist')}">再逛逛&gt;</a></p> -->
+        <ul class="mui-table-view shopcarList" id="shopcarListOld"></ul>
+    </div>
+    <nav class="mui-bar mui-bar-tab bottom-bg shopcarBottom" style="background: #fafafa;bottom: 51px;">
+        <div class="mui-pull-left color-hui allSelect">
+            <i class="iconfont mui-pull-left icon-yuan"></i>
+            <label class="text-14 mui-pull-left">全选(<span class="allNum">0</span>) </label>
+        </div>
+        <div class="totalcost color-main text-14 m-l mui-pull-left"> 合计：<span class="text-16">￥0.00</span></div>
+        <span class="text-14 mui-pull-left" id="delAll" style="display: none;">清空</span>
+        <div class="account">
+            <a href="javascript:void(0);" class="text-15 bg-main nav-bottom-btn mui-text-center goCal" style="border-radius: 25px;top: 1.5px;line-height: 45px;height: 45px;">去结算</a>
+        </div>
+    </nav>
+    <div id="spec" data-id="" goodsid="" class="spec mui-popover mui-popover-action mui-popover-bottom" style="display: none;">
+        <div style="padding: 10px;">
+            <div class="specTop">
+                <!--  <img class="spec-img" src="__IMG__/temp/user.jpg" alt="">
+            <a href="#spec"><i class="iconfont icon-cuo mui-pull-right mui-backdrop-action"></i></a>
+            <div class="price-tip">
+                <span class="price color-main">￥<e class="price-info">21.9</e></span><br>
+                <span class="text-15">请选择 颜色 尺码</span>
+            </div> -->
+            </div>
+            <div class="specWrap">
+                <!-- <div class="goods-attribute m-b-sm">
+                <p class="m-b-sm text-15">颜色</p>
+                <p>
+                    <span class="selected">卡其色</span>
+                    <span class="">米白色</span>
+                    <span class="">米白色</span>
+                    <span class="">米白色</span>
+                    <span class="">米白色</span>
+                </p>
+            </div>
+            <div class="goods-attribute">
+                <p class="m-b-sm text-15">尺码</p>
+                <p class="m-b-sm"><span class="">M</span><span class="">L</span><span class="selected">XL</span></p>
+            </div> -->
+            </div>
+            <div class="goods-num mui-input-row specNum">
+                <label class="text-15">购买数量</label>
+                <div class="mui-numbox" data-numbox-min='1' data-numbox-max='999'>
+                    <button class="mui-btn mui-btn-numbox-minus" type="button">-</button>
+                    <input class="mui-input-numbox" type="number" />
+                    <button class="mui-btn mui-btn-numbox-plus" type="button">+</button>
+                </div>
+            </div>
+        </div>
+        <div class="mui-row goods-option">
+            <span class="spec-confim mui-col-xs-12 bg-main">确定</span>
+        </div>
+    </div>
+    <script type="text/html" id="shopCell">
+        <li class="mui-table-view-cell mui-media" id="goods_[[id]]" goodsid="[[id]]" data-gid="[[goods_id]]" data-spec="[[spec_key]]" goodsgroup="[[goods_group]]">
+            <a href="/wapapp/goods/goods/id/[[goods_id]]/group/[[g_g]]" class="mui-media-object mui-pull-left">
+            [[if store_count > 0]]
+            <i class="iconfont mui-pull-left color-999[[if selected]] icon-chenggong color-main[[else]] icon-yuan[[/if]] "></i>
+            [[/if]]
+            <img src="[[goods_img]]">
+        </a>
+            <div class="mui-media-body">
+                <a href="/wapapp/goods/goods/id/[[goods_id]]/group/[[g_g]]" title="">
+                    <p class="mui-ellipsis-2 color-333 text-14 b-name">[[goods_name]]</p>
+                </a>
+                <p class="t-r"><span class="group_span">[[goods_group]]</span></p>
+                [[if spec_key]]<a class="color-666 b-spec mui-block text-13 mui-ellipsis">[[spec_key_name]]</a>[[/if]]
+                <div class="priceNum">
+                    <p class="color-main text-15 mui-ellipsis prices">
+                        ￥<span class="yuan">[[goods_price]]</span>
+                        <!-- <del class="color-999 text-mini"> ￥[[market_price]]</del> -->
+                    </p>
+                    <p class="orinum text-mini color-333">X<span class="text-14">[[goods_num]]</span></p>
+                    [[if store_count > 0]]
+                    <ul class="color-333 oprnum">
+                        <li class="subNum[[if goods_num == 1]] color-999[[/if]]">-</li>
+                        <li class="num">[[goods_num]]</li>
+                        <li class="addNum[[if store_count <= goods_num]] color-999[[/if]]" goods_storemount="[[store_count]]">+</li>
+                    </ul>
+                    [[/if]]
+                </div>
+                [[if store_count == 0]]
+                <p class="color-red text-mini">该商品暂时无库存</p>
+                <span class="num" style="display: none;">[[goods_num]]</span> [[/if]]
+                <p class="list-opr color-999 text-16">[[if is_collection == 1]]<span class="atten color-main">已收藏</span>[[else]]<span class="atten">收藏</span>[[/if]]<span class="del">删除</span></p>
+            </div>
+        </li>
+    </script>
+    <script type="text/html" id="specTopTem">
+        <img class="spec-img" src="[[spec_data[ori_spec_key].img]]" alt="商品图片">
+        <a href="#spec"><i class="iconfont icon-cuo mui-pull-right mui-backdrop-action"></i></a>
+        <div class="price-tip">
+            <span class="price color-main">￥<e class="price-info">[[spec_data[ori_spec_key].price]]</e></span><br>
+            <span class="text-15">库存<e class="specCount">[[spec_data[ori_spec_key].store_count]]</e>件</span><br>
+            <span class="text-15">已选择:<e class="specValue">[[spec_data[ori_spec_key].key_value]]</e></span>
+        </div>
+    </script>
+    {include file="public/footer" /}
+    <script type="text/javascript">
+        seajs.use(['/static/wapapp/shop/js/shopcar']);
+        window.webImConfig = {
+            nickname: '{$webImInfo.nickname|default=""}', //用户名称
+            headimgurl: '{$webImInfo.headimgurl|default=""}', //用户头像
+            mark_uid: '{$webImInfo.mark_uid|default=""}', //用户平台uid
+            principal: '0116fcaa30c3508b0626c9b96ffc85bc', //客服主体
+            button_id: 'contact' //元素ID
+        }
+    </script>
+    <!-- <script type="text/javascript" src="http://qiyu.im/onlinServer/chart/chat_fz.js"></script> -->
+</body>
+
+</html>

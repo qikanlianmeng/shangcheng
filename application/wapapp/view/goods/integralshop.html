@@ -1,0 +1,49 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/index.css">
+</head>
+
+<body class="integralshop">
+    <header id="header" class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">代售区</h1>
+    </header>
+    <div class="mui-content">
+        <div class="mon-banner clearFix">
+            <div class="touxiang mui-pull-left">
+                <a class="userImg" style="width:100%;height:100%;display:inline-block"><img src="__IMG__/default/touxiang.jpg"></a>
+            </div>
+            <div class="floatL txt-wrap">
+                <span class="floatLNum logined" style="display:none;"><a class="integralNum"><e style="font-size: 17px;">000</e><i style="font-size: 17px;margin-left: 2px;">羊币</i></a></span>
+                <span class="floatLNum notlogin"><a class="integralNum"><i style="font-size: 17px;margin-left: 2px;">未登录</i></a></span>
+            </div>
+        </div>
+        <p class="page-title"><span>羊币抵扣 <span style="font-size:12px;color:#8d8d8d">太热门了，超级抵钱！</span></span>
+        </p>
+        <div class="goods-wrap clearfix">
+            <div class="mui-row RecommendList">
+
+            </div>
+            <div class="mui-row RecommendList_second">
+
+            </div>
+        </div>
+        <div class="dropDown">
+            <p>暂无更多商品了，到别处看看</p>
+        </div>
+    </div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    seajs.use("/static/wapapp/shop/js/integralshop")
+</script>
+<script type="text/html" id="goodslist_box">
+    <div class=" goods-list">
+        <a href="/wapapp/goods/goods/id/[[id]]">
+            <img src="[[original_img]]" alt="">
+            <p>[[goods_name]]</p>
+            <div><span class="price">￥<e class="price-info">[[shop_price]]</e></span><span class="exchange ">羊币抵￥<e>[[exchange_integral_money]]</e></span></div>
+        </a>
+    </div>
+</script>
+
+</html>

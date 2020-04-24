@@ -1,0 +1,207 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.picker.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.poppicker.css">
+<script>
+    // var _hmt = _hmt || [];
+    // (function() {
+    //     var hm = document.createElement("script");
+    //     hm.src = "https://hm.baidu.com/hm.js?a154da86f31b94cc8ae4e17857ccd295";
+    //     var s = document.getElementsByTagName("script")[0];
+    //     s.parentNode.insertBefore(hm, s);
+    // })();
+</script>
+<script charset="utf-8" src="/static/wapapp/yang/js/jquery.3.1.1.js"></script>
+<style>
+    @font-face {
+        font-family: "iconfont";
+        src: url('iconfont.eot?t=1546848291218');
+        /* IE9 */
+        src: url('iconfont.eot?t=1546848291218#iefix') format('embedded-opentype'),
+            /* IE6-IE8 */
+            url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAM0AAsAAAAABxQAAALoAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCCcAqCIIISATYCJAMICwYABCAFhG0HLhs2BhHVmwnIfibE27uMLWJyci4mmmgfjTVBPG9X1ev/Z7YxCyLaMxDNHJUJiIiFw4MyuHNg+n1xzukaFaFG8hY9+kFS4DSnAPifY6bL5wPLDzSX7MABjlsHGlEXBXpAdyAH4DeMXeASTkMAmxSKkPYdu/fHRGNNEkCmT5k0BjPnQKNZ2ETw1qzUIbIFD6ax1ngKbA5/Xz5RLCYYeBRWVu+JHcbT+q22o5Tf9TPcR8CcTwewdaCAIkCD9K819ETFgSIUthbQZMC+0gXeatf1Vche/3mIFyvVB0ASZNwT02XdaqoBgIb9o4Glo74baF9zn28Yu2+vvysSuLPu1owTF0QOlncqKxtYUtL/Xmk6+0ra3y/LkEB5s/LyQaWlA66XJrPr3NOSnFslnXe9rG9feR2okXP4enz5HLhU2fN+452jJwMnbHvdMf/xhgNnqS+dvmTNyvza6euv78d+ybOsHj22Bm8ve7SLTfVvCNm+v3uP+FkJPXrs39qzhz2roKhtb/vKj6+CVPgJ1pXRhW2tWVK1qI3524xq3jd2/Ox+/gn9Jvr7bTlaMiilR/TU+Fo1y6h7QfdL/cImZk6K6Be+KHMhrQFwN+ok5f/tf0PptuqPCm3+zXQ0ABVD8jNDVj8TmDdnFPjJFToRXFcncbblNzTQwkBOg9FM6jcAWzfjYlkiqBsriX6jiGAS/V6mIJJTUJhkITW2CDw41AcvJq3AppBO6x0imYtCtAUUsBKAEMZZMAjhLijCeIbU2FrwEMMX8BImCmwGSuSODjkCWXVkXAR3WP9gt5zIUYuK0m+o32HhLDvEv5CbdcPUj8XwFRPyHHPaR88iBMQ5wgWchyFkKJwdbtIbkXIYBqr7on7LsVO0Y1wEd1j/YLecyG8uqvTzN9TvsHBLXY3yhdzs4DD1Yw/kVZB61d3LS9pHzyIExDnCBegw2IEMpX6Yw016M8JXDgNqRH0F/fqi+HVbABtLaoidr9DTkN5dBw==') format('woff2'), url('iconfont.woff?t=1546848291218') format('woff'), url('iconfont.ttf?t=1546848291218') format('truetype'),
+            /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+            url('iconfont.svg?t=1546848291218#iconfont') format('svg');
+        /* iOS 4.1- */
+    }
+
+    .iconfont {
+        font-family: "iconfont" !important;
+        font-size: 16px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .icon-kefu:before {
+        content: "\e604";
+    }
+
+    #newBridge #nb_icon_wrap {
+        display: none;
+    }
+
+    #showUserPicker {
+        width: 60%;
+        float: right;
+        margin-bottom: 0;
+        text-align: right;
+        border: none;
+        padding: 0;
+        font-size: 14px;
+        color: #FF4242;
+    }
+
+    .dis_span {
+        padding: 10px 0;
+        height: 40px;
+        display: block;
+        width: 40%;
+    }
+    input[name="discount"]{
+        color: red;
+    }
+    input[name="discount"]::-webkit-input-placeholder{
+        color: red;
+    }
+</style>
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">提交订单</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more"
+                style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-content firm-order">
+        <div class="address">
+            <div class="no-address text-16" style="display: none;">
+                <a href="/wapapp/usercenter/add_address/opr/add/address_id/new" class="color-333">
+                    您还未填写收货地址，点击去填写
+                    <span class="mui-pull-right color-999"><i class="iconfont icon-woyaohuida"></i></span>
+                </a>
+            </div>
+            <div class="has-address" style="display: block;">
+                <!-- <p class="color-333 text-16 m-b-sm">rtgf 15520201020
+                <a href="{:url('order/select_address')}"><span class="mui-pull-right color-999"><i class="iconfont icon-woyaohuida"></i></span></a>
+            </p>
+            <p class="color-999">北京市北京市东城区dfgsdfg</p> -->
+            </div>
+        </div>
+        <div class="noContent" style="display: none;">
+            <p onclick="javascript:location.reload();">商品加载失败，请重新选择</p>
+        </div>
+        <ul class="mui-table-view m-t table-view-order color-666 text-15" id="good_info">
+            <!-- <li class="mui-table-view-cell text-16 color-333">订单信息</li>
+        <li class="mui-table-view-cell book-tuwen">
+            <a href="{:url('goods/goods')}"><img src="http://resources-user-image.vxue360.com/7645e8f5832d5a2332b73afe0e0c6b93.png" class="mui-pull-left tuwen-img"></a>
+            <p class="mui-pull-left tuwen-name mui-ellipsis-2"><a href="{:url('goods/goods')}" class="color-333">物理考试试卷（名师预测名师解析高分秘籍析高分秘籍）析高分秘籍析高分秘籍</a></p>
+            <span class="book-num mui-pull-right">x1</span>
+            <p class="tuwen-price">
+                <span class="color-999 text-13">颜色：白色； 尺码：L</span>
+                <span class="sale-price mui-pull-right color-main mui-block">￥18.9</span>
+            </p>
+        </li>
+        <li class="mui-table-view-cell book-tuwen">
+            <a href="{:url('goods/goods')}"><img src="http://resources-user-image.vxue360.com/7645e8f5832d5a2332b73afe0e0c6b93.png" class="mui-pull-left tuwen-img"></a>
+            <p class="mui-pull-left tuwen-name mui-ellipsis-2"><a href="{:url('goods/goods')}" class="color-333">物理考试试卷（名师预测名师解析高分秘籍析高分秘籍）析高分秘籍析高分秘籍</a></p>
+            <span class="book-num mui-pull-right">x1</span>
+            <p class="tuwen-price">
+                <span class="color-999 text-13">颜色：白色； 尺码：L</span>
+                <span class="sale-price mui-pull-right color-main mui-block">￥18.9</span>
+            </p>
+        </li>
+        <li class="mui-table-view-cell">配送方式：<span class="mui-pull-right color-333">全国包邮</span></li>
+        <li class="mui-table-view-cell">快递运费：<span class="mui-pull-right color-333">￥0.00</span></li>
+        <li class="mui-table-view-cell no-active">
+            <textarea class="input-msg color-hui text-14" spellcheck="false" id="content" placeholder="订单补充说明..."></textarea>
+        </li>
+        <li class="mui-table-view-cell">
+            <span class="mui-pull-right color-333">共2件商品 小计：
+            <span class="color-main">￥8</span></span>
+        </li> -->
+        </ul>
+        <!-- <div class="mui-input-row mui-checkbox m-t text-15 score-cost">
+            <label class="color-333">积分抵用 <span class="color-main">共<e id="hasScore"></e>积分，可抵用<e id="scoreMoney"></e>元</span>
+        <input name="score" type="checkbox"></label>
+        </div> -->
+      <!-- <div class="mui-input-row mui-checkbox m-b text-15 score-cost" style="border-top: none;"  id="EleId">-->
+       	
+       	<div class="mui-input-row mui-checkbox m-b text-15 score-cost" style="border-top: none;">
+            <label class="color-333">余额抵用 <span class="color-main">共<e id="hasMoney"></e>余额，可抵用<e id="costMoney"></e>
+                    余额</span>
+                <input name="xuebi" id="xuebi" type="checkbox"></label>
+        </div>
+        <input type="hidden" value="{$dy_discount}" id="dy_discount">
+        <nav class="mui-bar mui-bar-tab bottom-bg order-bottom">
+            <span class="color-main mui-pull-left text-16 sum_money">总计：￥<span id="payFor"></span></span>
+            <span
+                style="height: 100%;display: inline-block;text-align: center;padding: 4px 0px;margin: 0px;line-height: 23px;right: 50px;position: absolute;"
+                id="contact">
+                <!-- <i class="iconfont icon-wangwang" style="display:inline-block;color:#ff4446;font-size: 20px;"></i>
+                <p style="width:100%;color: #ff4446;font-size: 12px;">联系客服</p> -->
+                <!-- <img src="/static/wapapp/shop/images/kefu.gif" alt="" style="    width: 20%;"> -->
+            </span>
+            <button type="button" id="submitOrder" class="text-15 bg-main nav-bottom-btn"
+                style="height:90%;border-radius: 25px;top:4.5%;">提交订单</button>
+        </nav>
+    </div>
+    {include file="public/footer" /}
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.picker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.poppicker.js"></script>
+    <script type="text/html" id="firmAddress">
+        <p class="color-333 text-16 m-b-sm">
+            [[consignee]] [[mobile]]
+            <a href="/wapapp/order/select_address"><span class="mui-pull-right color-999"><i class="iconfont icon-daipingjia"></i></span></a>
+        </p>
+        <p class="color-hui">[[address_detail]]</p>
+    </script>
+    <script type="text/html" id="good_info_tem">
+        <li class="mui-table-view-cell text-16 color-333">订单信息</li>
+        [[each goods_list as value i]]
+        <li class="mui-table-view-cell book-tuwen">
+            <a href="/wapapp/goods/goods/id/[[goods_list[i].goods_id]]/group/[[goods_list[i].goods_group]]"><img src="[[goods_list[i].goods_img]]" class="mui-pull-left tuwen-img"></a>
+            <p class="mui-pull-left tuwen-name mui-ellipsis-2"><a href="/wapapp/goods/goods/id/[[goods_list[i].goods_id]]/group/[[goods_list[i].goods_group]]" class="color-333">[[goods_list[i].goods_name]]</a></p>
+            <span class="book-num mui-pull-right">x[[goods_list[i].goods_num]]</span>
+            <p class="tuwen-price">
+                <span class="color-999 text-13">[[goods_list[i].spec_key_name]]</span>
+                <span class="sale-price mui-pull-right color-main mui-block">￥[[goods_list[i].goods_price]]</span>
+            </p>
+        </li>
+        [[/each]]
+        <li class="mui-table-view-cell">快递运费：<span class="mui-pull-right color-333">[[if goods_price.shipping_price==''||goods_price.shipping_price==0]]包邮[[else]]￥[[goods_price.shipping_price]][[/if]]</span></li>
+        <li class="mui-table-view-cell no-active">
+            <textarea class="input-msg color-hui text-14" spellcheck="false" id="content" placeholder="订单补充说明..."></textarea>
+        </li>
+        <li class="mui-table-view-cell">
+            <span class="mui-pull-right color-333">共[[goods_price.anum]]件商品 小计：
+        <span class="color-main">￥[[goods_price.total_amount]]</span></span>
+        </li>
+        [[if g_g==2&&dy_discount==1]]
+        <div id="discount_div" class="mui-input-row mui-checkbox m-b text-15 score-cost" style="border-top:unset;">
+                <label class="color-333" style="display: flex;padding: 0 0;">
+                    <span class="dis_span" style="color:red;font-weight:600;">拼代售折扣率</span>
+                    <input name="discount" id="showUserPicker" type="text" readonly onfocus='this.blur();'
+                        placeholder="点击选择折扣率"></label>
+        </div>
+        [[/if]]
+    </script>
+    <script type="text/javascript">
+        var good_id = "{:input('good_id')}",
+            address_id = "{:input('address_id')}";
+        seajs.use(['/static/wapapp/shop/js/firmOrder']);
+        $('#contact').on('click', function () {
+            $('#newBridge #nb_icon_wrap').click();
+        });
+        // console.log({$dy_discount});
+    </script>
+</body>
+
+</html>

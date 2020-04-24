@@ -1,0 +1,159 @@
+{include file="public/header" /}
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>【{$prize.title}】中奖名单</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">
+                <div  class="col-sm-3" >
+                    <div class="input-group" >  
+                        <a href="javascript:;" onclick="fafang();"><button class="btn btn-outline btn-primary" style="height:37px;" type="button">设为已发放</button></a>
+                    </div>
+                </div>   
+                </div>
+            </div>
+        </div>
+            <!--搜索框结束-->
+
+            
+            <div class="example-wrap">
+                <div class="example">
+                
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th><label>全选<input type="checkbox" name="all" id="all_checkbox"/></label></th>
+                                <th>ID</th>
+                                <th>会员信息</th>
+                                <th>奖品信息</th>
+                                <th>中奖时间</th>
+                                <th>奖品发放状态</th>
+                                <th>奖品发放时间</th>
+                            </tr>
+                        </thead>
+
+                        {volist name='list' id='v'}
+                        <tr class="long-td ">
+                            <td>{if $v.status == 1}<input type="checkbox" value="{$v.id}" name="id[]"/>{else/}*{/if}</td>
+                            <td>{$v.id}</td>
+                            <td>会员编号：{$v.uid}<br/>会员手机号：{$v.mobile}<br/>会员昵称：{$v.nickname}</td>
+                            <td>{$v.desc}</td>
+                            <td>{$v.create_time|date='Y-m-d H:i:s',###}</td>
+                            <td>{if $v.status == 1}未发放{else/}已发放{/if}</td>
+                            <td>{if $v.status == 1}--{else/}{$v.send_time|date='Y-m-d H:i:s',###}{/if}</td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#export').click(function () {
+            $('#search').attr('action',"{:url('cash_export')}");
+        });
+        $('#submit').click(function () {
+            $('#search').attr('action',"{:url('cash_list')}");
+        });
+
+
+
+    });
+
+//删除
+function del(id){
+    var url = '{:url("manageOrder")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id, 'btn_key':'remove'}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+function treeClicked(obj,cat_id,parent_id_path){
+
+    var src = $(obj).attr('src');
+    if(src == '/static/admin/images/tv-expandable.gif')
+    {
+        $(".parent_id_"+cat_id).show();
+        $(obj).attr('src','/static/admin/images/tv-collapsable-last.gif');
+    }else{
+        $("tr[parent_id_path^='"+parent_id_path+"_']").hide().find('img').attr('src','/static/admin/images/tv-expandable.gif');
+        $(obj).attr('src','/static/admin/images/tv-expandable.gif');
+
+    }
+}
+
+
+//IOS开关样式配置
+var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+var config = {
+    '.chosen-select': {},
+}
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+$("#start").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#end").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#start2").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#end2").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+
+$('#all_checkbox').change(function(){
+    $(':checkbox[name="id[]"]').prop('checked',$(this).prop('checked'));
+})
+function fafang(){
+    var selected_box = $(':checkbox[name="id[]"]:checked');
+    //alert(selected_box.length);
+    //return false;
+    if(selected_box.length < 1){
+        layer.msg('未选择任何记录',{icon:0,time:1500,shade: 0.1});
+        return false
+    }
+    var id_arr = {};
+    selected_box.each(function(index){
+        id_arr[index] = $(this).val();
+    })
+    $.post('{:url("set_zj")}',{id_arr:id_arr},function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    },'json')
+}
+
+
+
+</script>
+</body>
+</html>

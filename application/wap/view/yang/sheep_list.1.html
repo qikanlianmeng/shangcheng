@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>羊列表</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/mob/yang/css/base.css" />
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="/static/mob/public/font/iconfont.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/mob/yang/css/index.css" />
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon iconfont icon-back11 mui-pull-left" @click="back" style="font-size: 18px; line-height: 44px;"></a>
+        <h1 class="mui-title">羊列表</h1>
+    </header>
+    <div class="tender-list"  v-cloak>
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+            <div class="what-list" style="padding-bottom:10px;">
+                <div class="what-item"
+                     v-for="(item, index) in list"
+                     :key="item.photo">
+                    <div class="item-box clearfix" @click="sheep_detail(item.id)">
+                        <div class="thumb">
+                            <span>{{item.id}}</span>
+                            <img src="/static/mob/shop/images/default/touxiang.jpg" alt="">
+                        </div>
+                        <!--<div class="item-x">-->
+                        <!--<span class="num" v-cloak>{{item.returns}}<span class="unit">%</span></span>-->
+                        <!--<p>周期回报率</p>-->
+                        <!--</div>-->
+                        <div class="item-title" v-cloak>
+                            {{item.title}}
+                        </div>
+                        <div class="item-y">
+                            <span class="num" v-cloak><em>{{new Date(item.start_date*1000).Format("yyyy-MM-dd hh:mm")}}</em></span>
+                            开始时间
+                        </div>
+                        <div class="item-y">
+                            <span class="num text-danger " v-cloak><em>{{new Date(item.end_date*1000).Format("yyyy-MM-dd hh:mm")}}</em></span>结束时间
+                        </div>
+                        <div v-if="item.yang_hunger==0 && item.yang_sick==0">
+                            <div class="item-btn receive" v-cloak>正常</div>
+                        </div>
+                        <div v-if="item.yang_hunger==1">
+                            <div class="item-btn over" v-cloak>饥饿</div>
+                        </div>
+                        <div v-if="item.yang_sick==1">
+                            <div class="item-btn hold" v-cloak>生病</div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
+        </mt-loadmore>
+        <div class="loading_data" style="text-align:center;padding:15px 0 30px 0;color:#666;font-size: 14px;"><p>点击加载更多...</p></div> 
+    </div>
+   
+</div>    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+    <script src="/static/mob/yang/js/template.js"></script>
+    <script src="/static/mob/yang/js/common.js"></script>
+    <script type="text/template" id="list">
+         <div class="what-item">
+            <div class="item-box clearfix" onclick="sheep_detail({{id}})">
+                <div class="thumb">
+                    <span>{{id}}</span>
+                    <img src="/static/mob/shop/images/default/touxiang.jpg" alt="">
+                </div>
+                <!--<div class="item-x">-->
+                <!--<span class="num" v-cloak>{{returns}}<span class="unit">%</span></span>-->
+                <!--<p>周期回报率</p>-->
+                <!--</div>-->
+                <div class="item-title">
+                    {{title}}
+                </div>
+                <div class="item-y">
+                    <span class="num"><em>{{start_date}}</em></span>
+                    开始时间
+                </div>
+                <div class="item-y">
+                    <span class="num text-danger "><em>{{end_date}}</em></span>结束时间
+                </div>
+              
+               {{yang_hunger}}
+               {{if yang_hunger==0 && yang_sick==0}}
+               <div class="item-btn receive">正常</div>
+               {{/if end}}
+               {{if yang_hunger==1}}
+               <div class="item-btn over">饥饿</div>
+               {{/if end}}
+               {{if yang_sick==1}}
+               <div class="item-btn hold">生病</div>
+               {{/if end}}
+            </div>
+        </div>
+        
+    </script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                page: 1,
+                limit:10,
+                list: [],
+                allLoaded: false
+            },
+            created() {
+                axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                var that = this
+                this.getTender().then(function(res) {
+                    that.list = res.data.data
+                });
+            },
+            methods: {
+                back() {
+                    window.history.back()
+                },
+                loadBottom() {
+                    var that = this
+                    that.page += 1
+                    that.getTender().then(function(res) {
+                        that.list.concat(res.data.data)
+                        if(res.data.data.length < that.limit) {
+                            that.allLoaded = true;// 若数据已全部获取完毕
+                        }
+                        that.$refs.loadmore.onBottomLoaded();
+                    });
+                },
+                getTender() {
+                    let that = this
+                    that.$indicator.open('加载中...');
+                    return new Promise(function(resolve, reject) {
+
+                        axios({
+                            url: '/api/yangyang/yang_userlists',
+                            params: {
+                                page: that.page,
+                                num: that.limit
+                            }
+                        }).then(function(res) {
+                            that.$indicator.close();
+                            resolve(res);
+                            
+                        }).catch(function(err) {
+                            that.$indicator.close();
+                            console.log(err);
+                            reject(err);
+                        });
+                    });
+                },
+                sheep_detail(id) {
+                    // window.location.href = `/wap/yang/sheep_detail?id=${id}`
+                    console.log(id);
+                }
+            
+            }
+
+        });
+        var page=1;
+        var count=1;  //1是继续加载  0是停止加载
+        var num=10; //每页显示数量
+        $('.loading_data').on('click',function(){
+            if(count==1){
+                page++;
+                // alert(page);
+                $('.loading_data').html('<p><img src="/static/mob/yang/imgs/index/loading.gif" style="width:60px;"></p><p>加载中...</p>');
+                setTimeout(function(){
+                    $get('/api/yangyang/yang_userlists',{page:page},function(data){
+                        console.log(JSON.stringify(data));
+                        var obj=data.data;
+                        var list="";
+                        for(var i in  obj){
+                            obj[i].start_date=new Date(obj[i].start_date*1000).Format("yyyy-MM-dd hh:mm");
+                            obj[i].end_date=new Date(obj[i].end_date*1000).Format("yyyy-MM-dd hh:mm");
+                           
+                            list+=template('list',obj[i]);
+                        }
+                        $('.what-list').append(list);
+                        // alert(obj.length);
+                        if(obj.length<num){
+                            $('.loading_data').html('<p>全部加载完成</p>');
+                            count=0;
+                        }else{
+                            $('.loading_data').html('<p>点击加载更多...</p>');
+                        }
+                    });
+                },1500);
+
+            }else{
+                $('.loading_data').html('<p>全部加载完成</p>');
+                return ;
+            }
+            
+        })
+        
+
+    </script>
+</body>
+</html>

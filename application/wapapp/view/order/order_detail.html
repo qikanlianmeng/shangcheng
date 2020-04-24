@@ -1,0 +1,190 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">订单详情</h1>
+        <a class="mui-icon mui-icon-left-nav mui-pull-left" onclick="back();"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <script>
+        function back() {
+            mui.back();
+        }
+    </script>
+    <div class="wrap" style="padding-top: 44px;"></div>
+    <!-- <div class="mui-content order-detail">
+    <div class="address">
+        <div class="has-address">
+            <i class="iconfont icon-dingwei mui-pull-left"></i>
+            <p class="color-333 text-16 m-b-sm">某某某 155****6363</p>
+            <p class="color-999">黑龙江齐齐哈尔建华区111</p>
+        </div>
+        <div class="has-address logistics">
+            <a href="{:url('order/wuliu')}">
+                <i class="iconfont icon-daishouhuo mui-pull-left color-main"></i>
+                <p class="color-main text-15 m-b-sm mui-ellipsis">签收成功</p>
+                <p class="color-999">2017-9-13   09:12</p>
+            </a>
+        </div>
+    </div>
+    <ul class="mui-table-view m-t table-view-order color-666 text-15">
+        <li class="mui-table-view-cell color-333">下单时间：2017-8-7   10:05<span class="mui-pull-right color-main text-14">
+            待付款
+            </span>
+        </li>
+        <li class="mui-table-view-cell book-tuwen">
+            <a href="{:url('goods/goods')}"><img src="http://resources-user-image.vxue360.com/7645e8f5832d5a2332b73afe0e0c6b93.png" class="mui-pull-left tuwen-img"></a>
+            <p class="mui-pull-left tuwen-name"><a href="{:url('goods/goods')}" class="color-333">测试1</a> </p>
+            <span class="book-num mui-pull-right">x1</span>
+            <p class="tuwen-price color-333">
+                ￥20.00
+                <del class="ori-price text-mini color-999">￥25.00</del>
+                <a class="mui-pull-right mui-block refund mui-btn-outlined-main" href="{:url('usercenter/refund')}">申请退款</a>
+            </p>
+        </li>
+        <li class="mui-table-view-cell book-tuwen" id="20" data-count="1">
+            <a href="{:url('goods/goods')}"><img src="http://resources-user-image.vxue360.com/7645e8f5832d5a2332b73afe0e0c6b93.png" class="mui-pull-left tuwen-img"></a>
+            <p class="mui-pull-left tuwen-name"><a href="{:url('goods/goods')}" class="color-333">测试1</a> </p>
+            <span class="book-num mui-pull-right">x1</span>
+            <p class="tuwen-price color-333">
+                ￥5.00
+                <del class="ori-price text-mini color-999">￥10.00</del>
+                <a class="mui-pull-right text-mini color-999" href="{:url('usercenter/refund_detail')}">查看退款详情</a>
+            </p>
+        </li>
+        <li class="mui-table-view-cell">快递运费：<span class="mui-pull-right color-333">包邮</span></li>
+        <li class="mui-table-view-cell">金额合计：<span class="mui-pull-right color-333" id="money" data-money="28.00">￥25.00</span></li>
+        <li class="mui-table-view-cell">总合计：
+            <span class="mui-pull-right color-main text-16">
+                ￥25.00
+            </span>
+        </li>
+        <li class="mui-table-view-cell"><span class="mui-btn-outlined-main back-jifen">羊币</span>返羊币88</li>
+        <li class="mui-table-view-cell other-info no-active">
+            <p class="m-t-sm">订单编号：<span id="orderCode">SN8077152697685d</span><a href="javascript:void(0);" class="copy text-mini mui-pull-right" id="copyBtn">复制</a></p>
+            <p class="m-t-sm">快递公司：<span id="orderCode">韵达快递</span></p>
+            <p class="m-t-sm">付款时间：<span id="orderCode">2017-05-06 15:00:50</span></p>
+            <p class="m-t-sm">发货时间：<span id="orderCode">2017-05-06 15:00:50</span></p>
+            <p class="m-t-sm">成交时间：<span id="orderCode">2017-05-06 15:00:50</span></p>
+        </li>
+    </ul>
+</div>
+<nav class="mui-bar mui-bar-tab orderDetail-bottom">
+    <a href="{:url('goods/goods')}" id="onceExchange" class="text-15 bg-main once-exchange">再次购买</a>
+    <a href="{:url('order/comment')}" class="text-15">评价</a>
+    <a href="javascript:;" class="text-15" id="contact"><i class="iconfont icon-kefu"></i>在线客服</a>
+</nav> -->
+    {include file="public/footer" /}
+    <script type="text/html" id="orderDetailTem">
+        <div class="mui-content order-detail">
+            <div class="address">
+                <div class="has-address">
+                    <i class="iconfont icon-dingwei mui-pull-left"></i>
+                    <p class="color-333 text-16 m-b-sm">[[consignee]] [[mobile]]</p>
+                    <p class="color-999">[[address_detail]]</p>
+                </div>
+                [[if !order_group==2]]
+                <div class="has-address logistics">
+                    <a href="/wapapp/order/wuliu/order_id/[[order_id]]">
+                        <i class="iconfont icon-daishouhuo mui-pull-left color-main"></i>
+                        <p class="color-main text-15 m-b-sm mui-ellipsis">正在查询中...</p>
+                        <p class="color-999"></p>
+                    </a>
+                </div>
+                [[/if]]
+            </div>
+            <ul class="mui-table-view m-t table-view-order color-666 text-15">
+                <li class="mui-table-view-cell color-333">下单时间：[[add_time]]<span class="mui-pull-right color-main text-14" id="status">
+            [[if order_status==0 && pay_status==0 && shipping_status==0]]
+            待付款
+            [[else if (order_status==0 || order_status==1) && pay_status==1 && shipping_status==0]]
+            待发货
+            [[else if order_status==1 && pay_status==1 && shipping_status==1]]
+            待收货
+            [[else if order_status==3]]
+            已取消
+            [[else if order_status==2 && pay_status==1 && shipping_status==1]]
+            已收货
+            [[else if order_status==4 && pay_status==1 && shipping_status==1]]
+            已完成
+            [[/if]]
+            </span>
+                </li>
+                [[each goods_list as value i]]
+                <li class="mui-table-view-cell book-tuwen">
+                    <a href="/wapapp/goods/goods/id/[[goods_list[i].goods_id]]/group/[[order_group]]"><img src="[[goods_list[i].img]]" class="mui-pull-left tuwen-img"></a>
+                    <p class="mui-pull-left tuwen-name"><a href="/wapapp/goods/goods/id/[[goods_list[i].goods_id]]/group/[[order_group]]" class="color-333">[[goods_list[i].goods_name]]</a> </p>
+                    <span class="book-num mui-pull-right">x[[goods_list[i].goods_num]]</span>
+                    <p class="tuwen-price color-333">
+                        ￥[[goods_list[i].goods_price]]
+                        <del class="ori-price text-mini color-999">￥[[goods_list[i].market_price]]</del>
+                    </p>
+                </li>
+                [[/each]]
+                <li class="mui-table-view-cell">商品总价：<span class="mui-pull-right color-333">￥[[goods_price]]</span></li>
+                <li class="mui-table-view-cell">快递运费：<span class="mui-pull-right color-333">[[if shipping_price]]￥[[shipping_price]][[else]]包邮[[/if]]</span></li>
+                <li class="mui-table-view-cell">优惠券：<span class="mui-pull-right color-333">￥[[coupon_price]]</span></li>
+                <li class="mui-table-view-cell">积分抵扣：<span class="mui-pull-right color-333">￥[[integral_money]]</span></li>
+                <li class="mui-table-view-cell">余额支付：<span class="mui-pull-right color-333">￥[[user_money]]</span></li>
+                <li class="mui-table-view-cell">订单总价：
+                    <span class="mui-pull-right color-main text-16">
+                ￥[[total_amount]]
+            </span>
+                </li>
+                <li class="mui-table-view-cell">实付款：<span class="mui-pull-right color-333">￥[[order_amount]]</span></li>
+                <li class="mui-table-view-cell other-info no-active">
+                    [[if user_note]]
+                    <p class="m-t-sm">订单备注：<span>[[user_note]]</span></p>
+                    [[/if]]
+                    <p class="m-t-sm">订单编号：<span>[[order_sn]]</span></p>
+                    [[if order_status==1 && pay_status==1 && shipping_status==1]]
+                    <p class="m-t-sm">快递公司：<span>[[shipping_name]]</span></p>
+                    <p class="m-t-sm">快递单号：<span style="user-select:text;">[[invoice_no]]</span></p>
+                    [[/if]] [[if pay_time]]
+                    <p class="m-t-sm">付款时间：<span>[[pay_time]]</span></p>
+                    [[/if]] [[if shipping_time]]
+                    <p class="m-t-sm">发货时间：<span>[[shipping_time]]</span></p>
+                    [[/if]] [[if confirm_time]]
+                    <p class="m-t-sm">成交时间：<span>[[confirm_time]]</span></p>
+                    [[/if]]
+                </li>
+            </ul>
+            <div class="noContent" style="display: none;">
+                <p onclick="javascript:location.reload();">订单详情查看失败，请点击刷新</p>
+            </div>
+        </div>
+        [[if !((order_status==0 || order_status==1) && pay_status==1 && shipping_status==0)&&!(order_status==3)]]
+        <nav class="mui-bar mui-bar-tab orderDetail-bottom">
+            [[if order_status==0 && pay_status==0 && shipping_status==0]]
+            <a href="/wapapp/order/pay_order/order_id/[[order_id]]" class="text-16 bg-main once-exchange" id="checkout">去付款</a>
+            <a href="javascript:void(0);" class="text-16 cancelOrder">取消订单</a> [[/if]] [[if order_status==1 && pay_status==1 && shipping_status==1]]
+            <a href="javascript:void(0);" class="bg-main once-exchange" id="subGet">确认收货</a> [[/if]] [[if order_status==4 || order_status==2 && pay_status==1 && shipping_status==1]] [[if is_comment]]
+            <a href="/wapapp/order/comment/order_id/[[order_id]]" class="text-16">追加评论</a> [[else]]
+            <a href="/wapapp/order/comment/order_id/[[order_id]]" class="text-16">评论</a> [[/if]] [[/if]]
+            <!--   <a href="javascript:;" class="text-16" id="contact"><i class="iconfont icon-kefu"></i>在线客服</a>-->
+        </nav>
+        [[/if]]
+    </script>
+    <script type="text/javascript">
+        var order_id = "{:input('order_id')}";
+        seajs.use(['/static/wapapp/shop/js/orderDetail'])
+        window.webImConfig = {
+            nickname: '{$webImInfo.nickname|default=""}', //用户名称
+            headimgurl: '{$webImInfo.headimgurl|default=""}', //用户头像
+            mark_uid: '{$webImInfo.mark_uid|default=""}', //用户平台uid
+            principal: '0116fcaa30c3508b0626c9b96ffc85bc', //客服主体
+            button_id: 'contact' //元素ID
+        }
+    </script>
+    <!-- <script type="text/javascript" src="http://qiyu.im/onlinServer/chart/chat_fz.js"></script> -->
+</body>
+
+</html>

@@ -1,0 +1,88 @@
+{include file="public/header" /}
+    <link rel="stylesheet" href="__CSS__/index.css">
+</head>
+<body class="footprint">
+    <header id="header" class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">我的足迹</h1>
+        <a class="mui-pull-right delete">清空</a>
+    </header>
+    <div class="mui-content footprintlist">
+        <!-- <p class="time"><span>2017-8-31</span></p>
+        <ul class="mui-table-view ">
+            <li class="mui-table-view-cell mui-media">
+                <a href="">
+                    <img class="mui-media-object mui-pull-left" src="__IMG__/temp/user.jpg" alt="">
+                    <div class="mui-media-body">
+                        <p>疯狂作文 大材小用3.格言名句高考复习讲义初三冲刺必备指导</p>
+                        <div class="return-info"></div>
+                        <div class="goods-info"><span class="price">￥<e class="price-info">21.9</e></span><span class="original-price">￥<e>21.8</e></span><span class="already-sale mui-pull-right"><e>6000</e>人付款</span></div>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a href="">
+                    <img class="mui-media-object mui-pull-left" src="__IMG__/temp/user.jpg" alt="">
+                    <div class="mui-media-body">
+                        <p>疯狂作文 大材小用3.格言名句 </p>
+                        <div class="return-info"></div>
+                        <div class="goods-info"><span class="price">￥<e class="price-info">21.9</e></span><span class="original-price">￥<e>21.8</e></span><span class="already-sale mui-pull-right"><e>6000</e>人付款</span></div>
+                    </div>
+                </a>
+            </li>
+        </ul>
+        <p class="time"><span>2017-8-31</span></p>
+        <ul class="mui-table-view ">
+            <li class="mui-table-view-cell mui-media">
+                <a href="">
+                    <img class="mui-media-object mui-pull-left" src="__IMG__/temp/user.jpg" alt="">
+                    <div class="mui-media-body">
+                        <p>疯狂作文 大材小用3.格言名句高考复习讲义初三冲刺必备指导</p>
+                        <div class="return-info"></div>
+                        <div class="goods-info"><span class="price">￥<e class="price-info">21.9</e></span><span class="original-price">￥<e>21.8</e></span><span class="already-sale mui-pull-right"><e>6000</e>人付款</span></div>
+                    </div>
+                </a>
+            </li>
+            <li class="mui-table-view-cell mui-media">
+                <a href="">
+                    <img class="mui-media-object mui-pull-left" src="__IMG__/temp/user.jpg" alt="">
+                    <div class="mui-media-body">
+                        <p>疯狂作文 大材小用3.格言名句 </p>
+                        <div class="return-info"></div>
+                        <div class="goods-info"><span class="price">￥<e class="price-info">21.9</e></span><span class="original-price">￥<e>21.8</e></span><span class="already-sale mui-pull-right"><e>6000</e>人付款</span></div>
+                    </div>
+                </a>
+            </li>
+        </ul> -->
+    </div>
+    <div class="noAttend" style="display: none;background-color:#f4f4f4">
+        <i class="iconfont icon-zanwu"></i>
+        <p>您还没浏览过商品，赶快看看发布的新品吧~</p>
+        <a href="/wap/goods/hotgoods" class="text-16 goshopping" style="color: #FF3D00;border: 1px solid #FF3D00;padding: 6px 30px;border-radius: 3px;background-color: #fff;">去逛逛</a>
+    </div>
+    <div class="dropDown">
+        <p>暂无更多足迹了，快去看看发布的新品吧</p>
+    </div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    seajs.use("__JS__/footprint")
+</script>
+<template id="footprint">
+    <p class="time"><span>[[time]]</span></p>
+    <ul class="mui-table-view ">
+        [[each list as value i]]
+        <li class="mui-table-view-cell mui-media">
+            <a href="/wap/goods/goods/id/[[value.goods_id]]">
+                <img class="mui-media-object mui-pull-left" src="[[value.original_img]]" alt="">
+                <div class="mui-media-body">
+                    <p>[[value.goods_name]]</p>
+                    <div class="return-info">[[if value.exchange_integral_money]]<span class="exchange">羊币抵￥<e>[[value.exchange_integral_money]]</e></span>[[/if]][[if value.give_integral]]<span class="return-integral">购物返<e>[[value.give_integral]]</e>羊币</span>[[/if]]</div>
+                    <div class="goods-info"><span class="price">￥<e class="price-info">[[value.shop_price]]</e></span><span class="original-price">￥<e>[[value.market_price]]</e></span><span class="already-sale mui-pull-right"><e>[[value.sales_num]]</e>人付款</span></div>
+                </div>
+            </a>
+        </li>
+        [[/each]]
+    </ul>
+</template>
+</html>

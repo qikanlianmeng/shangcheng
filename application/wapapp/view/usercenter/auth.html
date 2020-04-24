@@ -1,0 +1,132 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.picker.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.poppicker.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+<style>
+    .step_3_form_cont>p {
+        padding: 20px 0;
+        margin-bottom: 0;
+    }
+
+    .groupImg {
+        width: 210px;
+        margin: 0 auto;
+    }
+
+    .img-list li,
+    .upload {
+        width: 100%;
+        height: 120px;
+        margin: 0 auto;
+    }
+
+    .uploadimg {
+        width: 100%;
+        height: 100%;
+    }
+
+    .t_c {
+        text-align: center;
+    }
+
+    .choose {
+        display: none;
+    }
+    .need_dis.mui-disabled{
+        color:#333 !important;
+    }
+</style>
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">实名认证</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more"
+                style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-content">
+        <form class="mui-input-group mar-t10 add-form text-15">
+            <div class="mui-input-row">
+                <label>姓名:</label>
+                <input type="text" name="name" class="mui-input-clear need_dis" placeholder="需与银行卡姓名一致" data-input-clear="1">
+                <span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>身份证号:</label>
+                <input type="text" name="id" class="mui-input-clear need_dis" placeholder="同一身份证号仅能实名一次" data-input-clear="1">
+                <span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>年龄:</label>
+                <input class=" need_dis" type="number" name="age" placeholder="请输入您的真实年龄">
+            </div>
+            <div class="mui-input-row dingwei">
+                <label>省市区:</label>
+                <input type="text" readonly="readonly" onfocus='this.blur();' id="showCityPicker" name="area"
+                    placeholder="点击选择您所在地区" class=" need_dis">
+                <div id="cityResult3" class="ui-alert"></div>
+            </div>
+            <div class="step_3_form_cont">
+                <label id="label_sh" style="display: block;padding: 20px 0;">上传证件图片<span id="status_sh"></span></label>
+                <div class="groupImg">
+                    <input type="hidden" value="" name="avatar">
+                    <input type="file" class="choose need_dis" id="upload_1" accept="image/*" multiple="">
+                    <ul class="img-list">
+                        <div class="upload" id="imgdiv1">
+                            <img src="__IMG__/card_upload.png" alt="" class="uploadimg idcarda" onclick="return false;">
+                        </div>
+                    </ul>
+                    <div id="picDiv1" style="width: 1px; height: 1px;"></div>
+                    <div class="mui-clearfix"></div>
+                </div>
+                <p class="t_c">请上传身份证正面照</p>
+                <div class="groupImg">
+                    <input type="file" class="choose need_dis" id="upload_2" accept="image/*" multiple="">
+                    <ul class="img-list">
+                        <div class="upload" id="imgdiv2">
+                            <img src="__IMG__/card_upload2.png" alt="" class="uploadimg idcardb"
+                                onclick="return false;">
+                        </div>
+                    </ul>
+                    <div id="picDiv2" style="width: 1px; height: 1px;"></div>
+                    <div class="mui-clearfix"></div>
+                </div>
+                <p class="t_c">请上传身份证反面照</p>
+
+                <p>*请确保照片的内容完整并清晰可见,<br>*仅支持JPG和PNG图片格式，图片大小小于2M</p>
+
+            </div>
+        </form>
+        <div style="margin-bottom: 10px;"></div>
+        <div class="mui-text-center save-address">
+            <div class="mui-input-row mui-checkbox mui-left text-14 color-666">
+                <label>本人确认认证信息真实有效<input name="set-default" type="checkbox"></label>
+            </div>
+            <button type="button" class="btn-main text-16 ">确定</button>
+        </div>
+        <div style="margin-bottom: 10px;"></div>
+        <p style="padding: 0 10px;font-size: 13px;">*年龄小于22岁大于60岁的用户，不符合要求无法保存资料</p>
+        <div style="margin-bottom: 50px;"></div>
+    </div>
+    {include file="public/footer" /}
+    <script src="__PUBLIC__/libs/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.picker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.poppicker.js"></script>
+    <script type="text/javascript" src="__JS__/imgUpload.js"></script>
+    <script type="text/javascript">
+        uploadImg(1, '#upload_1', '/api2/user/upload_card');
+        uploadImg(1, '#upload_2', '/api2/user/upload_card');
+        var opr = "{:input('opr')}",
+            address_id = "{:input('address_id')}";
+        seajs.use(['__JS__/auth']);
+    </script>
+</body>
+
+</html>

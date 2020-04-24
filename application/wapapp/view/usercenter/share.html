@@ -1,0 +1,187 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/yang/css/style.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/yang/css/icon.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/yang/css/index.css">
+<style>
+    body {
+        background: url(/static/wapapp/yang/imgs/bg.png) top center no-repeat;
+        background-size: 100% 100%;
+    }
+    
+    .index_header {
+        height: 340px !important;
+    }
+    
+    .mui-content {
+        background: unset !important;
+    }
+    
+    .copy_code {
+        text-align: center;
+    }
+    
+    .invite_info {
+        position: absolute;
+        width: 100%;
+    }
+    
+    .img_box {
+        text-align: center;
+        width: 100%;
+    }
+    
+    .img_box img {
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+    }
+    
+    .img_box p {
+        font-size: 20px;
+        color: #fff;
+    }
+    
+    .inner {
+        position: absolute;
+        left: 50%;
+        bottom: 0;
+        margin-left: -40%;
+    }
+    
+    @media (min-width:320px) and (max-width:360px) {
+        .inner {
+            bottom: 34px;
+        }
+        .index_header {
+            height: 320px !important;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav" style="border-bottom:none!important;margin: 0 auto;">
+        <h1 class="mui-title">推广二维码</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <a class=" mui-pull-right" style="font-size:15px;line-height: 40px;color: #e94a47" id="share_show"> 分享</a>
+    </header>
+    <div class="mui-content  ">
+        <div class="index_header">
+            <!-- <div class="invite_info">
+                <div class="img_box">
+                    <img src="" alt="">
+                    <p class="account"></p>
+                </div>
+            </div> -->
+            <div class="inner">
+                <p class="qr_img"></p>
+                <p class="only_code" style="display:none;">您的专属邀请码</p>
+                <p class="invite_code" style="color: lightgreen"></p>
+                <p> <button type="button" class="mui-btn copy_code btn" style="background:#6c1317 !important;width: 60%;">复制邀请码</button></p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="share_pop">
+        <div class="share_pop_cont">
+            <div class="share_box">
+                <ul>
+                    <li onclick="to_share('session');">
+                        <p><img src="/static/wapapp/yang/imgs/index/weixin.png" alt=""></p>
+                        <p>好友</p>
+                    </li>
+                    <li class="fr" onclick="to_share('timeline');">
+                        <p><img src="/static/wapapp/yang/imgs/index/pengyouquan.png" alt=""></p>
+                        <p>朋友圈</p>
+                    </li>
+                </ul>
+                <p class="close_pop">取消</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    {include file="public/footer" /}
+    <script src="/static/wapapp/yang/js/jquery.3.1.1.js"></script>
+    <script src="/static/wapapp/yang/js/jquery.qrcode.min.js"></script>
+    <script src="/static/wapapp/yang/js/common.js"></script>
+    <script src="/static/wapapp/yang/js/api.js"></script>
+    <script src="/static/wapapp/yang/js/clipboard.min.js"></script>
+    <script>
+        var baseUrls = "http://ysk.jianchenggjjt.com";
+
+        var track_id = '';
+
+        $get('/api2/user/getuserinfo', {}, function(data) {
+            // console.log(JSON.stringify(data));
+            if (data.code == 1) {
+                // data.data.head_img == '' ? $('.img_box img').attr('src', '/static/wapapp/shop/images/default/touxiang.bk.jpg') : $('.img_box img').attr('src', data.data.head_img);
+                // $('.account').html(data.data.account);
+                track_id = data.data.rcode;
+                $('.invite_code').html(track_id);
+                //使用canvas生成
+                jQuery('.qr_img').qrcode({
+                    render: "canvas",
+                    text: baseUrls + '/wap/index/r.html?rcode=' + track_id
+                });
+                $('.qr_img').fadeIn();
+            }
+
+        });
+
+        $('#share_show').on('tap', function() {
+            $('.share_pop').fadeIn(300);
+        });
+        $('.close_pop').on('tap', function() {
+            $('.share_pop').fadeOut(300);
+        });
+
+        // 微信分享 
+        function to_share(type) {
+            $('.share_pop').fadeOut(300);
+            var wx = api.require('wx');
+            wx.shareWebpage({
+                apiKey: 'wx5cf90f1ce954e0b3',
+                scene: type,
+                title: '天佑众成商城',
+                description: '科研人员通过不懈努力先后推出了天佑众成负离子灯、负离子空气净化器、富氢水杯、新能源汽车ECU转换器等一系列新能源产品。现拥有自主产权五十八专利技术。',
+
+                contentUrl: baseUrls + '/wap/index/r.html?rcode=' + track_id
+            }, function(ret, err) {
+                if (ret.status) {
+                    // 用户点击了分享后执行的回调函数
+                    $get('/api2/user/share', {}, function(ret) {
+                        // console.log(JSON.stringify(ret));
+                        mui.toast(ret.msg);
+                    });
+                } else {
+                    // alert(err.code);
+                    mui.toast("分享失败");
+                    console.log(err.code);
+                }
+            });
+        }
+        // 复制邀请码
+        $(".copy_code").on('click', function() {
+            var _this = this;
+            var val = $('.invite_code').html();
+            $('.copy_code').attr('data-clipboard-text', val);
+            var clipboard = new ClipboardJS('.copy_code');
+            clipboard.on('success', e => {
+                mui.toast('邀请码复制成功，去粘贴');
+                $(_this).addClass('mui-disabled');
+                clipboard.destroy()
+            });
+            clipboard.on('error', e => {  
+                mui.toast('复制失败');
+                clipboard.destroy();  
+            });
+        })
+    </script>
+</body>
+
+</html>

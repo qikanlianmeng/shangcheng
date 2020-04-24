@@ -1,0 +1,143 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<style>
+.file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
+.file-item .info{overflow: hidden;}
+.uploader-list{width: 100%; overflow: hidden;}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑{$user.nickname}收货地址</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal" name="edit_member" id="edit_member" method="post" action="{:url('edit_address')}">
+                        <input type="hidden" name="address_id" value="{$address.address_id}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">收货人：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="consignee" type="text" class="form-control" name="consignee" value="{$address.consignee}">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">电话：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="mobile" type="text" class="form-control" name="mobile" value="{$address.mobile}">
+                            </div>
+                        </div>
+                        
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">地区：</label>
+                            <div class="input-group col-sm-4">
+                                <select name="province" id="province" class="form-control">
+                                    {foreach $region_list.province_list as $v}
+                                    <option value="{$v.id}" {if $v.id==$address.province}selected{/if}> {$v.name}</option>
+                                    {/foreach}
+                                </select>
+                                <select name="city" id="city" class="form-control">
+                                    {foreach $region_list.city_list as $v}
+                                    <option value="{$v.id}" {if $v.id==$address.city}selected{/if}> {$v.name}</option>
+                                    {/foreach}
+                                </select>
+                                <select name="district" id="district" class="form-control">
+                                    {foreach $region_list.district_list as $v}
+                                    <option value="{$v.id}" {if $v.id==$address.district}selected{/if}> {$v.name}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">详细地址：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="address" type="text" class="form-control" name="address" value="{$address.address}">
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+<script type="text/javascript" src="/static/admin/webupload/webuploader.min.js"></script>
+
+<script type="text/javascript">
+    $("#province").change(function(){
+        var pid=$(this).val();
+        $.get('/admin/member/get_region/type/json/pid/'+pid+'.html',function(data){
+            var html_str = '';
+            for(var i in data){
+                html_str += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+            }
+            //console.log(html_str);return false;
+            $('#city').html(html_str);
+        },'json')
+    })
+    $("#city").change(function(){
+        var pid=$(this).val();
+        $.get('/admin/member/get_region/type/json/pid/'+pid+'.html',function(data){
+            var html_str = '';
+            for(var i in data){
+                html_str += '<option value="'+data[i].id+'">'+data[i].name+'</option>'
+            }
+            //console.log(html_str);return false;
+            $('#district').html(html_str);
+        },'json')
+    })
+    //提交
+    $(function(){
+        $('#edit_member').ajaxForm({
+            beforeSubmit: checkForm, 
+            success: complete, 
+            dataType: 'json'
+        });
+        
+        function checkForm(){
+
+            /*
+            if( '' == $.trim($('#name').val())){
+                layer.msg('请填写持卡人姓名',{icon:2,time:1500,shade: 0.1}, function(index){
+                layer.close(index);
+                });
+                return false;
+            } 
+            */
+
+        }
+
+        function complete(data){
+            if(data.code==1){
+                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+                    //window.location.href="{:url('member/index')}";
+                    location.reload();
+                });
+            }else{
+                layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1});
+                return false;   
+            }
+        }   
+    });
+
+</script>
+</body>
+</html>

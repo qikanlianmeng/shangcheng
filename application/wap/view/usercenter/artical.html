@@ -1,0 +1,71 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+<script src="/static/mob/yang/js/template.js"></script>
+<link rel="stylesheet" href="/static/mob/yang/mescroll/mescroll.min.css">
+<script src="/static/mob/yang/mescroll//mescroll.min.js" charset="utf-8"></script>
+<script src="/static/mob/public/wallet/js/common.js"></script>
+<script src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+<style>
+.artical{
+    width: 90%;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+.title{
+    color: #000;
+    font-size: 20px;
+}
+.artical_content{
+    margin-top: 20px;
+    font-size: 15px;
+    color: #000;
+    line-height: 25px;    
+    letter-spacing: 1px;
+}
+</style>
+   </head>
+    <body style="background:#fff;">
+        <header id="header" class="mui-bar mui-bar-nav">
+            <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+            <h1 class="mui-title">文章详情</h1>
+        </header>
+    
+        <div class="mui-content"  style="background:#fff;">
+            <div id="artical" class="artical">
+                <p class="title" id="title">文章标题</p>
+                <p>
+                    <span style="margin-right:10px;" id="author">作者：车金明</span>
+                    <span id="time">2018-08-08 16:45:32</span>
+                </p>
+                <img src="/static/mob/yang/imgs/game/yiliao-dialog-title.png" alt="" style="width:100%;" id="ar_img">
+
+                <p class="artical_content" id="ar_con">这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容这是测试内容</p>
+            </div>
+        </div>
+
+
+        <script>
+         function getQueryString(name) {
+            var result = window.location.search.match(new RegExp("[\?\&]" + name + "=([^\&]+)", "i"));
+            if (result == null || result.length < 1) {
+                return "";
+            }
+            return result[1];
+        }
+        var id = getQueryString("id");
+
+
+         $get('/api/yangyang/article_desc',{article_id:id},function(data){
+                var obj=data.data;
+                console.log(JSON.stringify(data));
+                $('#title').html(obj.title);
+                $('#author').html(obj.writer);
+                $('#time').html(timetrans_3(obj.create_time));
+                $('#ar_img').attr('src',obj.photo);
+                $('#ar_con').html(obj.content);
+
+                
+        });
+        </script>
+    </body>
+    {include file="public/footer" /}

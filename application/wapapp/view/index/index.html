@@ -1,0 +1,406 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/index.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/public/font/iconfont.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/uc_icon.css">
+<style>
+    .mui-card-footer:before,
+    .mui-card-header:after {
+        height: 0;
+    }
+
+    .mui-card-header {
+        margin: 0 5px;
+        border-radius: 10px;
+        background: #fff;
+    }
+
+    .mui-card-header>span {
+        font-size: 15px;
+        font-weight: 600;
+        color: #333;
+    }
+
+    .mui-bar .mui-input-row .mui-input-clear~.mui-icon-clear {
+        right: 35px !important;
+    }
+
+    @font-face {
+        font-family: "iconfont";
+        src: url('iconfont.eot?t=1566632091435');
+        /* IE9 */
+        src: url('iconfont.eot?t=1566632091435#iefix') format('embedded-opentype'),
+            /* IE6-IE8 */
+            url('data:application/x-font-woff2;charset=utf-8;base64,d09GMgABAAAAAAXQAAsAAAAACogAAAWBAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHEIGVgCDMgqIAIZHATYCJAMUCwwABCAFhG0HbRv4CFFUbspkH4np1g4ZQywmy1lMpUKo+ubsoZQE3+/323PloZYgiUa6eCQRGiTxRigkSLQIJTNks9D+8Gyzf4g6B0avLlhclS6y1ItyDrBxjl0k3LVeJF5WWPej84f7mS59s2E++zaXjLYKwNGABxYRp1F4eKd3dMJ87kSFnzTD2IUJXCbQacJQ0EZlfTsQKZRZgTi0kWYgCmmUHGJolzcpG4u4AwLt6Yb3BAC39u/HF9CFiKRmylW7BxWdoPhF8JkGZv5njM8sWNeeCdQ2MhYBhThPtRyC3cgiWKcQ4lsBxL+1S9KL4FPZZ4rPNP//DxDMSNap/sMjS4ogGoqkG+FXooUXgY6QeZEhJF4VCIVXDW9fJBVN78QYEDsAxD3ATy6uOhS1Xy6uFr2TyOdLYufRxbBYJpHESYQxkpm7wpXSO0GMvzNUIbsfSTVueZEuPfeqj2D76yzZ2Ze9PSiEQBjNeyDFcpxv3R71Og7x9ec47aZEbhO7OW5zUiAQtx91ULN+73r/FwcgSKvluH37sDiA+B5cCTInrz5E/YG4wP79wZzvBo1FAMpDYXSmKXAQJOaA1giYK2nSfdcgmL2OyvZeBckAtbt5Mth47tEt9vZj9G4oeUewdf919prvCnO1/dwr9rX/JfOi1H+YPeQ7wBwcA20+rDGsZ9Tt6w6ZgMlx9mkoGAzfigwJnNdP7AN2hGoeRspuhwsPPbK8CvuCzcF5BpyMzB/dbgzPN72O+EMtoXkz5b59m7bHmaBIxATIih4PGDYeccuMEGu8FkaCwXZgZg74DkGGtUlFt7yYse9QYp+L/AcTwLoDeT+ZpG1tPxo+TEIfQ1/CB4YfhstqEpCNO7AdS5G+6BL7q21Alw5alLlyzIbMuxOeZW6YGMNXy4Vvxv3SokDis9d+Tt4g823J7vxpN8no2uz4VfKWT+oeCpPVQqFIoIKIwdNetgBhytTZmtK2prGGFFHy5J+XIu2QShDzxcBwZvOAzAHNQPfjel/pZyflzfKTn/VBbKJi1RYmJeHThNSELasUidjUnG90fmT/p1s+/WksoETFIip5ZFk5Dy4ry12lSFcfGC1o1jfoGlIaUh0SKAEkggSo5q+f4sbnwenRlKg/4vObec9808rB/0WTV0jrUoore1dqjgtrDn9HNb3QYlzdkyNZ1iVcV4qOj14dmfolb/5mrugASZunzW9Wpg0hy3HuOfhHC8XESR/CrZybsSI/l5Jw9wHZ/8MJ8uP/xeVx9DXehtvP1wn1+mp4od7gcK59Vdfz/99zp2NY1Q/OunrzxDS9S7CC43V9qHsn7tCIS3E6fMdG5CmykZeahflIJ7xxwEa4qykApgFoOfMN3jc2JZI/g6tpTN4Os7anMPPITrL2kDJ7kiz/13b0Le57Why7GblbzgLKc547KYH7gHJLthWRr2hr4St1Dp9dXYvlYvOexbLH0jHovXbKLnkstBvxIWkzbsraRS5EF/wiVF2WoNFuGTotqNreZYgXLEoH5i0EEPodh6TXI2T9nqIL/l2oRn0Ljf6AodNeqA7sMh02pMyLm2m8E+uYjtkslJuQnkac/Fac7HGavUG+TTbi3m6bHxs1fGQ0XoW7cW8bS7qnkDqaJjDCS7mwSnAd7nRSmMdL2XELPdxK057cESOItGcabqFcALHOC2dGw3XCdJgOY2NBcSPM3jQk9vOtcKQeTmbenKoCoxHOq5ttcMwow40sga6SuEtVHUtptylIOjQKETAElUtxwVQiE86pRigYT/o4O5wFbThrjZBHrhGoG1FWMrx/mesYc/+OmsqBNVLkKFGjkfdpy6AZVlsHtaWE2U12W/FpNttpt5E9JXSIHWLecDc5zEJ5pouclMVM75lImISi1AAAAAAA') format('woff2'), url('iconfont.woff?t=1566632091435') format('woff'), url('iconfont.ttf?t=1566632091435') format('truetype'),
+            /* chrome, firefox, opera, Safari, Android, iOS 4.2+ */
+            url('iconfont.svg?t=1566632091435#iconfont') format('svg');
+        /* iOS 4.1- */
+    }
+
+    .iconfont1 {
+        font-family: "iconfont" !important;
+        font-size: 16px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .icon-ETC:before {
+        content: "\e615";
+    }
+
+    .icon-zhibo:before {
+        content: "\e50f";
+    }
+
+    .icon-location:before {
+        content: "\e505";
+    }
+
+    .icon-xiaoxi:before {
+        content: "\e611";
+    }
+
+    .gps_box {
+        width: 20%;
+        text-align: left;
+    }
+
+    .gps_box>p {
+        margin-bottom: 0;
+    }
+
+    .gps_box>p:first-child {
+        margin-right: 5px;
+    }
+
+    .swiper-slide img {
+        height: 200px;
+    }
+    .mui-bar input[type=search]{
+        margin: 0 0 !important;
+    }
+    .lucky_body{
+        position: fixed;
+        right: 0;
+        bottom: 20%;
+        width: 60px;
+        height: 60px;
+        z-index: 1000;
+    }
+    .lucky_body img{
+        width: 100%;
+    }
+</style>
+</head>
+
+<body class="index">
+    <header id="header" class="mui-bar mui-bar-nav flex" style="background: #00a2a9 !important;">
+        <!-- <div class="flex gps_box">
+            <p><i class="iconfont1 icon-location color-white" style="font-size: 18px;"></i></p>
+            <p class="color-white city_name"></p>
+        </div> -->
+        <div class="mui-title mui-input-row mui-search" style="width: 100%;">
+            <input type="search" name="searchgoods" class="mui-input-clear" placeholder="搜索商品">
+            <a class="iconfont icon-qianwang mui-pull-right"></a>
+        </div>
+        <!-- <div style="width: 10%;text-align: right;"><span class="iconfont1 icon-xiaoxi color-white" style="font-size: 20px;"></span></div> -->
+    </header>
+    <footer class="mui-bar mui-bar-tab">
+        <a href="{:url('wapapp/index/index')}" class="mui-tab-item mui-active">
+            <span class="uc_icon icon-yemian font-22"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a href="{:url('wapapp/goods/classification')}" class="mui-tab-item" id="integralshopbtn">
+            <span class="uc_icon icon-icon_type font-22"></span>
+            <span class="mui-tab-label">分类</span>
+        </a>
+        <a href="{:url('cart/shopcar')}" class="mui-tab-item" id="shopcarbtn" style="position:relative">
+            <span class="uc_icon icon-gouwuche font-22"></span>
+            <span class="mui-tab-label">购物车</span>
+            <span class="mui-badge shopcart-num">1</span>
+        </a>
+        <a href="{:url('usercenter/usercenter')}" class="mui-tab-item">
+            <span class="uc_icon icon-wode- font-22"></span>
+            <span class="mui-tab-label">会员中心</span>
+        </a>
+    </footer>
+    <div class="mui-content">
+        <div class="swiper-container lunbo" style="height: 200px;">
+            <div class="swiper-wrapper">
+                <!-- <div class="swiper-slide">
+                    <img src="__IMG__/temp/banner1.jpg" alt="">
+                </div>
+                <div class="swiper-slide">
+                    <img src="__IMG__/temp/banner2.jpg" alt="">
+                </div>
+                <div class="swiper-slide">
+                    <img src="__IMG__/temp/banner3.jpg" alt="">
+                </div> -->
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <div class="mb10"></div>
+        <!-- 公告-->
+        <!-- <div class="notice bg-whtie">
+            <div class="notice_left text_blue">
+                <img src="__IMG__/img_25.png" alt="" class="fl">
+                <span>公告:</span>
+            </div>
+            <div class="notice_right">
+                <div class="swiper-container notice_banner">
+                    <div class="swiper-wrapper" id="notice_lists">
+                        <div class="swiper-slide mui-ellipsis">
+                            <a class="text-15" href="javascript:;">今天的公告</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="mui-row button-area">
+            <!-- <div class="mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="{:url('goods/hotgoods?group=1')}">
+                        <p class="nav-block" style="background-color:#ff5a36;">
+                            <i class="iconfont icon-youhui" style="top:-4px"></i>
+                        </p>
+                        <div class="mui-media-body">样品专区</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="{:url('goods/hotgoods?group=2')}">
+                        <p class="nav-block" style="background-color:#0b8eba;">
+                            <i class="iconfont icon-jifen"></i>
+                        </p>
+                        <div class="mui-media-body">代售专区</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="{:url('goods/hotgoods?group=3')}">
+                        <p class="nav-block" style="background-color:#eea200;">
+                            <i class="iconfont icon-shangcheng"></i>
+                        </p>
+                        <div class="mui-media-body">订货专区</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="{:url('usercenter/usercenter')}">
+                        <p class="nav-block" style="background-color:#27b197;">
+                            <i class="iconfont icon-yonghuzhongxin"></i>
+                        </p>
+                        <div class="mui-media-body">用户中心</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="javascript:;" class="kaifaing">
+                        <p class="nav-block" style="background-color:#ffd600;">
+                            <i class="iconfont1 icon-zhibo"></i>
+                        </p>
+                        <div class="mui-media-body">在线直播</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="javascript:;" class="kaifaing">
+                        <p class="nav-block" style="background-color:#fe7098;">
+                            <i class="iconfont1 icon-ETC"></i>
+                        </p>
+                        <div class="mui-media-body">ETC全国六折</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="javascript:;" class="kaifaing">
+                        <p class="nav-block" style="background-color:#fa8657;">
+                            <i class="iconfont icon-qianbao12"></i>
+                        </p>
+                        <div class="mui-media-body">金融在线</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="javascript:;" class="kaifaing">
+                        <p class="nav-block" style="background-color:#52b2fd;">
+                            <i class="iconfont icon-youxi"></i>
+                        </p>
+                        <div class="mui-media-body">游戏</div>
+                    </a>
+                </li>
+            </div> -->
+        </div>
+        <!-- <div class="mui-row" style="height:204px;">
+            <div class="mui-col-sm-4 mui-col-xs-4 goods-new" style="height:100%;">
+                <a class="goods-new-href" href="">
+                    <p class="goods-title" style="color:#ff4c48">每日上新</p>
+                    <p class="goods-info">超值好货 每天更新</p>
+                    <img class="goods-new-img" src="__IMG__/temp/book1.png" alt="">
+                </a>
+            </div>
+            <div class="mui-col-sm-8 mui-col-xs-8" style="border-left:1px solid #e8e8e8">
+                <div class="mui-col-sm-12 mui-col-xs-12 goods-discover clear" style="border-bottom:1px solid #e8e8e8">
+                    <a class="goods-discover-href" href="">
+                        <div class="goods-wrap">
+                            <p class="goods-title" style="color:#04b2f9">发现</p>
+                            <text class="goods-info">发现精彩 爆款集结</text>
+                        </div>
+                        <img class="goods-discover-img" src="__IMG__/temp/book1.png" alt="">
+                    </a>
+                </div>
+                <div class="mui-row">
+                    <div class="mui-col-sm-6 mui-col-xs-6 goods-recommend" style="border-right:1px solid #e8e8e8">
+                        <a class="goods-recommend-href">
+                            <p class="goods-title" style="color:#ff960c">都在买</p>
+                            <text class="goods-info">流行款式 服务大众</text>
+                            <img class="goods-recommend-img" src="__IMG__/temp/book2.png" alt="">
+                        </a>
+                    </div>
+                    <div class="mui-col-sm-6 mui-col-xs-6 goods-recommend">
+                        <a class="goods-recommend-sceoundhref">
+                            <p class="goods-title" style="color:#93c800">超值推荐</p>
+                            <text class="goods-info">物美价廉 高性价比</text>
+                            <img class="goods-recommend-sceoundimg" src="__IMG__/temp/book3.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <!-- 样品 -->
+        <div class="mui-card" style="width:100%;">
+            <div class="mui-card-header">
+                <span>样品专区 </span><a href="{:url('goods/hotgoods?group=1')}"><span class="mui-pull-right"
+                        style="font-size:12px;color:#9b9b9b">查看更多<i class="iconfont icon-you"></i></span></a>
+            </div>
+            <div class="card-content">
+                <div class="goods-container swiper-container isrecommend c_1">
+
+                </div>
+            </div>
+        </div>
+        <!-- 代售 -->
+      <div class="mui-card" style="width: 100%;">
+            <div class="mui-card-header">
+                <span>代售专区</span><a href="{:url('goods/hotgoods?group=2')}"><span class="mui-pull-right"
+                        style="font-size:12px;color:#9b9b9b">查看更多<i class="iconfont icon-you"></i></span></a>
+            </div>
+            <div class="card-content">
+                <div class="goods-container swiper-container deduction c_2">
+
+                </div>
+            </div>
+        </div>
+        <!-- 自营 -->
+        <div class="mui-card" style="width: 100%;">
+            <div class="mui-card-header">
+                <span>订货专区 </span><a href="{:url('goods/hotgoods?group=3')}"><span class="mui-pull-right"
+                        style="font-size:12px;color:#9b9b9b">查看更多<i class="iconfont icon-you"></i></span></a>
+            </div>
+            <div class="card-content">
+                <div class="goods-container swiper-container isreturn c_3">
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="lucky_body" onclick="window.location.href='/wapapp/usercenter/lucky/id/2'">
+        <img src="__IMG__/lucky/lucky.png" alt="">
+    </div>
+</body>
+{include file="public/footer" /}
+<script type="text/html" id="adarea">
+    <div class="swiper-slide">
+        <a href="[[link_url]]"><img src="[[images]]" alt=""></a>
+    </div>
+</script>
+<!-- 代理区 -->
+<script type="text/html" id="deduction">
+    <div class="mui-col-sm-6 mui-col-xs-6 goods-list" style="height:auto;">
+        <a href="/wapapp/goods/goods/id/[[id]]" class="goodsImg">
+            <img src="[[original_img]]" alt="" style="width:100%;">
+            <p style="margin-top: 2%;margin-bottom:2%;">[[goods_name]]</p>
+            <div style="bottom: 10px;"><span class="price">￥<e class="price-info">[[price]]</e></span></div>
+            <!-- [[if exchange_integral_money]]<span class="exchange">羊币抵￥<e>[[exchange_integral_money]]</e></span>[[/if]] -->
+        </a>
+    </div>
+</script>
+<!-- 代售区 -->
+<script type="text/html" id="return">
+    <div class="mui-col-sm-6 mui-col-xs-6 goods-list" style="height:auto;">
+        <a href="/wapapp/goods/goods/id/[[id]]/group/[[group]]" class="goodsImg">
+            <img src="[[original_img]]" alt="" style="width:100%;">
+            <p style="margin-top: 2%;margin-bottom:2%;">[[goods_name]]</p>
+            <div style="bottom: 10px;"><span class="price">￥<e class="price-info">[[price]]</e></span></div>
+            <!-- [[if give_integral]]<span class="return-integral">返<e>[[give_integral]]</e>羊币</span>[[/if]] -->
+        </a>
+    </div>
+</script>
+<!-- 自营区 -->
+<script type="text/html" id="seckill">
+    <div class="mui-col-sm-6 mui-col-xs-6 goods-list" style="height:auto;">
+        <a href="/wapapp/goods/goods/id/[[id]]" class="goodsImg">
+            <img src="[[original_img]]" alt="" style="width:100%;">
+            <p style="margin-top: 2%;margin-bottom:2%;">[[goods_name]]</p>
+            <div style="bottom: 10px;"><span class="price">￥<e class="price-info">[[price]]</e></span></div>
+            <!-- [[if give_integral]]<span class="return-integral">返<e>[[give_integral]]</e>羊币</span>[[/if]] -->
+        </a>
+    </div>
+</script>
+<!-- <script type="text/html" id="seckill">
+    <div class="mui-col-sm-6 mui-col-xs-6 goods-list" style="height:auto;">
+        [[if status==1]]
+        <a href="/wapapp/goods/goods/id/[[goods_id]]" class="goodsImg">
+        [[else if status==0]]
+        <a class="nostartbtn">
+        [[else if status==2]]
+        <a class="endbtn">
+        [[/if]]
+            <img src="[[original_img]]" alt="">
+            <p>[[goods_name]]</p>
+            <p class="mui-ellipsis commodity progressa">
+            <div id="bar">
+                <div class="finish" style="width:[[bai]]%;"></div>
+                <span class="ing">剩余[[bai]]%</span>
+            </div>
+            <div style="position: absolute;bottom: 5px;width:calc(100% - 20px);">
+                <span class="price" style="width: calc(100% - 50px);display: inline-block;overflow: hidden;white-space: nowrap;">抢购价￥<e class="price-info">[[price]]</e></span>
+                [[if give_integral]]<span class="return-integral">返<e>[[give_integral]]</e>羊币</span>[[/if]]
+                [[if status==1]]
+                <span class="seckillbtn">抢购中</span>
+                [[else if status==0]]
+                <span class="seckillbtn nostartbtn">未开始</span>
+                [[else if status==2]]
+                <span class="seckillbtn endbtn">已结束</span>
+                [[/if]]
+            </div>
+        </a>
+    </div>
+</script> -->
+<script type="text/template" id="ad_btn">
+    <div class="mui-col-xs-3">
+        <li class="mui-table-view-cell">
+            <a href="[[link_url]]">
+                <p class="nav-block" style="background-color:unset;">
+                    <img src="[[images]]" alt="" style="border-radius: 50%;">
+                </p>
+                <div class="mui-media-body">[[title]]</div>
+            </a>
+        </li>
+    </div>
+</script>
+<script type="text/javascript">
+    seajs.use("/static/wapapp/shop/js/index")
+</script>
+
+</html>

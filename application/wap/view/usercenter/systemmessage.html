@@ -1,0 +1,208 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+
+<script src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+<script src="/static/mob/public/wallet/js/common.js"></script>
+<script src="/static/mob/yang/js/template.js"></script>
+<link rel="stylesheet" href="/static/mob/yang/mescroll/mescroll.min.css">
+<script src="/static/mob/yang/mescroll//mescroll.min.js" charset="utf-8"></script>
+<style>
+    .mui-bar-nav~.mui-content{
+        padding-top: 0px;
+    }
+    .mui-segmented-control.mui-segmented-control-inverted .mui-control-item.mui-active{
+        border-bottom: 2px solid #fa542e;
+    }
+    .title_bar{
+        /* margin-top:44px; */
+        background:#fff;
+        position: fixed;
+        top: 44px;
+        left: 0;
+        width:100%;
+    }
+    #title_bar a{
+        /* display: inline-block; */
+        width: 33%;
+        float: left;
+        text-align: center;
+        background: #fff;
+        padding: 10px 0px;
+        font-size: 16px;
+    }
+    .active{
+        color:#fa542e;
+        border-bottom: 2px solid #fa542e;
+    }
+    #mescroll{
+        position: fixed;
+        top:90px;
+        bottom: 0;
+        height: auto;
+    }
+ .time{
+     font-size: 14px;
+     color: #666;
+ }
+ .huanhang{
+     word-break: break-all;
+     word-wrap: break-word;
+     overflow: hidden;
+     color:#666;
+     font-size:14px;
+ }
+ .mui-media-body p{
+    -webkit-line-clamp: 3;
+    color:#999;
+ }
+</style>
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <h1 class="mui-title">新闻</h1>
+    </header>
+
+    <div class="title_bar" id="title_bar">
+            <a class="active" id="news" title="1">新闻</a>
+            <a class="" id="help" title="2">帮助</a>
+            <a class="" id="brodcast" title="3">公告</a>
+    </div>
+    <div class=" mescroll" id="mescroll">
+        <ul class="mui-table-view messageList" id="data_list" style="background:transparent;">
+           
+        </ul>
+
+        <!-- <div class="noAttend" style="display: none;background-color:#f4f4f4">
+            <i class="iconfont icon-zanwu"></i>
+            <p>暂无更多消息~</p>
+        </div> -->
+        <!-- <div class="dropDown">
+            <p>暂无更多消息哦~</p>
+        </div> -->
+    </div>
+</body>
+{include file="public/footer" /}
+
+
+<script type="text/html" id="message">
+    <li class="mui-table-view-cell messageDetail" data-id="{{id}}" style="height:auto;background:#fff" onclick="article_desc({{id}});">
+        <div class="mui-media-body">
+            <p class="information-title huanhang" style="width:100%;font-size:17px;margin-bottom:3%;color:#000;">{{title}}</p>
+           
+            <div style="width:100%;display:inline-block;vertical-align:middle;">
+                    <div style="width:80%;float:left;margin:0px;" class="huanhang mui-ellipsis-2">{{remark}}</div>
+                    <img src="{{photo}}" alt="" style="width:20%;float:right;"> 
+            </div>
+            
+          
+           
+        </div>
+    </li>
+</script>
+
+
+<script>
+
+    $(function(){
+        var mescroll=new MeScroll('mescroll',{
+            up:{
+                callback:getListData,
+                isBounce:false,
+                noMoreSize:1,
+                pageSize:1,
+                empty:{
+                    icon:'/static/mob/yang/imgs/index/web.png',
+                    tips:'暂无数据'
+                },
+                clearEmptyId:'data_list',
+                lazyload:{
+                    use:true
+                }
+            }
+        });
+        var pdType='1';
+        $('#title_bar a').on('click',function(){
+            pdType=$(this).attr('title');
+            $('#title_bar a').removeClass('active');
+            $(this).addClass('active');
+            console.log($(this).attr('title'));
+            
+            mescroll.resetUpScroll();
+        });
+        /*联网加载列表数据  page = {num:1, size:10}; num:当前页 从1开始, size:每页数据条数 */
+      
+        function getListData(page){
+				//联网加载数据
+				getListDataFromNet(pdType, page.num,page.size, function(curPageData){
+					//联网成功的回调,隐藏下拉刷新和上拉加载的状态;
+                    //mescroll会根据传的参数,自动判断列表如果无任何数据,则提示空;列表无下一页数据,则提示无更多数据;
+                    // console.log(page);
+					console.log("pdType="+pdType+", page.num="+page.num+", page.size="+page.size+", curPageData.length="+curPageData.length);
+                    
+                    
+                    mescroll.endSuccess(curPageData.length);
+                    if(curPageData.length<page.size){
+                        $('.upwarp-nodata').html('全部加载完成');
+                    }
+					
+					//设置列表数据
+					setListData(curPageData);
+				}, function(){
+					//联网失败的回调,隐藏下拉刷新和上拉加载的状态;
+	                mescroll.endErr();
+				});
+			}
+			
+			/*设置列表数据*/
+			function setListData(curPageData){
+                console.log(JSON.stringify(curPageData));
+                var data_list='';
+                for(var i in curPageData){
+                    template.config("escape", false);
+                    curPageData[i].create_time=timetrans_1(curPageData[i].create_time);
+                    var length=curPageData[i].content.length;
+                    curPageData[i].content=curPageData[i].content.substr(0,50);
+                    data_list+=template('message',curPageData[i]);
+                }
+                $('#data_list').append(data_list);
+                // $('.information-info').each(function(){
+                //     console.log($(this).text());
+                //     $(this).text($(this).text());
+                // });
+            }
+            
+            function getListDataFromNet(pdType,pageNum,pageSize,successCallback,errorCallback) {
+				//延时一秒,模拟联网
+                setTimeout(function () {
+                	$.ajax({
+		                type: 'GET',
+		                url: '/api/yangyang/article?cate_id='+pdType+'&page='+pageNum,
+//		                url: '../res/pdlist1.json?pdType='+pdType+'&num='+pageNum+'&size='+pageSize,
+		                dataType: 'json',
+		                success: function(data){
+                            var obj=data.data;
+		                	var listData=[];
+                            //全部商品 (模拟分页数据)
+                            for (var i in obj) {
+                                if(i==obj.length) break;
+                                listData.push(obj[i]);
+                            }
+		                	//回调
+		                	successCallback(listData);
+		                },
+		                error: errorCallback
+		            });
+                },1000);
+			}
+
+
+      
+    }); 
+    function article_desc(id){
+        location.href='artical.html?id='+id;
+         
+    }
+    
+</script>
+
+</html>

@@ -1,0 +1,47 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">我的优惠券</h1>
+        <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/wapapp/usercenter/usercenter"></a>
+    </header>
+    <div class="mui-content" id="slider">
+        <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted orderTit">
+            <a class="mui-control-item" href="#item1mobile">未使用</a>
+            <a class="mui-control-item" href="#item2mobile">已使用</a>
+            <a class="mui-control-item" href="#item3mobile">已过期</a>
+        </div>
+        <div class="mui-slider-group" style="padding-top: 50px;">
+            <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+                <ul class="mui-table-view shopcarList orderList" id="allOrder">
+
+                </ul>
+            </div>
+            <div id="item2mobile" class="mui-slider-item mui-control-content">
+                <ul class="mui-table-view shopcarList orderList" id="waitPayment">
+                </ul>
+            </div>
+            <div id="item3mobile" class="mui-slider-item mui-control-content">
+                <ul class="mui-table-view shopcarList orderList" id="waitSendout">
+                </ul>
+            </div>
+            <div class="dropdown mui-text-center color-999 text-14 m-b"></div>
+        </div>
+        <div class="noAttend" style="display: none;">
+            <i class="iconfont icon-zanwu"></i>
+            <p>暂无优惠券记录</p>
+        </div>
+    </div>
+    {include file="public/footer" /}
+    <script type="text/html" id="ListTem">
+
+    </script>
+    <script type="text/javascript">
+        var tab_num = "{:input('tab_num')}";
+        seajs.use(['__JS__/coupons']);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,195 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+<link rel="stylesheet" href="__CSS__/uc_icon.css">
+<style>
+    .promote_body .mui-content {}
+    
+    .li_box ul>li {
+        width: 33%;
+        text-align: center;
+    }
+    
+    .cont {
+        width: 96%;
+        margin: 0 auto;
+    }
+    
+    .top_con {
+        border-radius: 10px;
+        margin-top: 6px;
+    }
+    
+    .content_top {
+        padding: 10px 0;
+    }
+    
+    .content_top img {
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+    }
+    
+    .content_top p {
+        width: 70%;
+        text-align: right;
+    }
+    
+    .border {
+        border-radius: 24px;
+        background: rgba(0, 0, 0, 0.1);
+    }
+    
+    .li_box:nth-child(2) {
+        margin: 20px 0;
+    }
+    
+    .li_box:nth-child(4) {
+        margin: 35px 0 10px 0;
+        padding-bottom: 20px;
+    }
+    
+    .ul_2 li {
+        width: 33%;
+        text-align: center;
+    }
+    
+    #rank_name {
+        background: #00a2a8;
+        padding: 3px 10px;
+        border-radius: 10px;
+        color: #fff;
+    }
+</style>
+</head>
+
+<body class="promote_body bg-lanhui">
+    <div class="mui-inner-wrap">
+        <!--头部导航-->
+        <header class="mui-bar mui-bar-nav bg-lanhui" style="border-bottom: 0 !important;">
+            <a class="mui-icon mui-icon-back mui-pull-left mui-action-back color-white"></a>
+            <h1 class="mui-title color-white">我的推广</h1>
+            <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#fff"></span>
+                <div class="small_box">
+                    <a href='/wapapp/index/index'>首页</a>
+                    <a href='/wapapp/cart/shopcar'>购物车</a>
+                    <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+                </div>
+            </div>
+        </header>
+        <!--主体部分-->
+        <div class="mui-content" style="background: transparent !important;">
+            <div class="">
+                <div class="cont bg-whtie top_con">
+                    <div class="content_top flex">
+                        <img class="head_img" class="fl" src="__IMG__/default/touxiang.bk.jpg" alt="">
+                        <p class="fr color-999 text-14"><a class="color-999" href="{:url('usercenter/spendintegral')}">我的余额</a><span class="mui-icon mui-icon-arrowright text-18"></span></p>
+                    </div>
+                    <div class="li_box">
+                        <ul class="flex">
+                            <li>
+                                <p id="money" class="text-18 color-333"></p>
+                                <p>余额</p>
+                            </li>
+                            <li style="width: 26%;">
+                                <p class="account"></p>
+                                <p class="text-13"><span id="rank_name">会员等级</span></p>
+                            </li>
+                            <li>
+                                <p class="integral text-18 color-333"><span></span></p>
+                                <p>积分</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="li_box">
+                        <ul class="flex">
+                            <li>
+                                <p class="text-18 color-333">￥<span id="total_income"></span></p>
+                                <p>总佣金</p>
+                            </li>
+                            <li>
+                                <p class="text-18 color-333">￥<span id="wait_cash"></span></p>
+                                <p>待审核金额</p>
+                            </li>
+                            <li>
+                                <p class="text-18 color-333">￥<span id="already_cash"></span></p>
+                                <p>已提现</p>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="li_box">
+                        <ul class="flex">
+                            <li>
+                                <a href="{:url('usercenter/team')}">
+                                    <p><span class="uc_icon font-35 icon-i color-blue"></span></p>
+                                    <p>我的好友</p>
+                                    <!-- <p><span id="son_dl"></span>个</p> -->
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{:url('usercenter/share')}">
+                                    <p><span class="uc_icon icon-tuiguangerweima font-35 color-orange"></span></p>
+                                    <p>推广二维码</p>
+                                    <!-- <p class="text-mini">更好的推广自己</p> -->
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{:url('usercenter/commission')}">
+                                    <p><span class="uc_icon icon-yongjin font-35 color-red"></span></p>
+                                    <p>我的积分</p>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="m-b"></div>
+            <div class="cont">
+                <div>
+                    <ul class="mui-table-view  text-16 color-333 unset_b radius_up">
+                        <li class="mui-table-view-cell">
+                            <a class="" need-login="1" href="javascript:;">
+                                <a class="islogin" href="{:url('usercenter/commission_list')}" need-login="1" style="width: 100%;">
+                                    <span> 佣金统计</span>
+                                    <span class="fr color-999 text-14">明细<span class="mui-icon mui-icon-arrowright text-18"></span></span>
+                                </a>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="mui-table-view list-row text-15 color-666 clearfix unset_a radius_down flex ul_2">
+                        <li class="" style="padding: 10px 0;">
+                            <a href="javascript:;" need-login="1" class="islogin flex">
+                                <div class="mui-media-body">
+                                    <p class="color-333 t-c"><span class="color-red text-16">￥<span id="dl_income"></span></span>
+                                    </p>
+                                    <p>代理团队</p>
+                                </div>
+                            </a>
+                        </li>
+                        <li class="" style="padding: 10px 0;">
+                            <a href="javascript:;" need-login="1" class="islogin flex">
+                                <div class="mui-media-body">
+                                    <p class="color-333 t-c"><span class="color-red text-16">￥<span id="dy_income"></span></span>
+                                    </p>
+                                    <p>分销佣金</p>
+                                </div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--end 主体部分-->
+    </div>
+    <script type="text/template" id="content">
+
+    </script>
+    {include file="public/footer" /}
+    <script>
+        seajs.use(['__JS__/promote']);
+    </script>
+    </script>
+</body>
+
+</html>

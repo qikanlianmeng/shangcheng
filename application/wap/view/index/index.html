@@ -1,0 +1,238 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+<link rel="stylesheet" type="text/css" href="/static/mob/public/font/iconfont.css">
+</head>
+
+<body class="index">
+    <header id="header" class="mui-bar mui-bar-nav">
+        <div class="mui-title mui-input-row mui-search">
+            <input type="search" name="searchgoods" class="mui-input-clear" placeholder="搜索全部商品">
+        </div>
+        <a class="iconfont icon-qianwang mui-pull-right"></a>
+    </header>
+    <footer class="mui-bar mui-bar-tab">
+        <a href="{:url('wap/index/index')}" class="mui-tab-item mui-active">
+            <span class="iconfont icon-shouye1"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a href="{:url('wap/goods/classification')}" class="mui-tab-item" id="integralshopbtn">
+            <span class="iconfont icon-shangcheng"></span>
+            <span class="mui-tab-label">分类</span>
+        </a>
+        <a href="{:url('cart/shopcar')}" class="mui-tab-item" id="shopcarbtn" style="position:relative">
+            <span class="iconfont icon-gouwuche"></span>
+            <span class="mui-tab-label">购物车</span>
+            <span class="mui-badge shopcart-num">1</span>
+        </a>
+        <a href="{:url('usercenter/usercenter')}" class="mui-tab-item">
+            <span class="iconfont icon-wode1"></span>
+            <span class="mui-tab-label">会员中心</span>
+        </a>
+    </footer>
+    <div class="mui-content">
+        <div class="swiper-container lunbo">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <img src="__IMG__/temp/banner.png" alt="">
+                </div>
+                <div class="swiper-slide">
+                    <img src="__IMG__/temp/banner.png" alt="">
+                </div>
+                <div class="swiper-slide">
+                    <img src="__IMG__/temp/banner.png" alt="">
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+        <!-- <div class="mui-row button-area">
+            <div class="mui-col-sm-3 mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="{:url('goods/hotgoods')}">
+                        <p class="nav-block" style="background-color:#ff5a36;">
+                            <i class="iconfont icon-youhui" style="top:-4px"></i>
+                        </p>
+                        <div class="mui-media-body">今日特惠</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-sm-3 mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="{:url('goods/integralshop')}">
+                        <p class="nav-block" style="background-color:#0b8eba;">
+                            <i class="iconfont icon-jifen"></i>
+                        </p>
+                        <div class="mui-media-body">羊币商城</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-sm-3 mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="{:url('cart/shopcar')}">
+                        <p class="nav-block" style="background-color:#eea200;">
+                            <i class="iconfont icon-gouwuche-copy"></i>
+                        </p>
+                        <div class="mui-media-body">购物车</div>
+                    </a>
+                </li>
+            </div>
+            <div class="mui-col-sm-3 mui-col-xs-3">
+                <li class="mui-table-view-cell">
+                    <a href="{:url('usercenter/usercenter')}">
+                        <p class="nav-block" style="background-color:#27b197;">
+                            <i class="iconfont icon-yonghuzhongxin"></i>
+                        </p>
+                        <div class="mui-media-body">用户中心</div>
+                    </a>
+                </li>
+            </div>
+        </div> -->
+        <!-- <div class="mui-row" style="height:204px;">
+            <div class="mui-col-sm-4 mui-col-xs-4 goods-new" style="height:100%;">
+                <a class="goods-new-href" href="">
+                    <p class="goods-title" style="color:#ff4c48">每日上新</p>
+                    <p class="goods-info">超值好货 每天更新</p>
+                    <img class="goods-new-img" src="__IMG__/temp/book1.png" alt="">
+                </a>
+            </div>
+            <div class="mui-col-sm-8 mui-col-xs-8" style="border-left:1px solid #e8e8e8">
+                <div class="mui-col-sm-12 mui-col-xs-12 goods-discover clear" style="border-bottom:1px solid #e8e8e8">
+                    <a class="goods-discover-href" href="">
+                        <div class="goods-wrap">
+                            <p class="goods-title" style="color:#04b2f9">发现</p>
+                            <text class="goods-info">发现精彩 爆款集结</text>
+                        </div>
+                        <img class="goods-discover-img" src="__IMG__/temp/book1.png" alt="">
+                    </a>
+                </div>
+                <div class="mui-row">
+                    <div class="mui-col-sm-6 mui-col-xs-6 goods-recommend" style="border-right:1px solid #e8e8e8">
+                        <a class="goods-recommend-href">
+                            <p class="goods-title" style="color:#ff960c">都在买</p>
+                            <text class="goods-info">流行款式 服务大众</text>
+                            <img class="goods-recommend-img" src="__IMG__/temp/book2.png" alt="">
+                        </a>
+                    </div>
+                    <div class="mui-col-sm-6 mui-col-xs-6 goods-recommend">
+                        <a class="goods-recommend-sceoundhref">
+                            <p class="goods-title" style="color:#93c800">超值推荐</p>
+                            <text class="goods-info">物美价廉 高性价比</text>
+                            <img class="goods-recommend-sceoundimg" src="__IMG__/temp/book3.png" alt="">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+        <!-- 超值抢购 -->
+        <div class="mui-card" style="display:none;">
+            <div class="mui-card-header">
+                <span style="font-size:14px">超值抢购 <span style="font-size:12px;color:#8d8d8d">剩余不多，抓紧抢!</span></span><a href="{:url('goods/seckill')}"><span class="mui-pull-right" style="font-size:12px;color:#9b9b9b">更多<i class="iconfont icon-you"></i></span></a>
+            </div>
+            <div class="card-content">
+                <div class="goods-container swiper-container seckill">
+                    <div class="swiper-wrapper">
+
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 热门推荐 -->
+        <div class="mui-card" style="width:100%;">
+            <div class="mui-card-header">
+                <span style="font-size:14px">热门推荐 <span style="font-size:12px;color:#8d8d8d">超值购，都在买!</span></span><a href="{:url('goods/hotgoods')}"><span class="mui-pull-right" style="font-size:12px;color:#9b9b9b">更多<i class="iconfont icon-you"></i></span></a>
+            </div>
+            <div class="card-content">
+                <div class="goods-container swiper-container isrecommend">
+
+                </div>
+            </div>
+        </div>
+        <!-- 羊币抵扣 -->
+        <div class="mui-card" style="width: 100%;">
+            <div class="mui-card-header">
+                <span style="font-size:14px">羊币抵扣 <span style="font-size:12px;color:#8d8d8d">太热门啦，超级抵钱!</span></span><a href="{:url('goods/integralshop')}"><span class="mui-pull-right" style="font-size:12px;color:#9b9b9b">更多<i class="iconfont icon-you"></i></span></a>
+            </div>
+            <div class="card-content">
+                <div class="goods-container swiper-container deduction">
+
+                </div>
+            </div>
+        </div>
+        <!-- 购物返金币 -->
+        <div class="mui-card" style="width: 100%;">
+            <div class="mui-card-header">
+                <span style="font-size:14px">购物返羊币 <span style="font-size:12px;color:#8d8d8d">超值购，都在买!</span></span><a href="{:url('goods/returnintegral')}"><span class="mui-pull-right" style="font-size:12px;color:#9b9b9b">更多<i class="iconfont icon-you"></i></span></a>
+            </div>
+            <div class="card-content">
+                <div class="goods-container swiper-container isreturn">
+
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</body>
+{include file="public/footer" /}
+<script type="text/html" id="adarea">
+    <div class="swiper-slide">
+        <a href="[[link_url]]"><img src="[[images]]" alt=""></a>
+    </div>
+</script>
+<!-- 热门推荐 -->
+<script type="text/html" id="deduction">
+    <div class="mui-col-sm-6 mui-col-xs-6 goods-list" style="height:auto;">
+        <a href="/wap/goods/goods/id/[[id]]" class="goodsImg">
+            <img src="[[original_img]]" alt="" style="width:100%;">
+            <p style="margin-top: 2%;margin-bottom:2%;">[[goods_name]]</p>
+            <div style="bottom: 10px;"><span class="price">￥<e class="price-info">[[shop_price]]</e></span>[[if exchange_integral_money]]<span class="exchange">羊币抵￥<e>[[exchange_integral_money]]</e></span>[[/if]]</div>
+        </a>
+    </div>
+</script>
+<!-- 购物返羊币 -->
+<script type="text/html" id="return">
+    <div class="mui-col-sm-6 mui-col-xs-6 goods-list" style="height:auto;">
+        <a href="/wap/goods/goods/id/[[id]]" class="goodsImg">
+            <img src="[[original_img]]" alt="" style="width:100%;">
+            <p style="margin-top: 2%;margin-bottom:2%;">[[goods_name]]</p>
+            <div style="bottom: 10px;"><span class="price">￥<e class="price-info">[[shop_price]]</e></span>[[if give_integral]]<span class="return-integral">返<e>[[give_integral]]</e>羊币</span>[[/if]]</div>
+        </a>
+    </div>
+</script>
+<!-- 羊币抵扣 -->
+<script type="text/html" id="seckill">
+    <div class="mui-col-sm-6 mui-col-xs-6 goods-list" style="height:auto;">
+        [[if status==1]]
+        <a href="/wap/goods/goods/id/[[goods_id]]" class="goodsImg">
+        [[else if status==0]]
+        <a class="nostartbtn">
+        [[else if status==2]]
+        <a class="endbtn">
+        [[/if]]
+            <img src="[[original_img]]" alt="">
+            <p>[[goods_name]]</p>
+            <p class="mui-ellipsis commodity progressa">
+            <div id="bar">
+                <div class="finish" style="width:[[bai]]%;"></div>
+                <span class="ing">剩余[[bai]]%</span>
+            </div>
+            <div style="position: absolute;bottom: 5px;width:calc(100% - 20px);">
+                <span class="price" style="width: calc(100% - 50px);display: inline-block;overflow: hidden;white-space: nowrap;">抢购价￥<e class="price-info">[[price]]</e></span>
+                [[if give_integral]]<span class="return-integral">返<e>[[give_integral]]</e>羊币</span>[[/if]]
+                [[if status==1]]
+                <span class="seckillbtn">抢购中</span>
+                [[else if status==0]]
+                <span class="seckillbtn nostartbtn">未开始</span>
+                [[else if status==2]]
+                <span class="seckillbtn endbtn">已结束</span>
+                [[/if]]
+            </div>
+        </a>
+    </div>
+</script>
+<script type="text/javascript">
+    seajs.use("__JS__/index")
+</script>
+
+</html>

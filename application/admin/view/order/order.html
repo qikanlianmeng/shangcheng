@@ -1,0 +1,408 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<style type="text/css">
+.chosen-container{
+    width: 100px !important;
+}
+
+.chosen-search{
+    display: none;
+}
+.select-wrap{
+    border: 1px solid #1ab394;
+    margin: 0 15px;
+    padding:0;
+    width: auto;
+    float: right;
+}
+.chosen-container-single .chosen-single{
+    border: none;
+}
+.search:focus{
+    border: none;
+}
+.table>thead>.long-tr>th{
+    position: relative;
+}
+.long-tr th:hover::after{
+    content: "";
+    display: inline-block;
+    background-color: #1ab394;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+}
+.chosen-container-single .chosen-single span{
+    margin-right: 0;
+}
+</style>
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>订单列表</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">
+					<!--
+					<div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('addOrder')}"><button class="btn btn-outline btn-primary" type="button">添加订单</button></a>
+                        </div>
+                    </div>
+					-->
+                    
+                    <form method="get" action="{:url('Order','group='.$group)}" id="search">
+                    <!--<div class="col-sm-12 select-wrap">-->
+					<div class="col-sm-12 select-wrap" style="float: left;">
+                        <input type="hidden" name="order_group" value="{$group}"/>
+                        <span class="btn btn-outline" onclick="" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" >下单时间</span>
+                        <input placeholder="下单开始时间" type="text" class="form-control" name="start_time" style="width:140px;vertical-align: middle;display: inline-block;border:none;" id="start" value="{$data['start_time']}"/>
+                        <input placeholder="下单结束时间" type="text" class="form-control" name="end_time" style="width:140px;vertical-align: middle;display: inline-block;border:none;" id="end" value="{$data['end_time']}"/>
+                        <span class="btn btn-outline" onclick="" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" >支付时间</span>
+                        <input placeholder="开始时间" type="text" class="form-control" name="start_time2" style="width:100px;vertical-align: middle;display: inline-block;border:none;" id="start2" value="{$data['start_time2']}"/>
+                        <input placeholder="结束时间" type="text" class="form-control" name="end_time2" style="width:100px;vertical-align: middle;display: inline-block;border:none;" id="end2" value="{$data['end_time2']}"/>
+                        <select class="form-control m-b chosen-select" name="pay_status">
+                            <option value="">支付状态</option>
+                            <option value="0" {if condition="isset($data['pay_status']) && $data['pay_status'] == '0'"}selected{/if}>未支付</option>
+                            <option value="1" {if condition="isset($data['pay_status']) && $data['pay_status'] == '1'"}selected{/if}>已支付</option>
+                            <!--<option value="">部分支付</option>-->
+                            <!-- <option value="3" {if condition="isset($data['pay_status']) && $data['pay_status'] == '3'"}selected{/if}>已退款</option>
+                            <option value="4" {if condition="isset($data['pay_status']) && $data['pay_status'] == '4'"}selected{/if}>拒绝退款</option> -->
+                        </select>
+                        <select class="form-control m-b chosen-select" name="pay_code">
+                            <option value="">支付方式</option>
+                            {foreach name="pay_name" item="vo"}
+                            <option value="{$vo.id}" {if condition="isset($data['pay_code']) && $data['pay_code'] == $vo.id"}selected{/if}>{$vo.name}</option>
+                            {/foreach}
+                        </select>
+                        <select class="form-control m-b chosen-select" name="shipping_status">
+                            <option value="">发货状态</option>
+                            <option value="0" {if condition="isset($data['shipping_status']) && $data['shipping_status'] == '0'"}selected{/if}>未发货</option>
+                            <option value="1" {if condition="isset($data['shipping_status']) && $data['shipping_status'] == '1'"}selected{/if}>已发货</option>
+                            <option value="2" {if condition="isset($data['shipping_status']) && $data['shipping_status'] == '2'"}selected{/if}>已送达</option>
+                        </select>
+                        <select class="form-control m-b chosen-select" name="order_status">
+                            <option value="">订单状态</option>
+                            <option value="0" {if condition="isset($data['order_status']) && $data['order_status'] == '0'"}selected{/if}>待确认</option>
+                            <option value="1" {if condition="isset($data['order_status']) && $data['order_status'] == '1'"}selected{/if}>已确认</option>
+                            <option value="2" {if condition="isset($data['order_status']) && $data['order_status'] == '2'"}selected{/if}>已收货</option>
+                            <option value="3" {if condition="isset($data['order_status']) && $data['order_status'] == '3'"}selected{/if}>已取消</option>
+                            <option value="4" {if condition="isset($data['order_status']) && $data['order_status'] == '4'"}selected{/if}>已完成</option>
+                            <option value="5" {if condition="isset($data['order_status']) && $data['order_status'] == '5'"}selected{/if}>已作废</option>
+                        </select>
+                        <input placeholder="订单号/账号/手机号/收货人/收货电话/交易号" type="text" class="form-control search" name="keywords" style="width:300px;vertical-align: middle;display: inline-block;border:none;" value="{if isset($data['keywords'])}{$data['keywords']}{/if}">
+                        <input placeholder="会员编号" type="text" class="form-control search" name="id" style="width:100px;vertical-align: middle;display: inline-block;border:none;" value="{if isset($data['id'])}{$data['id']}{/if}">
+                        <input type="hidden" id="order" name="order"/>
+                        <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" id="submit">搜索</button>
+                        <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" id="export">导出</button>
+                    </div>
+                    
+
+                    </form>
+                </div>
+                <div class="col-sm-12" style="margin-top:10px;">
+                    <div  class="col-sm-3" style="height: 42px;width:200px;">
+                        <div class="input-group" >
+                            <div  class="btn btn-primary" id="shouhuo" {if $group != 2}style="height:38px;line-height:25px;"{/if}>已发货订单一件收货</div>
+                        </div>
+                    </div>
+                    {if $group==2}
+                    <div  class="col-sm-2" style="width: 150px">
+                        <div class="input-group" >
+                            <div  class="btn btn-primary" id="dy_shipping">一键发货</div>
+                        </div>
+                    </div>
+                    {else/}
+
+                    <div  class="col-sm-2" style="width: 150px">
+                        <div class="input-group" >
+                            <div  id="imgPicker">导入物流单号</div>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="input-group">
+                            <p style="line-height:39px;"><a href="/static/admin/images/shipping_demo.xlsx" target="_blank">导入文件格式</a>&nbsp;&nbsp;&nbsp;<a href="/static/admin/images/company_code.xls" target="_blank">快递简称对照表</a></p>
+                        </div>
+                    </div>
+                    
+                    {/if}
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <form class="form-search" method="post" action="" id="del_form">
+                    <table class="table table-bordered table-hover">
+                    {if $group!= 1}
+                        <thead>
+                            <tr><th colspan="12" style="text-align:left;">
+                                <label><input type="checkbox" id="all_checkbox"/>全选</label>&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-danger" type="submit" id="delete_front"><i class="fa fa-trash-o"></i> 前端删除</button>
+                                <button class="btn btn-danger" type="submit" id="delete_back"><i class="fa fa-trash-o"></i> 后端删除</button>
+                                <button class="btn btn-danger" type="submit" id="delete_all"><i class="fa fa-trash-o"></i> 前后端删除</button>
+                            </th></tr>
+                        </thead>
+                    {/if}
+                        
+                        <thead>
+                            <tr class="long-tr">
+                                <th>ID</th>
+                                <th>订单编号</th>
+                                <th>会员信息</th>
+                                <th>收货人</th>
+                                <th>总金额</th>
+                                <th>应付金额</th>
+                                <th>订单状态</th>
+                                <th>支付状态</th>
+                                <th>发货状态</th>
+                                <th>支付信息</th>
+                                <!--<th>配送方式</th>-->
+                                <th>时间</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                        <style>
+                            .lev2,.lev3{
+                                background-color:#F5F5F6;
+                            }
+                        </style>
+                        {if $list->isEmpty()}
+                        <tr class="long-td">
+                            <td colspan="12" style="text-align:center">暂无订单信息</td>
+                        </tr>
+                        {/if}
+                        {volist name='list' id='v'}
+                        <tr class="long-td ">
+                            <td>{if $group!= 1}<input type="checkbox" value="{$v.order_id}" name="id[]"/>{/if}{$v.order_id}</td>
+                            <td>{$v.order_sn}</td>
+                            <td>会员编号：{$v.user_id}<br/>会员账号：{$v.account}</td>
+                            <td>{$v.consignee}:{$v.mobile}</td>
+                            <td>{$v.total_amount}</td>
+                            <td>{$v.order_amount}</td>
+                            <td>{$ORDER_STATUS[$v->order_status]}</td>
+                            <td>{$PAY_STATUS[$v->pay_status]}</td>
+                            <td>{$SHIPPING_STATUS[$v->shipping_status]}</td>
+                            <td>支付方式：{$v.pay_name}<br/>交易号：{$v.out_trade_no}</td>
+
+                            <td>
+                            下单时间：{:date('Y-m-d H:i:s',$v->add_time)}<br/>
+                            支付时间：{if $v->pay_time > 0}{:date('Y-m-d H:i:s',$v->pay_time)}{else/}--{/if}
+                            </td>
+                            <td>
+                                <a href="{:url('detail',['id' => $v.order_id])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i> 查看</a>&nbsp;&nbsp;
+                                <!-- {if $v->order_status == 5 || $v->order_status == 3}
+                                <a href="javascript:;" onclick="del({$v.order_id})" class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                                {/if} -->
+                            </td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    </form>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+<script type="text/javascript" src="/static/admin/webupload/webuploader.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    var $list = $('#fileList');
+    //上传图片,初始化WebUploader
+    var uploader = WebUploader.create({
+
+        auto: true,// 选完文件后，是否自动上传。
+        swf: '/static/admin/js/webupload/Uploader.swf',// swf文件路径
+        server: "{:url('import_shipping')}",// 文件接收服务端。
+        duplicate :true,// 重复上传图片，true为可重复false为不可重复
+        pick: '#imgPicker',// 选择文件的按钮。可选。
+
+        accept: {
+            title: 'Images',
+            extensions: 'xls,xlsx',
+            //mimeTypes: 'image/jpg,image/jpeg,image/png'
+        },
+
+        'onUploadSuccess': function(file, data, response) {
+            if(data.code){
+            var group = "{$group}";
+                layer.msg(data.msg, {icon: 1,time:1500,shade: 0.1}, function(index){
+                    window.location.href="{:url('order','','')}"+'/order_group/'+group;
+                });
+            }else{
+                layer.msg(data.msg,{icon:2,time:1500,shade: 0.1});
+            }
+        }
+    });
+
+    uploader.on( 'fileQueued', function( file ) {
+        $list.html( '<div id="' + file.id + '" class="item">' +
+            '<h4 class="info">' + file.name + '</h4>' +
+            '<p class="state">正在上传...</p>' +
+            '</div>' );
+    });
+
+    // 文件上传成功
+    uploader.on( 'uploadSuccess', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传成功！');
+    });
+
+    // 文件上传失败，显示上传出错。
+    uploader.on( 'uploadError', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传出错!');
+    });
+
+
+</script>
+<script type="text/javascript">
+    $(function(){
+        $('#export').click(function () {
+            $('#search').attr('action',"{:url('export')}");
+        });
+        $('#submit').click(function () {
+            $('#search').attr('action',"{:url('order')}");
+        });
+        $('#all_checkbox').change(function(){
+            $(':checkbox[name="id[]"]').prop('checked',$(this).prop('checked'));
+        })
+        $('#delete_front').click(function () {
+            $('#del_form').attr('action',"{:url('delete_all_order','deleted=1')}");
+        });
+        $('#delete_back').click(function () {
+            $('#del_form').attr('action',"{:url('delete_all_order','deleted=2')}");
+        });
+        $('#delete_all').click(function () {
+            $('#del_form').attr('action',"{:url('delete_all_order','deleted=3')}");
+        });
+    });
+    //一键发货
+    $('#dy_shipping').click(function(){
+        $.getJSON('{:url("dy_shipping")}', {}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+    })
+//删除
+function del(id){
+    var url = '{:url("manageOrder")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id, 'btn_key':'remove'}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+$('#shouhuo').click(function(){
+    var url = '{:url("shouhuo")}';
+    var group = "{$group}";
+    layer.confirm('确认把所有已发货订单设为已收货吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {group:group}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+})
+function treeClicked(obj,cat_id,parent_id_path){
+
+    var src = $(obj).attr('src');
+    if(src == '/static/admin/images/tv-expandable.gif')
+    {
+        $(".parent_id_"+cat_id).show();
+        $(obj).attr('src','/static/admin/images/tv-collapsable-last.gif');
+    }else{
+        $("tr[parent_id_path^='"+parent_id_path+"_']").hide().find('img').attr('src','/static/admin/images/tv-expandable.gif');
+        $(obj).attr('src','/static/admin/images/tv-expandable.gif');
+
+    }
+}
+
+
+//IOS开关样式配置
+var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+var config = {
+    '.chosen-select': {},
+}
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+$("#start").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#end").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#start2").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+$("#end2").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+var order = [
+    {name : 'order_id', order_id : 0},
+    {name : 'order_sn', order_sn : 0},
+    {name : 'consignee', consignee : 0},
+    {name : 'total_amount', total_amount : 0},
+    {name : 'order_amount', order_amount : 0},
+    {name : 'order_status', order_status : 0},
+    {name : 'pay_status', pay_status : 0},
+    {name : 'shipping_status', shipping_status : 0},
+    {name : 'pay_name', pay_name : 0},
+    {name : 'shipping_name', shipping_name : 0},
+    {name : 'add_time', add_time : 0}
+]
+$(".long-tr th").click(function(){
+    var index =$(this).index();
+    if (index < 0 || index > 10) {
+        return false;
+    }
+    var order_name = "{$order_name}";
+    var order_sort = parseInt("{$order_sort}");
+    $(order).each(function(k,v){
+        if (v.name == order_name) {
+            order[k]['order'] = order_sort;
+        }
+    })
+    if (order[index].order == 0) {
+        order[index].order = 1;
+    } else {
+        order[index].order = 0;
+    }
+    $("#order").attr('name', 'order');
+    $("#order").val(order[index].name + '-' + order[index].order);
+    $("#search").submit();
+})
+</script>
+</body>
+</html>

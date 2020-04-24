@@ -1,0 +1,172 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">订单评价</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-content comment">
+        <ul class="mui-table-view refundlist" id="comment">
+            <!-- <li class="mui-table-view-cell mui-media m-b" id="1435">
+                <a class="goods" href="{:url('goods/goods')}" style="border-top: 0;">
+                    <img class="mui-media-object mui-pull-left" src="http://resources-user-image.vxue360.com/a37062c0351c77f659ec5383829ab7e8.png">
+                    <div class="mui-media-body">
+                        <p class="mui-ellipsis-2 color-333 text-15">人民的名义人民的名义人民的名义人民的名义人民的名义人民的名义</p>
+                        <p class="color-333 m-t-sm" style="text-align: left;">
+                            ￥28.00
+                        </p>
+                    </div>
+                </a>
+                <div class="star">
+                    <h4 class="text-16 color-333">商品评价</h4>
+                    <div class="starBox">
+                        <span class="iconfont icon-sc1"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                    </div>
+                    <p class="starText" data-rank="1">很差</p>
+                </div>
+                <div class="content">
+                    <textarea class="text-14" placeholder="商品满意吗？来分享你的使用感受吧！" name="content"></textarea>
+                </div>
+                <input type="file" class="choose" accept="image/*" multiple="" style="display: none;">
+                <ul class="img-list clearfix">
+                    <li class="add"><i class="iconfont icon-pjia color-999"></i>
+                        <p class="text-mini color-999">添加图片</p>
+                    </li>
+                </ul>
+            </li> -->
+            <!-- <li class="mui-table-view-cell mui-media m-b" id="1435">
+                <a class="goods" href="{:url('goods/goods')}" style="border-top: 0;">
+                    <img class="mui-media-object mui-pull-left" src="http://resources-user-image.vxue360.com/a37062c0351c77f659ec5383829ab7e8.png">
+                    <div class="mui-media-body">
+                        <p class="mui-ellipsis-2 color-333 text-15">人民的名义人民的名义人民的名义人民的名义人民的名义人民的名义</p>
+                        <p class="color-333 m-t-sm" style="text-align: left;">
+                            ￥28.00
+                        </p>
+                    </div>
+                </a>
+                <div class="star">
+                    <h4 class="text-16 color-333">商品评价</h4>
+                    <div class="starBox">
+                        <span class="iconfont icon-sc1"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                    </div>
+                    <p class="starText" data-rank="1">很差</p>
+                </div>
+                <div class="content">
+                    <textarea class="text-14" placeholder="商品满意吗？来分享你的使用感受吧！" name="content"></textarea>
+                </div>
+                <input type="file" class="choose" accept="image/*" multiple="" style="display: none;">
+                <ul class="img-list clearfix">
+                    <li class="add"><i class="iconfont icon-pjia color-999"></i>
+                        <p class="text-mini color-999">添加图片</p>
+                    </li>
+                </ul>
+            </li> -->
+            <!-- <li class="mui-table-view-cell mui-media m-b" data-goodsid="[[goods_id]]">
+                <a class="goods" href="/wapapp/goods/goods/id/[[goods_id]]" style="border-top: 0;">
+                    <img class="mui-media-object mui-pull-left" src="[[img]]">
+                    <div class="mui-media-body">
+                        <p class="mui-ellipsis-2 color-333 text-15">商品</p>
+                        <p class="color-333 m-t-sm mui-text-left">
+                            ￥1200
+                        </p>
+                    </div>
+                </a>
+                <div class="star">
+                    <h4 class="text-16 color-333">商品评价</h4>
+                    <div class="starBox">
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                        <span class="iconfont icon-shoucang color-999"></span>
+                    </div>
+                    <p class="starText" data-rank="0">请打分</p>
+                </div>
+                <div class="content">
+                    <textarea class="text-14" placeholder="商品满意吗？来分享你的使用感受吧！" name="content"></textarea>
+                </div>
+                <input type="file" class="choose" accept="image/*" multiple="" style="display: none;">
+                <ul class="img-list clearfix">
+                    <li class="add"><i class="iconfont icon-pjia color-999"></i>
+                        <p class="text-mini color-999">添加图片</p>
+                    </li>
+                </ul>
+                <div class="comment-bottom clearfix m-b-sm" data-type="[[if is_comment]]1[[else]]0[[/if]]">
+                    <div class="mui-input-row mui-checkbox mui-left mui-pull-left">
+                        <label class="text-15">匿名评价</label>
+                        <input name="checkbox" value="" type="checkbox">
+                    </div>
+                    <a href="javascript:;" class="text-15 mui-btn-outlined-main bg-main commentBtn">评价</a>
+                </div>
+            </li> -->
+        </ul>
+    </div>
+    {include file="public/footer" /}
+    <script type="text/html" id="commentTem">
+        <li class="mui-table-view-cell mui-media m-b" data-goodsid="[[goods_id]]">
+            <a class="goods" href="/wapapp/goods/goods/id/[[goods_id]]" style="border-top: 0;">
+                <img class="mui-media-object mui-pull-left" src="[[img]]">
+                <div class="mui-media-body">
+                    <p class="mui-ellipsis-2 color-333 text-15">[[goods_name]]</p>
+                    <p class="color-333 m-t-sm mui-text-left">
+                        ￥[[goods_price]]
+                    </p>
+                </div>
+            </a>
+            [[if !is_comment]]
+            <div class="star">
+                <h4 class="text-16 color-333">商品评价</h4>
+                <div class="starBox">
+                    <span class="iconfont icon-shoucang color-999"></span>
+                    <span class="iconfont icon-shoucang color-999"></span>
+                    <span class="iconfont icon-shoucang color-999"></span>
+                    <span class="iconfont icon-shoucang color-999"></span>
+                    <span class="iconfont icon-shoucang color-999"></span>
+                </div>
+                <p class="starText" data-rank="0">请打分</p>
+            </div>
+            [[/if]]
+            <div class="content">
+                <textarea class="text-14" placeholder="商品满意吗？来分享你的使用感受吧！" name="content"></textarea>
+            </div>
+            <input type="file" class="choose" accept="image/*" multiple="" style="display: none;">
+            <ul class="img-list clearfix">
+                <li class="add"><i class="iconfont icon-pjia color-999"></i>
+                    <p class="text-mini color-999">添加图片</p>
+                </li>
+            </ul>
+            <div class="comment-bottom clearfix m-b-sm" data-type="[[if is_comment]]1[[else]]0[[/if]]">
+                [[if !is_comment]]
+                <div class="mui-input-row mui-checkbox mui-left mui-pull-left">
+                    <label class="text-15">匿名评价</label>
+                    <input name="checkbox" value="" type="checkbox">
+                </div>
+                [[/if]]
+                <a href="javascript:;" class="text-15 mui-btn-outlined-main bg-main commentBtn">发表[[if is_comment]]追评[[else]]评价[[/if]]</a>
+            </div>
+        </li>
+    </script>
+    <script type="text/javascript">
+        var order_id = "{:input('order_id')}";
+        seajs.use(['/static/wapapp/shop/js/comment', '/static/wapapp/public/js/imgUpload'])
+    </script>
+</body>
+
+</html>

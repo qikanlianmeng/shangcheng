@@ -1,0 +1,186 @@
+{include file="public/header" /}
+<!-- <link href="__CSS__/plugins/iCheck/custom.css" rel="stylesheet"> -->
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>幻灯片管理</h5>
+                <div class="ibox-tools">
+                    <a class="collapse-link">
+                        <i class="fa fa-chevron-up"></i>
+                    </a>
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="table_basic.html#">
+                        <i class="fa fa-wrench"></i>
+                    </a>
+                    <a class="close-link">
+                        <i class="fa fa-times"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="col-sm-3" style="width: 100px">
+                            <div class="input-group" >
+                                <a href="{:url('slide_add')}"><button class="btn btn-outline btn-primary" type="button">添加幻灯片</button></a>
+                            </div>
+                        </div>
+                        <div class="col-sm-3" style="margin-left: 15px;">
+                            <select name="dept" style="width: 150px;" data-placeholder="默认分类" id="slidecat" class="dept_select">
+                                <option value="-1"></option>
+                                <option value="分类一">分类一</option>
+                                <option value="分类一">分类一</option>
+                                <option value="分类一">分类一</option>
+                                <option value="分类一">分类一</option>
+                                <option value="分类一">分类一</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="row">
+                    <div class="col-sm-9 m-b-xs">
+                        <button class="btn btn-primary size-S radius">排序</button>
+                        <button class="btn btn-primary size-S radius">显示</button>
+                        <button class="btn btn-primary size-S radius">隐藏</button>
+                        <button class="btn btn-danger size-S radius">删除</button>
+                    </div>
+                </div>
+                <form id="export-form" method="post" action="{:url('export')}">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th><input class="i-checks checkbox check-all" type="checkbox"></th>
+                                <th>排序</th>
+                                <th>ID</th>
+                                <th>标题</th>
+                                <th>描述</th>
+                                <th>链接</th>
+                                <th>图片</th>
+                                <th>状态</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input class="ids i-checks" type="checkbox" name="ids[]" value=""></td>
+                                <td><input name="listorders[1]" class="input input-order mr5" type="text" size="3" value="0" aria-invalid="false"></td>
+                                <td>0023</td>
+                                <td>思维脑图宣传banner</td>
+                                <td>思维脑图宣传banner</td>
+                                <td><a href="http://vxueshop.com/index.php/admin/index/index.html" title="">http://vxueshop.com/index.php/admin/index/index.html</a></td>
+                                <td><img style="max-width: 120px;max-height: 50px;" src="http://resources-user-image.vxue360.com/8d9799aecfbfc860fcc05638455551b1.jpg" alt=""></td>
+                                <td>正常显示</td>
+                                <td>
+                                    <a href="javascript:;" onclick="edit_ad()" class="btn btn-primary btn-xs btn-outline">
+                                        <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="del_ad()" class="btn btn-danger btn-xs btn-outline">
+                                        <i class="fa fa-trash-o"></i> 删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input class="ids i-checks" type="checkbox" name="ids[]" value=""></td>
+                                <td><input name="listorders[1]" class="input input-order mr5" type="text" size="3" value="0" aria-invalid="false"></td>
+                                <td>0023</td>
+                                <td>思维脑图宣传banner</td>
+                                <td>思维脑图宣传banner</td>
+                                <td><a href="http://vxueshop.com/index.php/admin/index/index.html" title="">http://vxueshop.com/index.php/admin/index/index.html</a></td>
+                                <td><img style="max-width: 120px;max-height: 50px;" src="http://resources-user-image.vxue360.com/8d9799aecfbfc860fcc05638455551b1.jpg" alt=""></td>
+                                <td>正常显示</td>
+                                <td>
+                                    <a href="javascript:;" onclick="edit_ad()" class="btn btn-primary btn-xs btn-outline">
+                                        <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="del_ad()" class="btn btn-danger btn-xs btn-outline">
+                                        <i class="fa fa-trash-o"></i> 删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input class="ids i-checks" type="checkbox" name="ids[]" value=""></td>
+                                <td><input name="listorders[1]" class="input input-order mr5" type="text" size="3" value="0" aria-invalid="false"></td>
+                                <td>0023</td>
+                                <td>思维脑图宣传banner</td>
+                                <td>思维脑图宣传banner</td>
+                                <td><a href="http://vxueshop.com/index.php/admin/index/index.html" title="">http://vxueshop.com/index.php/admin/index/index.html</a></td>
+                                <td><img style="max-width: 120px;max-height: 50px;" src="http://resources-user-image.vxue360.com/8d9799aecfbfc860fcc05638455551b1.jpg" alt=""></td>
+                                <td>正常显示</td>
+                                <td>
+                                    <a href="javascript:;" onclick="edit_ad()" class="btn btn-primary btn-xs btn-outline">
+                                        <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="del_ad()" class="btn btn-danger btn-xs btn-outline">
+                                        <i class="fa fa-trash-o"></i> 删除</a>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input class="ids i-checks" type="checkbox" name="ids[]" value=""></td>
+                                <td><input name="listorders[1]" class="input input-order mr5" type="text" size="3" value="0" aria-invalid="false"></td>
+                                <td>0023</td>
+                                <td>思维脑图宣传banner</td>
+                                <td>思维脑图宣传banner</td>
+                                <td><a href="http://vxueshop.com/index.php/admin/index/index.html" title="">http://vxueshop.com/index.php/admin/index/index.html</a></td>
+                                <td><img style="max-width: 120px;max-height: 50px;" src="http://resources-user-image.vxue360.com/8d9799aecfbfc860fcc05638455551b1.jpg" alt=""></td>
+                                <td>正常显示</td>
+                                <td>
+                                    <a href="javascript:;" onclick="edit_ad()" class="btn btn-primary btn-xs btn-outline">
+                                        <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+                                    <a href="javascript:;" onclick="del_ad()" class="btn btn-danger btn-xs btn-outline">
+                                        <i class="fa fa-trash-o"></i> 删除</a>
+                                </td>
+                            </tr>
+                            <!-- {notempty name="data"}
+                                {volist name="data" id="vo"}
+                                <tr>
+                                    <td><input class="ids i-checks" checked="chedked" type="checkbox" name="ids[]" value="{$vo.name}"></td>
+                                    <td>{$vo.name}</td>
+                                    <td>【{$vo.rows}】 条记录</td>
+                                    <td>{$vo.data_length|format_bytes}</td>
+                                    <td>{$vo.create_time}</td>
+                                    <td id="info">等待备份...</td>
+                                    <td>
+                                        <a class="btn btn-primary btn-xs btn-outline" href="{:url('optimize',['ids'=>$vo['name']])}">优化表</a>
+                                        <a class="btn btn-danger btn-xs btn-outline" href="{:url('repair',['ids'=>$vo['name']])}">修复表</a>
+                                    </td>
+                                </tr>
+                                {/volist}
+                            {else /}
+                                <td colspan="7" class="text-center"> 暂未发现数据库表! </td>
+                            {/notempty} -->
+                        </tbody>
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+    //全选的实现
+    $('.check-all').on('ifChecked', function (event) {
+        $('input[name="ids[]"]').iCheck('check');
+    });
+    $('.check-all').on('ifUnchecked', function (event) {
+        $('input[name="ids[]"]').iCheck('uncheck');
+    });
+    $(function () {
+        $('.dept_select').chosen();
+
+    });
+    function edit_ad(id){
+        location.href = './slide_edit/id/'+id+'.html';
+        // location.href = './slidecat_edit/id/'+id+'.html';
+    }
+    function del_ad(id){
+        layer.confirm('确认删除此幻灯片?', {icon: 3, title:'提示'}, function(index){
+
+            layer.close(index);
+        })
+    }
+
+</script>
+</body>
+</html>

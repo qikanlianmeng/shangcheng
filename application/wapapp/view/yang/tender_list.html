@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>认养列表</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/base.css" />
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="/static/wapapp/public/font/iconfont.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/wapapp/yang/css/index.css" />
+    <script>
+        document.documentElement.style.fontSize = document.documentElement.clientWidth / 720*100 + 'px';
+    </script>
+</head>
+<body>
+<div id="app">
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-action-back mui-icon iconfont icon-back11 mui-pull-left" @click="back" style="font-size: 18px; line-height: 44px;"></a>
+        <h1 class="mui-title">认养列表</h1>
+    </header>
+    <div class="tender-list"  v-cloak>
+        <mt-loadmore :bottom-method="loadBottom" :bottom-all-loaded="allLoaded" ref="loadmore">
+            <div class="what-list">
+                <div class="what-item"
+                     v-for="(item, index) in list"
+                     :key="item.photo">
+                    <div class="item-box clearfix" @click="rengou(item.id)">
+                        <div class="thumb">
+                            <span>第{{item.id}}期</span>
+                            <img :src="item.photo ? item.photo : '/static/mob/yang/imgs/index/default-thumb.png'" alt="">
+                        </div>
+                        <!--<div class="item-x">-->
+                        <!--<span class="num" v-cloak>{{item.returns}}<span class="unit">%</span></span>-->
+                        <!--<p>周期回报率</p>-->
+                        <!--</div>-->
+                        <div class="item-title" v-cloak>
+                            {{item.title}}
+                        </div>
+                        <div class="item-y">
+                            <span class="num" v-cloak><em>{{item.cycle}}</em>天</span>期限
+                        </div>
+                        <div class="item-y">
+                            <span class="num text-danger " v-cloak><em>{{item.price}}</em>元</span>认养价格
+                        </div>
+                        <div class="item-btn receive"  v-if="item.status==1">认购</div>
+                        <div class="item-btn " style="background: linear-gradient(to right, #bbb, #999);box-shadow: none;" v-else>已结束</div>
+                    </div>
+                </div>
+            </div>
+        </mt-loadmore>
+    </div>
+    <nav class="footer-bar mui-bar-tab">
+        <a href="/wapapp/yang/index.html" class="mui-tab-item mui-active">
+            <span class="iconfont icon-shouye1"></span>
+            <span class="mui-tab-label">首页</span>
+        </a>
+        <a href="/wapapp/index/index.html" class="mui-tab-item">
+            <span class="iconfont icon-shangcheng"></span>
+            <span class="mui-tab-label">商城</span>
+        </a>
+        <a href="/wapapp/yang/game.html" class="mui-tab-item youxi">
+            <img src="/static/mob/yang/imgs/index/img_xiabaidi.png">
+        </a>
+        <a href="/wapapp/cart/shopcar.html" class="mui-tab-item" style="position:relative">
+            <span class="iconfont icon-gouwuche"></span>
+            <span class="mui-tab-label">购物车</span>
+        </a>
+        <a href="/wapapp/usercenter/usercenter.html" class="mui-tab-item">
+            <span class="iconfont icon-wode1"></span>
+            <span class="mui-tab-label">我的</span>
+        </a>
+    </nav>
+</div>    
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.min.js"></script>
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/mint-ui/lib/index.js"></script>
+    <script>
+        var app = new Vue({
+            el: '#app',
+            data: {
+                page: 1,
+                limit: 8,
+                list: [],
+                allLoaded: false
+            },
+            created() {
+                axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+                var that = this
+                this.getTender().then(function(res) {
+                    that.list = res.data.data
+                })
+            },
+            methods: {
+                back() {
+                    window.history.back();
+                },
+                loadBottom() {
+                    var that = this
+                    that.page += 1
+                    that.getTender().then(function(res) {
+                        that.list.concat(res.data.data)
+                        if(res.data.data.length < that.limit) {
+                            that.allLoaded = true;// 若数据已全部获取完毕
+                        }
+                        that.$refs.loadmore.onBottomLoaded();
+                    })
+                },
+                getTender() {
+                    let that = this
+                    that.$indicator.open('加载中...');
+                    return new Promise(function(resolve, reject) {
+
+                        axios({
+                            url: '/api/yangyang/tender',
+                            params: {
+                                page: that.page,
+                                num: that.limit
+                            }
+                        }).then(function(res) {
+                            that.$indicator.close();
+                            resolve(res)
+                            
+                        }).catch(function(err) {
+                            that.$indicator.close();
+                            console.log(err)
+                            reject(err)
+                        })
+                    })
+                },
+                rengou(id) {
+                    window.location.href = `/wapapp/yang/tender_desc?id=${id}`
+                },
+                home() {
+                    window.location.href = '/wapapp/yang'
+                },
+                gotoGame() {
+                    window.location.href = '/wapapp/yang/game'
+                },
+                my() {
+                    window.location.href = '/wapapp/usercenter/usercenter.html'
+                }
+            },
+        })
+    </script>
+</body>
+</html>

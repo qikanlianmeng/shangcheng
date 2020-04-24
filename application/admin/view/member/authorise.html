@@ -1,0 +1,88 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>第三方用户</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="8%">ID</th>
+                                <th width="7%">来源</th>
+                                <th width="12%">用户名</th>
+                                <th width="7%">头像</th>
+                                <th width="10%">绑定账号</th>
+                                <th width="15%">首次登录时间</th>
+                                <th width="15%">最后登录时间</th>
+                                <th width="11%">最后登录IP</th>
+                                <th width="8%">登录次数</th>
+                                <th width="8%">关注状态</th>
+                                <th width="7%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list-content">
+                        {volist name="list" id="vo"}
+							<tr class="long-td">
+                                <td>{$vo.id}</td>
+                                <td>
+                                	{switch name="vo.from" }
+									    {case value="qq"}qq扫描登录{/case}
+									    {case value="weixin"}微信登录{/case}
+									    {case value="wx_qrcode"}微信扫描登录{/case}
+									{/switch}
+                                </td>
+                                <td>{$vo.nickname}</td>
+                                <td>
+                                    <img src="{$vo.head_img}" class="img-circle" style="width:35px;height:35px" onerror="this.src='/static/admin/images/head_default.gif'">
+                                </td>
+                                <td>{$vo.uid}</td>
+                                <td>{$vo.create_time|date="Y-m-d",###}</td>
+                                <td>{$vo.update_time|date="Y-m-d",###}</td>
+                                <td>{$vo.last_login_ip}</td>
+                                <td>{$vo.login_num}</td>
+                                <td>
+	                                {switch name="vo.status" }
+										    {case value="0"}未知{/case}
+										    {case value="1"}关注{/case}
+										    {case value="2"}取消关注{/case}
+									{/switch}
+                                </td>
+                                <td>
+                                    <a href="javascript:;" onclick="del_member({$vo.uid})" class="btn btn-danger btn-outline btn-xs"><i class="fa fa-trash-o"></i> 删除</a>
+                                </td>
+                            </tr>
+                        {/volist}
+						{empty name="list"}
+							<tr>
+							  <td colspan="10" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>
+							</tr>
+						{/empty}
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;">
+                       {$page}
+                    </div>
+                </div>
+            </div>
+            <!-- End Example Pagination -->
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+{include file="public/footer" /}
+<script type="text/javascript">
+function del_member(id){
+	layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+		var url="{:url('autorise_del','','')}";
+		window.location.href=url+'/id/'+id;
+	    layer.close(index);
+	})
+}
+</script>
+</body>
+</html>

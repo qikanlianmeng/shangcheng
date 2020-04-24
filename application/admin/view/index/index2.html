@@ -1,0 +1,48 @@
+{include file="public/header"/}
+
+<body class="gray-bg">
+<div class="wrapper wrapper-content">
+    <div class="alert alert-danger alert-dismissable">
+        <button aria-hidden="true" data-dismiss="alert" class="close" type="button">×</button>
+        <div>尊敬的会员<span id="weather"></span></div>
+    </div>
+
+    <!-- 中间折线 -->
+    <div class="row">
+        <div class="col-sm-12">
+
+
+            <div class="col-sm-6">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <i class="fa fa-cogs"></i> 系统信息
+                    </div>
+                    <div class="panel-body">
+                        <p><i class="fa fa-sitemap"></i> 框架版本：ThinkPHP{$think_v}
+                        </p>
+                        <p><i class="fa fa-windows"></i> 服务环境：{$web_server}
+                        </p>
+                        <p><i class="fa fa-warning"></i> 上传附件限制：{$onload}
+                        </p>
+                        <p><i class="fa fa-credit-card"></i> PHP 版本：{$phpversion}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+{include file="public/footer" /}
+<script src="/static/admin/js/jquery.leoweather.min.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    $("#start").datetimepicker({lang:'ch'});
+    $("#end").datetimepicker({lang:'ch'});
+    $('#weather').leoweather({format:'，{时段}好！<span id="colock">现在时间是：<strong>{年}年{月}月{日}日 星期{周} {时}:{分}:{秒}</strong></span>'});
+</script>
+
+</body>
+</html>

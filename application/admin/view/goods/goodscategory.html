@@ -1,0 +1,178 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>商品分类</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">   
+                <div  class="col-sm-2" style="width: 100px">
+                    <div class="input-group" >  
+                        <a href="{:url('addGoodsCategory')}"><button class="btn btn-outline btn-primary" type="button">添加分类</button></a>
+                    </div>
+                </div>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <!--<th>※</th>-->
+                                <th>ID</th>
+                                <th>分类名称</th>
+                                <!--<th>wap显示名称</th>
+                                <th>是否推荐</th>
+                                <th>是否显示</th>-->
+                                <th>排序</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        <style>
+                            .lev2,.lev3{
+                                background-color:#F5F5F6;
+                            }
+                        </style>
+                        {volist name='list' id='v'}
+                        <tr class="long-td parent_id_{$v.parent_id} {switch $v.level}
+    {case 2} lev2{/case}
+    {case 3} lev3{/case}
+{/switch}" data-level="{$v.level}" parent_id_path ="{$v.parent_id_path}" nctype="0" {if condition="$v.level gt 1"} style="display:none;"{/if}>
+                            <!--<td>{if condition="$v->level lt 3"}
+                                <div style="text-align: center; width: 24px;margin:0 auto;">
+                                    <img onClick="treeClicked(this,{$v.id},'{$v.parent_id_path}')" nc_type="flex" status="open" fieldid="2" src="/static/admin/images/tv-expandable.gif">
+                                </div>
+                                {/if}
+                            </td>-->
+                            <td>{$v.id}</td>
+                            <td><input class="form-control name" style="margin:0 auto" value="{$v.name}" row_id = "{$v.id}" attr="name"/></td>
+                           <!-- <td><input class="form-control name" style="margin:0 auto" value="{$v.mobile_name}" row_id = "{$v.id}" attr="mobile_name"/></td>
+                            <td>{if condition='$v.is_hot eq 1'}
+                                <span class="yes" onClick="changeTableVal('GoodsCategory','{$v.id}','is_hot',0)" style="color:#1ab394;"><i class="fa fa-check-circle"></i> 是</span>
+                                {else /}
+                                <span class="no" onClick="changeTableVal('GoodsCategory','{$v.id}','is_hot',1)" style="color:#9ea3a7;"><i class="fa fa-ban"></i> 否</span>
+                                {/if}</td>
+                            <td><div style="margin:0 auto; width: 80px;">
+                                {if condition='$v.is_show eq 1'}
+                                    <span class="yes" onClick="changeTableVal('GoodsCategory','{$v.id}','is_show',0)" style="color:#1ab394;"><i class="fa fa-check-circle"></i> 是</span>
+                                    {else /}
+                                    <span class="no" onClick="changeTableVal('GoodsCategory','{$v.id}','is_show',1)" style="color:#9ea3a7;"><i class="fa fa-ban"></i> 否</span>
+                                {/if}
+                            </div></td>-->
+                            <td><input class="form-control sort" style="width:50px;margin:0 auto" value="{$v.order}" row_id = "{$v.id}"/></td>
+                            <td>
+                                <!--<a href="{:url('editGoodsCategory', ['id' => $v['id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;-->
+                                <a href="javascript:;" onclick="del({$v.id})" class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/volist}
+                    </table>
+                    <div style="text-align:center;">
+                        {/*$list->render()*/}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+
+<script type="text/javascript">
+
+//删除
+function del(id){
+    var url = '{:url("delGoodsCategory")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+function treeClicked(obj,cat_id,parent_id_path){
+
+    var src = $(obj).attr('src');
+    if(src == '/static/admin/images/tv-expandable.gif')
+    {
+        $(".parent_id_"+cat_id).show();
+        $(obj).attr('src','/static/admin/images/tv-collapsable-last.gif');
+    }else{
+        $("tr[parent_id_path^='"+parent_id_path+"_']").hide().find('img').attr('src','/static/admin/images/tv-expandable.gif');
+        $(obj).attr('src','/static/admin/images/tv-expandable.gif');
+
+    }
+}
+$(".sort").change(function(){
+    var id = $(this).attr('row_id');
+    var sort = $(this).val();
+    var model = 'goodsCategory';
+    var url = '{:url("changeSort")}';
+    if (sort > 255) {sort = 255};
+    if (sort < 0) {sort = 0};
+    $.getJSON(url, {'id' : id, 'sort' : sort, 'model' : model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+})
+$(".name").change(function(){
+    var id = $(this).attr('row_id');
+    var val = $(this).val();
+    var attr = $(this).attr('attr');
+    var model = "GoodsCategory";
+    var url = '{:url("changeInfo")}';
+    if(!val){
+        layer.msg("分类名称不允许为空",{icon:0,time:1500,shade: 0.1});
+        return false;
+    }
+    $.getJSON(url, {'id' : id, 'val' : val, 'attr' : attr,'model':model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+})
+function changeTableVal(model, id, attr, val){
+    var url = '{:url("changeInfo")}';
+    $.getJSON(url, {'id' : id, 'val' : val, 'attr' : attr,'model':model}, function(res){
+        if(res.code == 1){
+            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+            setTimeout(function(){
+                window.location.reload();
+            },1500);
+        }else{
+            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+        }
+    });
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,112 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/admin/js/plugins/zTree/zTreeStyle.css" type="text/css">
+<link rel="stylesheet" href="/static/admin/address/css/index.css" type="text/css">
+<style>
+.active span{
+  background-color:#1bb394 !important;
+}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>地区设置</h5>
+        </div>
+        <div class="ibox-content">
+            <!-- 搜索框开始 -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('index_add')}"><button class="btn btn-outline btn-primary" type="button">添加地区</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 搜索框结束 -->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="25%">地区</th>
+                                <th width="25%">所在层级</th>
+                                <th width="25%">上级地区</th>
+                                <th width="25%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list-content">
+                            {volist name="list" id="vo"}
+								<tr class="long-td">
+	                                <td>{$vo.name}</td>
+	                                <td>{$vo.level}</td>
+	                                <td>无</td>
+	                                <td>
+	                                    <a href="{:url('index_edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs btn-outline">
+	                                        <i class="fa fa-paste"></i> 修改</a>&nbsp;&nbsp;
+	                                    <a href="javascript:;" onclick="del_article('{$vo.id}')" class="btn btn-danger btn-xs btn-outline">
+	                                        <i class="fa fa-trash-o"></i> 删除</a>
+	                                </td>
+	                            </tr>
+	                            {notempty name='vo["child"]'}
+	                               {volist name='vo["child"]' id='vm'}
+                                        <tr class="long-td secondfloor">
+			                                <td><span>——</span>{$vm.name}</td>
+			                                <td>{$vm.level}</td>
+			                                <td>{$vo.name}</td>
+			                                <td>
+			                                    <a href="{:url('index_edit',array('id'=>$vm['id']))}"  class="btn btn-primary btn-xs btn-outline">
+			                                        <i class="fa fa-paste"></i> 修改</a>&nbsp;&nbsp;
+			                                    <a href="javascript:;" onclick="del_article('{$vm.id}')" class="btn btn-danger btn-xs btn-outline">
+			                                        <i class="fa fa-trash-o"></i> 删除</a>
+			                                </td>
+			                            </tr>
+	                                     {volist name='vm["child"]' id='vk'}
+	                                     	<tr class="long-td thirdfloor">
+				                                <td><span>————</span>{$vk.name}</td>
+				                                <td>{$vk.level}</td>
+				                                <td>{$vm.name}</td>
+				                                <td>
+				                                    <a href="{:url('index_edit',array('id'=>$vk['id']))}"class="btn btn-primary btn-xs btn-outline">
+				                                        <i class="fa fa-paste"></i> 修改</a>&nbsp;&nbsp;
+				                                    <a href="javascript:;" onclick="del_article('{$vk.id}')" class="btn btn-danger btn-xs btn-outline">
+				                                        <i class="fa fa-trash-o"></i> 删除</a>
+				                                </td>
+				                            </tr>
+	                                     {/volist}
+                                     {/volist}
+	                            {/notempty}
+							{/volist}
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;">{$page}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 加载动画 -->
+{include file="public/footer" /}
+<script type="text/javascript" src="/static/admin/js/plugins/zTree/jquery.ztree.core-3.5.js"></script>
+<script type="text/javascript" src="/static/admin/js/plugins/zTree/jquery.ztree.exedit-3.5.js"></script>
+<script type="text/javascript">
+    function del_article(id){
+    	layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+    	    $.getJSON('{:url("ajax_del")}', {'id' : id}, function(res){
+    	        if(res.status == 1){
+    	            layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+    	            setTimeout(function(){
+    	                window.location.reload();
+    	            },1500);
+    	        }else{
+    	            layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+    	        }
+    	    });
+    	    layer.close(index);
+    	})
+    }
+</script>
+</body>
+</html>

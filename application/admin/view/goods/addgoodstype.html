@@ -1,0 +1,116 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<style>
+.file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
+.file-item .info{overflow: hidden;}
+.uploader-list{width: 100%; overflow: hidden;}
+.input-group[class*=col-]{
+    float: left;
+}
+@media (max-width:768px) {
+    .input-group[class*=col-]{
+        float: none;
+    }
+}
+.detail{
+    line-height: 34px;
+    color: #999
+}
+
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加类型</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal" name="userAdd" id="userAdd" method="post" action="{:url('addGoodsType')}">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">类型名称：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="name" type="text" class="form-control" name="name" >
+                            </div>
+                            <div class="col-sm-4 detail">*</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{include file="public/footer" /}
+<script type="text/javascript" src="/static/admin/webupload/webuploader.min.js"></script>
+
+<script type="text/javascript">
+    //提交
+    $(function(){
+        $('#userAdd').ajaxForm({
+            beforeSubmit: checkForm,
+            success: complete,
+            dataType: 'json'
+        });
+
+        function checkForm(){
+            if( !$.trim($('#name').val())){
+                layer.msg('请输入类型名称',{icon:2,time:1500,shade: 0.1}, function(index){
+                layer.close(index);
+                });
+                return false;
+            }
+        }
+
+
+        function complete(data){
+             //window.location.href="{:url('goodsType')}";
+             if(data.code==1){
+                 layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+                     window.location.href = "{$backUrl}";
+                 });
+             }else{
+                 layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1});
+                 return false;
+             }
+        }
+
+    });
+
+
+
+    //IOS开关样式配置
+   var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem, {
+            color: '#1AB394'
+        });
+    var config = {
+        '.chosen-select': {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+
+</script>
+</body>
+</html>

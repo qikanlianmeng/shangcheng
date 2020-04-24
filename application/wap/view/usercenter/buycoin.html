@@ -1,0 +1,89 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="__CSS__/index.css">
+</head>
+
+<body class="buycoin">
+    <div class="mui-inner-wrap">
+        <!--头部导航-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left mui-action-back"></a>
+            <h1 class="mui-title">余额充值</h1>
+        </header>
+
+        <!--主体部分-->
+        <div class="mui-content new-recharge m-b">
+            <div class="bg-whtie">
+                <div class="text-16 s_tit color-333 text-16">充值金额 <span class="color-666 text-13">(1余额=1元)</span></div>
+                <div class="rechargelist color-333">
+                    <div class="mui-col-xs-3 recharge selected" data-money='10'>
+                        <span class="text-18">10元</span>
+                        <span class="text-13 color-666 mui-block">10余额</span>
+                    </div>
+                    <div class="mui-col-xs-3 recharge" data-money='20'>
+                        <span class="text-18">20元</span>
+                        <span class="text-13 color-666 mui-block">20余额</span>
+                    </div>
+                    <div class="mui-col-xs-3 recharge" data-money='30'>
+                        <span class="text-18">30元</span>
+                        <span class="text-13 color-666 mui-block">30余额</span>
+                    </div>
+                    <div class="mui-col-xs-3 recharge" data-money='50'>
+                        <span class="text-18">50元</span>
+                        <span class="text-13 color-666 mui-block">50余额</span>
+                    </div>
+                    <div class="mui-col-xs-3 recharge" data-money='100'>
+                        <span class="text-18">100元</span>
+                        <span class="text-13 color-666 mui-block">100余额</span>
+                    </div>
+                    <div class="mui-col-xs-3 recharge" data-money='200'>
+                        <span class="text-18">200元</span>
+                        <span class="text-13 color-666 mui-block">200余额</span>
+                    </div>
+                    <div class="mui-col-xs-3 recharge" data-money='300'>
+                        <span class="text-18">300元</span>
+                        <span class="text-13 color-666 mui-block">300余额</span>
+                    </div>
+                    <div class="mui-col-xs-3 recharge" data-money='500'>
+                        <span class="text-18">500元</span>
+                        <span class="text-13 color-666 mui-block">500余额</span>
+                    </div>
+                    <div class="mui-col-xs-3 recharge other" data-money=''>
+                        <p>其他金额</p>
+                        <div class="input-money">
+                            <input type="number" id="other" name="other">元
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+                </div>
+            </div>
+            <div class="bg-whtie m-t">
+                <div class="m-t-lg paymethod">
+                    <div class="text-16 p-b p-l s_tit">支付方式：</div>
+                    <form class="mui-input-group">
+                        <div class="mui-input-row mui-radio m-b alipay-pay">
+                            <label><span class="iconfont icon-zhifubao"></span>支付宝支付</label>
+                            <input name="pay" type="radio" value="alipay">
+                        </div>
+                        <div class="mui-input-row mui-radio m-b">
+                            <label><span class="iconfont icon-wxpay"></span>微信支付</label>
+                            <input name="pay" type="radio" value="wxpay" checked="">
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <form id='payform' method="post" action="">
+                <input value="" type="hidden" id="coin" name='coin'>
+                <input value="" type="hidden" id="paytype" name='paytype'>
+                <div class="userLetter">
+                    <a class="btn-green mui-btn mui-btn-primary text-16" href="javascript:;" id="submit">确&nbsp;&nbsp;定</a>
+                </div>
+            </form>
+        </div>
+        <!--end 主体部分-->
+    </div>
+</body>
+{include file="public/footer" /}
+<script>
+    seajs.use(['shop/js/buycoin']);
+</script>
+</html>

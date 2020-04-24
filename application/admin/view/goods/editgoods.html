@@ -1,0 +1,597 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/weixin/css/index.css">
+<style>
+.file-item{float: left; position: relative; width: 110px;height: auto; margin: 0 20px 20px 0; padding: 4px;border: none;}
+.file-item .info{overflow: hidden;}
+.uploader-list{width: 100%; overflow: hidden;}
+.photoitems .file-item .info{display: none;}
+.discount .form-control{float: none;width: 100px;}
+.chosen-container{width: 150px !important;margin-right: 20px;}
+.Goodstype .chosen-container{float: left;}
+.tab_btn{
+    line-height: 29px;
+    text-align: center;
+    transition: all .5s;
+    cursor:pointer;
+    border-radius: 3px 3px 0 0;
+}
+.tab_btn:hover,.tab_btn.active{
+    color: #1ab394;
+    background-color: #fff;
+}
+.secondfloor td:first-child{
+    padding:0px;
+    width: 10%;
+}
+#Goodsclass .secondfloor td:first-child{
+    padding:0px;
+    width: 20%;
+}
+.float-e-margins .btn{
+    margin-bottom: 0;
+    margin-left: 10px;
+}
+.float-e-margins .btn.choosed{
+    background-color: #1ab394;
+    color: #fff;
+}
+.tab_div{
+    display: none;
+}
+.tab_div.active{
+    display: block;
+}
+#edit .secondtab_div,#edit .third_div {
+    display: block;
+    position: absolute;
+    opacity: 0;
+    filter:Alpha(opacity=0);
+}
+#edit .secondtab_div.active,#edit .third_div.active{
+    position: inherit;
+    opacity: 1;
+    filter: Alpha(opacity=1);
+}
+.goods_table1 tr td:last-child{
+    text-align: left;
+}
+#filePickerSecond{
+    width: 82px;
+    height: 38px;
+}
+.imagesinput[type=file]{
+    display: none;
+}
+/* TAB */
+.nav-tabs.nav>li>a {
+    padding: 10px 25px;
+    margin-right: 0;
+}
+.nav-tabs.nav>li>a:hover,
+.nav-tabs.nav>li.active>a {
+    border-top: 3px solid #1ab394;
+    padding-top: 8px;
+}
+.nav-tabs>li>a {
+    color: #A7B1C2;
+    font-weight: 500;
+    margin-right: 2px;
+    line-height: 1.42857143;
+    border: 1px solid transparent;
+    border-radius: 0;
+}
+.updata_img{
+    display: none;
+}
+.photoitems .file-item{
+    padding: 0px;
+}
+.photoitems img{
+    padding:4px;
+    border: 1px solid #ddd;
+}
+.photoitems .delete{
+    height: 40px;
+    line-height: 40px;
+    cursor:pointer;
+}
+.goodsselect{
+    width: 150px !important;
+    margin-right: 20px;
+    margin-bottom: 5px !important;
+}
+.spec_img{
+    height: 35px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.spec_img .webuploader-pick{
+    width: 35px;
+    height: 35px;
+    background: url("/static/admin/goods/images/add_button.jpg");
+    background-size: 100% 100%;
+}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>编辑商品</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="builder-tabs builder-form-tabs">
+                        <ul class="nav nav-tabs">
+                                <li class="tab_btn active"><a>通用信息</a></li>
+                                <li class="tab_btn"><a>商品相册</a></li>
+                                
+                        </ul>
+                    </div>
+                    <form class="form-horizontal m-t" name="edit" id="edit" method="post" action="{:url('editGoods')}">
+                        <div class="hr-line-dashed"></div>
+                        <div class="tab_div active" >
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">商品名称：</label>
+                                <div class="input-group col-sm-4">
+                                    <input  type="text" class="form-control" name="goods_name" value="{$info.goods_name}">
+                                    <input type="hidden" name="id" value="{$info.id}" />
+                                </div>
+                               
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">商品促销语：</label>
+                                <div class="input-group col-sm-4">
+                                    <textarea type="text" rows="5" name="goods_remark"   class="form-control">{$info.goods_remark}</textarea>
+                                </div>
+                                <div class="col-sm-4 detail">输入对商品的简单介绍</div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">商品分类：</label>
+                                <div class="input-group col-sm-6">
+                                    <select class="form-control m-b goodsselect" name="cat_id">
+                                        <option value="">请选择商品分类</option>
+                                        {foreach name="category" item="vo"}
+                                        <option value="{$vo.id}" {if condition="$info.cat_id eq $vo.id"}selected="selected"{/if}>{$vo.name}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">商品品牌：</label>
+                                <select class="form-control col-md-3 chosen-select" style="margin-right: 10px;" name="brand_id">
+                                    <option value="">请选择商品品牌</option>
+                                    {foreach name="brandList" item="vo"}
+                                    <option value="{$vo.id}" {if condition="$info->brand_id == $vo->id"}selected="selected"{/if}>{$vo.name}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">封面：</label>
+                                <div class="input-group col-sm-4">
+                                    <input type="hidden" id="data_photo" name="original_img" value="{$info.original_img}">
+                                    <div id="fileList" class="uploader-list" style="float:right"></div>
+                                    <div id="imgPicker" style="float:left">选择图片</div>
+                                    <img id="img_data"  height="98px" width="152px" style="float:left;margin-left: 50px;margin-top: -10px;" src="{$info.original_img}"/>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">代理价格：</label>
+                                <div class="input-group col-sm-4">
+                                    <input  type="text" class="form-control" name="dl_price" value="{$info.dl_price}">
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">代售折扣：</label>
+                                <div class="input-group col-sm-4">
+                                <select class="form-control col-md-3 chosen-select" style="margin-right: 10px;" name="dy_zhekou">
+                                    <option value="">请选择代售折扣率</option>
+                                    {for start="1" end="10" name="ii"}
+                                    <option value="{$ii}" {if $ii==$info.dy_zhekou}selected="selected"{/if}>{$ii}折</option>    
+                                    {/for}
+                                </select>
+                                </div>
+                                <div class="col-sm-4 detail">代售价格：￥{$info.dy_price}</div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">自营价格：</label>
+                                <div class="input-group col-sm-4">
+                                    <input type="text" class="form-control" name="zy_price" value="{$info.zy_price}">
+                                </div>
+                            </div>
+                            
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">是否包邮：</label>
+                                <div class="input-group col-sm-4">
+                                    <div class="radio i-checks">
+                                        <input type="radio" name='is_free_shipping' value="0" {if $info->is_free_shipping == 0}checked="checked"{/if}/>否&nbsp;&nbsp;
+                                        <input type="radio" name='is_free_shipping' value="1" {if $info->is_free_shipping == 1}checked="checked"{/if}/>是
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">运费模板：</label>
+                                <select class="form-control col-md-3 chosen-select" style="margin-right: 10px;" name="fid">
+                                    {foreach name="fid" item="vo"}
+                                    <option value="{$vo.id}" {if $info->fid == $vo.id}selected{/if}>{$vo.name}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                            
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label">总库存：</label>
+                                <div class="input-group col-sm-4">
+                                    <input type="text" class="form-control" name="store_count" value="{$info.store_count}">
+                                </div>
+                            </div>
+                            
+                            <div class="hr-line-dashed"></div>
+                            <div class="form-group">
+                                <label class="col-sm-3 control-label " for="myEditor">商品详情描述：</label>
+                                <div class="input-group col-sm-9">
+                                    <script src="/static/admin/ueditor/ueditor.config.js" type="text/javascript"></script>
+                                    <script src="/static/admin/ueditor/ueditor.all.js" type="text/javascript"></script>
+                                    <textarea name="goods_content" style="width:90%" id="myEditor">{$info.goods_content}</textarea>
+                                    <script type="text/javascript">
+                                        var editor = new UE.ui.Editor();
+                                        editor.render("myEditor");
+                                    </script>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        </div>
+                        <div class="tab_div secondtab_div" >
+                            <div class="form-group photoitems">
+                                <label class="col-sm-3 control-label">商品相册</label>
+                                <div class="input-group col-sm-8">
+                                    <div id="fileLists" class="uploader-list">
+                                    {foreach name="$info.goods_images" item = 'vo'}
+                                        <div class="file-item thumbnail"><img src="{$vo}"><div class="delete" onclick="deleteimg(this);">删除</div><input type="hidden" name="goods_images[]" value="{$vo}"></div>
+                                        {/foreach}
+                                    </div>
+                                    <div id="filePickerSecond">选择图片</div>
+                                </div>
+                            </div>
+                            <div class="hr-line-dashed"></div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+  {include file="public/footer" /}
+<script type="text/javascript" src="/static/admin/webupload/webuploader.min.js"></script>
+<script type="text/javascript">
+
+    var $list = $('#fileList');
+    var $lists = $("#fileLists");
+    //上传图片,初始化WebUploader
+    var uploader = WebUploader.create({
+
+        auto: true,// 选完文件后，是否自动上传。
+        swf: '/static/admin/webupload/Uploader.swf',// swf文件路径
+        server: "{:url('Upload/upload2qiniu')}",// 文件接收服务端。
+        duplicate :true,// 重复上传图片，true为可重复false为不可重复
+        pick: '#imgPicker',// 选择文件的按钮。可选。
+
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'image/jpg,image/jpeg,image/png'
+        },
+        'onUploadSuccess': function(file, data, response) {
+            if (data.code == 0) {
+                layer.msg(data.data, {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+            $("#data_photo").val(data.data);
+            $("#img_data").attr('src', data.data).show();
+        }
+    });
+    uploader.on( 'fileQueued', function( file ) {
+        $list.html( '<div id="' + file.id + '" class="item">' +
+                '<h4 class="info">' + file.name + '</h4>' +
+                '<p class="state">正在上传...</p>' +
+                '</div>' );
+    });
+    // 文件上传成功
+    uploader.on( 'uploadSuccess', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传成功！');
+    });
+    // 文件上传失败，显示上传出错。
+    uploader.on( 'uploadError', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传出错!');
+    });
+
+    //上传商品相册
+    var uploaderlists = WebUploader.create({
+        auto: true,
+        swf: '/static/admin/webupload/Uploader.swf',
+        server: "{:url('Upload/upload2qiniu')}",
+        pick: '#filePickerSecond',
+        accept: {
+            title: 'Images',
+            extensions: 'gif,jpg,jpeg,bmp,png',
+            mimeTypes: 'mage/jpg,image/jpeg,image/png'
+        },
+        'onUploadSuccess' : function(file, data, response) {
+            if (data.code == 0) {
+                layer.msg(data.data, {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+            var $li = $(
+                            '<div id="' + file.id + '" class="file-item thumbnail">' +
+                            '<img>' +
+                            '<div class="delete" onclick="deleteimg(this);">删除</div>' +
+                            '<input type="hidden" name="goods_images[]" value="'+data.data+'"/>'+
+                            '</div>'
+                    ),
+                    $img = $li.find('img');
+            $lists.append( $li );
+            uploader.makeThumb( file, function( error, src ) {
+                if ( error ) {
+                    $img.replaceWith('<span>不能预览</span>');
+                    return;
+                }
+                $img.attr( 'src', src);
+            }, 100, 100 );
+        }
+    });
+    // 文件上传成功
+    uploaderlists.on( 'uploadSuccess', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传成功！');
+    });
+    // 文件上传失败，显示上传出错。
+    uploaderlists.on( 'uploadError', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传出错!');
+    });
+
+
+    $(function(){
+        $('#edit').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+
+        function checkForm(){
+            /*if( '' == $.trim($('#title').val())){
+                layer.msg('商品名称不能为空', {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }*/
+
+     }
+
+        function complete(data){
+            if(data.code == 1){
+                layer.msg(data.msg, {icon: 6,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                    window.location.href= "{$backUrl}";
+                });
+            }else{
+                layer.msg(data.msg, {icon: 5,time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+
+    });
+
+
+    //IOS开关样式配置
+   var elem = document.querySelector('.js-switch');
+        var switchery = new Switchery(elem, {
+            color: '#1AB394'
+        });
+    var config = {
+        '.chosen-select': {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+    $(".tab_btn").on("click",function(){
+        var index = $(this).index();
+        var $this = $(this);
+        $(this).hasClass("active") ? console.log("a") : tabfunction(index,$this);
+    })
+
+    function tabfunction(index,$this){
+        $(".tab_btn.active").removeClass("active");
+        $this.addClass("active");
+        $(".tab_div.active").removeClass("active");
+        $(".tab_div").eq(index).addClass("active");
+    }
+
+    //商品属性获取图片
+    $(".imagesinput").change(function(e){
+        var $this = $(this)
+        //获取文件
+        var file = this.files[0];
+        //创建读取文件的对象
+        var reader = new FileReader();
+        //正式读取文件
+        reader.readAsDataURL(file);
+        //为文件读取成功设置事件
+        //创建文件读取相关的变量
+        var imgFile;
+        reader.onload=function(e) {
+            imgFile = e.target.result;
+            $this.siblings("img").attr('src', imgFile);
+            $this.siblings(".updata_img").val(imgFile);
+        };
+    })
+
+    //删除图片
+    function deleteimg(that){
+        $(that).parents(".thumbnail").remove();
+    }
+    function choosed(that){
+        $(that).toggleClass("choosed");
+    }
+    //筛选类型=》渲染规格和属性tpl
+    $("#selectType").change(function(){
+        var type_id = $(this).val();
+        if (!type_id) {
+            return false;
+        }
+        $("#tableTpl").html('');
+        var url = "{:url('ajaxGetAttr')}";
+        var goods_id = "{$info.id}"
+        $.getJSON(url, {type_id : type_id, goods_id:goods_id}, function(data){
+            $("#specTpl").html(data.msg.specTpl);
+            $("#attributeTpl").html(data.msg.attributeTpl);
+            //规格图册
+            $("#specTpl .spec_img").each(function(k,v){
+                //console.log(v);
+                var id = $(v).attr('id');
+                var item_id = $(v).attr('item_id');
+                var pic  = $(v).attr('pic');
+                WebUploader.create({
+                    auto: true,// 选完文件后，是否自动上传。
+                    swf: '/static/admin/webupload/Uploader.swf',// swf文件路径
+                    server: "{:url('Upload/upload2qiniu')}",// 文件接收服务端。
+                    duplicate :true,// 重复上传图片，true为可重复false为不可重复
+                    pick: '#' + id,// 选择文件的按钮。可选。
+                    accept: {
+                        title: 'Images',
+                        extensions: 'gif,jpg,jpeg,bmp,png',
+                        mimeTypes: 'image/jpg,image/jpeg,image/png'
+                    },
+                    'onUploadSuccess': function(file, data, response) {
+                        if (data.code == 0) {
+                            layer.msg(data.data, {icon: 5,time:1500,shade: 0.1}, function(index){
+                                layer.close(index);
+                            });
+                            return false;
+                        }
+                        console.log(data.data);
+                        $("input[name='item_img["+item_id+"]']").val(data.data);
+                        $("#" + id).find(".webuploader-pick").css({
+                            'background':"url("+ JSON.parse(data._raw).data +")",
+                            'background-size':"100% 100%"
+                        });
+                    }
+                });
+                if(pic){
+                    $(v).find(".webuploader-pick").css({
+                        'background':"url("+ pic +")",
+                        'background-size':"100% 100%"
+                    });
+                }
+            })
+            var spec_arr = {};
+            var goods_id = "{$info.id}"
+            $("#specTpl  button.btn").each(function() {
+                if ($(this).hasClass('choosed')) {
+                    var spec_id = $(this).attr('spec_id');
+                    var item_id = $(this).attr('item_id');
+                    if (!spec_arr.hasOwnProperty(spec_id))
+                        spec_arr[spec_id] = [];
+                    spec_arr[spec_id].push(item_id);
+                }
+            })
+            var url = "{:url('ajaxGetSpecInput')}";
+            $.getJSON(url, {spec_arr : spec_arr,goods_id:goods_id}, function(data){
+                $("#tableTpl").html(data.msg);
+                hbdyg();  // 合并单元格
+            })
+        })
+    })
+    //筛选属性获取构造表单
+
+    $("#specTpl").on('click', '.btn', function(){
+        var spec_arr = {};
+        var goods_id = "{$info.id}"
+        $("#specTpl  button.btn").each(function() {
+            if ($(this).hasClass('choosed')) {
+                var spec_id = $(this).attr('spec_id');
+                var item_id = $(this).attr('item_id');
+                if (!spec_arr.hasOwnProperty(spec_id))
+                    spec_arr[spec_id] = [];
+                spec_arr[spec_id].push(item_id);
+            }
+        })
+        var url = "{:url('ajaxGetSpecInput')}";
+        $.getJSON(url, {spec_arr : spec_arr,goods_id:goods_id}, function(data){
+            $("#tableTpl").html(data.msg);
+            hbdyg();  // 合并单元格
+        })
+    })
+    // 合并单元格
+    function hbdyg() {
+        var tab = document.getElementById("tableTpl"); //要合并的tableID
+        var maxCol = 2, val, count, start;  //maxCol：合并单元格作用到多少列
+        if (tab != null) {
+            for (var col = maxCol - 1; col >= 0; col--) {
+                count = 1;
+                val = "";
+                for (var i = 0; i < tab.rows.length; i++) {
+                    if (val == tab.rows[i].cells[col].innerHTML) {
+                        count++;
+                    } else {
+                        if (count > 1) { //合并
+                            start = i - count;
+                            tab.rows[start].cells[col].rowSpan = count;
+                            for (var j = start + 1; j < i; j++) {
+                                tab.rows[j].cells[col].style.display = "none";
+                            }
+                            count = 1;
+                        }
+                        val = tab.rows[i].cells[col].innerHTML;
+                    }
+                }
+                if (count > 1) { //合并，最后几行相同的情况下
+                    start = i - count;
+                    tab.rows[start].cells[col].rowSpan = count;
+                    for (var j = start + 1; j < i; j++) {
+                        tab.rows[j].cells[col].style.display = "none";
+                    }
+                }
+            }
+        }
+    }
+
+    
+</script>
+
+</body>
+</html>

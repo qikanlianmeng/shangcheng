@@ -1,0 +1,85 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+<style>
+    #shipping_name {
+        margin-left: 10px;
+        background: rgba(0, 0, 0, 0.1);
+        border-radius: 25px;
+        padding: 3px 6px;
+        font-size: 14px;
+        color: #555;
+    }
+</style>
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">物流详情</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-content">
+        <div class="mui-loading m-t">
+            <div class="mui-spinner"></div>
+        </div>
+        <div class="wuliuTitle bg-whtie">
+            <!-- <p class="mui-pull-left color-333 text-15">物流公司：</p> -->
+            <p class="color-333 text-15">
+                快递单号：
+                <span id="invoice_no">
+                3337548463515
+            </span><span id="shipping_name"></span>
+            </p>
+        </div>
+        <div class="wuliuNews bg-whtie">
+            <h2 class=" color-333 text-16 clearfix">
+                <i class="iconfont icon-daishouhuo color-main mui-pull-left">
+            </i>
+                <span class="mui-pull-left">
+                物流信息：
+            </span>
+            </h2>
+            <ul>
+                <li>
+                    <p class="color-999">
+                        已签收-已签收 已收件
+                    </p>
+                    <p class="color-999 border">
+                        2017-09-06 11:58:24
+                    </p>
+                    <span>
+                    <i>
+                    </i>
+                </span>
+                </li>
+            </ul>
+        </div>
+        <div class="noAttend" style="display: none;">
+            <i class="iconfont icon-zanwu">
+        </i>
+            <p>
+                暂无物流信息
+            </p>
+        </div>
+    </div>
+    {include file="public/footer" /}
+    <script type="text/html" id="wuliuTem">
+        <li>
+            <p class="color-999">[[context]]</p>
+            <p class="color-999 border">[[time]]</p>
+            <span><i></i></span>
+        </li>
+    </script>
+    <script type="text/javascript">
+        var order_id = "{:input('order_id')}";
+        seajs.use(['/static/wapapp/shop/js/wuliu']);
+    </script>
+</body>
+
+</html>

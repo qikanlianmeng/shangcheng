@@ -1,0 +1,165 @@
+{include file="public/header" /}
+<script src="/static/wapapp/public/wallet/js/mui.min.js"></script>
+<script src="/static/wapapp/public/wallet/js/jquery.3.1.1.js"></script>
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/api.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/mui.min.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/style.css">
+<title>手机号绑定</title>
+<style>
+    .line_img {
+        position: absolute;
+        right: 2%;
+        top: 8%;
+    }
+</style>
+</head>
+
+<body>
+    <header id="header" class=" mui-bar" style="margin-left:0px;">
+        <div class="mb15"></div>
+        <a class="back mui-icon mui-icon-left-nav mui-pull-left" onclick="quit();"></a>
+        <h1 class="mui-title">绑定手机号</h1>
+    </header>
+
+    <div class="content_box">
+        <div class="binding_info">
+            <ul>
+                <li>
+                    <span>手机号码</span>
+                    <span>
+            <i class="mui-icon mui-icon-arrowright"></i>
+            <input class="zfb_hao" id="new_mobile" type="text" value="" placeholder="请输入手机号码">
+          </span>
+                </li>
+                <li>
+                    <span>验证码</span>
+                    <span style="width: 90%;">
+            <i class="code" id="sendbtn">获取验证码</i>
+            <input type="hidden" name="" class="mobile" id="phone">
+            <input  type="number" value="" class="verify" id="code" style="width:60%" placeholder="请输入验证码">
+          </span>
+                </li>
+            </ul>
+
+
+        </div>
+        <div class="mb20"></div>
+        <button type="button" name="button" class="btn bingding_btn bg-lanhui">确定绑定</button>
+        <!-- <div style="text-align: center;">
+            <a id="go_quit" class="text-14 color-999" style="text-align: center;margin-top: 15px;border-bottom: 1px solid #666;" href="javascript:;">退出登录</a>
+        </div> -->
+    </div>
+
+
+
+
+
+    <script src="/static/wapapp/public/wallet/js/api.js"></script>
+    <!-- <script src="/static/wapapp/public/wallet/js/index.js"></script> -->
+    <script src="/static/wapapp/public/wallet/js/common1.js"></script>
+    <script type="text/javascript">
+        mui.init();
+    </script>
+    <script type="text/javascript">
+        $('body').on('tap', '.bingding_btn', function() {
+            bind_m();
+        });
+
+        function bind_m() {
+            // 修改手机号
+            var new_mobile = $('#new_mobile').val();
+            var code = $('#code').val();
+            if (new_mobile == "") {
+                mui.toast('手机号不能为空!');
+                return false;
+            } else if (code == '') {
+                mui.toast('验证码不能为空!');
+                return false;
+            } else {
+                $get('/api2/user/bind_mobile', {
+                    mobile: new_mobile,
+                    verify: code
+                }, function(data) {
+                    mui.toast(data.msg);
+                    if (data.status == 1) {
+                        window.location.href = "/wapapp/usercenter/usercenter.html";
+                    } else {
+
+                    }
+                });
+            }
+        }
+        $("body").on("tap", '#sendbtn', function() {
+            var s = $("#sendbtn").attr('s');
+            var mobile = $("#new_mobile").val();
+            console.log(mobile);
+            if (s > 0) {
+                return false;
+                mui.toast("请稍后再试")
+            } else if (!mobile) {
+                mui.toast('请输入手机号');
+            } else {
+                confirm(mobile);
+            }
+        })
+
+        function confirm(mobile) {
+
+            mui.confirm('<div class="alert_text phone-pop"><p style="position:relative;"><input type="number" id="img_code"  placeholder="请输入验证码"><img class="code-block line_img" src="/api2/user/img_verify" onclick="javascript:this.src=\'/api2/user/img_verify\'" style="cursor: pointer"></div>', '验证', ['取消', '确定'], function(e) {
+                if (e.index == 1) {
+                    var img_code = $('#img_code').val();
+                    if (!$('#img_code').val()) {
+                        mui.toast('请输入图形验证码');
+                        return false;
+                    } else {
+                        $get("/api2/user/send_verify_bind", {
+                            mobile: mobile,
+                            img_code: img_code,
+                        }, function(ret) {
+                            if (ret.code == 1) {
+                                mui.toast('发送成功');
+                                setTime();
+                            } else {
+                                mui.toast(ret.msg);
+                                if (ret.msg == '图片验证码错误') {
+                                    confirm(mobile);
+                                }
+                            }
+                        });
+                    }
+
+                } else {}
+            }, 'div');
+        }
+
+        function setTime() {
+            console.log("Aa")
+            $("#sendbtn").attr('s', 60);
+            $("#sendbtn").html("60秒后再发");
+            window.set_time = setInterval(function() {
+                var s = $("#sendbtn").attr('s');
+                if (s > 0) {
+                    s--;
+                    $("#sendbtn").attr('s', s);
+                    $("#sendbtn").html(s + "秒后再发");
+                } else {
+                    clearInterval(window.set_time);
+                    $("#sendbtn").html("获取验证码");
+                }
+            }, 1000);
+        }
+        //退出登录
+        $('#go_quit').on('click', function() {
+            quit();
+        })
+
+        function quit() {
+            $get('/api2/user/logout', {}, function(data) {
+                setTimeout('window.location.href="/wapapp/index/login.html";', 1000);
+            });
+        }
+    </script>
+
+</body>
+
+</html>

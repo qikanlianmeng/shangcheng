@@ -1,0 +1,141 @@
+{include file="public/header" /}
+    <script src="/static/mob/public/wallet/js/mui.min.js"></script>
+    <script src="/static/mob/public/wallet/js/jquery.3.1.1.js"></script>
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/api.css">
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/mui.min.css">
+    <link rel="stylesheet" href="/static/mob/public/wallet/css/style.css">
+    <title>支付宝绑定</title>
+</head>
+<body>
+  <header  id="header" class=" mui-bar" style="margin-left:0px;">
+      <div class="mb15"></div>
+      <a class="back mui-icon mui-icon-left-nav mui-pull-left" onclick="back();"></a>
+      <script>
+        function back(){
+          mui.back();
+        }
+      </script>
+      <h1 class="mui-title">绑定支付宝</h1>
+  </header>
+
+  <div class="content_box">
+    <div class="binding_info">
+      <ul>
+        <li>
+          <span>真实姓名</span>
+          <span>
+            <i class="mui-icon mui-icon-arrowright"></i>
+            <input type="text" class="zfb_name" id="zfb_name" value="" placeholder="请输入真实姓名">
+            <input type="hidden" class="mobile" value="" >
+          </span>
+        </li>
+        <li>
+          <span>支付宝账号</span>
+          <span>
+            <i class="mui-icon mui-icon-arrowright"></i>
+            <input class="zfb_hao" id="zfb_hao" type="text" value="" placeholder="请输入支付宝账号">
+          </span>
+        </li>
+        <li>
+          <span>验证码</span>
+          <span>
+            <i class="code" id="code">获取验证码</i>
+            <input type="hidden" name="" class="mobile" id="phone">
+            <input  type="number" value="" class="verify" id="verify" style="width:50%" placeholder="验证码">
+          </span>
+        </li>
+      </ul>
+
+
+    </div>
+      <div class="mb20"></div>
+    <button type="button" name="button" class="btn bingding_btn">确定绑定</button>
+  </div>
+
+
+
+
+
+<script src="/static/mob/public/wallet/js/api.js"></script>
+<!-- <script src="/static/mob/public/wallet/js/index.js"></script> -->
+<script src="/static/mob/public/wallet/js/common.js"></script>
+<script type="text/javascript">
+    mui.init();
+</script>
+<script type="text/javascript">
+  function get_info(){
+    $post('/api/user/userinfo',{},function(data){
+      console.log("会员基本信息");
+      console.log(JSON.stringify(data));
+      
+      var obj=data.data;
+        if(data.code==1){
+          if(obj.zfb_name!=''||obj.zfb_name.length!=0){
+            $('#zfb_name').val(obj.zfb_name);
+          }
+          if(obj.zfb_hao!=''||obj.zfb_hao.length!=0){
+            $('#zfb_hao').val(obj.zfb_hao);
+          }
+          $('#phone').val(obj.mobile);
+        }
+    });
+  };
+//获取会员基本信息
+  get_info();
+  var timer = null;
+    $('#code').on('tap',function(){
+      var param=$('#phone').val();
+      var time = 60;
+      var that = this;
+      if(param==''){
+        mui.toast('手机号不能为空！');
+      }else{
+        clearInterval(timer);
+        timer = setInterval(function() {
+          if(time <= 0) {
+            that.innerText = "发送验证码";
+            $("#mybtn").css('pointer-events', 'auto');
+          } else {
+            $("#mybtn").css('pointer-events', 'none');
+            that.innerText = "剩余" + (time) + "秒";
+            time--;
+
+          }
+        },1000);
+        $post('/api/user/send_verify',{id:1,param:param,type:'sms'},function(data){
+          console.log("短信发送");
+          console.log(JSON.stringify(data));
+            mui.toast(data.msg);
+        });
+      }
+    });
+
+  // 提交
+  $('.bingding_btn').on('tap',function(){
+    get_info();
+    var zfb_name=$('#zfb_name').val();
+    var zfb_hao=$('#zfb_hao').val();
+    var verify=$('#verify').val();
+    if(zfb_name==''){
+      mui.toast('真实姓名不能为空');
+    }else if(zfb_hao==''){
+      mui.toast('支付宝账号不能为空');
+    }else if(verify==''){
+      mui.toast('验证码不能为空！');
+    }else{
+      $post('/api/user/zfb',{zfb_name:zfb_name,zfb_hao:zfb_hao,verify:verify},function(data){
+          if(data.code==1){
+            mui.alert('支付宝绑定成功','提示',function(){
+               mui.back();
+            });
+          }else{
+            mui.toast(data.msg);
+          }
+      });
+    };
+
+  });
+</script>
+
+</body>
+</html>

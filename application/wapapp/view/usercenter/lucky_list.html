@@ -1,0 +1,105 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/index.css">
+<style>
+    .mui-navigate-right:after,
+    .mui-push-right:after {
+        right: -2px !important;
+    }
+
+    .img_v {
+        width: 44%;
+        position: absolute;
+        top: 20%;
+        right: 0;
+    }
+
+    .mui-table-view-cell:last-child:after {
+        content: unset;
+    }
+
+    .mui-input-group:after {
+        content: unset;
+    }
+
+    .mui-input-group:before {
+        content: unset;
+    }
+
+    .img_out {
+        width: 6%;
+        height: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-right: 5px;
+    }
+
+    .img_out img {
+        width: 100%;
+    }
+
+    .mui-navigate-right:after,
+    .mui-push-left:after,
+    .mui-push-right:after {
+        /* margin-top: -14px; */
+        font-size: 16px;
+        color: #333;
+    }
+</style>
+</head>
+
+<body class="editinfo">
+    <div class="mui-inner-wrap">
+        <!--头部导航-->
+        <header class="mui-bar mui-bar-nav">
+            <a class="mui-icon mui-icon-back mui-pull-left mui-action-back"></a>
+            <h1 class="mui-title">抽奖活动</h1>
+        </header>
+
+        <!--主体部分-->
+        <div class="mui-content">
+            <form method="post" id="form1" name="form1" action="" enctype="multipart/form-data" class="mui-input-group"
+                style="margin-top: 10px;">
+                <ul class="edit-table" style="margin-top: 0">
+
+                </ul>
+            </form>
+        </div>
+        <!--end 主体部分-->
+    </div>
+    <script type="text/template" id="list">
+        <li class="mui-table-view-cell">
+            <a href="{:url('usercenter/lucky')}">
+                <span style="line-height:30px;font-size:16px;float:left">[[title]]</span>
+                <div class="mui-pull-right  mui-navigate-right color-hui right5" style="position:absolute;width:100%;">
+                   <input id="password" name="password" value="" type="text" class="text-14 mui-text-right text_hong" readonly onfocus="this.blur()">
+                </div>
+            </a>
+        </li>
+    </script>
+    {include file="public/footer" /}
+    <script src="__PUBLIC__/libs/jquery-3.2.1.min.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/js/ajaxfileupload.js" charset="utf-8"></script>
+    <script src="__PUBLIC__/libs/layer/layer.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        seajs.use(['common', 'layer', "jquery", "ajaxupload"], function (common, layer) {
+            getData();
+
+            function getData() {
+                $get("/api2/prize/lists", function (ret) {
+                    if (ret.status == 1) {
+                        var list = '';
+                        for (const i of ret.list) {
+                            i.start_time=common.getLocalTime(new Date(i.start_time * 1000));
+                            i.end_time=common.getLocalTime(new Date(i.end_time * 1000));
+                            list += '<li class="mui-table-view-cell"><a  class="mui-navigate-right" href="/wapapp/usercenter/lucky/id/'+i.id+'"><p style="display:flex;color:#333;"><span class="img_out"><img src="__IMG__/lucky.png"/></span><span style="line-height:30px;font-size:16px;float:left">' + i.title + '</span></p><div class="mui-pull-right color-hui right5" style="width:100%;margin-top: 5px;"><p><span class="fl">截止日期:'+i.start_time+'-'+i.end_time+'</span></span></span></p></div></a></li>	';
+                        }
+                        $('.edit-table').html(list);
+                    }
+                })
+            }
+        })
+    </script>
+</body>
+
+</html>

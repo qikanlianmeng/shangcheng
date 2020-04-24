@@ -1,0 +1,65 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__CSS__/shopstyle.css">
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">管理收货地址</h1>
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+    <a class="mui-btn mui-btn-link mui-pull-right" href="add_address.html">添加</a>
+</header>
+<div class="mui-content" id="addressList">
+    <!-- <div class="address-list cur" data-id="45">
+        <div class="address-text">
+            <p class="color-333 text-16 m-b-sm">rtgf 15520201020</p>
+            <p class="color-999">北京市北京市东城区dfgsdfg</p>
+        </div>
+        <div class="address-opr clearfix text-15 color-666">
+            <div class="mui-pull-left mui-radio mui-left">
+                <label>设为默认<input name="default" type="radio" checked=""></label>
+            </div>
+            <div class="mui-pull-right">
+                <a href="javascript:void(0);" class="color-666 delAdd">
+                    <span class="iconfont icon-shanchu color-999"></span>删除
+                </a>
+            </div>
+            <div class="mui-pull-right">
+                <a href="add_address.html" class="color-666">
+                    <span class="iconfont icon-woyaohuida color-999"></span>编辑
+                </a>
+            </div>
+        </div>
+    </div> -->
+    <div class="noAttend">
+        <i class="iconfont icon-zanwu"></i>
+        <p>您还没有收货地址哦~</p>
+    </div>
+</div>
+{include file="public/footer" /}
+<script type="text/html" id="addressItem">
+    <div class="address-list [[if is_default]]cur[[/if]]" data-id="[[address_id]]">
+        <div class="address-text">
+            <p class="color-333 text-16 m-b-sm">[[consignee]] [[mobile]]</p>
+            <p class="color-999">[[address_detail]]</p>
+        </div>
+        <div class="address-opr clearfix text-15 color-666">
+            <div class="mui-pull-left mui-radio mui-left">
+                <label>设为默认<input name="default" type="radio" [[if is_default]]checked[[/if]]></label>
+            </div>
+            <div class="mui-pull-right del-div">
+                <a href="javascript:void(0);" class="color-666 delAdd">
+                    <span class="iconfont icon-shanchu color-999"></span>删除
+                </a>
+            </div>
+            <div class="mui-pull-right edit-div">
+                <a href="/wap/usercenter/add_address/opr/mod/address_id/[[address_id]]" class="color-666">
+                    <span class="iconfont icon-woyaohuida color-999"></span>编辑
+                </a>
+            </div>
+        </div>
+    </div>
+</script>
+<script type="text/javascript">
+    seajs.use(['shop/js/addressList']);
+</script>
+</body>
+</html>

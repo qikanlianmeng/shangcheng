@@ -1,0 +1,77 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/shopstyle.css">
+</head>
+<style>
+    html {
+        background-color: #fff;
+    }
+    
+    .login-block {
+        margin: 20px 26px;
+    }
+    
+    .line_span {
+        font-size: 14px !important;
+        border-bottom: 1px solid #999;
+        padding-right: 0;
+        position: absolute;
+        right: 6%;
+        top: 20%;
+    }
+    
+    .line_img {
+        position: absolute;
+        right: 2%;
+        top: 10%;
+    }
+</style>
+
+<body class="bg-white">
+    <header class="mui-bar mui-bar-nav">
+        <!-- <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a> -->
+        <a class="mui-btn mui-btn-link mui-pull-right color-lanhui" id="" href="/wapapp/index/register">注册</a>
+        <h1 class="mui-title">账号登录</h1>
+    </header>
+    <div class="mui-content login-content">
+        <div class="top_img">
+            <img src="__IMG__/logo.png" alt="" style="width:20%;border-radius: 10px;">
+        </div>
+        <div class="login-block">
+            <div class="inp-div"><span class=" iconfont icon-crmtubiao32"></span><input id="account" type="text" name="username" class="input-login" placeholder="请输入账户名称"></div>
+            <div class="inp-div" style="margin-bottom: 5px;"><span class=" iconfont icon-mima"></span><input id="password" type="password" name="password" placeholder="请输入密码" class="input-login"></div>
+            <!-- <div class="inp-div inp-code"><span class=" iconfont icon-yanzhengma"></span><input type="input" name="code" placeholder="请输入验证码" class="input-login input-code" ><img class="code-block" src="__IMG__/temp/code.png" onclick="#" style="cursor: pointer"/></div>
+        <img class="code-block" src="/index/login/checkverify" onclick="javascript:this.src='/index/login/checkverify?m='+Math.random();" style="cursor: pointer"> -->
+            <div class="m-b clearfix login-check">
+                <div class="mui-input-row mui-checkbox mui-pull-left">
+                    <input name="remember" type="checkbox" value="remember"><label class="text-15">记住账号</label>
+                </div>
+                <a href="/wapapp/usercenter/find_password" class="mui-pull-right text-15">忘记密码？</a>
+            </div>
+            <div style="text-align: center;">
+                <a id="go_verify" class="text-15 color-999" style="text-align: center;width: 100%;border-bottom: 1px solid #666;" href="javascript:;">短信验证登录</a>
+            </div>
+        </div>
+        <div class="long_btn">
+            <button id="login" type="button">登录</button>
+        </div>
+        <!-- <ul class="mui-table-view m-t">
+            <p class="mui-text-center"><span>使用其他账号登录</span></p>
+            <li class="mui-table-view-cell mui-media mui-text-center">
+                <a href="/api/oalogin/login/type/qq" class="qq-login mui-col-xs-6">
+                    <span class="mui-icon mui-icon-qq m-t"></span>
+                    <div class="mui-media-body text-15 m-t-sm">QQ登录</div>
+                </a>
+                <a href="/api/oalogin/login/type/wx_qrcode" class="wx-login mui-col-xs-6">
+                    <span class="mui-icon mui-icon-weixin m-t"></span>
+                    <div class="mui-media-body text-15 m-t-sm">微信登录</div>
+                </a>
+            </li>
+        </ul> -->
+    </div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    seajs.use(['__JS__/login', '/static/wapapp/public/js/cookie.js']);
+</script>
+
+</html>

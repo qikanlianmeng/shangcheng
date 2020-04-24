@@ -1,0 +1,56 @@
+{include file="public/header" /}
+<link rel="stylesheet" href="/static/wapapp/shop/css/index.css">
+</head>
+<body class="coinrecharged">
+   <div class="mui-inner-wrap">
+    <!--头部导航-->
+    <header class="mui-bar mui-bar-nav">
+        <a class="mui-icon mui-icon-back mui-pull-left mui-action-back"></a>
+        <h1 class="mui-title">消费记录</h1>
+    </header>
+
+    <!--主体部分-->
+    <div class="mui-content bg-whtie integral-list">
+        <ul id="list">
+            <!-- <li class="clearfix">
+                <div class="clearfix">
+                    <p class="mui-text-left color-333 text-16 mui-pull-left">
+                    购买清华北大状元《学霸秘籍》视频讲座（每周1期）
+                    </p>
+                </div>
+                <div class="clearfix m-t">
+                    <p class="mui-text-left mui-pull-left text-mini color-hui" style="margin-bottom:0px">9-28   11:46</p>
+                    <p class="mui-text-right text-orange mui-pull-right" style="margin-bottom:0px">-5.00学币</p>
+                </div>
+            </li> -->
+        </ul>
+
+        <div class="noAttend" style="display: none;background-color:#f4f4f4;">
+            <i class="iconfont icon-zanwu"></i>
+            <p>暂无更多记录~</p>
+        </div>
+        <div class="dropDown">
+            <p>暂无更多记录哦~</p>
+        </div>
+    </div>
+    <!--end 主体部分-->
+  </div>
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    seajs.use("/static/wapapp/shop/js/spendcoin");
+</script>
+<script type="text/html" id="listTem">
+    <li class="clearfix">
+        <div class="clearfix">
+            <p class="mui-text-left color-333 text-16 mui-pull-left m-b-0">
+            [[if act == 1]]用户[[/if]][[remark]]
+            </p>
+        </div>
+        <div class="clearfix m-t">
+            <p class="mui-text-left mui-pull-left text-mini color-hui">[[update_time]]</p>
+            <p class="mui-text-right text-orange mui-pull-right">[[money]] 余额</p>
+        </div>
+    </li>
+</script>
+</html>

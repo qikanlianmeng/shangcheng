@@ -1,0 +1,67 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+<style>
+    .mui-control-content ul li {
+        width: 96%;
+        margin: 0 auto;
+        padding: 10px;
+        border-radius: 10px;
+        margin-bottom: 8px;
+    }
+    
+    .mui-control-content ul li>p:first-child {
+        margin-bottom: 8px;
+    }
+</style>
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">佣金明细</h1>
+        <a class="mui-icon mui-icon-back mui-pull-left" onclick="back();"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <script>
+        function back() {
+            mui.back();
+        }
+    </script>
+    <div class="mui-content" id="slider">
+        <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted orderTit" style="z-index: 1">
+            <a class="mui-control-item" href="#item1mobile">代理团队</a>
+            <a class="mui-control-item" href="#item2mobile">分销佣金</a>
+        </div>
+        <div class="mui-slider-group" style="padding-top: 50px;">
+            <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+                <ul class="mui-table-view shopcarList orderList" id="allOrder">
+
+                </ul>
+            </div>
+            <div id="item2mobile" class="mui-slider-item mui-control-content">
+                <ul class="mui-table-view shopcarList orderList" id="waitPayment">
+                </ul>
+            </div>
+            <div class="dropdown mui-text-center color-999 text-14 m-b"></div>
+        </div>
+        <div class="noAttend" style="display: none;">
+            <i class="iconfont icon-zanwu"></i>
+            <p>暂无记录</p>
+        </div>
+    </div>
+    {include file="public/footer" /}
+    <script type="text/html" id="ListTem">
+
+    </script>
+    <script type="text/javascript">
+        var tab_num = "{:input('tab_num')}";
+        seajs.use(['__JS__/commission_list']);
+    </script>
+</body>
+
+</html>

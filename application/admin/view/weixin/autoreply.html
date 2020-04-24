@@ -1,0 +1,81 @@
+{include file="public/header" /}
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>自定义回复</h5>
+        </div>
+        <div class="ibox-content">
+            <!-- 搜索框开始 -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div  class="col-sm-2" style="width: 100px">
+                        <div class="input-group" >
+                            <a href="{:url('autoreply_add')}"><button class="btn btn-outline btn-primary" type="button">添加自定义回复</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- 搜索框结束 -->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="5%">ID</th>
+                                <th width="25%">规则名称</th>
+                                <th width="40%">关键词</th>
+                                <th width="10%">状态</th>
+                                <th width="20%">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody id="list-content">
+                           {volist name="list" id="vo"}
+	                            <tr class="long-td">
+	                                <td>{$vo.id}</td>
+	                                <td>{$vo.rule_name}</td>
+	                                <td>{$vo.key_word}</td>
+	                                <td>
+	                                    <a href="{:url('change_status',array('status'=>$vo['status'],'id'=>$vo['id']))}" class="status">
+	                                        {eq name="vo.status" value="1"}
+	                                         <span class="label label-danger">禁用</span>
+	                                        {else/}
+	                                          <span class="label label-info">开启</span>
+	                                        {/eq}
+	                                       
+	                                    </a>
+	                                </td>
+	                                <td>
+	                                    <a href="{:url('autoreply_edit',array('id'=>$vo['id']))}" class="btn btn-primary btn-xs btn-outline">
+	                                        <i class="fa fa-paste"></i> 编辑</a>&nbsp;&nbsp;
+	                                    <a href="javascript:;" onclick="del_index({$vo.id})" class="btn btn-danger btn-xs btn-outline">
+	                                        <i class="fa fa-trash-o"></i> 删除</a>
+	                                </td>
+	                            </tr>
+						   {/volist}
+						   {empty name="list"}
+								<tr class="long-td"><td colspan="5">暂时没有内容</td></tr>
+						    {/empty}
+                        </tbody>
+                    </table>
+                    <div id="AjaxPage" style="text-align:right;">{$page}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{include file="public/footer" /}
+</body>
+<script>
+function del_index(id){
+	layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+		var url="{:url('autoreply_del','','')}";
+		window.location.href=url+'/id/'+id;
+	    layer.close(index);
+	})
+}
+</script>
+</html>

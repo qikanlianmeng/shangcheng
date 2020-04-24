@@ -1,0 +1,108 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/weixin/css/index.css">
+<style>
+.file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
+.file-item .info{overflow: hidden;}
+.uploader-list{width: 100%; overflow: hidden;}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>微信菜单修改</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="form_basic.html#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" method="post" action="{:url('edit_menu')}">
+                    <input type="hidden" value='{$row.id}' name="id">
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜单类型：</label>
+                            <div class="input-group col-sm-2">
+                                <select class="form-control m-b chosen-select" name="pid">
+                                    <option value="0">顶级</option>
+                                    {volist name="menu" id="vo"}
+										{eq name="vo.id" value="$row['pid']"}
+									     <option selected="selected" value="{$vo.id}">{$vo.name}</option>
+									    {else/}
+									      <option value="{$vo.id}">{$vo.name}</option>
+									   {/eq}
+									{/volist}
+                                </select>
+                            </div>
+                            <div class="col-sm-6 detail">自定义菜单最多包括3个一级菜单，每个一级菜单最多包含5个二级菜单</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜单名称：</label>
+                            <div class="input-group col-sm-4">
+                                <input value="{$row.name}" type="text" class="form-control" name="name" >
+                            </div>
+                            <div class="col-sm-4 detail">菜单名称</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">菜单类型：</label>
+                            <div class="col-sm-6">
+                                <div class="radio i-checks">
+                                    <label for="mingling"><input type="radio" {eq name="row.type" value="1"}checked="checked"{/eq} name='type' value="1"/>点击</label>&nbsp;&nbsp;
+                                    <label for="lianjie"><input type="radio"  {eq name="row.type" value="2"}checked="checked"{/eq}  name='type' value="2"/>链接</label>&nbsp;&nbsp;
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label menukey">{eq name="row.type" value="2"}Url链接地址：{else/}菜单关键词：{/eq}</label>
+                            <div class="input-group col-sm-4">
+                                <input value="{$row.key_value}" type="text" class="form-control" name="key_value" >
+                            </div>
+                            <div class="col-sm-4 detail">菜单值</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label">排序：</label>
+                            <div class="input-group col-sm-4">
+                                <input value='{$row.sort}' type="text" class="form-control" name="sort" >
+                            </div>
+                            <div class="col-sm-4 detail">排序</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4 col-sm-offset-3">
+                                <button class="btn btn-primary" type="submit"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+  {include file="public/footer" /}
+</body>
+<script>
+$('input').on('ifChecked', function(event){
+	var type=$(this).val();
+	if(type=='2'){
+		$('.menukey').html('Url链接地址：');
+	}else{
+		$('.menukey').html('菜单关键词：');
+	}
+}); 
+</script>
+</html>

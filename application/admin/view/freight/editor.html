@@ -1,0 +1,719 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/webuploader.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/webupload/style.css">
+<link rel="stylesheet" type="text/css" href="/static/admin/css/animate.min.css">
+<style>
+.file-item{float: left; position: relative; width: 110px;height: 110px; margin: 0 20px 20px 0; padding: 4px;}
+.file-item .info{overflow: hidden;}
+.uploader-list{width: 100%; overflow: hidden;}
+.input-group[class*=col-]{
+    float: left;
+}
+@media (max-width:768px) {
+    .input-group[class*=col-]{
+        float: none;
+    }
+}
+.detail{
+    line-height: 34px;
+    color: #999
+}
+.ship-method .checkbox label{padding-left: 0;display: block;}
+.ship-method .chose-address{border: 1px solid #e7eaec;padding: 5px;margin: 3px 0 6px;width: 710px;}
+.other-method .chose-address{width: 1000px;}
+.ship-method .chose-address input{text-align: center;}
+.ship-method .address-set{
+    -webkit-box-shadow:0 0 5px rgba(0, 0, 0, .3);
+    -moz-box-shadow:0 0 5px rgba(0, 0, 0, .3);
+    box-shadow:0 0 5px rgba(0, 0, 0, .3);
+}
+.ship-method .address-set-top{padding: 5px;margin: 0;background-color: #E8F2FF;}
+.ship-method .address-set-top input{width: 100px;display: inline-block;margin: 0 3px;}
+.ship-method .table-striped{margin-bottom: 7px;}
+.other-method .table-striped{margin-bottom: 0;}
+.ship-method .table-striped thead{background-color: #f9f9f9;}
+.ship-method .table-striped>tbody>tr:nth-of-type(even){background-color: #f9f9f9;}
+.ship-method .table-striped>tbody>tr:nth-of-type(odd){background-color: transparent;}
+.other-method thead th:first-child{text-align: left;}
+.other-method thead th{text-align: center;}
+.other-method input{width: 40px;display: inline-block;margin: 0 3px;}
+.other-method .chosen-select{margin-bottom: 5px;}
+.other-method td.opr{text-align: center;}
+/*.other-method td.opr a{font-size: 30px;margin: 0 8px;}*/
+.clearfix{overflow:hidden;_zoom:1;}
+.area-modal .modal-dialog{width: 750px;}
+.area-modal .area-list{margin-bottom: 5px;}
+.area-modal ul{padding-left: 0;}
+.area-modal ul li{list-style: none;}
+.area-modal .first-level{float: left;width: 103px;}
+.area-modal .second-level{float: left;width: 645px;}
+.area-modal li{float: left;width: 215px;position: relative;}
+.area-modal li.active{}
+.area-modal li .second-fa{vertical-align: top;cursor: pointer;width: 20px;text-align: center;
+    font-size: 18px;
+    color: #18a689;}
+.area-modal li .second-fa.fa-sort-down{margin: -3px 0 0 5px;}
+.area-modal li .second-fa.fa-sort-up{margin: 5px 0 0 5px;}
+.area-modal label{padding-left: 0;margin-bottom: 5px;}
+.area-modal label.first-label{padding-left: 15px;}
+.area-modal .third-level{display: none;position: absolute;background-color: #FFF7D8;z-index: 1000;width: 215px;
+    max-height: 240px;padding: 10px 5px 0;;border: 1px solid #F7E5A5;
+    left: -1px;}
+.area-modal .third-level label{width: 99px;overflow: hidden;
+    white-space: nowrap;}
+.area-modal .third-level .fa{position: absolute;color:#F7E5A5;top: -10px;left: 10px;font-size: 22px; }
+.area-modal li.active .third-level{display: block!important;}
+.area-modal .second-label span{color: red;font-weight: bold;}
+.text-center{text-align: center;}
+.chose-address input.form-control,.chose-address select{height: 28px;padding: 2px 8px;}
+.chose-address .btn{margin-bottom: 0;}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>添加运费模板</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <form class="form-horizontal m-t" name="edit" id="edit" method="post" action="#">
+                    <input type="hidden" name="id">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">模板名称：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="title" type="text" class="form-control" name="name" value="{$info.name|default=''}">
+                            </div>
+                            <div class="col-sm-4 detail">*</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+						<!--
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">宝贝地址：</label>
+                            <div class="input-group col-sm-4">
+                                <input id="link" type="text" class="form-control" name="link" >
+                            </div>
+                            <div class="col-sm-4 detail">*</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+						
+						<div class="form-group">
+                            <label class="col-sm-2 control-label">发货时间：</label>
+                            <div class="input-group col-sm-4">
+                                <select id="time" class="form-control m-b chosen-select" name="time">
+                                    <option value="">==请选择==</option>
+                                    <option value="1">1天内发货</option>
+                                    <option value="2">2天内发货</option>
+                                    <option value="3">3天内发货</option>
+                                    <option value="4">4天内发货</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-4 detail">如实设定宝贝的发货时间，不仅可避免纠纷，还可促进成交</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+						-->
+                        
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">计价方式：</label>
+                            <div class="col-sm-4" id="charge_type">
+								<div class="radio i-checks">
+								{empty name="info"}
+									<label><input type="radio" name='charge_type' value="1" checked="checked"/>按件数</label> &nbsp;&nbsp;
+                                    <label><input type="radio" name='charge_type' value="2" />按重量</label>&nbsp;&nbsp;
+                                    <label><input type="radio" name='charge_type' value="3" />按体积</label>
+								{else/}
+									<label><input type="radio" name='charge_type' value="1" {eq name="info.charge_type" value="1"}checked="checked"{/eq}/>按件数</label> &nbsp;&nbsp;
+                                    <label><input type="radio" name='charge_type' value="2" {eq name="info.charge_type" value="2"}checked="checked"{/eq}/>按重量</label>&nbsp;&nbsp;
+                                    <label><input type="radio" name='charge_type' value="3" {eq name="info.charge_type" value="3"}checked="checked"{/eq}/>按体积</label>
+								{/empty}
+                                </div>
+                            </div>
+                            <div class="col-sm-4 detail">*</div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group ship-method ys-method">
+                            <label class="col-sm-2 control-label">运费设置：</label>
+                            <div class="col-sm-10">
+                                <p style="margin-top: 7px;">除指定地区外，其余地区的运费采用“默认运费”</p>
+                                <div class="checkbox i-checks">
+									<!--
+									<label><input type="radio" name='transport' value="1" checked="checked"/>快递</label> &nbsp;&nbsp;
+                                    <label><input type="radio" name='transport' value="2" />EMS</label>&nbsp;&nbsp;
+                                    <label><input type="radio" name='transport' value="3" />物流</label>
+									-->
+                                    
+                                    <div id="general" class="chose-address">
+                                        <div class="address-set">
+                                            <p class="address-set-top" id="default">
+                                                默认运费
+                                                超<input class="form-control" type="text" name="begin" value="{$info.data_arr.default.begin|default=''}"><span class="freight_unit">件</span><input class="form-control" type="text" name="begin_price" value="{$info.data_arr.default.begin_price|default=''}">元，
+                                                每增加
+                                                <input class="form-control" type="text" name="inc" value="{$info.data_arr.default.inc|default=''}"><span class="freight_unit">件</span>，增加运费<input class="form-control" type="text" name="inc_price" value="{$info.data_arr.default.inc_price|default=''}">元。
+                                            </p>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>运送到</th>
+                                                        <th width="67">&nbsp;</th>
+                                                        <th width="81">首费单位(<span class="freight_unit">件</span>)</th>
+                                                        <th width="66">首费(元)</th>
+                                                        <th width="81">续费单位(<span class="freight_unit">件</span>)</th>
+                                                        <th width="66">续费(元)</th>
+                                                        <th class="text-center" width="67">操作</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+													{notempty name="info.data_arr.general"}
+														{foreach name="info.data_arr.general" item="dg" key="k"}
+														<tr id="general_{$k}">
+															<td class="pro">{$dg.provice}</td>
+															<td><a href="javascript:;" data-region-num="{$k}" data-type="general" class="btn btn-primary btn-outline btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-paste"></i> 编辑</a></td>
+															<td><input class="form-control" type="text" name="begin" value="{$dg.info.begin}"></td>
+															<td><input class="form-control" type="text" name="begin_price" value="{$dg.info.begin_price}"></td>
+															<td><input class="form-control" type="text" name="inc" value="{$dg.info.inc}"></td>
+															<td><input class="form-control" type="text" name="inc_price" value="{$dg.info.inc_price}"></td>
+															<td><a href="javascript:;" data-region-num="{$k}" data-type="general" class="btn btn-danger btn-outline btn-xs del_row"><i class="fa fa-trash-o"></i> 删除</a></td>
+														</tr>
+														{/foreach}
+													{/notempty}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <a href="javascript:void(0);" title="" class="add_row">添加区域</a>&nbsp;&nbsp;&nbsp;
+                                    </div>
+									
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group ship-method other-method">
+                            <div class="col-sm-12">
+                                <div class="checkbox i-checks" id="other">
+                                   <label><input type="checkbox" name='calway' value="1"/>指定条件包邮（可选）</label>
+                                </div>
+                               <div id="special" class="chose-address" {empty name="info.data_arr.special"}style="display: none;"{else/}style="display: block;"{/empty} >
+                                    <div class="address-set">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>选择地区</th>
+                                                    <th width="150">&nbsp;</th>
+                                                    <th width="130">设置包邮条件</th>
+                                                    <th width="120">操作</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+												{notempty name="info.data_arr.special"}
+													{foreach name="info.data_arr.special" item="ds" key="k"}
+													<tr id="special_1">
+														<td class="pro">{$ds.provice}</td>
+														<td><a href="javascript:;" class="btn btn-primary btn-outline btn-xs" data-region-num="{$k}" data-type="special" data-toggle="modal" data-target="#myModal"><i class="fa fa-paste"></i> 编辑</a></td>
+														
+														<td>
+															<select class="form-control m-b chosen-select" name="type">
+																<option value="price" <?php if($ds['type']=='price') echo "selected='selected'"; ?>>金额</option>
+																<option value="weight" <?php if($ds['type']=='weight') echo "selected='selected'"; ?>>重量</option>
+															</select>
+															{if condition="$ds.type eq 'price'"}
+															<p>满<input type="text" class="form-control" name="range" value="{$ds.range}">元包邮</p>
+															{elseif condition="$ds.type eq 'weight'"/}
+															<p>在<input type="text" class="form-control" name="range" value="{$ds.range}">kg内包邮</p>
+															{/if}
+															
+														</td>
+														<td class="opr">
+															<a href="javascript:;" class="btn btn-primary btn-outline btn-xs add_row"><i class="fa fa-plus"></i> 增加</a>
+															<a href="javascript:;" data-region-num="{$k}" data-type="special" class="btn btn-danger btn-outline btn-xs del_row"><i class="fa fa-trash-o"></i> 删除</a>
+														</td>
+													</tr>
+													{/foreach}
+												{else/}
+													<tr id="special_1">
+														<td class="pro">未添加地区</td>
+														<td><a href="javascript:;" class="btn btn-primary btn-outline btn-xs" data-region-num="1" data-type="special" data-toggle="modal" data-target="#myModal"><i class="fa fa-paste"></i> 编辑</a></td>
+														
+														<td>
+															<select class="form-control m-b chosen-select" name="type">
+																<option value="price">金额</option>
+																<option value="weight">重量</option>
+															</select>
+															<p>满<input type="text" class="form-control" name="range">元包邮</p>
+														</td>
+														<td class="opr"><!-- <a href="javascript:void(0);" class="add_row" title="">+</a><a href="javascript:void(0);" class="del_row" title="">-</a> -->
+															<a href="javascript:;" class="btn btn-primary btn-outline btn-xs add_row"><i class="fa fa-plus"></i> 增加</a>
+														</td>
+													</tr>
+												{/notempty}
+                                                
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="hr-line-dashed"></div>
+                        <div class="form-group">
+                            <div class="col-sm-4">
+                                <button class="btn btn-primary" id="sub_btn" type="button"><i class="fa fa-save"></i> 保存</button>&nbsp;&nbsp;&nbsp;
+                                <a class="btn btn-danger" href="javascript:history.go(-1);"><i class="fa fa-close"></i> 返回</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+  {include file="public/footer" /}
+<div class="modal fade area-modal" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close close-div" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                <h3 class="modal-title">选择区域</h3>
+            </div>
+            <div class="checkbox i-checks">
+			{foreach name="reg_data" item="rd" key="k"}
+                <div class="area-list" >
+                    <div class="first-level">
+                        <label class="first-label"><input type="checkbox" name='first_box' value="1"/>{$k}</label>
+                    </div>
+                    <div class="second-level">
+                        <ul>
+							{foreach name="rd" item="d"}
+                            <li class="">
+                                <label class="second-label"><input type="checkbox"  name='second_box' value="666"/>{$d.name}<span></span></label><i class="fa fa-sort-down second-fa"></i>
+                                <div class="third-level animated">
+                                    <i class="fa fa-sort-up"></i>
+									{foreach name="d.city" item="dc" key="k2"}
+                                    <label class="third-label"><input type="checkbox" name='third_box' value="{$k2}"/>{$dc}</label>
+									{/foreach}
+                                    
+                                </div>
+                            </li>
+							{/foreach}
+                        </ul>
+                    </div>
+                    <div style="clear: both;"></div>
+                </div>
+			{/foreach}	
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-act="save" data-dismiss="modal" class="btn btn-primary close-div"><i class="fa fa-save"></i> 保存</button>
+                <button type="button" class="btn btn-danger close-div" data-dismiss="modal"><i class="fa fa-close"></i> 关闭</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    
+    $(function(){
+		//定义一个运费模板中的三组数据
+		var tp_id = "{$id}";
+		var _default={},general={},special={};
+		special[1] = {'range':'','type':'','region':''}
+		_default = {'begin':'','begin_price':'','inc':'','inc_price':''};
+		if(tp_id > 0){
+			var main_data = JSON.parse('{$json}');
+			_default = main_data.default;
+			general = main_data.general;
+			special = main_data.special;
+			if(special){
+				$('#other input').iCheck('check');
+			}
+		}
+
+        /*指定条件包邮*/
+        $('#other input').on('ifChanged', function(event){
+            $('#other').siblings('.chose-address').toggle();
+        });
+        /*运送方式--加一行*/
+        $('.ys-method').on('click','.add_row',function(){
+			
+			var reg_num;
+			if(Object.getOwnPropertyNames(general).length < 1){
+				reg_num = 1;
+			}else{
+				var key_str = '';
+				for(var i in general){
+					key_str += key_str==''?i:','+i;
+				}
+				key_arr = key_str.split(',');
+				reg_num = Math.max.apply(null,key_arr)+1;
+			}
+			general[reg_num] = {'info':{'begin':'','begin_price':'','inc':'','inc_price':''},'region':''};
+            var str = '<tr id="general_'+reg_num+'">\
+                            <td class="pro">未添加地区</td>\
+                            <td><a href="javascript:;" data-region-num="'+reg_num+'" data-type="general" class="btn btn-primary btn-outline btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-paste"></i> 编辑</a></td>\
+                            <td><input class="form-control" type="text" name="begin"></td>\
+                            <td><input class="form-control" type="text" name="begin_price"></td>\
+                            <td><input class="form-control" type="text" name="inc"></td>\
+                            <td><input class="form-control" type="text" name="inc_price"></td>\
+                            <td><a href="javascript:;" data-region-num="'+reg_num+'" data-type="general" class="btn btn-danger btn-outline btn-xs del_row"><i class="fa fa-trash-o"></i> 删除</a></td>\
+                        </tr>';
+            $('.ys-method').find('tbody').append(str);
+			
+        })
+        /*指定条件包邮--加一行*/
+        $('.other-method').on('click','.add_row',function(){
+			var reg_num;
+			if(Object.getOwnPropertyNames(special).length < 1){
+				reg_num = 1;
+			}else{
+				var key_str = '';
+				for(var i in special){
+					key_str += key_str==''?i:','+i;
+				}
+				key_arr = key_str.split(',');
+				reg_num = Math.max.apply(null,key_arr)+1;
+			}
+			special[reg_num] = {'range':'','type':'','region':''};
+            var str = ' <tr id="special_'+reg_num+'">\
+                        <td class="pro">未添加地区</td>\
+                        <td><a href="javascript:;" data-region-num="'+reg_num+'" data-type="special" class="btn btn-primary btn-outline btn-xs" data-toggle="modal" data-target="#myModal"><i class="fa fa-paste"></i> 编辑</a></td>\
+                        <td>\
+                            <select class="form-control m-b chosen-select" name="type">\
+								<option value="price">金额</option>\
+                                <option value="weight">重量</option>\
+                            </select>\
+                            <p>满<input type="text" class="form-control" name="range">元包邮</p>\
+                        </td>\
+                        <td class="opr"><a href="javascript:;" class="btn btn-primary btn-outline btn-xs add_row"><i class="fa fa-plus"></i> 增加</a><a href="javascript:;" data-region-num="'+reg_num+'" data-type="special" class="btn btn-danger btn-outline btn-xs del_row"><i class="fa fa-trash-o"></i> 删除</a></td>\
+                    </tr>';
+            $('.other-method').find('tbody').append(str);
+        })
+        /*删除一行*/
+        $('.table').on('click','.del_row',function(){
+			var type = $(this).attr("data-type");
+			var reg_num = $(this).attr("data-region-num");
+			if(type == 'general'){
+				delete general[reg_num];
+			}else if(type == 'special'){
+				delete special['reg_num'];
+			}
+            $(this).parents('tr').remove();
+        })
+        /*区域选择--一级*/
+        $('.first-label input').on('ifClicked',function(){
+            var $this = $(this);
+            var $second_level = $this.parents('.first-level').siblings('.second-level');
+            if($this.is(':checked')){
+                $second_level.find('input').iCheck('uncheck');
+            }else{
+                $second_level.find('input').iCheck('check');
+            }
+            var len = $second_level.find('li').length;
+            for(var i = 0;i<len;i++){
+                var $second_label = $second_level.find('li').eq(i).find('label');
+                var $third_level = $second_label.siblings('.third-level');
+                var len1 = $third_level.find('label').length;
+                var check_size = $third_level.find(".checked").size();
+                $second_label.find('span').html('\（'+check_size+'\）');
+            }
+        })
+        /*下箭头选择*/
+        $('.second-fa').on('click',function(){
+            var $this = $(this);
+            if($this.hasClass('fa-sort-up')){
+                $this.parents('li').removeClass('active');
+                $this.removeClass('fa-sort-up').addClass('fa-sort-down');
+            }else{
+                $('.area-modal').find('li').removeClass('active');
+                $('.second-level .second-label').siblings('.fa').removeClass('fa-sort-up').addClass('fa-sort-down');
+                $this.parents('li').addClass('active');
+                $this.removeClass('fa-sort-down').addClass('fa-sort-up');
+            }
+        })
+        /*区域选择--二级*/
+        $('.second-label input').on('ifClicked',function(){
+            var $this = $(this);
+            var $second_label = $this.parents('label');
+            var $second_level = $this.parents('.second-level');
+            var $third_level = $second_label.siblings('.third-level');
+            var len = $third_level.find('label').length;
+            var $first_level = $second_level.siblings('.first-level');
+            var $first_label = $first_level.find('label');
+            if($this.is(':checked')){
+                $third_level.find('input').iCheck('uncheck');
+            }else{
+                $third_level.find('input').iCheck('check');
+            }
+            var check_size = $third_level.find(".checked").size();
+            $second_label.find('span').html('\（'+check_size+'\）');
+            var len1 = $second_level.find('li').length;
+            var check_size1 = $second_level.find(".second-label .checked").size();
+            var $second_input = $second_label.find('input');
+            if($second_input.is(':checked')){
+                check_size1 -= 1;
+            }else{
+                check_size1 += 1;
+            }
+            if(len1 == check_size1){
+                $first_label.find('input').iCheck('check');
+            }else{
+                $first_label.find('input').iCheck('uncheck');
+            }
+            $('.area-modal').find('li').removeClass('active');
+            $('.area-modal').find('.third-level').hide();
+            $('.second-level .second-label').siblings('.fa').removeClass('fa-sort-up').addClass('fa-sort-down');
+            $this.parents('li').addClass('active');
+            $third_level.show();
+            $second_label.siblings('.fa').removeClass('fa-sort-down').addClass('fa-sort-up');
+        })
+        /*区域选择--三级*/
+        $('.third-label input').on('ifClicked',function(){
+            var $this = $(this);
+            var $thrid_label = $this.parents('label');
+            var $third_level = $this.parents('.third-level');
+            var $second_label = $third_level.siblings('label');
+            var $second_level = $second_label.parents('.second-level');
+            var $first_level = $second_level.siblings('.first-level');
+            var $first_label = $first_level.find('label');
+            var len = $third_level.find('label').length;
+            var check_size = $third_level.find(".checked").size();
+            if($this.is(':checked')){
+                check_size -= 1;
+            }else{
+                check_size += 1;
+            }
+            var len1 = $second_level.find('li').length;
+            var check_size1 = $second_level.find(".second-label .checked").size();
+            var $second_input = $second_label.find('input');
+            if($second_input.is(':checked')){
+                check_size1 -= 1;
+            }else{
+				if(len == check_size)
+					check_size1 += 1;
+            }
+            $second_label.find('span').html('\（'+check_size+'\）');
+            if(len == check_size){
+                $second_label.find('input').iCheck('check');
+            }else{
+                $second_label.find('input').iCheck('uncheck');
+            }
+            if(len1 == check_size1){
+                $first_label.find('input').iCheck('check');
+            }else{
+                $first_label.find('input').iCheck('uncheck');
+            }
+        })
+		//根据计费方式，改变单位
+		$("#charge_type input").on('ifClicked',function(){
+			var new_val = $(this).val();
+			//alert(new_val);
+			if(new_val == 1){
+				$(".freight_unit").html('件');
+			}else if(new_val == 2){
+				$(".freight_unit").html('kg');
+			}else if(new_val == 3){
+				$(".freight_unit").html('立方');
+			}
+			
+		})
+		//根据包邮方式，改变描述
+		$(document).on('change','.chosen-select',function(){
+			if($(this).val() == 'price'){
+				$(this).parent().find("p").html('满<input type="text" class="form-control" name="range" value="">元包邮');
+			}else if($(this).val() == 'weight'){
+				$(this).parent().find("p").html('在<input type="text" class="form-control" name="range" value="">kg内包邮');
+			}
+		})
+		
+		//点击区域弹窗时，定义弹窗归属为 该编辑按钮所属的组.同时构造弹框数据状态
+		var reg_div_type = '';
+		var reg_div_num = 0;
+		$(document).on("click","[data-target='#myModal']",function(){
+			reg_div_type = $(this).attr("data-type");
+			reg_div_num  = $(this).attr("data-region-num");
+			//当前组的数据在弹框中可编辑，其他组的数据在弹框中不可编辑
+			var third_box_obj = $("input[name='third_box']");
+			
+			if(reg_div_type == 'general'){
+				var view_data = general;
+			}else if(reg_div_type == 'special'){
+				var view_data = special;
+			}
+
+			for(var i in view_data){
+				var arr = view_data[i].region.split(",");
+				
+				for(var ii in arr){
+					var third_box = $("input[name='third_box'][value='"+arr[ii]+"']");
+					
+					
+					third_box.iCheck("check");
+					if(i !== reg_div_num){
+						third_box.iCheck("disable");
+						third_box.parents("li").find(".second-label input").iCheck("disable");
+						third_box.parents(".area-list").find(".first-label input").iCheck("disable");
+					}else{
+						third_box.iCheck("enable");
+						third_box.parents("li").find(".second-label input").iCheck("enable");
+						third_box.parents(".area-list").find(".first-label input").iCheck("enable");
+					}
+				}
+
+			}
+			//设置完所有数据的选中状态后，遍历所有一级和二级框，看是否被全选，并显示二级框下选中的三级框数量
+			var input_obj = $(".area-list");
+			input_obj.each(function(index){
+				var one = $(this);
+				if(one.find(".third-label input").size() == one.find(".third-label .checked").size()){
+					one.find(".first-label input").iCheck("check");
+				}
+				
+				var second_obj = one.find("li");
+				second_obj.each(function(index2){
+					var two = $(this);
+					if(two.find(".third-label input").size() == two.find(".third-label .checked").size()){
+						two.find(".second-label input").iCheck("check");
+					}
+					if(two.find(".third-label .checked").size() > 0){
+						two.find(".second-label span").html('\（'+two.find(".third-label .checked").size()+'\）');
+					}
+				})
+			})
+			
+		})
+		
+		//关闭弹窗后，所有选中数据都初始化
+		$(".close-div").click(function(){
+			var act = $(this).attr('data-act');
+			if(act && act=='save'){
+				//把选中的二级地区信息保存到所属的组的对象中，同时把省份信息展示在页面
+				var checked_obj = $("input[name='third_box']:checked").not(":disabled");
+				if(checked_obj.length < 1){
+					layer.msg('没有选择任何地区', {icon: 5,time:700,shade: 0.1}, function(index){
+						layer.close(index);
+					});
+					return false;
+				}else{
+					var reg_str = '';
+					var reg_obj = {};
+					checked_obj.each(function(index){
+						reg_str += reg_str==''?$(this).val():','+$(this).val();
+						reg_obj[index] = $(this).val();
+					})
+					if(reg_div_type == 'general'){
+						general[reg_div_num].region = reg_str;
+					}else if(reg_div_type == 'special'){
+						special[reg_div_num].region = reg_str;
+					}
+					//产生选中的省份列表
+					var pro_data = '{$provice_data}';
+					var pro_obj = JSON.parse(pro_data);
+					var pro_str = '';
+					//console.log(reg_obj);
+					for(var i in reg_obj){
+						for(var ii in pro_obj){
+							if(pro_obj[ii].city.indexOf(reg_obj[i]) > -1){
+								if(pro_str.indexOf(pro_obj[ii].name) < 0){
+									pro_str += pro_str==''?pro_obj[ii].name:'、'+pro_obj[ii].name;
+								}
+								continue;
+							}
+						}
+					}
+					$("#"+reg_div_type+"_"+reg_div_num+" .pro").text(pro_str);
+				}
+			}
+			//初始化区域div的各种状态和标识
+			$(".area-list input").iCheck('uncheck');
+			$(".second-label span").html('');
+			reg_div_type = '';
+			reg_div_num = 0;
+		})
+		//
+		
+		//提交数据
+		$("#sub_btn").click(function(){
+			var tp_name = $("input[name='name']").val();
+			if(tp_name == ""){
+				layer.alert('模板名称不能为空');
+					return false;
+			}
+			var tp_charge_type = $("input[name='charge_type']:checked").val();
+
+			//判断常规 模板下所有运费和起重不能小于0
+			$("#general input").each(function(){
+				if(Boolean($(this).val())<0.1){
+					layer.alert('重量和费用不能小于0.1');
+					return false;
+				}
+			})
+			//选中包邮条件下，判断包邮模板下所有包邮范围不能小于0
+			if($('#other input').prop("checked") == true){
+				$("#special input").each(function(){
+				if(Boolean($(this).val())<0.1){
+					layer.alert('包邮范围不能小于0');
+					return false;
+				}
+			})
+			}
+			
+			/******构造提交的数据************/
+			var freight_data = {};
+			//填充_default对象
+			var df_input = $("#default");
+			//console.log(_default);return false;
+			_default.begin = df_input.find("input[name='begin']").val();
+			_default.begin_price = df_input.find("input[name='begin_price']").val();
+			_default.inc = df_input.find("input[name='inc']").val();
+			_default.inc_price = df_input.find("input[name='inc_price']").val();
+			freight_data.default = _default;
+			//填充general对象
+			if(Object.getOwnPropertyNames(general).length > 0){
+				for(var i in general){
+					if(general[i].region == ""){
+						layer.alert('请选择运费区域');
+						return false;
+					}
+					var gn_input = $("#general_"+i);
+					general[i].info.begin = gn_input.find("input[name='begin']").val();
+					general[i].info.begin_price = gn_input.find("input[name='begin_price']").val();
+					general[i].info.inc = gn_input.find("input[name='inc']").val();
+					general[i].info.inc_price = gn_input.find("input[name='inc_price']").val();
+				}
+				freight_data.general = general;
+			}
+			//填充special对象
+			if($('#other input').prop("checked") == true && Object.getOwnPropertyNames(special).length > 0){
+				for(var i in special){
+					if(special[i].region == ""){
+						layer.alert('请选择运费区域');
+						return false;
+					}
+					var sp_input = $("#special_"+i);
+					special[i].type = sp_input.find("select").val();
+					special[i].range = sp_input.find("input").val();
+				}
+				freight_data.special = special;
+			}
+			//提交数据
+			$.post("{:url('editor')}",{'id':tp_id,'name':tp_name,'charge_type':tp_charge_type,'data':freight_data},function(data){
+				var done_msg = tp_id?'模板编辑成功':'模板添加成功';
+				if(data == 1){
+					layer.msg(done_msg, {icon: 6,time:800,shade: 0.1}, function(index){
+						layer.close(index);
+						window.location.href = "{:url('index')}";
+					});
+				}else{
+					layer.msg('操作异常，请重试', {icon: 5,time:800,shade: 0.1}, function(index){
+						layer.close(index);
+					});
+				}
+			},'html')
+		})
+		
+    });
+</script>
+</body>
+</html>

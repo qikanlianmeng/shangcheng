@@ -1,0 +1,248 @@
+{include file="public/header" /}
+<style>
+    .ncap-order-details{
+        overflow: hidden;
+    }
+    .ncap-order-details .tabs-panels dt {
+        color: #999;
+        width: 100px;
+        text-align: right;
+    }
+    .ncap-order-details .tabs-panels dd {
+        color: #333;
+        min-width: 150px;
+    }
+    .ncap-order-details .tabs-panels dt, .ncap-order-details .tabs-panels dd {
+        font-size: 12px;
+        line-height: 20px;
+        vertical-align: top;
+        display: inline-block;
+    }
+    .long-tr td{
+        text-align: center;
+    }
+    .input-group button{
+        margin-right: 20px;
+    }
+    .table>tbody>tr>td{
+        border-right: none;
+        border-left: none;
+    }
+    .table>thead:first-child>tr:first-child>th{
+        border-right: none;
+        border-left: none;
+    }
+    .chosen-search{
+        display:none;
+    }
+    dl {
+        margin-top: 0;
+        margin-bottom: 10px;
+    }
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>订单发货</h5>
+        </div>
+        <div class="ibox-content">
+            <!-- 搜索框开始 -->
+            <!-- 搜索框结束 -->
+            <form class="form-horizontal" name="edit_cate" id="edit_cate" method="post" action="">
+            <input type="hidden" name="id" value="">
+                <div class="hr-line-dashed"></div>
+                <div class="ncap-order-details">
+                    <h4>基本信息</h4>
+                    <div class="tabs-panels">
+                        <dl>
+                            <dt>订单号：</dt>
+                            <dd>{$orderInfo->order_id}</dd>
+                            <dt>下单时间：</dt>
+                            <dd>{$orderInfo->order_sn}</dd>
+                            <dt>配送方式：</dt>
+                            <dd>
+                                <select id="shipping_id">
+                                    {foreach name='shipping' item='vo'}
+                                    <option value="{$vo.code}">{$vo.shipping_name}</option>
+                                    {/foreach}
+                                </select>
+                            </dd>
+                        </dl>
+                        <dl>
+                            <dt>配送费用：</dt>
+                            <dd>{$orderInfo->shipping_price|default='NaN'}</dd>
+                            <dt>配送单号</dt>
+                            <dd style="margin-top: -7px;">
+                                <input type="text" class="form-control" id="invoice_no">
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="ncap-order-details">
+                    <h4>收货信息</h4>
+                    <div class="tabs-panels">
+                        <dl>
+                            <dt>收货人：</dt>
+                            <dd>{$orderInfo->consignee|default='NaN'}</dd>
+                            <dt>联系方式：</dt>
+                            <dd>{$orderInfo->mobile|default='NaN'}</dd>
+                        </dl>
+                        <dl>
+                            <dt>收货地址：</dt>
+                            <dd>{$orderInfo->addr|default='NaN'}</dd>
+                        </dl>
+                        <dl>
+                            <dt>邮编：</dt>
+                            <dd>{$orderInfo->zipcode|default='NaN'}</dd>
+                        </dl>
+                        <dl>
+                            <dt>发票抬头：</dt>
+                            <dd>{$orderInfo->invoice_title|default='NaN'}</dd>
+                            <dt>用户备注：</dt>
+                            <dd>{$orderInfo->user_note|default='NaN'}</dd>
+                            <dt>管理员备注：</dt>
+                            <dd>{$orderInfo->admin_note|default='NaN'}</dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <div class="ncap-order-details">
+                    <h4>商品信息</h4>
+                    <div class="tabs-panels">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr class="long-tr">
+                                    <th>商品编号</th>
+                                    <th></th>
+                                    <th>商品</th>
+                                    <th>规格属性</th>
+                                    <th>购买数量</th>
+                                    <th>商品单价</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {foreach name="goodsList" item="vo"}
+                                <tr class="long-tr">
+                                    <td>{$vo.goods_sn}</td>
+                                    <td><img width="80px" height="80px;" src="{$vo.img}" alt="{$vo.goods_name}"></td>
+                                    <td>{$vo.goods_name}</td>
+                                    <td>{$vo.spec_key_name}</td>
+                                    <td>{$vo.goods_num}</td>
+                                    <td>{$vo.member_goods_price}</td>
+                                </tr>
+                                {/foreach}
+                            </tbody>
+                        </table>
+                    </div>
+                    <p style="float:right;margin-bottom:0;">商品总额：￥{$orderInfo->goods_price}</p>
+                </div>
+                <div class="hr-line-dashed"></div>
+                <h4>发货单备注</h4>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">操作备注：</label>
+                    <div class="input-group col-sm-4">
+                        <textarea id="note" type="text" class="form-control" value="" placeholder="请输入操作备注"></textarea>
+                    </div>
+                    <label class="col-sm-3 control-label" style="margin-top:20px;">可执行操作：</label>
+                    <div class="input-group col-sm-4" style="margin-top:20px;">
+                        <a><button class="btn btn-outline btn-primary manage" type="button">确认发货</button></a>
+                    </div>
+                </div>
+                <div class="hr-line-dashed"></div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+{include file="public/footer" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+
+    $(function(){
+        $(document).on("click",".iradio_square-green",function(){
+            var $this = $(this);
+            $this.hasClass("checked") ? $this.removeClass("checked"):$this.addClass("checked");
+            $this.prev().prop("checked")?$this.prev().prop("checked",false):$this.prev().prop("checked",true)
+        })
+    })
+
+//删除
+function del(id){
+    var url = '{:url("delOrder")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+
+function treeClicked(obj,cat_id,parent_id_path){
+
+    var src = $(obj).attr('src');
+    if(src == '/static/admin/images/tv-expandable.gif')
+    {
+        $(".parent_id_"+cat_id).show();
+        $(obj).attr('src','/static/admin/images/tv-collapsable-last.gif');
+    }else{
+        $("tr[parent_id_path^='"+parent_id_path+"_']").hide().find('img').attr('src','/static/admin/images/tv-expandable.gif');
+        $(obj).attr('src','/static/admin/images/tv-expandable.gif');
+
+    }
+}
+//管理员  发货订单
+$('.manage').click(function(){
+    var id = "{$orderInfo->order_id}";
+    var url = "{:url('delivery')}";
+    var invoice_no = $("#invoice_no").val();
+    var shipping_id = $("#shipping_id").val();
+    if (!invoice_no) {
+        layer.msg("发货单号不能为空",{icon:0,time:1500,shade: 0.1});
+        return false;
+    }
+    var note = $("#note").val();
+    layer.confirm('确认对该订单进行【发货】操作吗?', {icon: 3, title:'提示'}, function(index){
+        $.post(url, {'id' : id, 'invoice_no':invoice_no, 'note':note, 'shipping_id':shipping_id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.href = "{:url('detail',['id' => $orderInfo->order_id])}";
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        },'json');
+        layer.close(index);
+    })
+})
+
+
+//IOS开关样式配置
+var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+var config = {
+    '.chosen-select': {},
+}
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+$("#start").datetimepicker({onChangeDateTime:'logic',
+    onShow:'logic',lang:'ch'});
+$("#end").datetimepicker({onChangeDateTime:'logic',
+    onShow:'logic',lang:'ch'});
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.picker.css">
+<link rel="stylesheet" type="text/css" href="__PUBLIC__/css/mui.poppicker.css">
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">新增收货地址</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-content">
+        <form class="mui-input-group mar-t10 add-form text-15">
+            <div class="mui-input-row">
+                <label>收货人:</label>
+                <input type="text" name="name" class="mui-input-clear" placeholder="请输入收货人姓名" data-input-clear="1">
+                <span class="mui-icon mui-icon-clear mui-hidden"></span>
+            </div>
+            <div class="mui-input-row">
+                <label>手机号:</label>
+                <input type="number" name="phone" placeholder="请输入联系方式"></div>
+            <div class="mui-input-row dingwei">
+                <label>省市区:</label>
+                <input type="text" readonly="readonly" onfocus='this.blur();' id="showCityPicker" name="area" placeholder="点击选择您所在地区">
+                <div id="cityResult3" class="ui-alert"></div>
+            </div>
+            <!-- <div class="mui-input-row">
+            <label>邮政编码:</label>
+            <input type="number" id="code" name="code" placeholder="请输入邮政编码">
+        </div> -->
+            <div class="mui-input-row">
+                <label>详细地址:</label>
+                <input type="text" name="address" placeholder="请输入详细街道地址">
+            </div>
+        </form>
+        <div class="mui-text-center save-address">
+            <div class="mui-input-row mui-checkbox mui-left text-14 color-666">
+                <label>设为默认收货地址<input name="set-default" type="checkbox"></label>
+            </div>
+            <button type="button" class="btn-main text-16 ">确定</button>
+        </div>
+    </div>
+    {include file="public/footer" /}
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.picker.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/libs/mui.poppicker.js"></script>
+    <script type="text/javascript">
+        var opr = "{:input('opr')}",
+            address_id = "{:input('address_id')}";
+        seajs.use(['__JS__/addAddress']);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,187 @@
+{include file="public/header" /}
+<style type="text/css">
+.chosen-container{
+    width: 100px !important;
+}
+
+.chosen-search{
+    display: none;
+}
+.select-wrap{
+    border: 1px solid #1ab394;
+    margin: 0 15px;
+    padding:0;
+    width: auto;
+    float: right;
+}
+.chosen-container-single .chosen-single{
+    border: none;
+}
+.search:focus{
+    border: none;
+}
+.table>thead>.long-tr>th{
+    position: relative;
+}
+.long-tr th:hover::after{
+    content: "";
+    display: inline-block;
+    background-color: #1ab394;
+    width: 100%;
+    height: 3px;
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+}
+.chosen-container-single .chosen-single span{
+    margin-right: 0;
+}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>评论管理</h5>
+        </div>
+        <div class="ibox-content">
+            <div class="row">
+                <div class="col-sm-12">
+                   
+                    <form method="get" action="{:url('commentlist')}" id="search">
+                    <!--<div class="col-sm-12 select-wrap">-->
+					<div class="col-sm-12 select-wrap" style="float: left;">
+                        <input placeholder="开始时间" type="text" class="form-control" name="start_time" style="width:140px;vertical-align: middle;display: inline-block;border:none;" id="start" value="{$data['start_time']}"/>
+                        <input placeholder="结束时间" type="text" class="form-control" name="end_time" style="width:140px;vertical-align: middle;display: inline-block;border:none;" id="end" value="{$data['end_time']}"/>
+                        <select class="form-control m-b chosen-select" name="rank">
+                            <option value="all">评价分数</option>
+                           
+                            <option value="1" {if condition="$data['rank'] == '1'"}selected{/if}>1星</option>
+                            <option value="2" {if condition="$data['rank'] == '2'"}selected{/if}>2星</option>
+                            <option value="3" {if condition="$data['rank'] == '3'"}selected{/if}>3星</option>
+                            <option value="4" {if condition="$data['rank'] == '4'"}selected{/if}>4星</option>
+                            <option value="5" {if condition="$data['rank'] == '5'"}selected{/if}>5星</option>
+                        </select>
+                        
+                        <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" id="submit">搜索</button>
+                    </div>
+                    <div class="row">
+                        <div  class="col-sm-3" style="width: 150px;margin-right:20px;">
+                            <div class="input-group" >  
+                                <a href="javascript:;" onclick="delete_all();"><button class="btn btn-outline btn-primary" style="height:37px;" type="button">批量删除</button></a>
+                            </div>
+                        </div>   
+                    </div>
+            
+                    </form>
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr class="long-tr">
+                                <th><input type="checkbox" name="all" id="all_checkbox"/></th>
+                                <th>用户</th>
+                                <th>评论内容</th>
+                                <th>商品</th>
+                                <th>评星个数</th>
+                                <!-- <th>类型</th> -->
+                                <th>评论时间</th>
+                                <th>操作</th>
+                            </tr>
+                        </thead>
+                        {foreach name='extend' item='v'}
+                        <tr class="long-td">
+                            <td><input type="checkbox" value="{$v.id}" name="id[]"/></td>
+                            <td>{$v.user_name}</td>
+                            <td>{$v.content}</td>
+                            <td>{$v.goods_name}</td>
+                            <td>{$v.rank}</td>
+                            <!-- <td>{$v.type}</td> -->
+                            <td>{$v.c_time}</td>
+                            <td>
+                                <a href="{:url('replyComment', ['id' => $v['id']])}" class="btn btn-primary btn-outline btn-xs">
+                                    <i class="fa fa-paste"></i> 回复</a>&nbsp;&nbsp;
+                                <a href="javascript:;" onclick="del({$v.id})" class="btn btn-danger btn-outline btn-xs">
+                                    <i class="fa fa-trash-o"></i> 删除</a>
+                            </td>
+                        </tr>
+                        {/foreach}
+                    </table>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+{include file="public/footer" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+$("#start").datetimepicker({lang:'ch'});
+$("#end").datetimepicker({lang:'ch'});
+$('#all_checkbox').change(function(){
+    $(':checkbox[name="id[]"]').prop('checked',$(this).prop('checked'));
+})
+function delete_all(){
+        var selected_box = $(':checkbox[name="id[]"]:checked');
+        //alert(selected_box.length);
+        //return false;
+        if(selected_box.length < 1){
+            layer.msg('未选择任何记录',{icon:0,time:1500,shade: 0.1});
+            return false
+        }
+        var id_arr = {};
+        selected_box.each(function(index){
+            id_arr[index] = $(this).val();
+        })
+        $.post('{:url("delcomment")}',{id:id_arr},function(data){
+                if(data.status == 1){
+                    layer.msg('操作成功',{icon:1,time:1500,shade: 0.1});
+                    window.location.reload();
+                }else{
+                    layer.msg(data.msg,{icon:0,time:1500,shade: 0.1});
+                }
+            },'json')
+    }
+//删除
+function del(id){
+    var url = '{:url("delComment")}';
+    layer.confirm('确认删除此条记录吗?', {icon: 3, title:'提示'}, function(index){
+        $.getJSON(url, {'id' : id}, function(res){
+            if(res.code == 1){
+                layer.msg(res.msg,{icon:1,time:1500,shade: 0.1});
+                setTimeout(function(){
+                    window.location.reload();
+                },1500);
+            }else{
+                layer.msg(res.msg,{icon:0,time:1500,shade: 0.1});
+            }
+        });
+        layer.close(index);
+    })
+}
+//IOS开关样式配置
+var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+var config = {
+    '.chosen-select': {},
+}
+for (var selector in config) {
+    $(selector).chosen(config[selector]);
+}
+</script>
+</body>
+</html>

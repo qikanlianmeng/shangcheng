@@ -1,0 +1,43 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">支付成功</h1>
+        <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-content firm-order">
+        <div class="pay-result mui-text-center bg-whtie">
+            <p class="p-suc p-icon"><span class="iconfont icon-dui"></span></p>
+            <p class="m-t p-suc-text text-16">订单支付成功</p>
+        </div>
+        <div class="order-view bg-whtie m-t clearfix">
+        </div>
+        <div class="order-link order-link-suc mui-text-center">
+            <div class="mui-btn mui-btn-primary" id="findGoods">返回首页</div>
+            <div class="mui-btn mui-btn-primary" id="checkOrder">查看订单</div>
+        </div>
+    </div>
+    {include file="public/footer" /}
+    <script type="text/html" id="orderViewTem">
+        <p><label>订单金额</label><span>[[order_amount]]元</span></p>
+        <p><label>订单编号</label><span>[[order_sn]]</span></p>
+        <p><label>收货地址</label><span>[[address_detail]]</span></p>
+        [[if user_note]]
+        <p><label>订单备注</label><span>[[user_note]]</span></p>[[/if]]
+    </script>
+    <script type="text/javascript">
+        var order_id = "{:input('order_id')}";
+        seajs.use(['/static/wapapp/shop/js/payOrder']);
+    </script>
+</body>
+
+</html>

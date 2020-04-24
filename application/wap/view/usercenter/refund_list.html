@@ -1,0 +1,121 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__CSS__/shopstyle.css">
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav">
+    <h1 class="mui-title">退款记录</h1>
+    <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/wap/usercenter/usercenter"></a>
+</header>
+<div class="mui-content">
+    <ul class="mui-table-view refundlist">
+        <!-- <li class="mui-table-view-cell mui-media" id="35">
+            <h4 class="text-15 color-333">
+                退货退款， 提交退款
+            </h4>
+            <a class="goods" href="#">
+                <img class="mui-media-object mui-pull-left" src="https://img.alicdn.com/bao/uploaded/i4/TB12uHINFXXXXaSXVXXXXXXXXXX_!!0-item_pic.jpg">
+                <div class="mui-media-body">
+                    <p class="mui-ellipsis-2 color-333">
+                        宝贝名称
+                    </p>
+                    <p class="color-main">
+                        退款金额： 23.80元
+                    </p>
+                </div>
+            </a>
+            <div class="opare">
+                <a href="refund_detail.html"><button type="button">查看详情</button></a>
+                <button class="cancel" type="button">
+                    取消退款
+                </button>
+            </div>
+        </li>
+        <li class="mui-table-view-cell mui-media" id="33">
+            <h4 class="text-15 color-333">
+                退货退款， 拒绝退款
+            </h4>
+            <a class="goods" href="/index.php?s=/wap/shop/particulars/id/17">
+                <img class="mui-media-object mui-pull-left" src="http://resources-user-image.vxue360.com/060f6f5826f6a45d0a3385182e85a422.jpg">
+                <div class="mui-media-body">
+                    <p class="mui-ellipsis-2 color-333">
+                        教材帮限时抢购开始啦啦啦啦啦！教材帮限时抢购开始啦啦啦啦啦！教材帮限时抢购开始啦啦啦啦啦！
+                    </p>
+                    <p class="color-main m-t-sm">
+                        退款金额： 2元
+                    </p>
+                </div>
+            </a>
+            <div class="opare">
+                <a href="refund_detail.html"><button type="button">查看详情</button></a>
+            </div>
+        </li> -->
+    </ul>
+    <div class="noAttend" style="display: none;">
+        <i class="iconfont icon-zanwu"></i>
+        <p>暂无退款哦~</p>
+    </div>
+</div>
+{include file="public/footer" /}
+<script type="text/html" id="refundListTem">
+    <li class="mui-table-view-cell mui-media">
+        <h4 class="text-15 color-333">
+            [[if refund_type]]
+            退货退款
+            [[else]]
+            仅退款
+            [[/if]]
+            [[if status == -1]]
+            ，拒绝退款
+            [[else if status == -2]]
+            ，用户取消退款
+            [[else if status == 0]]
+            ，提交退款
+            [[else if status == 1]]
+            ，退款成功
+            [[/if]]
+        </h4>
+        [[each goods_list as value i]]
+        <a class="goods" href="/wap/goods/goods/id/[[goods_list[i].goods_id]]">
+            <img class="mui-media-object mui-pull-left" src="[[goods_list[i].img]]">
+            <div class="mui-media-body">
+                <p class="mui-ellipsis-2 color-333">
+                    [[goods_list[i].goods_name]]
+                </p>
+                <p class="mui-ellipsis-2 color-999 text-mini">
+                    [[goods_list[i].spec_key_name]]
+                </p>
+            </div>
+        </a>
+        [[/each]]
+        <div class="refund-money clearfix">
+            [[if refund_money != '0.00']]
+            <p class="color-main">
+                退款金额： [[refund_money]]元
+            </p>
+            [[/if]]
+            [[if refund_deposit != '0.00']]
+            <p class="color-main">
+                退款余额： [[refund_deposit]]余额
+            </p>
+            [[/if]]
+            [[if refund_integral]]
+            <p class="color-main">
+                退款羊币： [[refund_integral]]羊币
+            </p>
+            [[/if]]
+        </div>
+        <div class="opare">
+            <a href="/wap/usercenter/refund_detail/return_id/[[id]]"><button type="button">查看详情</button></a>
+            [[if status == 0]]
+            <button class="cancel" type="button" data-id="[[id]]">
+                取消退款
+            </button>
+            [[/if]]
+        </div>
+    </li>
+</script>
+<script type="text/javascript">
+seajs.use(['shop/js/refundList'])
+</script>
+</body>
+</html>

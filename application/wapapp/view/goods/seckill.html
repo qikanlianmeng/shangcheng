@@ -1,0 +1,82 @@
+{include file="public/header" /}
+ <link href="/static/wapapp/shop/css/index.css" rel="stylesheet"/>
+	<body  style="min-width:320px;" class="seckill">
+		<div class="mui-inner-wrap">
+			<header class="mui-bar mui-bar-nav">
+			    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			    <h1 class="mui-title">限时抢购</h1>
+			</header>
+			<div class="mui-content all-miaosha">
+				<ul class="mui-table-view" id="miaoSha">
+
+				</ul>
+				<div class="dropDown text-14 color-hui">
+	       	 		<span>上拉加载</span>
+	    		</div>
+				<div class="noContent" style="display: none;"><p>暂无限时秒杀商品</p></div>
+			</div>
+		</div>
+
+{include file="public/footer" /}
+<script type="text/javascript">
+    seajs.use("/static/wapapp/shop/js/seckill")
+</script>
+<script type="text/html" id="miaoShaList">
+	 <li class="mui-table-view-cell mui-media bootor slave-item">
+        [[if status==1]]
+        <a href="goods/id/[[goods_id]]">
+        [[else if status==0]]
+        <a class="nostartbtn">
+        [[else if status==2]]
+        <a class="endbtn">
+        [[/if]]
+            [[if original_img == null]]
+			 <img class="zuoimg mui-media-object mui-pull-left" src="__IMG__/book.jpg">
+             [[else]]
+             <img class="zuoimg mui-media-object mui-pull-left" src="__IMG__/book.jpg" data-echo="[[original_img]]">
+             [[/if]]
+			 <div class="mui-media-body" id="goods_[[id]]">
+				 <div class="goods-name">[[goods_name]]</div>
+				 [[if status==2]]
+				 <p class="mui-ellipsis countdown">
+					 <i class="iconfont icon-xianshi"></i>
+					 活动已结束[[if rnum==0]] <span style="font-size: 12px;">[[buy_num]]件已秒杀完</span>[[/if]]
+				 </p>
+				 <p class="mui-ellipsis integral"><span class="text-16">
+						[[price]]元
+					 </span>
+				 </p>
+				 <div class="swapping-div">
+				 	<span class="sale-price mui-pull-right color-black mui-block swapping" style="background:#aaa;color:#fff !important;">已结束</span>
+				 </div>
+				 [[else]]
+                 <p class="mui-ellipsis countdown text-12">
+					 <i class="iconfont icon-xianshi"></i>
+					 距离[[if status==0]]开始[[else]]结束[[/if]]还剩:<span class="hei">[[ time[0] ]]</span>天<span class="hei">[[ time[1] ]]</span>时<span
+						 class="hei">[[ time[2] ]]</span>分<span class="hei">[[ time[3] ]]</span>秒
+				 </p>
+				 <p class="mui-ellipsis commodity progressa">
+				 <div id="bar">
+					 <div class="finish" style="width:[[bai]]%;"></div>
+					 <span class="ing">[[bai]]%</span>
+				 </div>
+				 </p>
+				 <p class="mui-ellipsis integral">
+					 <span class="text-16">
+						[[price]]元
+					 </span>
+				 </p>
+				 <div class="swapping-div">
+					 [[if status==0]]
+					 <span class="sale-price mui-pull-right color-black mui-block swapping" style="background:#aaa;color:#fff !important;">即将开始</span>
+				 	 [[else]]
+					 <span class="sale-price mui-pull-right color-black mui-block swapping" style="color:#fff !important;background-color: #ff3b01;margin-top: 2px;">去秒杀</span>
+					 [[/if]]
+				 </div>
+				 [[/if]]
+			 </div>
+		 </a>
+    </li>
+</script>
+</body>
+</html>

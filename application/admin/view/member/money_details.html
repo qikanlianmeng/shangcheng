@@ -1,0 +1,148 @@
+{include file="public/header" /}
+<style type="text/css">
+.chosen-search{
+    display: none;
+}
+.clearfix{overflow:hidden;_zoom:1;}
+.con-form{padding: 0 15px;}
+.con-form input,.con-form select{width: 160px;display: inline-block;}
+.con-form .form-group{float: left;margin-bottom: 0;}
+.m-r{margin-right: 15px;}
+.clear{clear: both;}
+.table th, .table td{text-align: center;padding: 12px 8px!important;}
+.color-red{color: #ec4758;}
+</style>
+<body class="gray-bg">
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+        {if $uid > 0}
+            <h5>用户：{$user_account}收支明细</h5>
+        {else/}
+            <h5>收支明细</h5>
+        {/if}
+        </div>
+        <div class="ibox-content">
+            <div class="row con-form clearfix">
+                <form action="#" method="get" accept-charset="utf-8" id="search_form">
+                    <div class="form-group m-r">
+                        <label class="control-label">开始时间</label>
+                        <input type="input" name="start_time" id="start_time" class="form-control" value="{$start_time}">
+                    </div>
+                    <div class="form-group m-r">
+                        <label class="control-label">结束时间</label>
+                        <input type="input" name="end_time" id="end_time" class="form-control" value="{$end_time}">
+                    </div>
+                    <div class="form-group m-r">
+                        <label class="control-label">收支类型</label>
+                        <select class="form-control chosen-select" name="type">
+                            <option value="0" >全部</option>
+                            {php}
+                            foreach($type_name as $k=>$v){
+                            $str = '<option value="'.$k.'" ';
+                            if($type == $k){
+                            $str .= 'selected';
+                            }
+                            $str .='>'.$v.'</option>>';
+                            echo $str;
+                            }
+                            {/php}
+
+                        </select>
+                    </div>
+                    <div class="form-group m-r">
+                        <label class="control-label">关键字</label>
+                        <input type="input" name="key" id="key" placeholder="用户账号/手机" class="form-control" value="{$key}">
+                        <input type="hidden" name="uid"  value="{$uid}">
+                    </div>
+                    <div class="form-group m-r">
+                        <label class="control-label">用户编号</label>
+                        <input type="input" name="id" id="id" placeholder="用户编号" class="form-control" value="{$id}">
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-primary" type="submit" id="search"><i class="fa fa-search"></i> 搜索</button>
+                        <button class="btn btn-primary" type="submit" id="export"><i class="fa fa-search"></i> 导出</button>
+                    </div>
+                </form>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+            <div class="example-wrap">
+                <div class="example">
+                    <!-- <div>
+                        <span>总收入：<b style="color:red;">{$total_income}元</b></span>&nbsp;&nbsp;&nbsp;
+                        <span>总支出：<b style="color:green;">{$total_cash}元</b></span>&nbsp;&nbsp;&nbsp;
+                    </div> -->
+                    <form class="form-search" method="post" action="{:url('del_money_details')}">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr><th colspan="7" style="text-align:left;">
+                                <label><input type="checkbox" id="all_checkbox"/>全选</label>&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-danger" type="submit" id="delete"><i class="fa fa-trash-o"></i> 删除</button>
+                            </th></tr>
+                        </thead>
+                        <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th>用户编号</th>
+                                <th>用户账号</th>
+                                <th>收支类型</th>
+                                <th>操作备注</th>
+                                <th>金额(单位：元)</th>
+                                <th>发生时间</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                         {foreach $list as $v}
+                            <tr>
+                                <td><input type="checkbox" value="{$v.id}" name="id[]"/>{$v.id}</td>
+                                <td>{$v.uid}</td>
+                                <td>{$v.account}</td>
+                                <td>{$type_name[$v.type]}</td>
+                                <td>{$v.act_msg}</td>
+                                <td style="{lt name='v.money' value='0'}color:green;{else/}color:red;{/lt}"> {$v.money}</td>
+                                <td>{$v.create_time|date="Y-m-d H:i:s",###}</td>
+                            </tr>
+                         {/foreach}
+                        </tbody>
+                    </table>
+                    </form>
+                    <div style="text-align:center;">
+                        {$list->render()}
+                        <span style="display:inline-block;padding:22px 5px;vertical-align: top;">到<input style="width:50px;" type="text" id="go_page" />页</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+
+{include file="public/footer" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    $(function(){
+        $('#search').click(function () {
+            $('#search_form').attr('action',"{:url('money_details')}");
+        });
+        $('#export').click(function () {
+            $('#search_form').attr('action',"{:url('export_money_details')}");
+        });
+        $('#all_checkbox').change(function(){
+            $(':checkbox[name="id[]"]').prop('checked',$(this).prop('checked'));
+        })
+
+
+    });
+$("#start_time").datetimepicker({lang:'ch'});
+$("#end_time").datetimepicker({lang:'ch'});
+$("#go_page").blur(function(){
+    var page = $(this).val();
+    var url = '{$go_url}'+'&page='+page;
+    window.location.href = url;
+})
+</script>
+</body>
+</html>

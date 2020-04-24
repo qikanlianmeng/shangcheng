@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>完善资料</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1, minimum-scale=1">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/mob/yang/css/base.css" />
+    <script src="/static/mob/public/libs/mui.min.js" charset="utf-8"></script>
+
+
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/mint-ui/lib/style.css">
+    <link rel="stylesheet" href="/static/mob/public/font/iconfont.css">
+    <link rel="stylesheet" href="/static/mob/public/css/mui.min.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="/static/mob/yang/css/index.css" />
+  
+<link rel="stylesheet" href="__CSS__/shopstyle.css">
+</head>
+<style>
+    html{background-color: #fff;}
+    p{color:#333!important;}
+    input{outline: none;}
+    /* mui-confirm样式 */
+.mui-popup-text{
+    overflow: hidden;
+    text-align: center;
+}
+.mui-popup-title,.mui-popup-button{
+    color: #ff0036;
+    padding-bottom: 10px;
+}
+/*.mui-popup-button{
+    color:#333;
+}*/
+.mui-popup-button-bold{
+    background:#ff0036;
+    color:#fff;
+    font-weight:400!important;
+}
+.mui-popup-buttons{
+    border-top: 1px solid #ff0036;
+}
+.img_code_box{
+      position: relative;
+      /* padding:15px; */
+  }
+  .img_code_box input{
+      margin-bottom: 0;
+      border:1px solid #ccc!important;
+      font-size: 13px;
+      background: #fff!important;
+      padding:0;
+  }
+  .img_code_box img{
+      position: absolute;
+      height:95%;
+      top: 1px;
+      right:2px;
+      width:50%;
+  }
+  .pop{
+      position:fixed;
+      top:0;
+      left: 0;
+      z-index: 99999;
+      background: rgba(0, 0, 0, 0.5);
+      width: 100%;
+      height: 100%;
+      display: none;
+  }
+  .pop_box{
+    width: 70%;
+    height: auto;
+    background: #fff;
+    border-radius: 10px;
+    margin: 0 auto;
+    align-items: center;
+    /* padding: 10px 20px 0px 10px; */
+    text-align: center;
+    vertical-align: middle;
+    margin-top: 45%;
+    overflow: hidden;
+  }
+  .pop_title{
+      padding:15px;
+  }
+  .pop_input{
+      margin:0px 0px 15px 0;
+      padding:0px 20px;
+  }
+  .pop_btn{
+      width:100%;
+      height:45px;
+      line-height: 45px;
+      border-top:1px solid #ff0036;
+  }
+  .pop_btn span{
+      width:50%;
+      height:45px;
+      line-height: 45px;
+      display: inline-block;
+  }
+  .pop_ok{
+      background: #ff0036;
+      color:#fff;
+  }
+</style>
+<body class="bg-white">
+
+<div class="login-content">
+    <div class="login-block">
+        <!-- <div class="inp-div"><span class=" mui-icon mui-icon-person"></span><input type="text" name="account" class="input-login" placeholder="请输入用户名"></div> -->
+        <div class="inp-div"><span class="mui-icon mui-icon-phone"></span><input type="text" name="mobile" class="input-login mobile-num" placeholder="请输入手机号码"></div>
+        <div class="inp-div inp-code"><span class="mui-icon mui-icon-checkmarkempty"></span><input type="number" name="code" placeholder="请输入验证码" class="input-login input-code"><span s="0" id="sendbtn" class="code-block get-code">获取验证码</span></div>
+        <div class="inp-div"><span class=" mui-icon mui-icon-locked"></span><input type="password" name="password" placeholder="请输入密码" class="input-login"></div>
+        <div class="protocol" style="margin-bottom: 5px;">
+            <a href="" class="color-main" style="font-size:13px;text-decoration:underline;float:right;">已有账号 立即下载APP</a>
+        </div>
+        <!-- <div class="inp-div" style="margin-bottom: 5px;"><span class=" iconfont icon-mima"></span><input type="password" name="repassword" placeholder="请输入确认密码" class="input-login"></div> -->
+        <!-- <div class="protocol">
+            <div class="mui-input-row mui-checkbox mui-pull-left">
+                <input name="agree" type="checkbox" value="agree" checked=""><label class="text-16">同意</label>
+            </div>
+            <a href="/wap/index/protocol" class="color-main text-16" title="">《用户协议》</a>
+        </div> -->
+ 
+        <button id="register" type="button" class="inp-btn m-t tosubmit">免费注册</button>
+    </div>
+    <div class="explain explain_cont" style="width: 80%;margin: 0 auto;margin-top: 30px;line-height: 25px;font-size: 15px;color: #333; text-align: justify;margin-bottom:50px;">
+            
+    </div>
+    <div class="pop">
+        <div class="pop_box">
+            <div class="pop_title">获取验证码</div>
+            <div class="pop_input">
+                <div class="img_code_box">
+                    <input type="number" placeholder="请输入验证码" id="code">
+                    <img src="/api/user/img_verify" id="img_code" onclick="get_codes();"}></div>
+             </div>
+            <div class="pop_btn"><span class="pop_cancel">取消</span><span class="pop_ok">确认</span></div>
+        </div>
+    </div>
+</div>
+<script src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+<script src="/static/mob/yang/js/common.js"></script>
+
+</body>
+{include file="public/footer" /}
+<script type="text/javascript">
+    seajs.use(['shop/js/register2']);
+    // $get('/api2/task/guize',{id:3},function(data){
+    //     if(data.code==1){
+    //         $('.explain_cont').html(data.data.content);
+    //     }
+    // });
+     // 更换验证码
+   function get_codes(){
+        $('#img_code').attr('src',"/api/user/img_verify")
+    }
+</script>
+</html>

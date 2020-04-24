@@ -1,0 +1,294 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/public/wallet/css/api.css" />
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/mui.min.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/mui.picker.min.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/mui.poppicker.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/swiper.min.css">
+<link rel="stylesheet" href="/static/wapapp/public/wallet/css/style.css" />
+<script src="/static/wapapp/public/wallet/js/jquery.3.1.1.js"></script>
+<script src="/static/wapapp/public/wallet/js/mui.min.js"></script>
+<script src="/static/wapapp/public/wallet/js/mui.picker.min.js"></script>
+<script src="/static/wapapp/public/wallet/js/mui.poppicker.js"></script>
+<script src="/static/wapapp/public/wallet/js/swiper.min.js"></script>
+<style>
+    @font-face {
+        font-family: "iconfont";
+        src: url('iconfont.eot?t=1539400098846');
+        /* IE9*/
+        src: url('iconfont.eot?t=1539400098846#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('data:application/x-font-woff;charset=utf-8;base64,d09GRgABAAAAAAWIAAsAAAAACBQAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAABHU1VCAAABCAAAADMAAABCsP6z7U9TLzIAAAE8AAAARAAAAFY8fkjfY21hcAAAAYAAAABVAAABhmgO0N1nbHlmAAAB2AAAAbEAAAH0FRKUFWhlYWQAAAOMAAAALwAAADYS7klAaGhlYQAAA7wAAAAeAAAAJAfeA4VobXR4AAAD3AAAAAwAAAAMDAEAAGxvY2EAAAPoAAAACAAAAAgAkgD6bWF4cAAAA/AAAAAfAAAAIAEUAGhuYW1lAAAEEAAAAUUAAAJtPlT+fXBvc3QAAAVYAAAALgAAAD+JoegSeJxjYGRgYOBikGPQYWB0cfMJYeBgYGGAAJAMY05meiJQDMoDyrGAaQ4gZoOIAgCKIwNPAHicY2BkYWCcwMDKwMHUyXSGgYGhH0IzvmYwYuRgYGBiYGVmwAoC0lxTGByecTx7y9zwv4EhhrmBoQEozAiSAwDvZAzYeJztkMERgCAMBPcAGcexEB8W5Mvy+VEDJkG78GY2l1zgE2ABsnEaBXQjXJelijyzRV7iTTUXqa2tjwGfm2S7ap78nyq/9qjHOyW/1iT6PkEP9ZIRGgAAAHicY2BnYPg/n/kBcwIDB4MggxSDFoMjQxBDNAMDoxKbiJiRmYkaK4yhbsdoogbiMCryMbILyjGKK9oxmgvqMTIqqamzm+sxAhWYA0XVlIHSIuJsrOLqQAZcWIRNHWYSo5qguLiSuDijIq+QkJSQUCGQqyghwZjwt8IpgokpwompwzkcSP9jkjKUTpU1t2VkWVKdt1iUjy+rm4mDl3G+mL+YjhiQzdSdldrPbJnNKywMNIYpUkIRZNAtISkQv5MRZKiiOGM40ESEyU4Rf+s5WY0j1JJssruYmQqjmJiakhRkGdM8ddg4GJnLoyLLmZnLI41Cn0OMYWBgAobROeZlzFIM5gzODAyqQC+rIwcBkAv2qLkdozhQyMxc0dTYVBmI1czMjUWNRZVFjdnYxcRZwSrMjcTE+RiZlzFFu/794RrNBKSZOGzDudXPB5jXh0WmsTJF1TmFm8oK/du56NgxRnauwMuX10joGWf/E4syY2c1N7YusNfNusG4AKIXbAajt5VglJqzNyNTlItBPDu7pJCpnYK1cggjD2OSsnWin5BiPrO/jJQ+k7y8lSMDAF9+YIkAAAB4nGNgZGBgAOIVRt9exvPbfGXgZmEAgevPmxYh6P/zWRiYE4BcDgYmkCgAaCwMPQB4nGNgZGBgbvjfwBDDAmQxMLAwMIBpJMAMAEciAm0AAAQAAAAEAAAABAEAAAAAAAAAkgD6eJxjYGRgYGBmiGFgZwABJiDmAkIGhv9gPgMAEjgBfQB4nGWPTU7DMBCFX/oHpBKqqGCH5AViASj9EatuWFRq911036ZOmyqJI8et1ANwHo7ACTgC3IA78EgnmzaWx9+8eWNPANzgBx6O3y33kT1cMjtyDRe4F65TfxBukF+Em2jjVbhF/U3YxzOmwm10YXmD17hi9oR3YQ8dfAjXcI1P4Tr1L+EG+Vu4iTv8CrfQ8erCPuZeV7iNRy/2x1YvnF6p5UHFockikzm/gple75KFrdLqnGtbxCZTg6BfSVOdaVvdU+zXQ+ciFVmTqgmrOkmMyq3Z6tAFG+fyUa8XiR6EJuVYY/62xgKOcQWFJQ6MMUIYZIjK6Og7VWb0r7FDwl57Vj3N53RbFNT/c4UBAvTPXFO6stJ5Ok+BPV8bUnV0K27LnpQ0kV7NSRKyQl7WtlRC6gE2ZVeOEXpc0Yk/KGdI/wAJWm7IAAAAeJxjYGKAAC4G7ICZkYmRmZGFgSspM103PNU5I7GEoyojM600KTGfgQEAVrEHIQAA') format('woff'), url('iconfont.ttf?t=1539400098846') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
+        url('iconfont.svg?t=1539400098846#iconfont') format('svg');
+        /* iOS 4.1- */
+    }
+
+    .iconfont {
+        font-family: "iconfont" !important;
+        font-size: 16px;
+        font-style: normal;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    .icon-big-WeChat:before {
+        content: "\e6ed";
+    }
+
+    .icon-zhifubao:before {
+        content: "\e608";
+    }
+
+    .mui-popup-inner {
+        padding: 15px 0 0 0 !important;
+    }
+
+    .mui-popup-title+.mui-popup-text {
+        padding: 5px !important;
+    }
+
+    table.cont td {
+        padding: 10px 15px;
+        font-size: 16px;
+    }
+
+    table.cont tr>td:first-child {
+        width: 60%;
+    }
+</style>
+</head>
+
+<body>
+<!-- 顶部 -->
+<header id="header" class="mui-bar" style="margin-left:0px;">
+    <div class="mb15"></div>
+    <a class="mui-icon mui-icon-back mui-pull-left back" onclick="back();"></a>
+    <script>
+      function back() {
+        mui.back();
+      }
+    </script>
+    <h1 class="mui-title">提现 </h1>
+    <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+        <div class="small_box">
+            <a href='/wapapp/index/index'>首页</a>
+            <a href='/wapapp/cart/shopcar'>购物车</a>
+            <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+        </div>
+    </div>
+</header>
+
+
+<!-- main -->
+<div class="content_box mui-content">
+    <div class="recharge_box">
+        <h3>提现金额<span>（1余额=1元）</span><span class="fr">您的余额<span class="color-main
+                " id="money"></span></span>
+        </h3>
+        <div class="recharge_box_cont cont">
+            <ul>
+                <li title="100">
+                        <span>
+                            <p>100元</p>
+                            <p>100元</p>
+                        </span>
+                </li>
+                <li title="200">
+                        <span>
+                            <p>200元</p>
+                            <p>200元</p>
+                        </span>
+                </li>
+                <li title="300">
+                        <span>
+                            <p>300元</p>
+                            <p>300元</p>
+                        </span>
+                </li>
+                <li title="500">
+                        <span>
+                            <p>500元</p>
+                            <p>500元</p>
+                        </span>
+                </li>
+                <li title="800">
+                        <span>
+                            <p>800元</p>
+                            <p>800元</p>
+                        </span>
+                </li>
+                <li title="1000">
+                        <span>
+                            <p>1000元</p>
+                            <p>1000元</p>
+                        </span>
+                </li>
+                <li title="" class="mo_input">
+                        <span>
+                            <p>其他金额</p>
+                            <p><input type="text" placeholder="请输入" style="background:transparent!important;" id="money"
+                                      class="rd"></p>
+                        </span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="mb10"></div>
+    <!-- 支付方式 -->
+    <!-- <div class="recharge_pay">
+        <h3>提现到</h3>
+        <div class="recharge_pay_box cont">
+            <ul>
+                <li>
+                    <div class="mui-input-row mui-radio">
+                        <label> <i class="mui-icon iconfont icon-big-WeChat" style="color:#00c506;"></i>微信 </label>
+                        <input id="wechat" name="pay" type="radio" value="3" checked style="top:10px;">
+                    </div>
+                    <div class="mui-input-row mui-radio">
+                        <label > <i class="mui-icon iconfont icon-qianbao" style="color:#00c506;"></i>银行卡 </label>
+                        <input name="pay" type="radio" value="2" checked style="top:10px;">
+                    </div>
+                </li>
+                <li>
+                    <div class="mui-input-row mui-radio">
+                        <label><i class="mui-icon iconfont icon-zhifubao" style="color:#00a0ea;"></i> 支付宝</label>
+                        <input id="zfb" name="pay" type="radio" value="2" style="top:10px;">
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div> -->
+    <!-- <table>
+        <tr>
+            <td>提现金额</td>
+            <td>100</td>
+        </tr>
+        <tr>
+            <td>提现手续费</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>提现服务费</td>
+            <td>5</td>
+        </tr>
+        <tr>
+            <td>应到金额</td>
+            <td>5</td>
+        </tr>
+    </table> -->
+
+    <div class="beizhu cont">
+        <h4>您的提现说明</h4>
+        <h4>1.您的静态可提现金额为<span><strong>{$jingti+$yusuan}</strong></span>。</h4>
+        <h4>2.您的动态可提现金额为<span>{$dongti}</span>。</h4>
+        <h4>3.您已经提现<span>{$yiti}</span>(包含已经提交提现申请还未到账的金额)。</h4>
+        <h4>4.您的剩余提现金额为<span>{$jingti+$yusuan+$dongti-$yiti}</span>。</h4>
+    </div>
+
+    <div class="mb10"></div>
+    <div class="beizhu cont">
+        <h5>备注</h5>
+        <p>1.提现金额只能是<span class="tx_min"></span>的倍数。</p>
+        <p>2.最少提现数￥<span class="tx_min"></span>。</p>
+        <p>3.提现手续费<span id="shouxu"></span>%。</p>
+        <p>4.提现服务费￥<span id="fuwu"></span>。</p>
+    </div>
+    <div class="mb20"></div>
+    <div class="midu_btn cont">
+        <button class="btn" id="rechargeIma">立即提现</button>
+    </div>
+    <div class="mb20"></div>
+</div>
+
+<input type="hidden" name="" id="money_num">
+<input type="hidden" name="" id="zhenti" value="{$jingti+$yusuan+$dongti-$yiti}">
+
+<script type="text/javascript" src="/static/wapapp/public/wallet/js/api.js"></script>
+<script src="/static/wapapp/public/wallet/js/common.js"></script>
+<script>
+  mui.init();
+</script>
+<script>
+  var shouxu = '',
+    fuwu = '',
+    min = '';
+  $('.recharge_box_cont>ul>li:not(".mo_input")').on('tap', function() {
+    $(this).addClass('on').siblings().removeClass('on');
+    $('#money_num').val($(this).attr('title'));
+  });
+  $('.recharge_box_cont>ul>li.mo_input').on('tap', function() {
+    $(this).addClass('on').siblings().removeClass('on');
+    $('#money_num').val('');
+  });
+  var money = '';
+  //提现
+
+  get_data();
+  var zhenti = $('#zhenti').val();
+  $('#rechargeIma').on('tap', function() {
+
+    if ($('#money_num').val() == '') {
+      money = $('.mo_input input').val();
+    } else {
+      money = $('#money_num').val();
+    }
+    if( Number(money) >  Number(zhenti)){
+
+      mui.toast('提现金额不可大于'+zhenti);
+      return;
+    }
+    if (money == '') {
+      mui.toast('请输入提现金额！');
+    } else {
+      $post('/api2/user/cash', {
+        money: money
+      }, function(data) {
+        if (data.status == 1) {
+          var _shouxu = accMul(shouxu / 100.0, money);
+          var true_money = Number(money) - Number(_shouxu) - Number(fuwu);
+          mui.confirm('<table class="cont"><tr><td>提现金额</td><td>￥' + money + '</td></tr><tr><td>提现手续费</td><td>￥' + _shouxu + '</td></tr><tr><td>提现服务费</td><td>￥' + fuwu + '</td></tr><tr><td>应到金额</td><td>￥' + true_money + '</td></tr></table>', '提现', ['取消', '确定'], function(e) {
+            if (e.index == 1) {
+              mui.alert(data.msg, '提示', function() {
+                location.href = 'spendintegral.html';
+              });
+            } else {}
+          }, 'div');
+        } else {
+          mui.toast(data.msg);
+        }
+      });
+    }
+
+
+  })
+
+  function get_data() {
+    //个人信息
+    $post('/api2/user/getuserinfo', {}, function(data) {
+      var obj = data.data;
+      if (data.code == 1) {
+        $('#money').html(obj.money);
+        shouxu = obj.shouxu_cost;
+        fuwu = obj.fuwu_cost;
+        min = obj.cash_unit;
+        $('.tx_min').html(min);
+        $('#shouxu').html(shouxu);
+        $('#fuwu').html(fuwu);
+      }
+    });
+  }
+  //精确乘法函数
+  function accMul(arg1, arg2) {
+    var m = 0,
+      s1 = arg1.toString(),
+      s2 = arg2.toString();
+    try {
+      m += s1.split(".")[1].length
+    } catch (e) {}
+    try {
+      m += s2.split(".")[1].length
+    } catch (e) {}
+    return (Number(s1.replace(".", "")) * Number(s2.replace(".", "")) / Math.pow(10, m)).toFixed(2);
+  }
+</script>
+</body>
+
+</html>

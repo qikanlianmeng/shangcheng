@@ -1,0 +1,199 @@
+{include file="public/header"/}
+<style type="text/css">
+    .chosen-container{
+        width: 100px !important;
+    }
+
+    .chosen-search{
+        display: none;
+    }
+    .select-wrap{
+        border: 1px solid #1ab394;
+        margin: 0 15px;
+        padding:0;
+        width: auto;
+        float: right;
+    }
+    .chosen-container-single .chosen-single{
+        border: none;
+    }
+    .search:focus{
+        border: none;
+    }
+    .table>thead>.long-tr>th{
+        position: relative;
+    }
+    .long-tr th:hover::after{
+        content: "";
+        display: inline-block;
+        background-color: #1ab394;
+        width: 100%;
+        height: 3px;
+        position: absolute;
+        bottom: 0px;
+        left:0px;
+    }
+    .chosen-container-single .chosen-single span{
+        margin-right: 0;
+    }
+</style>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!-- Panel Other -->
+    <div class="ibox float-e-margins">
+        <div class="ibox-title">
+            <h5>会员日志列表</h5>
+        </div>
+        <div class="ibox-content">
+            <!--搜索框开始-->
+            <div class="row">
+                <div class="col-sm-12">                                             
+                    <form name="admin_list_sea" class="form-search" method="post" action="{:url('front_log')}" id="search">
+                        <div class="col-sm-12 select-wrap" style="float: left;">
+                            <input placeholder="开始时间" type="text" class="form-control" name="start" style="width:150px;vertical-align: middle;display: inline-block;border:none;" id="start" value="{$start}"/>
+                            <input placeholder="结束时间" type="text" class="form-control" name="end" style="width:150px;vertical-align: middle;display: inline-block;border:none;" id="end" value="{$end}"/>
+                            <input placeholder="会员手机号/编号/昵称" type="text" class="form-control search" id="user" name="user" style="width:200px;vertical-align: middle;display: inline-block;border:none;" value="{$user}">
+                            <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" id="submit">搜索</button>
+                            <button class="btn btn-outline btn-primary" type="submit" style="margin-bottom:0;border-top:0;border-right:0;border-bottom:0;border-radius:0;" id="export">导出</button>
+                        </div>
+                    </form>                         
+                </div>
+            </div>
+            <!--搜索框结束-->
+            <div class="hr-line-dashed"></div>
+
+            <div class="example-wrap">
+                <div class="example">
+                <form class="form-search" method="post" action="{:url('delete_front')}">
+                    <table class="table table-bordered table-hover">
+                        <thead>
+                            <tr><th colspan="7">
+                                <label><input type="checkbox" id="all_checkbox"/>全选</label>&nbsp;&nbsp;&nbsp;
+                                <button class="btn btn-danger" type="submit" id="delete"><i class="fa fa-trash-o"></i> 删除</button>
+                            </th></tr>
+                        </thead>
+                        <thead>
+                            <tr class="long-tr">
+                                <th width="10%">ID</th>
+                                <th width="15%">会员信息</th>
+                                <th width="20%">描述</th>
+                                <th width="15%">操作前数据</th>
+                                <th width="15%">操作后数据</th>
+                                <th width="8%">操作IP</th>
+                                <th width="10%">操作时间</th>
+
+                            </tr>
+                        </thead>
+                        <script id="list-template" type="text/html">
+                            {{# for(var i=0;i<d.length;i++){  }}
+                                <tr class="long-td">
+                                    <td><input type="checkbox" value="{{d[i].id}}" name="id[]"/>{{d[i].id}}</td>
+                                    <td>编号：{{d[i].uid}}<br/>手机号：{{d[i].mobile}}<br/>昵称：{{d[i].nickname}}  </td>
+                                    <td>{{d[i].description}}</td>
+                                    <td>{{d[i].before}}</td>
+                                    <td>{{d[i].after}}</td>
+                                    <td>{{d[i].ip}}</td>
+                                    <td>{{d[i].add_time}}</td> 
+                                    <!--
+                                    <td>
+                                        <a href="javascript:;" onclick="del_log({{d[i].log_id}})" class="btn btn-danger btn-outline btn-xs">
+                                            <i class="fa fa-trash-o"></i> 删除
+                                        </a>
+                                    </td>
+                                    -->
+                                </tr>
+                            {{# } }}
+                        </script>
+                        <tbody id="list-content"></tbody>
+                    </table>
+                </form>
+                    <div id="AjaxPage" style="text-align:right;"></div>
+                    <div style="text-align: right;">
+                        共{$count}条数据，<span id="allpage"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Panel Other -->
+</div>
+
+<!-- 加载动画 -->
+<div class="spiner-example">
+    <div class="sk-spinner sk-spinner-three-bounce">
+        <div class="sk-bounce1"></div>
+        <div class="sk-bounce2"></div>
+        <div class="sk-bounce3"></div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+<link rel="stylesheet" type="text/css" href="/static/admin/js/datetimepicker/jquery.datetimepicker.css"/ >
+<script src="/static/admin/js/datetimepicker/jquery.datetimepicker.js"></script>
+<script type="text/javascript">
+    $(function(){
+
+        $('#export').click(function () {
+            $('#search').attr('action',"{:url('export_front_log')}");
+        });
+        $('#submit').click(function () {
+            $('#search').attr('action',"{:url('front_log')}");
+        });
+        $('#all_checkbox').change(function(){
+            $(':checkbox[name="id[]"]').prop('checked',$(this).prop('checked'));
+        })
+    });
+    $("#start").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+    $("#end").datetimepicker({lang:'ch',timepicker:false,format:'Y/m/d',validateOnBlur:false});
+    //laypage分页
+    Ajaxpage();
+    function Ajaxpage(curr){
+        var start = "{$start}";
+        var end = "{$end}";
+        var user = "{$user}";
+        $.getJSON('{:url("log/front_log")}', {page: curr || 1,start:start,end:end,user:user}, function(data){
+            $(".spiner-example").css('display','none'); //数据加载完关闭动画 
+            if(data==''){
+                $("#list-content").html('<td colspan="20" style="padding-top:10px;padding-bottom:10px;font-size:16px;text-align:center">暂无数据</td>');
+            }else{
+                var tpl = document.getElementById('list-template').innerHTML;
+                laytpl(tpl).render(data, function(html){
+                    document.getElementById('list-content').innerHTML = html;
+                });
+                laypage({
+                    cont: $('#AjaxPage'),//容器。值支持id名、原生dom对象，jquery对象,
+                    pages:'{$allpage}',//总页数
+                    skip: true,//是否开启跳页
+                    skin: '#1AB5B7',//分页组件颜色
+                    curr: curr || 1,
+                    groups: 3,//连续显示分页数
+                    jump: function(obj, first){
+                        if(!first){
+                            Ajaxpage(obj.curr)
+                        }
+                        $('#allpage').html('第'+ obj.curr +'页，共'+ obj.pages +'页');
+                    }
+                });
+            }
+        });
+    }
+
+
+    //删除日志
+    function del_log(log_id){
+        lunhui.confirm(log_id,'{:url('del_log')}');
+    }
+    //IOS开关样式配置
+    var elem = document.querySelector('.js-switch');
+    var switchery = new Switchery(elem, {
+        color: '#1AB394'
+    });
+    var config = {
+        '.chosen-select': {},
+    }
+    for (var selector in config) {
+        $(selector).chosen(config[selector]);
+    }
+</script>
+</body>
+</html>

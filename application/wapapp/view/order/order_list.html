@@ -1,0 +1,206 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="/static/wapapp/shop/css/shopstyle.css">
+<style>
+    .o_footer {
+        padding: 10px 15px;
+    }
+    
+    .o_footer p {
+        /* margin-bottom: 10px; */
+    }
+    
+    .mui-btn {
+        font-size: 16px !important;
+    }
+</style>
+</head>
+
+<body>
+    <header id="header" class="mui-bar mui-bar-nav">
+        <h1 class="mui-title">订单管理</h1>
+        <a class="mui-icon mui-icon-left-nav mui-pull-left" href="/wapapp/usercenter/usercenter"></a>
+        <div id="nav_more" class="mui-btn mui-btn-link mui-pull-right"><span class="mui-icon mui-icon-more" style="font-size: 26px;color:#333"></span>
+            <div class="small_box">
+                <a href='/wapapp/index/index'>首页</a>
+                <a href='/wapapp/cart/shopcar'>购物车</a>
+                <a href='/wapapp/usercenter/usercenter'>个人中心</a>
+            </div>
+        </div>
+    </header>
+    <div class="mui-content" id="slider">
+        <div class="mui-slider-indicator mui-segmented-control mui-segmented-control-inverted orderTit" style="z-index: 1">
+            <a class="mui-control-item" href="#item1mobile">全部</a>
+            <a class="mui-control-item" href="#item2mobile">待付款</a>
+            <a class="mui-control-item" href="#item3mobile">待发货</a>
+            <a class="mui-control-item" href="#item4mobile">待收货</a>
+            <a class="mui-control-item" href="#item5mobile">待评价</a>
+        </div>
+        <div class="mui-slider-group" style="padding-top: 50px;">
+            <div id="item1mobile" class="mui-slider-item mui-control-content mui-active">
+                <ul class="mui-table-view shopcarList orderList" id="allOrder">
+                    <!-- <li class="mui-table-view-cell">
+                        <h3 class="color-main text-16">
+                            交易成功
+                        </h3>
+                        <a href="{:url('order/order_detail')}">
+                            <div class="mui-table-view-cell book-tuwen">
+                                <img src="http://resources-user-image.vxue360.com/7645e8f5832d5a2332b73afe0e0c6b93.png" class="mui-pull-left tuwen-img">
+                                <p class="mui-pull-left tuwen-name mui-ellipsis-2 color-333">物理考试试卷（名师预测名师解析高分秘籍析高分秘籍）析高分秘籍析高分秘籍</p>
+                                <span class="book-num mui-pull-right text-15">x1</span>
+                                <p class="tuwen-price">
+                                    <span class="color-999 text-13">颜色：白色； 尺码：L</span>
+                                    <span class="sale-price mui-pull-right color-333 mui-block">￥18.9</span>
+                                </p>
+                            </div>
+                            <div class="mui-table-view-cell book-tuwen">
+                                <img src="http://resources-user-image.vxue360.com/7645e8f5832d5a2332b73afe0e0c6b93.png" class="mui-pull-left tuwen-img">
+                                <p class="mui-pull-left tuwen-name mui-ellipsis-2 color-333">物理考试试卷（名师预测名师解析高分秘籍析高分秘籍）析高分秘籍析高分秘籍</p>
+                                <span class="book-num mui-pull-right text-15">x1</span>
+                                <p class="tuwen-price">
+                                    <span class="color-999 text-13">颜色：白色； 尺码：L</span>
+                                    <span class="sale-price mui-pull-right color-333 mui-block">￥18.9</span>
+                                </p>
+                            </div>
+                        </a>
+                        <p class="total">
+                            共计1件商品 合计：
+                            <span class="color-main">
+                                ￥18.9
+                            </span> (含运费￥0)
+                        </p>
+                        <div class="opera">
+                            <a href="{:url('order/comment')}" class="mui-btn mui-btn-outlined mui-btn-outlined-main">评价</a>
+                            <a href="{:url('order/wuliu')}" class="mui-btn mui-btn-outlined">查看物流</a>
+                        </div>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <h3 class="color-main text-16">
+                            交易完成
+                        </h3>
+                        <a href="{:url('order/order_detail')}">
+                            <div class="mui-table-view-cell book-tuwen">
+                                <img src="http://resources-user-image.vxue360.com/7645e8f5832d5a2332b73afe0e0c6b93.png" class="mui-pull-left tuwen-img">
+                                <p class="mui-pull-left tuwen-name mui-ellipsis-2 color-333">物理考试试卷（名师预测名师解析高分秘籍析高分秘籍）析高分秘籍析高分秘籍</p>
+                                <span class="book-num mui-pull-right text-15">x1</span>
+                                <p class="tuwen-price">
+                                    <span class="color-999 text-13">颜色：白色； 尺码：L</span>
+                                    <span class="sale-price mui-pull-right color-333 mui-block">￥18.9</span>
+                                </p>
+                            </div>
+                        </a>
+                        <p class="total">
+                            共计1件商品 合计：
+                            <span class="color-main">
+                                ￥18.9
+                            </span> (含运费￥0)
+                        </p>
+                        <div class="opera">
+                            <a href="{:url('order/comment')}" class="mui-btn mui-btn-outlined mui-btn-outlined-main">追加评论</a>
+                            <a href="{:url('order/wuliu')}" class="mui-btn mui-btn-outlined">查看物流</a>
+                        </div>
+                    </li>
+                    <li class="mui-table-view-cell">
+                        <h3 class="color-main text-16">
+                            交易关闭
+                            <i class="iconfont icon-shanchu color-999"></i>
+                        </h3>
+                        <a href="{:url('order/order_detail')}">
+                            <div class="mui-table-view-cell book-tuwen">
+                                <img src="http://resources-user-image.vxue360.com/7645e8f5832d5a2332b73afe0e0c6b93.png" class="mui-pull-left tuwen-img">
+                                <p class="mui-pull-left tuwen-name mui-ellipsis-2 color-333">物理考试试卷（名师预测名师解析高分秘籍析高分秘籍）析高分秘籍析高分秘籍</p>
+                                <span class="book-num mui-pull-right text-15">x1</span>
+                                <p class="tuwen-price">
+                                    <span class="color-999 text-13">颜色：白色； 尺码：L</span>
+                                    <span class="sale-price mui-pull-right color-333 mui-block">￥18.9</span>
+                                </p>
+                            </div>
+                        </a>
+                        <p class="total">
+                            共计1件商品 合计：
+                            <span class="color-main">
+                                ￥18.9
+                            </span> (含运费￥0)
+                        </p>
+                    </li> -->
+                </ul>
+            </div>
+            <div id="item2mobile" class="mui-slider-item mui-control-content">
+                <ul class="mui-table-view shopcarList orderList" id="waitPayment">
+                </ul>
+            </div>
+            <div id="item3mobile" class="mui-slider-item mui-control-content">
+                <ul class="mui-table-view shopcarList orderList" id="waitSendout">
+                </ul>
+            </div>
+            <div id="item4mobile" class="mui-slider-item mui-control-content">
+                <ul class="mui-table-view shopcarList orderList" id="waitTake">
+                </ul>
+            </div>
+            <div id="item5mobile" class="mui-slider-item mui-control-content">
+                <ul class="mui-table-view shopcarList orderList" id="waitAssess">
+                </ul>
+            </div>
+            <div class="dropdown mui-text-center color-999 text-14 m-b"></div>
+        </div>
+        <div class="noAttend" style="display: none;">
+            <i class="iconfont icon-zanwu"></i>
+            <p>您还没有订单哦~</p>
+        </div>
+    </div>
+    {include file="public/footer" /}
+    <script type="text/html" id="orderListTem">
+        <li class="mui-table-view-cell" data-id="[[order_id]]">
+            <h3 class="color-main text-16">
+                [[if order_status==0 && pay_status==0 && shipping_status==0]] 待付款 [[else if (order_status==0 || order_status==1) && (pay_status==1 || pay_status==4) && shipping_status==0]] 待发货 [[else if order_status==1 && (pay_status==1 || pay_status==4) && shipping_status==1]]
+                待收货 [[else if order_status==3]] 交易关闭 [[else if order_status==4 && (pay_status==1 || pay_status==4) && shipping_status==2]] 交易完成 [[else if order_status==2 && (pay_status==1 || pay_status==4) && shipping_status==2]] 已收货 [[/if]]
+            </h3>
+            <a href="/wapapp/order/order_detail/order_id/[[order_id]]">
+            [[each goods_list as value i]]
+            <div class="mui-table-view-cell book-tuwen">
+                <img src="[[goods_list[i].img]]" class="mui-pull-left tuwen-img">
+                <p class="mui-pull-left tuwen-name mui-ellipsis-2 color-333">[[goods_list[i].goods_name]]</p>s
+                <span class="book-num mui-pull-right text-15">x[[goods_list[i].goods_num]]</span>
+                <p class="fl" style="width:60%">
+                    [[if !order_type]]
+                <span class="group_span">[[order_group]]</span></p>[[/if]]
+                <p class="tuwen-price">
+                    <span class="color-999 text-13">[[goods_list[i].spec_key_name]]</span>
+                    <span class="sale-price mui-pull-right color-main mui-block">￥[[goods_list[i].goods_price]]</span>
+                </p>
+            </div>
+            [[/each]]
+        </a>
+            <p class="total">
+                共计[[goods_num]]件商品 合计：
+                <span class="color-main">
+                ￥[[order_amount]]
+            </span> (含运费￥[[shipping_price]])
+            </p>
+            [[if o_g==2]]
+            <div class="o_footer">
+                <p class="color-main">预计收益：[[income]]</p>
+                <p class="color-main">结算时间：[[settle_time]]</p>
+                <p class="color-main">结算状态：[[is_settle]]</p>
+            </div>
+            [[/if]]
+            <div class="opera">
+                [[if order_status==0 && pay_status==0 && shipping_status==0]]
+                <a href="/wapapp/order/pay_order/order_id/[[order_id]]" class="mui-btn mui-btn-outlined">去付款</a>
+                <a href="javascript:void(0);" class="mui-btn mui-btn-outlined cancelOrder">取消订单</a> [[/if]] [[if order_status==1 && pay_status==1 && shipping_status==1]]
+                <a href="javascript:void(0);" class="bg-main once-exchange subGet">确认收货</a> [[/if]] [[if order_status==2 || order_status==4 && pay_status==1 && shipping_status==1]] [[if is_comment==1]]
+                <a href="/wapapp/order/comment/order_id/[[order_id]]" class="mui-btn mui-btn-outlined mui-btn-outlined-main">追加评论</a> [[else]]
+                <a href="/wapapp/order/comment/order_id/[[order_id]]" class="mui-btn mui-btn-outlined mui-btn-outlined-main">评价</a> [[/if]] [[/if]] [[if shipping_status&&o_g!=2]]
+                <a href="/wapapp/order/wuliu/order_id/[[order_id]]" class="mui-btn mui-btn-outlined">查看物流</a> [[else]]
+                <a href="/wapapp/order/order_detail/order_id/[[order_id]]" class="mui-btn mui-btn-outlined">查看订单</a> [[/if]][[if order_status==3]]
+                <a href="javascript:;" class="mui-btn mui-btn-outlined to_del">删除订单</a>[[/if]]
+            </div>
+        </li>
+    </script>
+    <script type="text/javascript">
+        var order_type = "{:input('type')}";
+        var tab_num = "{:input('tab_num')}";
+        seajs.use(['/static/wapapp/shop/js/orderList']);
+    </script>
+</body>
+
+</html>

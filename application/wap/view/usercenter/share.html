@@ -1,0 +1,134 @@
+{include file="public/header" /}
+<link rel="stylesheet" type="text/css" href="__CSS__/shopstyle.css">
+<link rel="stylesheet" type="text/css" href="/static/mob/yang/css/style.css">
+<link rel="stylesheet" type="text/css" href="/static/mob/yang/css/icon.css">
+
+</head>
+<body>
+<header id="header" class="mui-bar mui-bar-nav" style="border-bottom:none!important;margin: 0 auto;">
+    <h1 class="mui-title">我的分享二维码</h1>
+    <a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+</header>
+<div class="mui-content  ">
+    <div class="index_header">
+            <div class="invite_info">
+                
+            </div>
+            <div class="inner">
+                <p><img class="qr_img" src="" alt="" ></p>
+                <p class="only_code" style="display:none;">您的专属邀请码</p>
+                <p class="invite_code" style="display:none;"></p>
+                <p> <button type="button" class="mui-btn copy_code btn">的分享二维码</button></p>
+            </div>
+
+    </div>
+        
+</div>
+
+<script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
+{include file="public/footer" /}
+
+<script src="/static/mob/yang/js/jquery.3.1.1.js"></script>
+<script src="/static/mob/yang/js/common.js"></script>
+<script type="text/javascript">
+    define = null;
+    require = null;
+</script>
+<script>
+    
+    $(function(){
+
+  
+    $get('/api/user/shaer_url',{},function(data){
+        // console.log(JSON.stringify(data));
+        if(data.code==1){
+            $('.qr_img').attr('src',data.data.qrcode);
+        }
+    });
+    var track_id='';
+    $get('/api/user/getuserinfo',{},function(data){
+        // console.log(JSON.stringify(data));
+        if(data.code==1){
+            $('.copy_code').html(data.data.account+'的分享二维码');
+            track_id=data.data.mobile;
+        }
+        
+    });
+
+    var urls=location.href;
+        console.log(urls);
+    var baseUrls="http://www.stdeye.com/";
+        
+    
+        // setTimeout(function(){
+        //     location.href='/wap/index/register.html?track_id='+track_id
+        // },1000)
+        
+        
+  
+        
+      
+            if(IS_WEIXIN==1){
+            $get('/api/weixin/getJsSign',{purl:urls},function(data){
+                // console.log(JSON.stringify(data));
+                    wx.config({
+                        debug: false, // 开启调试模式,调用的所有api的返回值会在客户端alert出来，若要查看传入的参数，可以在pc端打开，参数信息会通过log打出，仅在pc端时才会打印。
+                        appId: data.appId, // 必填，公众号的唯一标识
+                        timestamp: data.timestamp, // 必填，生成签名的时间戳
+                        nonceStr: data.nonceStr, // 必填，生成签名的随机串
+                        signature: data.signature,// 必填，签名，见附录1
+                        jsApiList: [
+                            'updateTimelineShareData',
+                            'checkJsApi',
+                            'onMenuShareTimeline',
+                            'onMenuShareAppMessage',
+                            'updateAppMessageShareData'
+                        ] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+                    });
+                    wx.ready(function(){
+              
+                        wx.onMenuShareTimeline({
+                            title:'神秘西域，掌中牧场', // 分享标题
+                            link:  baseUrls+'/wap/index/register.html?track_id='+track_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl: baseUrls+'/static/mob/shop/images/default/touxiang.jpg', // 分享图标
+                            success: function () {
+                                // 用户点击了分享后执行的回调函数
+                                $get('/api/yangyang/share',{},function(ret){
+                                    // alert(ret.msg);
+                                    if(ret.code==1){
+                                        location.href=urls;
+                                    }
+                                });
+                            }
+                        });
+                        wx.onMenuShareAppMessage({
+                            title: '神秘西域，掌中牧场', // 分享标题
+                            desc: '自由线上牧场，随心体验养殖乐趣，立即免费注册成为会员，与好友互动！', // 分享描述
+                            link: baseUrls+'/wap/index/register.html?track_id='+track_id, // 分享链接，该链接域名或路径必须与当前页面对应的公众号JS安全域名一致
+                            imgUrl:baseUrls+'/static/mob/shop/images/default/touxiang.jpg', // 分享图标
+                            type: 'link', // 分享类型,music、video或link，不填默认为link
+                            dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
+                            success: function () {
+                                // 用户点击了分享后执行的回调函数
+                                $get('/api/yangyang/share',{},function(ret){
+                                    // alert(ret.msg);
+                                    if(ret.code==1){
+                                        location.href=urls;
+                                    }
+                                });
+                            }
+                        });
+                  
+                    });
+                    wx.error(function(res){
+                        // config信息验证失败会执行error函数，如签名过期导致验证失败，具体错误信息可以打开config的debug模式查看，也可以在返回的res参数中查看，对于SPA可以在这里更新签名。
+                    });
+                });
+        }else{
+            // alert('不是微信');
+            console.log('不是微信！！');
+        }
+    })
+</script>
+</body>
+</html>
