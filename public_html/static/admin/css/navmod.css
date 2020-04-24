@@ -1,0 +1,11 @@
+.J_tabTheme{
+        right: 140px;
+        width: 61px!important;
+        background: #fff!important;
+        border-left: solid 1px #eee;
+}
+.roll-right.J_tabRight{right: 200px;}
+#right-sidebar{top: 42px;}
+.miniNav{position: absolute;right: 10px;z-index: 100;}
+.fixed-sidebar.mini-navbar .nav-header{padding-bottom: 40px;}
+.fixed-sidebar.mini-navbar .miniNav{top: 40px;}

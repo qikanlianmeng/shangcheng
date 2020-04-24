@@ -1,0 +1,307 @@
+
+.login-bg{
+    background: url(/static/mob/yang/imgs/login/bg_dengllu2.jpg) no-repeat;
+    background-size: 100%;
+    height: 100vh;
+    width: 100vw;
+}
+.logo{
+    width: 100%;
+    height: 6rem;
+    background: url('/static/mob/yang/imgs/login/login-logo.png') no-repeat center center;
+    background-size: 100% auto;
+}
+.login-box{
+    padding: 0 1rem;
+}
+.from-item{
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 0.33rem;
+    position: relative;
+}
+.label{
+    width: 0.96rem;
+    height: 0.45rem;
+    line-height: .45rem;
+    margin-top: 0.15rem;
+    margin-right: 0.25rem;
+}
+.input-bg2{
+    height: 0.75rem;
+    background: url('/static/mob/yang/imgs/login/img_shurukuangdi_middle.png') repeat-x;
+    background-size: auto 100%;
+    position: relative;
+}
+.input-bg2::before, .input-bg2::after{
+    background: url('/static/mob/yang/imgs/login/img_shurukuangdi2.png') no-repeat;
+    background-size: auto 100%;
+    content: '';
+    width: 0.2rem;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
+.input-bg2::before{
+    left: -0.15rem;
+    background-position-x: left;
+}
+
+.input-bg2::after{
+    right: -0.15rem;
+    background-position-x: right;
+}
+.input-bg2 input{
+    position: absolute;
+    z-index: 2;
+    border: none;
+    background: none;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: #fff;
+}
+.input-bg2 input::-webkit-input-placeholder{
+    color: #ffb680;
+}
+
+
+.input-bg{
+    height: 0.75rem;
+    background: url('/static/mob/yang/imgs/login/edit_shurukuang_middle.png') repeat-x;
+    background-size: auto 100%;
+    position: relative;
+}
+.input-bg::before, .input-bg::after{
+    background: url('/static/mob/yang/imgs/login/edit_shurukuang.png') no-repeat;
+    background-size: auto 100%;
+    content: '';
+    width: 0.2rem;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
+.input-bg::before{
+    left: -0.15rem;
+    background-position-x: left;
+}
+
+.input-bg::after{
+    right: -0.15rem;
+    background-position-x: right;
+}
+.input-bg input{
+    position: absolute;
+    z-index: 2;
+    border: none;
+    background: none;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: #fff;
+}
+.input-bg input::-webkit-input-placeholder{
+    color: #ffb680;
+}
+
+
+.account-input{
+    width: 3.9rem;
+}
+.password-input{
+    width: 3.15rem;
+}
+.account-label{
+    background: url(/static/mob/yang/imgs/login/zi_zhanghao.png) no-repeat;
+    background-size: auto 100%;
+}
+.password-label{
+    background: url(/static/mob/yang/imgs/login/zi_mima.png) no-repeat;
+    background-size: auto 100%;
+}
+.forget-pwd{
+    display: inline-block;
+    width: 0.55rem;
+    font-size: 0.25rem;
+    color: #9c281f;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.login-btn{
+    background: url('/static/mob/yang/imgs/login/btn_denglu.png') no-repeat;
+    background-size: auto 100%;
+    height: 1.7rem;
+    width: 4.49rem;
+    margin: 0 auto;
+    font-size: 0.5rem;
+    color: #9c281f;
+    font-weight: bold;
+    line-height: 1.9rem;
+    text-align: center;
+}
+.register-btn, .register-btn2{
+    background: url('/static/mob/yang/imgs/login/btn_lan.png');
+    background-repeat:  no-repeat;
+    background-size: 100%;
+    height: 1.1rem;
+    width: 3.25rem;
+    margin: 0 auto;
+    margin-top: 0.17rem;
+    font-size: 0.5rem;
+    color: #2456a1;
+    font-weight: bold;
+    line-height: 1.05rem;
+    text-align: center;
+}
+
+/* 注册 */
+.register-btn2{
+    background-image: url('/static/mob/yang/imgs/login/btn_huang.png');
+    color: #bc6300;
+    margin-top: 0.6rem;
+}
+
+
+.zhuce{
+    /* background: url('/static/mob/yang/imgs/login/zhuce.png') no-repeat center top; */
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+}
+.zhuce-title{
+    background: url('/static/mob/yang/imgs/login/zhuce_title.png') no-repeat center bottom;
+    background-size: 8.86rem auto;
+    height: 4.37rem;
+    position: relative;
+}
+.zhuce-title .close{
+    position: absolute;
+    top: 3rem;
+    right: 0.4rem;
+    width: 0.8rem;
+    height: 0.8rem;
+}
+.zhuce-box{
+    width: 100%;
+    background: url('/static/mob/yang/imgs/login/zhuce-middle.png') repeat-y center top;
+    background-size: 8.86rem auto;
+    padding: 0.5rem 0.8rem;
+    padding-bottom: 0;
+    box-sizing: border-box;
+    position: relative;
+    top: -0.02rem;
+}
+.zhuce-bottom{
+    background: url('/static/mob/yang/imgs/login/zhuce_bottom.png') no-repeat center top;
+    background-size: 8.86rem auto;
+    height: 0.7rem;
+    position: relative;
+    top: -0.04rem;
+}
+.zhuce-from-item{
+    display: flex;
+    flex-flow: row;
+    margin-bottom: 0.33rem;
+    position: relative;
+    line-height: 0.75rem;
+}
+
+.phone-label.stroke{
+    width: 1.2rem;
+    padding-left: 0.4rem;
+    line-height: 0.4rem;
+    font-size: 0.33rem;
+}
+.input-bg2{
+    height: 0.75rem;
+    background: url('/static/mob/yang/imgs/login/img_shurukuangdi_middle.png') repeat-x;
+    background-size: auto 100%;
+    position: relative;
+}
+.input-bg2::before, .input-bg2::after{
+    background: url('/static/mob/yang/imgs/login/img_shurukuangdi2.png') no-repeat;
+    background-size: auto 100%;
+    content: '';
+    width: 0.2rem;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+}
+
+.input-bg2::before{
+    left: -0.15rem;
+    background-position-x: left;
+}
+
+.input-bg2::after{
+    right: -0.15rem;
+    background-position-x: right;
+}
+.input-bg2 input{
+    position: absolute;
+    z-index: 2;
+    border: none;
+    background: none;
+    height: 100%;
+    width: 100%;
+    outline: none;
+    color: #fff;
+}
+.input-bg2 input::-webkit-input-placeholder{
+    color: #a48857;
+}
+.stroke{
+    font-family: '微软雅黑';
+    text-shadow: 0 0.03rem #7d5827, 0.03rem 0 #7d5827, -0.03rem 0 #7d5827, 0 -0.03rem #7d5827;
+    -webkit-text-stroke: 0.01rem #7d5827;
+    font-size: 0.4rem;
+    font-weight: bold;
+    color: #fff;
+    margin-right: 0.4rem;
+    text-align: right;
+    width: 1.6rem;
+}
+
+.stroke {
+    position: relative;
+    z-index: 0;
+}
+.stroke::before {
+    content: attr(data-text);
+    position: absolute;
+    -webkit-text-stroke: 0.06rem #7d5827;
+    z-index: -1;
+}
+.input-bg2.input-1{
+    width: 3.04rem;
+}
+.input-bg2.input-2{
+    width: 1.8rem;
+}
+.send-msg-btn{
+    width: 1rem;
+    height: 0.75rem;
+    background-image: url('/static/mob/yang/imgs/login/btn_lv.png');
+    background-size: 100% 100%;
+    color: #167d0e;
+    font-size: 0.32rem;
+    background-repeat: no-repeat;
+    margin-left: 0.4rem;
+    text-align: center;
+}
+.send-msg-btn.sended{
+    background-image: url('/static/mob/yang/imgs/login/btn_gray.png');
+    font-size: 0.26rem;
+    color: #5a5a5a;
+}
+.send-msg-btn.sended span{
+    font-size: 0.12rem;
+}

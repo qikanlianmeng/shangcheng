@@ -1,0 +1,185 @@
+支付宝
+  =============web方式==============
+ array (
+  '/index/snotify/index/type/ali_charge' => '',
+  'gmt_create' => '2017-09-08 13:13:37',
+  'charset' => 'UTF-8',
+  'subject' => '测试支付宝电脑网站支付',
+  'sign' => 'iy6kzSE85KYgMvpGMfokJXfeROD6vehspl5N5Jy4AMp/TfnrnVkU3WZscStnuz5sQst0KWlmuHKg+tTq4Lhih65KkFbnZq9NWI5EGE2FEYH/kdwEc/zXOiUTyLTW6Vi1aImRQqMK3o38gpOp7D7UIfOr/luVo0cHzxCXfuHPXuBuv/oAeDT3Nx0skPhrrVNi4rUMldzDwuVHXGH+ssVcJ41TwjS4IA1gf+E1+2OlJc2qw+Tf2plXPQf2HpD0X3STB3moUQtqk4htn3TD1Z+VCuUsoGDiJvIXw7ywVF9NUgXcIRLk9V7GbXz3T7qvqhqz2GrEgFesUMB7CQLHFqS0vw==',
+  'buyer_id' => '2088102174962015',
+  'body' => 'ali web pay',
+  'invoice_amount' => '0.01',
+  'notify_id' => '6ae81aca5074690b658572eaa91228fg2u',
+  'fund_bill_list' => '[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]',
+  'notify_type' => 'trade_status_sync',
+  'trade_status' => 'TRADE_SUCCESS',
+  'receipt_amount' => '0.01',
+  'app_id' => '2016082000291972',
+  'buyer_pay_amount' => '0.01',
+  'sign_type' => 'RSA2',
+  'seller_id' => '2088102172166835',
+  'gmt_payment' => '2017-09-08 13:13:43',
+  'notify_time' => '2017-09-08 13:13:45',
+  'passback_params' => '123123',
+  'version' => '1.0',
+  'out_trade_no' => '15048475599071',
+  'total_amount' => '0.01',
+  'trade_no' => '2017090821001004010200460652',
+  'auth_app_id' => '2016082000291972',
+  'point_amount' => '0.00',
+  'type' => 'ali_charge',
+)
+
+
+
+==================wap====================
+array (
+  '/index/snotify/index/type/ali_charge' => '',
+  'gmt_create' => '2017-09-08 13:27:19',
+  'charset' => 'UTF-8',
+  'seller_email' => 'vxdbui0004@sandbox.com',
+  'subject' => '测试支付宝手机网站支付',
+  'sign' => 'pcFbLBzoEYc3tDiBjw4Mz6AvcbyaCBZF//XVe1MzZHLZea/KPZcOKJ/6AYlK7p76moIBY7w8vMndwyBkWlwQCu+kCGceILIKdTMSNTP/K3F+pudAfJhUu9Bxq2Gqjae2quONgNY7rgn0J92Y5FIMh3UglMQLASmY/iPlgRe9UZo7pS0d92eK2cJYdeSgOPUL7NJioDQV1m3XfeH0YImWU6AP7MuRzR0A34OT438uwLcSnS+11xeNKU5CeU/Iy5U+X+K5q3r/xt9AW/QAEIy9XDd8+ipgl9kInac0etlkXml/QO88V5YZkfa7p53VOopJguUx0/plsvR2w6TsPr/4Jg==',
+  'body' => 'ali wap pay',
+  'buyer_id' => '2088102174962015',
+  'invoice_amount' => '0.01',
+  'notify_id' => '7a708506a6663c51caec2e580ac543ag2u',
+  'fund_bill_list' => '[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]',
+  'notify_type' => 'trade_status_sync',
+  'trade_status' => 'TRADE_SUCCESS',
+  'receipt_amount' => '0.01',
+  'app_id' => '2016082000291972',
+  'buyer_pay_amount' => '0.01',
+  'sign_type' => 'RSA2',
+  'seller_id' => '2088102172166835',
+  'gmt_payment' => '2017-09-08 13:27:20',
+  'notify_time' => '2017-09-08 13:27:21',
+  'passback_params' => 'tata',
+  'version' => '1.0',
+  'out_trade_no' => '15048483793581',
+  'total_amount' => '0.01',
+  'trade_no' => '2017090821001004010200460761',
+  'auth_app_id' => '2016082000291972',
+  'buyer_logon_id' => 'jfy***@sandbox.com',
+  'point_amount' => '0.00',
+  'type' => 'ali_charge',
+)
+
+================二维码扫码========================
+array (
+  '/index/snotify/index/type/ali_charge' => '',
+  'gmt_create' => '2017-09-08 13:38:42',
+  'charset' => 'UTF-8',
+  'seller_email' => 'vxdbui0004@sandbox.com',
+  'open_id' => '20880058318748560550519390118301',
+  'subject' => '测试支付宝扫码支付',
+  'sign' => 'dWuYfu68dS+W3zIlK0b4ZVFJoDWfUGSp5XW8XrvlDwzUFjWB/+yQAnSdPpZ3C4T9fPFmdMbEwzl+IOYUiabFkbMLWv2WwuEqFEHcDMHdnCNngSckpEfBxTF//OTCOWj1X6oZ/eiwKFbWi2zo2UbkLvrYi13isa2H4v8Mvrmh278T53aKjh1KFB2ZXIIkQJYR0t95NtgS+llmLsEnl7RE/PjXyugnn1ECj5xX7yUHztc3s/SzKbQGSayHGKHktGfzUVtZLucgigTVtWurb76Q4ECBU5Iu0RoH9QQtw7dd0EgJAl43i4f37HJZ3q/Mvp77ETJcmG3vB6WIjGTcAv3zhA==',
+  'body' => 'ali qr pay',
+  'buyer_id' => '2088102174962015',
+  'invoice_amount' => '0.01',
+  'notify_id' => 'e14ccf221fb1dd4a8ea5ee626004f2eg2u',
+  'fund_bill_list' => '[{"amount":"0.01","fundChannel":"ALIPAYACCOUNT"}]',
+  'notify_type' => 'trade_status_sync',
+  'trade_status' => 'TRADE_SUCCESS',
+  'receipt_amount' => '0.01',
+  'app_id' => '2016082000291972',
+  'buyer_pay_amount' => '0.01',
+  'sign_type' => 'RSA2',
+  'seller_id' => '2088102172166835',
+  'gmt_payment' => '2017-09-08 13:38:50',
+  'notify_time' => '2017-09-08 13:38:51',
+  'version' => '1.0',
+  'out_trade_no' => '15048490916533',
+  'total_amount' => '0.01',
+  'trade_no' => '2017090821001004010200460653',
+  'auth_app_id' => '2016082000291972',
+  'buyer_logon_id' => 'jfy***@sandbox.com',
+  'point_amount' => '0.00',
+  'type' => 'ali_charge',
+)
+
+
+
+================退款===================
+
+{"code":"10000",
+"msg":"Success",
+"buyer_logon_id":"jfy***@sandbox.com",
+"buyer_user_id":"2088102174962015",
+"fund_change":"Y","gmt_refund_pay":"2017-09-08 13:51:18",
+"open_id":"20880058318748560550519390118301",
+"out_trade_no":"15048483793581",
+"refund_fee":"0.01",
+"send_back_fee":"0.00",
+"trade_no":"2017090821001004010200460761",
+"channel":"ali_refund"
+}
+
+
+
+
+
+微信支付
+
+
+===================公众号=========================
+
+array (
+  'appid' => 'wx138f75e84b948401',
+  'attach' => '123456',
+  'bank_type' => 'CFT',
+  'cash_fee' => '1',
+  'device_info' => 'WEB',
+  'fee_type' => 'CNY',
+  'is_subscribe' => 'Y',
+  'mch_id' => '1487979432',
+  'nonce_str' => 'ylhu1t1pvfgb4uanvq938c2kxuaxa1jd',
+  'openid' => 'o6MuIwf4HUcB9CUmX8-Rat-xmIRQ',
+  'out_trade_no' => '15048540587255',
+  'result_code' => 'SUCCESS',
+  'return_code' => 'SUCCESS',
+  'sign' => '90154144F6CAC8024EF71CA24D46AA43',
+  'time_end' => '20170908150111',
+  'total_fee' => '1',
+  'trade_type' => 'JSAPI',
+  'transaction_id' => '4003622001201709080911936457',
+  'channel' => 'wx_charge',
+)
+
+
+
+=====================扫码支付================================
+
+ array (
+  'appid' => 'wx138f75e84b948401',
+  'attach' => '123',
+  'bank_type' => 'CFT',
+  'cash_fee' => '1',
+  'device_info' => 'WEB',
+  'fee_type' => 'CNY',
+  'is_subscribe' => 'Y',
+  'mch_id' => '1487979432',
+  'nonce_str' => 'jkf8s1i5i4p46ec7iokzftth87pr4w6j',
+  'openid' => 'o6MuIwf4HUcB9CUmX8-Rat-xmIRQ',
+  'out_trade_no' => '15048556252387',
+  'result_code' => 'SUCCESS',
+  'return_code' => 'SUCCESS',
+  'sign' => 'EAB8F11AB3CB4A61967D880E3AE5032F',
+  'time_end' => '20170908152735',
+  'total_fee' => '1',
+  'trade_type' => 'NATIVE',
+  'transaction_id' => '4003622001201709080915944598',
+  'channel' => 'wx_charge',
+)
+
+
+
+//微信退款返回的参数 
+{"return_code":"SUCCESS","return_msg":"OK","appid":"wx138f75e84b948401","mch_id":"1487979432","nonce_str":"yfry8h4llzwiRWdF","sign":"7BF9947DE70C76829ED2840A218273F0","result_code":"SUCCESS","transaction_id":"4003622001201709080915944598","out_trade_no":"15048556252387","out_refund_no":"15048610951308","refund_id":"50000604062017090801714629921","refund_channel":[],"refund_fee":"1","coupon_refund_fee":"0","total_fee":"1","cash_fee":"1","coupon_refund_count":"0","cash_refund_fee":"1","channel":"wx_refund"}
+
+
+
+
+
+
+

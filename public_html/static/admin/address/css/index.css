@@ -1,0 +1,20 @@
+.ztree li span.button.add{
+    background-position: 0px -110px;
+    margin-right: 2px;
+}
+.ztree li span.button.edit{
+    background-position: 0px -132px;
+}
+.ztree li span.button.remove{
+    background-position: 0px -154px;
+}
+#list-content .secondfloor td:first-child{
+    padding-left: 5%;
+}
+#list-content .thirdfloor td:first-child{
+    padding-left: 10%;
+}
+#list-content tr td:first-child{
+    text-align: left;
+    padding-left: 20px;
+}

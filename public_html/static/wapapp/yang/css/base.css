@@ -1,0 +1,27 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-size: .12rem;
+}
+.hidden{
+    display: none;
+}
+.loading{
+    position: fixed;
+    font-family: '';
+    top: 6.5rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 80%;
+    height: 3.45rem;
+    color: #fff;
+    text-align: center;
+}
+.loading .num{
+    font-size: 1rem;
+}
+.loading .text{
+    font-size: 0.42rem;
+}

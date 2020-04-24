@@ -1,0 +1,15 @@
+.input-group[class*=col-]{
+    float: left;
+}
+@media (max-width:768px) {
+    .input-group[class*=col-]{
+        float: none;
+    }
+}
+.detail{
+    line-height: 34px;
+    color: #999
+}
+.chosen-search{
+    display: none
+}

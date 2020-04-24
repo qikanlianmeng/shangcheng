@@ -1,0 +1,892 @@
+
+@keyframes rotation{
+    from {-webkit-transform: rotate(0deg);}
+    to {-webkit-transform: rotate(360deg);}
+}
+
+.game-bg{
+    overflow: hidden;
+    background: url('/static/mob/yang/imgs/game/bg_youxijiemian.jpg') no-repeat center center;
+    background-size: 100% 100%;
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+}
+.share_weixin{
+    position: fixed;
+    width:100%;
+    height:100%;
+    left:0;
+    top: 0;
+    z-index: 999;
+    background: url('/static/mob/yang/imgs/game/share_weixin.png') no-repeat center center;
+    background-size:100% 100%;
+}
+
+.left{
+    position: absolute;
+    left: 0;
+    top: 0.2rem;
+    width: 1.18rem;
+    z-index: 13;
+}
+.left .avatar-bg{
+    position: relative;
+    height: 1rem;
+}
+
+.avatar{
+    position: absolute;
+    right: 0.1rem;
+    top: 0.1rem;
+    width: 0.7rem;
+    height: 0.7rem;
+    border: 0.05rem solid #ffe7c9;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.avatar-img{
+    width: 100%;
+}
+.avatar-bg::before{
+    content: '';
+    right: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0, .45);
+    border-top-right-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    position: absolute;
+    z-index: 0;
+}
+.btns{
+    margin-left: 0.3rem;
+}
+.btn{
+    width: 0.75rem;
+    height: 0.75rem;
+    margin-top: 0.45rem;
+    background: url('/static/mob/yang/imgs/game/btn_huangseanniuyuan.png') no-repeat;
+    background-size: 100%;
+    position: relative;
+}
+.help::before, .notice::before, .task::before{
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    background-repeat: no-repeat;
+    background-size: 0.39rem 0.42rem;
+    background-position: center center;
+}
+.help::before{
+    background-image: url('/static/mob/yang/imgs/game/icon_bangzhu.png');
+}
+.notice::before{
+    background-image: url('/static/mob/yang/imgs/game/icon_huodong.png');
+}
+.task::before{
+    background-image: url('/static/mob/yang/imgs/game/icon_gonggao.png');
+}
+
+.status{
+    position: absolute;
+    top: 0.1rem;
+    left: 50%;
+    font-size: 0.33rem;
+    color: #eff9da;
+    transform: translateX(-50%);
+    background: url('/static/mob/yang/imgs/game/icon_renyang.png') no-repeat left center;
+    background-size: 0.68rem 0.58rem;
+    height: 0.58rem;
+    line-height: 0.58rem;
+    padding-left: 0.78rem;
+}
+.money{
+    position: absolute;
+    right: 0;
+    top: 0.3rem;
+    max-width: 1.8rem;
+    min-width: 1.5rem;
+    height: 0.61rem;
+    text-align: right;
+    color: #fff;
+    font-size: 0.33rem;
+    box-sizing: border-box;
+    z-index: 99;
+}
+.money::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: url('/static/mob/yang/imgs/game/icon_jinbi2.png') no-repeat left center;
+    background-size: auto 0.61rem;
+}
+.money span{
+    position: absolute;
+    left: 0.65rem;
+    top: 0.12rem;
+    z-index: 2;
+}
+.money::after{
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 0;
+    background: rgba(0,0,0,.45);
+    height: 80%;
+    width: 100%;
+    border-top-left-radius: 0.45rem;
+    border-bottom-left-radius: 0.45rem;
+    z-index: 0;
+}
+.yang_yao{
+    position: absolute;
+    right: 0;
+    top: 0.3rem;
+    max-width: 1.8rem;
+    min-width: 1.5rem;
+    height: 0.61rem;
+    text-align: right;
+    color: #fff;
+    font-size: 0.33rem;
+    box-sizing: border-box;
+    z-index: 99;
+}
+.yang_yao::before{
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    background: url('/static/mob/yang/imgs/game/yaoicon.png') no-repeat left center;
+    background-size: auto 0.55rem;
+}
+.yang_yao span{
+    position: absolute;
+    left: 0.65rem;
+    top: 0.12rem;
+    z-index: 2;
+}
+.yang_yao::after{
+    content: '';
+    position: absolute;
+    top: 10%;
+    left: 0;
+    background: rgba(0,0,0,.45);
+    height: 80%;
+    width: 100%;
+    border-top-left-radius: 0.45rem;
+    border-bottom-left-radius: 0.45rem;
+    z-index: 0;
+}
+.footer-bg{
+    position: fixed;
+    z-index: 10;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 4.12rem;
+    background: url('/static/mob/yang/imgs/game/footer-bg.png') no-repeat center bottom;
+    background-size: auto 100%;
+}
+.footer{
+    display: flex;
+    justify-content: space-around;
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+}
+.navbar-item {
+    height: 100%;
+    width: 25%;
+    text-align: center;
+    position: relative;
+    font-size: 0.33rem;
+    background: url('/static/mob/yang/imgs/game/img_tuxiayinying.png') no-repeat center 0.7rem;
+    background-size: auto 0.9rem;
+}
+.navbar-item.active::after{
+    content: '';
+    background: url('/static/mob/yang/imgs/game/img_texiaozhuandong.png') no-repeat center top;
+    background-size: 1.76rem auto;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    animation: rotation 2s linear infinite;
+
+}
+.navbar-item .text {
+    z-index: 0;
+    height: 100%;
+    color: #fff;
+    padding-top: 1.25rem;
+    position: relative;
+    z-index: 1;
+    font-weight: bold;
+    background-repeat: no-repeat;
+    background-size: auto 1.12rem;
+    background-position: center 0.26rem;
+    text-shadow: 0 0.03rem #c83554, 0.03rem 0 #c83554, -0.03rem 0 #c83554, 0 -0.03rem #c83554;
+    -webkit-text-stroke: 0.01rem #c83554;
+    box-sizing: border-box;
+}
+.navbar-item .text::before {
+    content: attr(data-text);
+    position: absolute;
+    -webkit-text-stroke: 0.06rem #c83554;
+    z-index: -1;
+}
+.navbar-item .fenxiang{
+    background-image: url('/static/mob/yang/imgs/game/icon_fenxiang.png');
+}
+.navbar-item .renyang{
+    background-image: url('/static/mob/yang/imgs/game/icon_renyang.png');
+}
+.navbar-item .yiliao{
+    background-image: url('/static/mob/yang/imgs/game/icon_yiliao-.png');
+}
+.navbar-item .shangcheng{
+    background-image: url('/static/mob/yang/imgs/game/icon_shagcheng.png');
+}
+.navbar-item .my_game{
+    background-image: url('/static/mob/yang/imgs/game/muchang.png');
+}
+.navbar-item .to_index{
+    background-image: url('/static/mob/yang/imgs/game/home.png');
+}
+.navbar-item .to_usercenter{
+    background-image: url('/static/mob/yang/imgs/game/icon_shagcheng.png');
+}
+.navbar-item .to_notice{
+    background-image: url('/static/mob/yang/imgs/game/notice.png');
+}
+.yangqun{
+    position: absolute;
+    z-index: 11;
+    top: 25%;
+    left: 0;
+    width: 100%;
+    height: 50%;
+}
+.yangqun img{
+    width: 100%;
+}
+.shuicao{
+    position: absolute;
+    bottom: 1.79rem;
+    left: 0.28rem;
+    width: 100%;
+    height: 1rem;
+    background: url('/static/mob/yang/imgs/game/img_shuicao.png') no-repeat left bottom;
+    background-size: auto 0.66rem;
+}
+
+/* base dialog */
+.g-dialog{
+    position: fixed;
+    top: 15%;
+    left: 50%;
+    z-index: 14;
+    transform: translate(-50%);
+    width: 100%;
+}
+.g-dialog-title{
+    position: relative;
+    background: url('/static/mob/yang/imgs/game/dialog-title.png') no-repeat center top;
+    background-size: auto 100%;
+    height: 1.38rem;
+    color: #fff;
+    font-size: 0.46rem;
+    text-align: center;
+    padding-top: 0.4rem;
+    box-sizing: border-box;
+}
+.g-dialog-title .close{
+    position: absolute;
+    right: 0.3rem;
+    top: 0;
+    width: 1rem;
+    height: 1rem;
+}
+.g-dialog-box{
+    background: url('/static/mob/yang/imgs/game/dialog-middle.png') repeat-y center top;
+    background-size: 100% auto;
+    padding: 0.2rem 1.25rem;
+    color: #7d5827;
+    line-height: 0.45rem;
+}
+
+.g-dialog-box::after{
+    position: absolute;
+    bottom: -0.62rem;
+    left: 0;
+    content: '';
+    background: url('/static/mob/yang/imgs/game/dialog-bottom.png') no-repeat center top;
+    background-size: auto 100%;
+    width: 100%;
+    height: 0.62rem;
+}
+.g-dialog-box .title{
+    color:#941e18;
+    font-size: 0.33rem;
+}
+.g-dialog-box .time{
+    color: #941e18;
+    font-size: 0.26rem;
+    margin-left: 0.2rem;
+}
+.g-dialog-box .gonggao-box{
+    padding-top: 0.2rem;
+    line-height: 0.44rem;
+}
+/* 公告弹窗 */
+.gonggao-mask{
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .45);
+}
+.gonggao-dialog{
+    position: fixed;
+    background: url('/static/mob/yang/imgs/game/gonggao-bg.png') no-repeat center top;
+    background-size: calc(90% - 0.02rem) auto;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.gonggao-dialog-title{
+    position: relative;
+    height: 3.47rem;
+    color: #fff;
+    font-size: 0.46rem;
+    text-align: center;
+    padding-top: 2.35rem;
+    box-sizing: border-box;
+}
+.gonggao-dialog-title .close{
+    position: absolute;
+    right: 0.3rem;
+    top: 1.8rem;
+    width: 1rem;
+    height: 1rem;
+}
+.gonggao-dialog-box{
+    padding: 0 1.25rem;
+    color: #7d5827;
+    line-height: 0.45rem;
+    height: 7.6rem;
+    overflow-y: auto;
+}
+/* 医疗 */
+.yiliao-dialog{
+    position: fixed;
+    z-index: 14;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    background: url('/static/mob/yang/imgs/game/yiliao-dialog.png') rgba(0, 0, 0, .45) no-repeat center top;
+    background-size: 90% auto;
+}
+.yiliao-dialog-title{
+    position: relative;
+    background-size: auto 100%;
+    height: 3.04rem;
+    color: #fff;
+    font-size: 0.46rem;
+    text-align: center;
+    padding-top: 0.4rem;
+    box-sizing: border-box;
+}
+.yiliao-dialog-title .close{
+    position: absolute;
+    right: 0.3rem;
+    top: 1.3rem;
+    width: 1rem;
+    height: 1rem;
+}
+.yiliao-dialog-box{
+    padding: 0 1.25rem;
+    color: #7d5827;
+    line-height: 0.45rem;
+}
+.yiliao-dialog-box .price{
+    margin-left: 2.9rem;
+    margin-top: 0.38rem;
+    margin-bottom: 1.18rem;
+    font-weight: bold;
+    width: 1.63rem;
+    height: 1rem;
+    line-height: 1rem;
+    text-align: center;
+    color: #cc6b00;
+    font-size: 0.22rem;
+}
+.yiliao-dialog-box .price span{
+    font-size: 0.3rem;
+}
+
+/* 认养弹窗 */
+.renyang-mask{
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .45);
+}
+.renyang-dialog{
+    position: fixed;
+    background: url('/static/mob/yang/imgs/game/renyang-dialog-bg.png') no-repeat center top;
+    background-size: calc(90% - 0.02rem) auto;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.renyang-dialog-title{
+    position: relative;
+    height: 3.47rem;
+    color: #fff;
+    font-size: 0.46rem;
+    text-align: center;
+    padding-top: 2.35rem;
+    box-sizing: border-box;
+}
+.renyang-dialog-title .close{
+    position: absolute;
+    right: 0.3rem;
+    top: 1.8rem;
+    width: 1rem;
+    height: 1rem;
+}
+.renyang-dialog-box{
+    padding: 0 1.25rem;
+    color: #7d5827;
+    line-height: 0.45rem;
+    height: 7.6rem;
+    overflow-y: auto;
+}
+/* 商城弹窗 */
+.shangcheng-mask{
+    position: fixed;
+    z-index: 3;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .45);
+}
+.shangcheng-dialog{
+    position: fixed;
+    background: url('/static/mob/yang/imgs/game/shangcheng-dialog-bg.png') no-repeat center top;
+    background-size: calc(90% - 0.02rem) auto;
+    z-index: 4;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+.shangcheng-dialog-title{
+    position: relative;
+    height: 3.47rem;
+    color: #fff;
+    font-size: 0.46rem;
+    text-align: center;
+    padding-top: 2.35rem;
+    box-sizing: border-box;
+}
+.shangcheng-dialog-title .close{
+    position: absolute;
+    right: 0.3rem;
+    top: 1.3rem;
+    width: 1rem;
+    height: 1rem;
+}
+.shangcheng-dialog-box{
+    padding: 0 1.25rem;
+    color: #7d5827;
+    line-height: 0.45rem;
+    height: 6.8rem;
+    overflow-y: auto;
+}
+
+/* 消息 */
+.g-alert-mask{
+    position: fixed;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .45);
+    z-index: 14;
+}
+.g-alert{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 5.75rem;
+    height: 4.53rem;
+    background: url('/static/mob/yang/imgs/game/alert-bg.png') no-repeat center center;
+    background-size: 90% auto;
+}
+.g-alert-text{
+    text-align: center;
+    color: #941e18;
+    font-size: 0.33rem;
+    margin: 0 auto;
+    margin-top: 1rem;
+    width: 60%;
+}
+.g-alert-btns{
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 0.7rem;
+    position: absolute;
+    bottom: 0.75rem;
+    display: flex;
+    justify-content: space-between;
+}
+.g-alert-btn{
+    font-size: 0.32rem;
+    line-height: 0.92rem;
+    text-align: center;
+}
+.g-alert-btn.btn1{
+    color: #1c7925;
+    width: 1.84rem;
+    height: 0.9rem;
+    background: url('/static/mob/yang/imgs/game/alert-btn1.png') no-repeat;
+    background-size: 100% auto;
+}
+.g-alert-btn.btn2{
+    color: #cc6b00;
+    width: 2.2rem;
+    height: 0.9rem;
+    background: url('/static/mob/yang/imgs/game/alert-btn2.png') no-repeat;
+    background-size: 100% auto;
+}
+/* 分享 */
+.share-bg{
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 14;
+    position: fixed;
+    background: url('/static/mob/yang/imgs/game/share-bg.png') no-repeat center top;
+    background-size:100% 100%;
+}
+.share-box{
+    position: absolute;
+    top: 3.8rem;
+    left: 1.2rem;
+    width: 4.6rem;
+    height: auto;
+    background: #fff;
+}
+.share-bg .close{
+    position: absolute;
+    top: 2.5rem;
+    right: 0.6rem;
+    width: 1rem;
+    height: 1rem;
+}
+.share-bg .footer-btn{
+    position: absolute;
+    bottom: 4.5rem;
+    left: 0;
+    width: 100%;
+    height: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1.6rem;
+    box-sizing: border-box;
+}
+.share-bg .weixin{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+.share-bg .pengyouquan{
+    width: 1.5rem;
+    height: 1.5rem;
+}
+/* 羊信息 */
+.yang-info-mask{
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 100%;
+    z-index: 20;
+}
+.yang-info{
+    position: fixed;
+    right: 0.5rem;
+    top: 1rem;
+    width: 3.55rem;
+}
+.info-title{
+    background: url('/static/mob/yang/imgs/game/tab_yangxinxi.png') no-repeat center bottom;
+    background-size: auto 100%;
+    width: 100%;
+    height: 0.7rem;
+    font-size: 0.35rem;
+    line-height: 0.7rem;
+    color: #964f15;
+    text-align: center;
+    position: relative;
+}
+.yang-id{
+    position: absolute;
+    right: 0.3rem;
+    top: 2rem;
+    color: #fff;
+    font-size: 0.33rem;
+}
+.info-box{
+    background: url('/static/mob/yang/imgs/game/yang-info-bg.png') no-repeat center top;
+    background-size: 100% auto;
+    width: 100%;
+    height: 3.41rem;
+    position: relative;
+}
+.info-box .yang{
+    position: absolute;
+    left: 0.3rem;
+    top: 0.2rem;
+    width: 1.37rem;
+    height: 1.37rem;
+    background: url('/static/mob/yang/imgs/game/yang.png') no-repeat center center;
+    background-size: 100% auto;
+}
+.info-box .time{
+    position: absolute;
+    top: 0.35rem;
+    right: 0.5rem;
+    width: 0.63rem;
+    font-size: 0.24rem;
+    color: #7d5827;
+}
+.info-box .state{
+    position: absolute;
+    top: 1rem;
+    right: 0.35rem;
+    width: 0.63rem;
+    font-size: 0.24rem;
+    color: #7d5827;
+}
+.info-box .list{
+    position: absolute;
+    top: 1.73rem;
+    left: 0.28rem;
+}
+.info-box .time-item{
+    position: relative;
+    color: #7d5827;
+    font-size: 0.24rem;
+    line-height: 0.34rem;
+    padding-bottom: 0.15rem;
+    padding-left: 0.2rem;
+}
+.info-box .time-item span{
+    padding-left: 0.1rem;
+}
+.info-box .time-item .yao{
+    position: absolute;
+    right: -0.1rem;
+    top: -0.05rem;
+    background: url('/static/mob/yang/imgs/game/btn_chiyaoaniu.png') no-repeat center center;
+    background-size: 100% auto;
+    width: 0.48rem;
+    height: 0.4rem;
+}
+.zise{
+    color: #6b1ede;
+}
+.hongse{
+    color: #da0909;
+}
+.yang{
+    width: 20%;
+    height: 20%;
+    position: absolute;
+    background-size: 90% auto;
+    background-repeat: no-repeat;
+}
+.yang1{
+    right: 2.6rem;
+    top: 2rem;
+    background-image: url('/static/mob/yang/imgs/game/yang2.gif');
+}
+
+.yang2{
+    right: 0.5rem;
+    top: 0.2rem;
+    background-image: url('/static/mob/yang/imgs/game/yang4.gif');
+}
+.yang3{
+    left: 1.4rem;
+    top: 0.3rem;
+    background-image: url('/static/mob/yang/imgs/game/yang3.gif');
+}
+.yang4{
+    right: -0.1rem;
+    top: 1.8rem;
+    background-image: url('/static/mob/yang/imgs/game/yang6.gif');
+}
+.yang5{
+    left: 1.6rem;
+    bottom: 2.4rem;
+    background-image: url('/static/mob/yang/imgs/game/yang5.gif');
+}
+.yang6{
+    right: 0.4rem;
+    bottom: 1.4rem;
+    background-image: url('/static/mob/yang/imgs/game/yang2.gif');
+}
+.yang7{
+    right: 0.1rem;
+    top: 2.9rem;
+    background-image: url('/static/mob/yang/imgs/game/yang1.gif');
+}
+.yang8{
+    left: 3.9rem;
+    bottom: 2rem;
+    background-image: url('/static/mob/yang/imgs/game/yang1.gif');
+}
+.yang9{
+    left: 2.2rem;
+    bottom: 1.2rem;
+    background-image: url('/static/mob/yang/imgs/game/yang3.gif');
+}
+.yang10{
+    left: 0.4rem;
+    bottom: 0.4rem;
+    background-image: url('/static/mob/yang/imgs/game/yang3.gif');
+}
+.yang11{
+    left: 0rem;
+    bottom: 2rem;
+    background-image: url('/static/mob/yang/imgs/game/yang5.gif');
+}
+.yang12{
+    left: 0.4rem;
+    top: 2.1rem;
+    background-image: url('/static/mob/yang/imgs/game/yang6.gif');
+}
+.yang13{
+    right: 1.6rem;
+    bottom: 0.7rem;
+    background-image: url('/static/mob/yang/imgs/game/yang4.gif');
+}
+.yang14{
+    top: 0.9rem;
+    right: 1.6rem;
+    background-image: url('/static/mob/yang/imgs/game/yang4.gif');
+}
+.yang15{
+    left: 5rem;
+    bottom: 3.4rem;
+    background-image: url('/static/mob/yang/imgs/game/yang2.gif');
+}
+.yang16{
+    left: 2.7rem;
+    top: 3rem;
+    background-image: url('/static/mob/yang/imgs/game/yang4.gif');
+}
+.yang17{
+    right: 2.7rem;
+    bottom: 0.05rem;
+    background-image: url('/static/mob/yang/imgs/game/yang4.gif');
+}
+.yang18{
+    left: 1.3rem;
+    top: 1.2rem;
+    background-image: url('/static/mob/yang/imgs/game/yang4.gif');
+}
+.yang19{
+    right: 0.3rem;
+    bottom: 0.2rem;
+    background-image: url('/static/mob/yang/imgs/game/yang1.gif');
+}
+.yang20{
+    right: 1.2rem;
+    bottom: 2.4rem;
+    background-image: url('/static/mob/yang/imgs/game/yang4.gif');
+}
+.stateTip{
+    background: url('/static/mob/yang/imgs/game/icon_qipaotishikuang.png') no-repeat center center;
+    background-size: 60% auto;
+    width: 1.36rem;
+    height: 1.05rem;
+    position: absolute;
+    right: -0.1rem;
+    top: -0.3rem;
+}
+.stateTip.state2::before, .stateTip.state3::before{
+    content: '';
+    width: 100%;
+    height: 100%;
+    display: block;
+}
+/*饥饿*/
+.stateTip.state2::before{
+    background: url('/static/mob/yang/imgs/game/icon_wei.png') no-repeat center center;
+    background-size: 0.5rem auto;
+}
+/*生病*/
+.stateTip.state3::before{
+    background: url('/static/mob/yang/imgs/game/yaoicon.png') no-repeat center center;
+    background-size: 0.5rem auto;
+}
+.shareTip{
+    position: fixed;
+    bottom: 1.8rem;
+    left: 50%;
+    transform: translate(-50%, 0);
+    width: 4rem;
+    height: 0.38rem;
+    /*background: url('/static/mob/yang/imgs/game/');*/
+    background: #fff49a;
+    border: 0.02rem solid #bc520c;
+    border-bottom-right-radius: 0.38rem;;
+    border-top-right-radius: 0.38rem;
+    color: #d50041;
+    font-size: 0.2rem;
+    line-height: 0.38rem;
+    text-align: center;
+    z-index:99;
+}
+.shareTip::before{
+    content: '';
+    position: absolute;
+    left: -0.5rem;
+    top: -0.15rem;
+    width: 0.82rem;
+    height: 0.82rem;
+    background: url('/static/mob/yang/imgs/game/icon_shouzhi.png') no-repeat left center;
+    background-size: auto 100%;
+}
